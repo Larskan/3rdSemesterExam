@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SplitBillsIntoFairShares.Properties
+namespace Client.Properties
 {
 
 
