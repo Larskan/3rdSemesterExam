@@ -37,6 +37,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -55,6 +57,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="View\ContentControls\temp.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -63,7 +69,15 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Model\1_Controller\temp.cs" />
+    <Compile Include="Model\2_Domain\temp.cs" />
+    <Compile Include="Model\4_Business\temp.cs" />
+    <Compile Include="Model\9_Foundation\temp.cs" />
+    <Compile Include="ViewModel\ContentControlModels\temp.cs" />
     <Compile Include="ViewModel\WindowModels\MainWindowViewModel.cs" />
+    <Compile Include="View\ContentControls\temp.xaml.cs">
+      <DependentUpon>temp.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -95,13 +109,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\1_Controller\" />
-    <Folder Include="Model\2_Domain\" />
-    <Folder Include="Model\4_Business\" />
-    <Folder Include="Model\9_Foundation\" />
-    <Folder Include="ViewModel\ContentControlModels\" />
-    <Folder Include="View\ContentControls\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
