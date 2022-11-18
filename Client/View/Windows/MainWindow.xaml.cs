@@ -13,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Client.Model._1_Controller;
+using Client.EF;
 
 namespace Client
 {
@@ -27,5 +29,25 @@ namespace Client
 
 			this.DataContext = new MainWindowViewModel();
 		}
-	}
+
+		//Just for concept proof that it works
+		private void OnClick_CMD(object sender, RoutedEventArgs e)
+		{
+			AddingGroup(3, "LarsKan", true);
+		}
+
+        public void AddingGroup(int ID, string name, bool temp)
+        {
+            var context = new FairShareDBEntities();
+            var group = new tblGroup()
+            {
+                fldGroupID = ID,
+                fldGroupName = name,
+                fldTempBool = temp
+            };
+            context.tblGroup.Add(group);
+            context.SaveChanges();
+
+        }
+    }
 }

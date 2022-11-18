@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Client.Model._1_Controller
 {
-	internal class temp
+	internal class temp3
 	{
 	}
 }
