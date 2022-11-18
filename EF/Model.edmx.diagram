@@ -10,9 +10,9 @@
         <EntityTypeShape EntityType="FairShareDBModel.tblLogin" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
         <EntityTypeShape EntityType="FairShareDBModel.tblReceipt" Width="1.5" PointX="6" PointY="5.5" IsExpanded="true" />
         <EntityTypeShape EntityType="FairShareDBModel.tblTrip" Width="1.5" PointX="3.75" PointY="6.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="FairShareDBModel.tblTripToUserExpenses" Width="1.5" PointX="5.25" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FairShareDBModel.tblTripToUserExpenses" Width="1.875" PointX="5.25" PointY="10.125" IsExpanded="true" />
         <EntityTypeShape EntityType="FairShareDBModel.tblUser" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="FairShareDBModel.tblUserExpenses" Width="1.5" PointX="3" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="FairShareDBModel.tblUserExpenses" Width="2.25" PointX="2.25" PointY="10" IsExpanded="true" />
         <EntityTypeShape EntityType="FairShareDBModel.tblUserToGroup" Width="1.5" PointX="6" PointY="2.75" IsExpanded="true" />
         <AssociationConnector Association="FairShareDBModel.FK__tblUserTo__fldGr__2E1BDC42" ManuallyRouted="false" />
         <AssociationConnector Association="FairShareDBModel.FK__tblLogin__fldUse__2A4B4B5E" ManuallyRouted="false" />
