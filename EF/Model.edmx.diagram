@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ac5f66064443482395b1358487e457bf" Name="Diagram1">
+        <EntityTypeShape EntityType="FairShareDBModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FairShareDBModel.tblGroup" Width="1.5" PointX="3.75" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FairShareDBModel.tblLogin" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FairShareDBModel.tblReceipt" Width="1.5" PointX="6" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FairShareDBModel.tblTrip" Width="1.5" PointX="3.75" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FairShareDBModel.tblTripToUserExpenses" Width="1.5" PointX="5.25" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FairShareDBModel.tblUser" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FairShareDBModel.tblUserExpenses" Width="1.5" PointX="3" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="FairShareDBModel.tblUserToGroup" Width="1.5" PointX="6" PointY="2.75" IsExpanded="true" />
+        <AssociationConnector Association="FairShareDBModel.FK__tblUserTo__fldGr__2E1BDC42" ManuallyRouted="false" />
+        <AssociationConnector Association="FairShareDBModel.FK__tblLogin__fldUse__2A4B4B5E" ManuallyRouted="false" />
+        <AssociationConnector Association="FairShareDBModel.FK__tblReceip__fldTr__3B75D760" ManuallyRouted="false" />
+        <AssociationConnector Association="FairShareDBModel.FK__tblReceip__fldUs__3A81B327" ManuallyRouted="false" />
+        <AssociationConnector Association="FairShareDBModel.FK__tblTripTo__fldTr__36B12243" ManuallyRouted="false" />
+        <AssociationConnector Association="FairShareDBModel.FK__tblTripTo__fldEx__37A5467C" ManuallyRouted="false" />
+        <AssociationConnector Association="FairShareDBModel.FK__tblUserEx__fldUs__33D4B598" ManuallyRouted="false" />
+        <AssociationConnector Association="FairShareDBModel.FK__tblUserTo__fldUs__2D27B809" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
