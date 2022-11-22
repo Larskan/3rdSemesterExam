@@ -1,9 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using FairShareAPI.Data;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<FairShareContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("FairShareContext") ?? throw new InvalidOperationException("Connection string 'FairShareContext' not found.")));
+	options.UseSqlServer(builder.Configuration.GetConnectionString("FairShareContext") ?? throw new InvalidOperationException("Connection string 'FairShareContext' not found.")));
 
 // Add services to the container.
 

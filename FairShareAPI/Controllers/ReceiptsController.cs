@@ -10,9 +10,9 @@ using FairShareAPI.Models;
 
 namespace FairShareAPI.Controllers
 {
-    [Route("/")]
     [ApiController]
-    public class ReceiptsController : ControllerBase
+	[Route("/")]
+	public class ReceiptsController : ControllerBase
     {
         private readonly FairShareContext _context;
 
