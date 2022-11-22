@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\DB\DBHandler.cs" />
     <Compile Include="Model\Domain\Log.cs" />
     <Compile Include="Model\FileIO\LogHandler.cs" />
     <Compile Include="Model\Foundation\temp3.cs" />

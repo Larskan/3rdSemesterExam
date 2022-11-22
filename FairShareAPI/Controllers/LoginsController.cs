@@ -2,15 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FairShareAPI.Data;
 using FairShareAPI.Models;
 
 namespace FairShareAPI.Controllers
 {
-	public class LoginsController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class LoginsController : ControllerBase
     {
         private readonly FairShareContext _context;
 
@@ -19,143 +21,102 @@ namespace FairShareAPI.Controllers
             _context = context;
         }
 
-        // GET: Logins
-        public async Task<IActionResult> Index()
+        // GET: api/Logins
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Login>>> GetLogin()
         {
-              return View(await _context.Login.ToListAsync());
+            return await _context.Login.ToListAsync();
         }
 
-        // GET: Logins/Details/5
-        public async Task<IActionResult> Details(string id)
+        // GET: api/Logins/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Login>> GetLogin(string id)
         {
-            if (id == null || _context.Login == null)
-            {
-                return NotFound();
-            }
-
-            var login = await _context.Login
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (login == null)
-            {
-                return NotFound();
-            }
-
-            return View(login);
-        }
-
-        // GET: Logins/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Logins/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Password")] Login login)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(login);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(login);
-        }
-
-        // GET: Logins/Edit/5
-        public async Task<IActionResult> Edit(string id)
-        {
-            if (id == null || _context.Login == null)
-            {
-                return NotFound();
-            }
-
             var login = await _context.Login.FindAsync(id);
+
             if (login == null)
             {
                 return NotFound();
             }
-            return View(login);
+
+            return login;
         }
 
-        // POST: Logins/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,Password")] Login login)
+        // PUT: api/Logins/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutLogin(string id, Login login)
         {
             if (id != login.Id)
             {
-                return NotFound();
+                return BadRequest();
             }
 
-            if (ModelState.IsValid)
+            _context.Entry(login).State = EntityState.Modified;
+
+            try
             {
-                try
-                {
-                    _context.Update(login);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!LoginExists(login.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                await _context.SaveChangesAsync();
             }
-            return View(login);
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!LoginExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
         }
 
-        // GET: Logins/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        // POST: api/Logins
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        public async Task<ActionResult<Login>> PostLogin(Login login)
         {
-            if (id == null || _context.Login == null)
+            _context.Login.Add(login);
+            try
             {
-                return NotFound();
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (LoginExists(login.Id))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
             }
 
-            var login = await _context.Login
-                .FirstOrDefaultAsync(m => m.Id == id);
+            return CreatedAtAction("GetLogin", new { id = login.Id }, login);
+        }
+
+        // DELETE: api/Logins/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteLogin(string id)
+        {
+            var login = await _context.Login.FindAsync(id);
             if (login == null)
             {
                 return NotFound();
             }
 
-            return View(login);
-        }
-
-        // POST: Logins/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
-        {
-            if (_context.Login == null)
-            {
-                return Problem("Entity set 'FairShareContext.Login'  is null.");
-            }
-            var login = await _context.Login.FindAsync(id);
-            if (login != null)
-            {
-                _context.Login.Remove(login);
-            }
-            
+            _context.Login.Remove(login);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+
+            return NoContent();
         }
 
         private bool LoginExists(string id)
         {
-          return _context.Login.Any(e => e.Id == id);
+            return _context.Login.Any(e => e.Id == id);
         }
     }
 }

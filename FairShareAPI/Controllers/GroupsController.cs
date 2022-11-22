@@ -2,15 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FairShareAPI.Data;
 using FairShareAPI.Models;
 
 namespace FairShareAPI.Controllers
 {
-	public class GroupsController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class GroupsController : ControllerBase
     {
         private readonly FairShareContext _context;
 
@@ -19,143 +21,88 @@ namespace FairShareAPI.Controllers
             _context = context;
         }
 
-        // GET: Groups
-        public async Task<IActionResult> Index()
+        // GET: api/Groups
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Group>>> GetGroup()
         {
-              return View(await _context.Group.ToListAsync());
+            return await _context.Group.ToListAsync();
         }
 
-        // GET: Groups/Details/5
-        public async Task<IActionResult> Details(int? id)
+        // GET: api/Groups/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Group>> GetGroup(int id)
         {
-            if (id == null || _context.Group == null)
-            {
-                return NotFound();
-            }
-
-            var @group = await _context.Group
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (@group == null)
-            {
-                return NotFound();
-            }
-
-            return View(@group);
-        }
-
-        // GET: Groups/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Groups/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,IsTemp")] Group @group)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(@group);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(@group);
-        }
-
-        // GET: Groups/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null || _context.Group == null)
-            {
-                return NotFound();
-            }
-
             var @group = await _context.Group.FindAsync(id);
+
             if (@group == null)
             {
                 return NotFound();
             }
-            return View(@group);
+
+            return @group;
         }
 
-        // POST: Groups/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,IsTemp")] Group @group)
+        // PUT: api/Groups/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutGroup(int id, Group @group)
         {
             if (id != @group.Id)
             {
-                return NotFound();
+                return BadRequest();
             }
 
-            if (ModelState.IsValid)
+            _context.Entry(@group).State = EntityState.Modified;
+
+            try
             {
-                try
-                {
-                    _context.Update(@group);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!GroupExists(@group.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                await _context.SaveChangesAsync();
             }
-            return View(@group);
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!GroupExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
         }
 
-        // GET: Groups/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        // POST: api/Groups
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        public async Task<ActionResult<Group>> PostGroup(Group @group)
         {
-            if (id == null || _context.Group == null)
-            {
-                return NotFound();
-            }
+            _context.Group.Add(@group);
+            await _context.SaveChangesAsync();
 
-            var @group = await _context.Group
-                .FirstOrDefaultAsync(m => m.Id == id);
+            return CreatedAtAction("GetGroup", new { id = @group.Id }, @group);
+        }
+
+        // DELETE: api/Groups/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteGroup(int id)
+        {
+            var @group = await _context.Group.FindAsync(id);
             if (@group == null)
             {
                 return NotFound();
             }
 
-            return View(@group);
-        }
-
-        // POST: Groups/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.Group == null)
-            {
-                return Problem("Entity set 'FairShareContext.Group'  is null.");
-            }
-            var @group = await _context.Group.FindAsync(id);
-            if (@group != null)
-            {
-                _context.Group.Remove(@group);
-            }
-            
+            _context.Group.Remove(@group);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+
+            return NoContent();
         }
 
         private bool GroupExists(int id)
         {
-          return _context.Group.Any(e => e.Id == id);
+            return _context.Group.Any(e => e.Id == id);
         }
     }
 }

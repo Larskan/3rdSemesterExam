@@ -7,7 +7,8 @@ using FairShareAPI.Models;
 
 namespace FairShareAPI.Data
 {
-    public class FairShareContext : DbContext
+#pragma warning disable CS1591
+	public class FairShareContext : DbContext
     {
         public FairShareContext (DbContextOptions<FairShareContext> options)
             : base(options)
@@ -26,4 +27,5 @@ namespace FairShareAPI.Data
 
         public DbSet<FairShareAPI.Models.UserExpenses> UserExpenses { get; set; }
     }
+#pragma warning restore CS1591
 }

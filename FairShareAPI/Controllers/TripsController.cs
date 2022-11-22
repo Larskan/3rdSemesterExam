@@ -2,15 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FairShareAPI.Data;
 using FairShareAPI.Models;
 
 namespace FairShareAPI.Controllers
 {
-	public class TripsController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class TripsController : ControllerBase
     {
         private readonly FairShareContext _context;
 
@@ -19,143 +21,102 @@ namespace FairShareAPI.Controllers
             _context = context;
         }
 
-        // GET: Trips
-        public async Task<IActionResult> Index()
+        // GET: api/Trips
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Trip>>> GetTrip()
         {
-              return View(await _context.Trip.ToListAsync());
+            return await _context.Trip.ToListAsync();
         }
 
-        // GET: Trips/Details/5
-        public async Task<IActionResult> Details(string id)
+        // GET: api/Trips/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Trip>> GetTrip(string id)
         {
-            if (id == null || _context.Trip == null)
-            {
-                return NotFound();
-            }
-
-            var trip = await _context.Trip
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (trip == null)
-            {
-                return NotFound();
-            }
-
-            return View(trip);
-        }
-
-        // GET: Trips/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Trips/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Sum")] Trip trip)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(trip);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(trip);
-        }
-
-        // GET: Trips/Edit/5
-        public async Task<IActionResult> Edit(string id)
-        {
-            if (id == null || _context.Trip == null)
-            {
-                return NotFound();
-            }
-
             var trip = await _context.Trip.FindAsync(id);
+
             if (trip == null)
             {
                 return NotFound();
             }
-            return View(trip);
+
+            return trip;
         }
 
-        // POST: Trips/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,Title,Sum")] Trip trip)
+        // PUT: api/Trips/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutTrip(string id, Trip trip)
         {
             if (id != trip.Id)
             {
-                return NotFound();
+                return BadRequest();
             }
 
-            if (ModelState.IsValid)
+            _context.Entry(trip).State = EntityState.Modified;
+
+            try
             {
-                try
-                {
-                    _context.Update(trip);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!TripExists(trip.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                await _context.SaveChangesAsync();
             }
-            return View(trip);
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!TripExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
         }
 
-        // GET: Trips/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        // POST: api/Trips
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        public async Task<ActionResult<Trip>> PostTrip(Trip trip)
         {
-            if (id == null || _context.Trip == null)
+            _context.Trip.Add(trip);
+            try
             {
-                return NotFound();
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (TripExists(trip.Id))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
             }
 
-            var trip = await _context.Trip
-                .FirstOrDefaultAsync(m => m.Id == id);
+            return CreatedAtAction("GetTrip", new { id = trip.Id }, trip);
+        }
+
+        // DELETE: api/Trips/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteTrip(string id)
+        {
+            var trip = await _context.Trip.FindAsync(id);
             if (trip == null)
             {
                 return NotFound();
             }
 
-            return View(trip);
-        }
-
-        // POST: Trips/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
-        {
-            if (_context.Trip == null)
-            {
-                return Problem("Entity set 'FairShareContext.Trip'  is null.");
-            }
-            var trip = await _context.Trip.FindAsync(id);
-            if (trip != null)
-            {
-                _context.Trip.Remove(trip);
-            }
-            
+            _context.Trip.Remove(trip);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+
+            return NoContent();
         }
 
         private bool TripExists(string id)
         {
-          return _context.Trip.Any(e => e.Id == id);
+            return _context.Trip.Any(e => e.Id == id);
         }
     }
 }
