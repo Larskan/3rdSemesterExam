@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Client.Model._1_Controller;
 using Client.EF;
+using System.Windows.Markup;
 
 namespace Client
 {
@@ -33,7 +34,11 @@ namespace Client
 		//Just for concept proof that it works
 		private void OnClick_CMD(object sender, RoutedEventArgs e)
 		{
-			AddingGroup(3, "LarsKan", true);
+			//int a = GroupID.Text;
+			//string b = GroupName.Text;
+			//bool c = GroupBool.Text;
+			//AddingGroup(a, b, c);
+			AddingGroup(4, "Wow", true);
 		}
 
         public void AddingGroup(int ID, string name, bool temp)
