@@ -123,14 +123,10 @@
     <Compile Include="EF\tblUserToGroup.cs">
       <DependentUpon>FairShareEF.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\1_Controller\temp1.cs" />
-    <Compile Include="Model\2_Domain\Expense.cs" />
-    <Compile Include="Model\2_Domain\Group.cs" />
-    <Compile Include="Model\2_Domain\Receipt.cs" />
-    <Compile Include="Model\2_Domain\Trip.cs" />
-    <Compile Include="Model\2_Domain\User.cs" />
-    <Compile Include="Model\4_Business\temp2.cs" />
-    <Compile Include="Model\9_Foundation\temp3.cs" />
+    <Compile Include="Model\Controller\temp1.cs" />
+    <Compile Include="Model\Domain\temp.cs" />
+    <Compile Include="Model\Business\temp2.cs" />
+    <Compile Include="Model\Foundation\temp3.cs" />
     <Compile Include="ViewModel\ContentControlModels\temp.cs" />
     <Compile Include="ViewModel\WindowModels\MainWindowViewModel.cs" />
     <Compile Include="View\ContentControls\temp.xaml.cs">
