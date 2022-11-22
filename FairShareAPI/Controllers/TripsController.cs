@@ -11,7 +11,7 @@ using FairShareAPI.Models;
 namespace FairShareAPI.Controllers
 {
 	[ApiController]
-	[Route("/")]
+	[Route("[controller]")]
 	public class TripsController : ControllerBase
     {
         private readonly FairShareContext _context;
