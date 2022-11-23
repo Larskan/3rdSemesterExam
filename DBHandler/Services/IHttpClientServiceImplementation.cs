@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Admin_Client.ViewModel.WindowModels
+namespace DBHandler.Services
 {
-	public class MainWindowViewModel
-	{
-
-
-
-	}
+    public interface IHttpClientServiceImplementation
+    {
+        Task Execute();
+    }
 }
