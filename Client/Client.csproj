@@ -69,7 +69,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="View\ContentControls\temp.xaml">
+    <Page Include="View\UserControls\temp.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -127,9 +127,9 @@
     <Compile Include="Model\Domain\temp.cs" />
     <Compile Include="Model\Business\temp2.cs" />
     <Compile Include="Model\Foundation\temp3.cs" />
-    <Compile Include="ViewModel\ContentControlModels\temp.cs" />
+    <Compile Include="ViewModel\UserControlModels\temp.cs" />
     <Compile Include="ViewModel\WindowModels\MainWindowViewModel.cs" />
-    <Compile Include="View\ContentControls\temp.xaml.cs">
+    <Compile Include="View\UserControls\temp.xaml.cs">
       <DependentUpon>temp.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Windows\MainWindow.xaml.cs">

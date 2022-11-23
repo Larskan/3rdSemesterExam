@@ -1,6 +1,6 @@
 ﻿using Client.EF;
 
-namespace Client.ViewModel.ContentControlModels
+namespace Client.ViewModel.UserControlModels
 {
     /// <summary>
     /// Push test

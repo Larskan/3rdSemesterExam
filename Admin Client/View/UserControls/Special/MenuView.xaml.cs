@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Client.View.ContentControls
+namespace Admin_Client.View.UserControls.Special
 {
 	/// <summary>
-	/// Interaction logic for temp.xaml
+	/// Interaction logic for MenuView.xaml
 	/// </summary>
-	public partial class temp : UserControl
+	public partial class MenuView : UserControl
 	{
-		public temp()
+		public MenuView()
 		{
 			InitializeComponent();
 		}

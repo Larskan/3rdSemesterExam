@@ -10,13 +10,27 @@ using System.Threading.Tasks;
 
 namespace Admin_Client.ViewModel.WindowModels
 {
-	public class MainWindowViewModel
+	public class MainWindowModel
 	{
 
-		public MainWindowViewModel()
+		#region Variables
+
+
+		#endregion
+
+		#region Parameters
+
+		private bool isloggetIn = false;
+
+		public bool IsloggetIn
 		{
-			
-        }
+			get { return isloggetIn; }
+			set { isloggetIn = value; }
+		}
+
+		#endregion
+
+		public MainWindowModel(){ }
 
 	}
 }

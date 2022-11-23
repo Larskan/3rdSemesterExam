@@ -5,8 +5,51 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Admin_Client"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="FairShare - Admin" Height="450" Width="800">
+    
+    <Window.Resources>
+        <Storyboard x:Key="OpenAccountTab">
+            <DoubleAnimation Storyboard.TargetProperty="Height" To="60" DecelerationRatio="0.5" Duration="0:0:0.3"/>
+        </Storyboard>
+
+
+        <Storyboard x:Key="CloseAccountTab">
+            <DoubleAnimation Storyboard.TargetProperty="Height" To="35" DecelerationRatio="0.5" Duration="0:0:0.3"/>
+        </Storyboard>
+
+        <Storyboard x:Key="OpenMenu">
+            <DoubleAnimation Storyboard.TargetProperty="Width" To="150" DecelerationRatio="0.5" Duration="0:0:0.3"/>
+        </Storyboard>
+
+
+        <Storyboard x:Key="CloseMenu">
+            <DoubleAnimation Storyboard.TargetProperty="Width" To="50" DecelerationRatio="0.5" Duration="0:0:0.3"/>
+        </Storyboard>
+    </Window.Resources>
+    
+    <Grid Background="LightGray">
+
+        <ContentControl x:Name="CControl_Main"/>
+
+        <Grid x:Name="CControl_Menu" Panel.ZIndex="10" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Height="100" MouseEnter="CControl_Menu_MouseEnter" MouseLeave="CControl_Menu_MouseLeave">
+            <Border Grid.Column="1" Grid.Row="2" Background="White" BorderBrush="Gray" BorderThickness="0,0,1,1">
+                <Border.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="0,0,10,0"/>
+                    </Style>
+                </Border.Resources>
+            </Border>
+        </Grid>
+
+        <Grid x:Name="CControl_Account" Panel.ZIndex="10" HorizontalAlignment="Right" VerticalAlignment="Top" Width="150" Height="35" MouseEnter="CControl_Account_MouseEnter" MouseLeave="CControl_Account_MouseLeave">
+            <Border Grid.Column="1" Grid.Row="2" Background="White" BorderBrush="Gray" BorderThickness="1,0,0,1">
+                <Border.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="0,0,0,10"/>
+                    </Style>
+                </Border.Resources>
+            </Border>
+        </Grid>
+
     </Grid>
 </Window>
