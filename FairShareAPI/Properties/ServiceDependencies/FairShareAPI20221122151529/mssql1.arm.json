@@ -61,7 +61,7 @@
                 "tier": "Standard",
                 "capacity": 10
               },
-              "kind": "v12.0,user",
+              "kind": "v12.0,fldUser",
               "location": "[parameters('resourceLocation')]",
               "name": "fairshareapidbserver/FairShareAPI_db",
               "type": "Microsoft.Sql/servers/databases",

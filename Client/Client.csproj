@@ -162,7 +162,6 @@
     <None Include="EF\FairShareEF.edmx.diagram">
       <DependentUpon>FairShareEF.edmx</DependentUpon>
     </None>
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -7,7 +7,7 @@ using FairShareAPI.Models;
 
 namespace FairShareAPI.Data
 {
-#pragma warning disable CS1591
+
 	public class FairShareContext : DbContext
     {
         public FairShareContext (DbContextOptions<FairShareContext> options)
@@ -15,17 +15,16 @@ namespace FairShareAPI.Data
         {
         }
 
-        public DbSet<FairShareAPI.Models.User> User { get; set; } = default!;
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<tblGroup> tblGroup { get; set; }
+        public virtual DbSet<tblLogin> tblLogin { get; set; }
+        public virtual DbSet<tblReceipt> tblReceipt { get; set; }
+        public virtual DbSet<tblTrip> tblTrip { get; set; }
+        public virtual DbSet<tblTripToUserExpenses> tblTripToUserExpenses { get; set; }
+        public virtual DbSet<tblUser> tblUser { get; set; }
+        public virtual DbSet<tblUserExpenses> tblUserExpenses { get; set; }
+        public virtual DbSet<tblUserToGroup> tblUserToGroup { get; set; }
 
-        public DbSet<FairShareAPI.Models.Group> Group { get; set; }
-
-        public DbSet<FairShareAPI.Models.Login> Login { get; set; }
-
-        public DbSet<FairShareAPI.Models.Receipt> Receipt { get; set; }
-
-        public DbSet<FairShareAPI.Models.Trip> Trip { get; set; }
-
-        public DbSet<FairShareAPI.Models.UserExpenses> UserExpenses { get; set; }
     }
-#pragma warning restore CS1591
+
 }

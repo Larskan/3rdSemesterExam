@@ -1,6 +1,7 @@
 ﻿using Admin_Client.Model.Domain;
 using Admin_Client.Model.FileIO;
 using Admin_Client.Singleton;
+using Admin_Client.ViewModel.WindowModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -24,10 +25,12 @@ namespace Admin_Client
 	/// </summary>
 	public partial class MainWindow : Window
 	{
-		public MainWindow()
+		MainWindowViewModel MainWindowViewModel { get; set; } = new MainWindowViewModel();
+        public MainWindow()
 		{
 			InitializeComponent();
-		}
+			this.DataContext = this.MainWindowViewModel;
+        }
 
 	}
 }

@@ -1,5 +1,5 @@
 ﻿
-namespace Client.ViewModel.ContentControlModels
+namespace Admin_Client.ViewModel.ContentControlModels
 {
     /// <summary>
     /// Push test

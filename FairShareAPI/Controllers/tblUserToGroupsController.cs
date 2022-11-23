@@ -10,49 +10,49 @@ using FairShareAPI.Models;
 
 namespace FairShareAPI.Controllers
 {
-	[ApiController]
-	[Route("[controller]")]
-	public class LoginsController : ControllerBase
+    [Route("api/[controller]")]
+    [ApiController]
+    public class tblUserToGroupsController : ControllerBase
     {
         private readonly FairShareContext _context;
 
-        public LoginsController(FairShareContext context)
+        public tblUserToGroupsController(FairShareContext context)
         {
             _context = context;
         }
 
-        // GET: api/Logins
+        // GET: api/tblUserToGroups
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Login>>> GetLogin()
+        public async Task<ActionResult<IEnumerable<tblUserToGroup>>> GettblUserToGroup()
         {
-            return await _context.Login.ToListAsync();
+            return await _context.tblUserToGroup.ToListAsync();
         }
 
-        // GET: api/Logins/5
+        // GET: api/tblUserToGroups/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Login>> GetLogin(string id)
+        public async Task<ActionResult<tblUserToGroup>> GettblUserToGroup(int id)
         {
-            var login = await _context.Login.FindAsync(id);
+            var tblUserToGroup = await _context.tblUserToGroup.FindAsync(id);
 
-            if (login == null)
+            if (tblUserToGroup == null)
             {
                 return NotFound();
             }
 
-            return login;
+            return tblUserToGroup;
         }
 
-        // PUT: api/Logins/5
+        // PUT: api/tblUserToGroups/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutLogin(string id, Login login)
+        public async Task<IActionResult> PuttblUserToGroup(int id, tblUserToGroup tblUserToGroup)
         {
-            if (id != login.Id)
+            if (id != tblUserToGroup.fldUserToGroupID)
             {
                 return BadRequest();
             }
 
-            _context.Entry(login).State = EntityState.Modified;
+            _context.Entry(tblUserToGroup).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace FairShareAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!LoginExists(id))
+                if (!tblUserToGroupExists(id))
                 {
                     return NotFound();
                 }
@@ -73,19 +73,19 @@ namespace FairShareAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Logins
+        // POST: api/tblUserToGroups
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Login>> PostLogin(Login login)
+        public async Task<ActionResult<tblUserToGroup>> PosttblUserToGroup(tblUserToGroup tblUserToGroup)
         {
-            _context.Login.Add(login);
+            _context.tblUserToGroup.Add(tblUserToGroup);
             try
             {
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateException)
             {
-                if (LoginExists(login.Id))
+                if (tblUserToGroupExists(tblUserToGroup.fldUserToGroupID))
                 {
                     return Conflict();
                 }
@@ -95,28 +95,28 @@ namespace FairShareAPI.Controllers
                 }
             }
 
-            return CreatedAtAction("GetLogin", new { id = login.Id }, login);
+            return CreatedAtAction("GettblUserToGroup", new { id = tblUserToGroup.fldUserToGroupID }, tblUserToGroup);
         }
 
-        // DELETE: api/Logins/5
+        // DELETE: api/tblUserToGroups/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteLogin(string id)
+        public async Task<IActionResult> DeletetblUserToGroup(int id)
         {
-            var login = await _context.Login.FindAsync(id);
-            if (login == null)
+            var tblUserToGroup = await _context.tblUserToGroup.FindAsync(id);
+            if (tblUserToGroup == null)
             {
                 return NotFound();
             }
 
-            _context.Login.Remove(login);
+            _context.tblUserToGroup.Remove(tblUserToGroup);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool LoginExists(string id)
+        private bool tblUserToGroupExists(int id)
         {
-            return _context.Login.Any(e => e.Id == id);
+            return _context.tblUserToGroup.Any(e => e.fldUserToGroupID == id);
         }
     }
 }
