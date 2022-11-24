@@ -23,7 +23,7 @@
 
             <Label Content="User 1" HorizontalAlignment="Right" VerticalAlignment="Center"/>
 
-            <Button Grid.Column="1" Grid.Row="0" Content="U1" FontSize="13" Margin="3">
+            <Button Grid.Column="1" Grid.Row="0" Content="U1" FontSize="13" Margin="5">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="100"/>

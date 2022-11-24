@@ -68,7 +68,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\UserControls\LoginView.xaml">
+    <Page Include="View\UserControls\OverviewView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -84,6 +84,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Windows\LogWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -95,8 +99,8 @@
     <Compile Include="View\UserControls\GroupListView.xaml.cs">
       <DependentUpon>GroupListView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserControls\LoginView.xaml.cs">
-      <DependentUpon>LoginView.xaml</DependentUpon>
+    <Compile Include="View\UserControls\OverviewView.xaml.cs">
+      <DependentUpon>OverviewView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControls\Special\AccountTabView.xaml.cs">
       <DependentUpon>AccountTabView.xaml</DependentUpon>
@@ -106,6 +110,9 @@
     </Compile>
     <Compile Include="View\UserControls\UserListView.xaml.cs">
       <DependentUpon>UserListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\LogWindow.xaml.cs">
+      <DependentUpon>LogWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

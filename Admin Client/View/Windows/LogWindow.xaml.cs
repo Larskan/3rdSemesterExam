@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Admin_Client.View.UserControls
+namespace Admin_Client.View.Windows
 {
 	/// <summary>
-	/// Interaction logic for LoginView.xaml
+	/// Interaction logic for LogWindow.xaml
 	/// </summary>
-	public partial class LoginView : UserControl
+	public partial class LogWindow : Window
 	{
-		public LoginView()
+		public LogWindow()
 		{
 			InitializeComponent();
 		}

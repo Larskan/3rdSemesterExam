@@ -32,7 +32,7 @@ namespace Admin_Client
 			//TEST
 			this.CControl_Account.Children.Add(new AccountTabView());
 			this.CControl_Menu.Children.Add(new MenuView());
-			this.CControl_Main.Content = new LoginView();
+			this.CControl_Main.Content = new OverviewView();
 			//TEST
 
 			this.DataContext = MainWindowModelSingleton.Instance;
