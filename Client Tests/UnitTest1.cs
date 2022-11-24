@@ -1,5 +1,5 @@
 using Client.EF;
-using Client.ViewModel.ContentControlModels;
+using Client.ViewModel.UserControlModels;
 using Client.ViewModel;
 using Client.Model._1_Controller;
 namespace ClientTests

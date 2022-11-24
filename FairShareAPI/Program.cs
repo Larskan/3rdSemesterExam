@@ -1,12 +1,15 @@
-using Microsoft.EntityFrameworkCore;
 using FairShareAPI.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddDbContext<FairShareContext>(options =>
-	options.UseSqlServer(builder.Configuration.GetConnectionString("FairShareContext") ?? throw new InvalidOperationException("Connection string 'FairShareContext' not found.")));
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddDbContext<FairShareDbContext>(options =>
+{
+	options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
