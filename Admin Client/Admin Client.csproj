@@ -226,7 +226,9 @@
     <Compile Include="PropertyChanged\NotifyPropertyChangedHandler.cs" />
     <Compile Include="Singleton\LogHandlerSingleton.cs" />
     <Compile Include="Singleton\MainWindowModelSingleton.cs" />
-    <Compile Include="ViewModel\ContentControlModels\temp.cs" />
+    <Compile Include="ViewModel\ContentControlModels\OverviewViewModel.cs" />
+    <Compile Include="ViewModel\ContentControlModels\Special\AccountTabViewModel.cs" />
+    <Compile Include="ViewModel\ContentControlModels\Special\MenuViewModel.cs" />
     <Compile Include="ViewModel\WindowModels\MainWindowModel.cs" />
     <Page Include="View\UserControls\GroupListView.xaml">
       <SubType>Designer</SubType>

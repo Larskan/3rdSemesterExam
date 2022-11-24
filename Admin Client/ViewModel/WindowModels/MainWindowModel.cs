@@ -33,7 +33,10 @@ namespace Admin_Client.ViewModel.WindowModels
 		public MainWindowModel()
 		{
 
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "MainWindow has startet up"));
+			if (LogHandlerSingleton.Instance.WriteToLogFile(new Log("MainWindow is starting")))
+			{
+				LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "MainWindow is shown"));
+			}
 
 		}
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Admin_Client.ViewModel.ContentControlModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,8 @@ namespace Admin_Client.View.UserControls
 		public OverviewView()
 		{
 			InitializeComponent();
+
+			this.DataContext = new OverviewViewModel();
 		}
 	}
 }
