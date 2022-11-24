@@ -30,7 +30,12 @@ namespace Admin_Client.ViewModel.WindowModels
 
 		#endregion
 
-		public MainWindowModel(){ }
+		public MainWindowModel()
+		{
+
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "MainWindow has startet up"));
+
+		}
 
 	}
 }

@@ -8,5 +8,6 @@ namespace Admin_Client.Model.DB
 {
 	public class DBHandler
 	{
+
 	}
 }

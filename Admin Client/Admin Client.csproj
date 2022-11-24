@@ -210,7 +210,17 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\DB\DBHandler.cs" />
+    <Compile Include="Model\DB\DBItem\TblGroup.cs" />
+    <Compile Include="Model\DB\DBItem\TblGroupToMoney.cs" />
+    <Compile Include="Model\DB\DBItem\TblLogin.cs" />
+    <Compile Include="Model\DB\DBItem\TblReceipt.cs" />
+    <Compile Include="Model\DB\DBItem\TblTrip.cs" />
+    <Compile Include="Model\DB\DBItem\TblTripToUserExpense.cs" />
+    <Compile Include="Model\DB\DBItem\TblUser.cs" />
+    <Compile Include="Model\DB\DBItem\TblUserExpense.cs" />
+    <Compile Include="Model\DB\DBItem\TblUserToGroup.cs" />
     <Compile Include="Model\Domain\Log.cs" />
+    <Compile Include="Model\FAKEDATABASE.cs" />
     <Compile Include="Model\FileIO\LogHandler.cs" />
     <Compile Include="Model\Foundation\temp3.cs" />
     <Compile Include="PropertyChanged\NotifyPropertyChangedHandler.cs" />

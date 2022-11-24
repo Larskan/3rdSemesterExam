@@ -1,6 +1,7 @@
 ﻿using Admin_Client.Model.Domain;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -30,6 +31,7 @@ namespace Admin_Client.Model.FileIO
 		protected LogHandler()
 		{
 			CreateDataDir();
+			CleanUpFolder();
 			CreateLogFile();
 		}
 
@@ -78,10 +80,10 @@ namespace Admin_Client.Model.FileIO
 			try
 			{
 				DateTime dateTime = DateTime.Now;
-				string dateTimeFileName = DateToString(dateTime);
+				string dateTimeFileName = ToFileName(dateTime);
 				File.WriteAllText(PATH + ToPath(dateTimeFileName, "txt"), "");
 				LogFilePath = ToPath(dateTimeFileName, "txt");
-				WriteToLogFile(new Log("Log file has been created"));
+				WriteToLogFile(new Log(LogType.Success, "Log file has been created"));
 			} catch
 			{
 				return false;
@@ -132,18 +134,44 @@ namespace Admin_Client.Model.FileIO
 		{
 			try
 			{
-				string content = File.ReadAllText(PATH + ToPath(DateToString(dateTime), "txt"));
-				WriteToLogFile(new Log(LogType.Success, "Read targetet file " + ToPath(DateToString(dateTime), "txt")));
+				string content = File.ReadAllText(PATH + ToPath(ToFileName(dateTime), "txt"));
+				WriteToLogFile(new Log(LogType.Success, "Read targetet file " + ToPath(ToFileName(dateTime), "txt")));
 				return content;
 			}
 			catch
 			{
-				WriteToLogFile(new Log(LogType.Error, "Could not read targetet file " + ToPath(DateToString(dateTime), "txt")));
+				WriteToLogFile(new Log(LogType.Error, "Could not read targetet file " + ToPath(ToFileName(dateTime), "txt")));
 				return null;
 			}
 		}
 
 		#endregion
+
+		#region CleanUp
+
+		/// <summary>
+		/// Makes sure that only a curtain amount of files are stored
+		/// </summary>
+		/// <returns>True if cleanUp was a success, false if not</returns>
+		public bool CleanUpFolder()
+		{
+			int amountOfLogFilesStored = 10;
+			try
+			{
+				string[] logFiles = Directory.GetFiles(PATH);
+				if (logFiles.Length >= amountOfLogFilesStored)
+				{
+					File.Delete(logFiles[0]);
+				}
+			}
+			catch
+			{
+				return false;
+			}
+			return true;
+		}
+
+		#endregion CleanUp
 
 		#region Convertions
 
@@ -159,13 +187,33 @@ namespace Admin_Client.Model.FileIO
 		}
 
 		/// <summary>
+		/// Formats the string to represent a fileName
+		/// </summary>
+		/// <param name="path">The path to the file</param>
+		/// <returns>The formatted string</returns>
+		private string ToFileName(string path)
+		{
+			return path.Split('\\').Last();
+		}
+
+		/// <summary>
 		/// Formats the datetime datatype to string, which can be used as a filename
 		/// </summary>
 		/// <param name="dateTime">The datetime</param>
 		/// <returns>The formattet string</returns>
-		private string DateToString(DateTime dateTime)
+		private string ToFileName(DateTime dateTime)
 		{
 			return dateTime.ToString().Replace(':', '_');
+		}
+
+		/// <summary>
+		/// Formats the string to dateTime datatype, which can be used to get the time
+		/// </summary>
+		/// <param name="fileName">The fileName</param>
+		/// <returns>The dateTime datatype</returns>
+		private DateTime ToDateTime(string fileName)
+		{
+			return DateTime.Parse(fileName.Replace('_', ':').Replace(".txt", ""));
 		}
 
 		#endregion
