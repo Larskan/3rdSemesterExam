@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Client Tests", "Client Tests\Client Tests.csproj", "{29B4161B-73C8-46D8-A257-7E721DDBE46E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FairShareAPI", "FairShareAPI\FairShareAPI.csproj", "{5357491C-0A71-4F2E-8EE2-C91620FF49D2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{29B4161B-73C8-46D8-A257-7E721DDBE46E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29B4161B-73C8-46D8-A257-7E721DDBE46E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29B4161B-73C8-46D8-A257-7E721DDBE46E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5357491C-0A71-4F2E-8EE2-C91620FF49D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5357491C-0A71-4F2E-8EE2-C91620FF49D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5357491C-0A71-4F2E-8EE2-C91620FF49D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5357491C-0A71-4F2E-8EE2-C91620FF49D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,6 +54,7 @@ Global
 		{1F0C9C0B-6685-4675-BEF1-6A36551A6AD4} = {012B443F-E1D4-4053-A177-0A5426053343}
 		{7D788376-0C2C-4750-A566-53D9144AAD41} = {2B09F1D7-E1F3-4C7F-8952-B0442F20BF30}
 		{29B4161B-73C8-46D8-A257-7E721DDBE46E} = {2B09F1D7-E1F3-4C7F-8952-B0442F20BF30}
+		{5357491C-0A71-4F2E-8EE2-C91620FF49D2} = {C9C1D606-D6F3-4012-97B6-8F2CA8079320}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8B560461-6752-414E-BF2E-77C75D120E94}
