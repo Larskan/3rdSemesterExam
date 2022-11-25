@@ -81,15 +81,23 @@ namespace Admin_Client.ViewModel.WindowModels
 		{
 			if (active)
 			{
-				if (this.Grid_Menu.Children.Count < 1)
+				int currentMenuElements = this.Grid_Menu.Children.Count;
+				if (currentMenuElements != 3)
 				{
+					if (currentMenuElements == 2)
+					{
+						LogHandlerSingleton.Instance.WriteToLogFile(new Log("Disabling active BackMenu"));
+						IsMenuActive(false);
+					}
+					Border extraChild = new Border(); // This is created to add one more child so Menu has 3 and BackMenu has 2. Then operations can be handled via the amount of children
 					Border border = new Border();
-					Grid.SetColumn(border,1);
-					Grid.SetRow(border,2);
+					Grid.SetColumn(border, 1);
+					Grid.SetRow(border, 2);
 					border.Background = Brushes.White;
 					border.BorderBrush = Brushes.Gray;
-					border.BorderThickness = new Thickness(0,0,1,1);
-					border.CornerRadius = new CornerRadius(0,0,10,0);
+					border.BorderThickness = new Thickness(0, 0, 1, 1);
+					border.CornerRadius = new CornerRadius(0, 0, 10, 0);
+					this.Grid_Menu.Children.Add(extraChild);
 					this.Grid_Menu.Children.Add(border);
 
 					this.Grid_Menu.Children.Add(new MenuView());
@@ -101,6 +109,36 @@ namespace Admin_Client.ViewModel.WindowModels
 			} else
 			{
 				this.Grid_Menu.Children.Clear();
+			}
+		}
+
+		public void IsMenuActive(UserControl backToView)
+		{
+			int currentMenuElements = this.Grid_Menu.Children.Count;
+			if (currentMenuElements != 2)
+			{
+				if (currentMenuElements == 3)
+				{
+					LogHandlerSingleton.Instance.WriteToLogFile(new Log("Disabling active Menu"));
+					IsMenuActive(false);
+				}
+
+				Border border = new Border();
+				Grid.SetColumn(border, 1);
+				Grid.SetRow(border, 2);
+				border.Background = Brushes.White;
+				border.BorderBrush = Brushes.Gray;
+				border.BorderThickness = new Thickness(0, 0, 1, 1);
+				border.CornerRadius = new CornerRadius(0, 0, 10, 0);
+				border.Height = 50;
+				border.VerticalAlignment = VerticalAlignment.Top;
+				this.Grid_Menu.Children.Add(border);
+
+				this.Grid_Menu.Children.Add(new BackMenuView(backToView));
+			}
+			else
+			{
+				LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Warning, "BackMenu is already shown"));
 			}
 		}
 

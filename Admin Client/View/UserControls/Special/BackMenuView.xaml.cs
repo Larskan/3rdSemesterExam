@@ -19,28 +19,25 @@ using System.Windows.Shapes;
 namespace Admin_Client.View.UserControls.Special
 {
 	/// <summary>
-	/// Interaction logic for AccountTabView.xaml
+	/// Interaction logic for BackMenuView.xaml
 	/// </summary>
-	public partial class AccountTabView : UserControl
+	public partial class BackMenuView : UserControl
 	{
-		AccountTabViewModel viewModel = new AccountTabViewModel();
-		public AccountTabView()
+		BackMenuViewModel viewModel = new BackMenuViewModel();
+		UserControl userControl;
+		public BackMenuView(UserControl lastUControl)
 		{
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log("AccountTab is starting"));
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Menu is starting"));
 			InitializeComponent();
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "AccountTab is shown"));
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Menu is shown"));
 
 			this.DataContext = viewModel;
+			this.userControl = lastUControl;
 		}
 
-		private void Profile_Click(object sender, RoutedEventArgs e)
+		private void Back_Click(object sender, RoutedEventArgs e)
 		{
-
-		}
-
-		private void LogOut_Click(object sender, RoutedEventArgs e)
-		{
-
+			viewModel.Back(userControl);
 		}
 	}
 }

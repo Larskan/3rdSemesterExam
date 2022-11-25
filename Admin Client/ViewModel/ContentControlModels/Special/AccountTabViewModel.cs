@@ -1,6 +1,7 @@
 ﻿using Admin_Client.Model.Domain;
 using Admin_Client.PropertyChanged;
 using Admin_Client.Singleton;
+using Admin_Client.View.UserControls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,20 @@ namespace Admin_Client.ViewModel.ContentControlModels.Special
 		#endregion
 
 		#region Public Methods
+
+		public void Logout()
+		{
+			//REMOVE USER OBJECT FROM SESSION
+
+			MainWindowModelSingleton.Instance.SetMainContent(new LoginView());
+
+			MainWindowModelSingleton.Instance.IsAccountTabActive(false);
+			MainWindowModelSingleton.Instance.IsMenuActive(false);
+		}
+		public void ChangeContentToAccount()
+		{
+			MainWindowModelSingleton.Instance.SetMainContent(new AccountView());
+		}
 
 		#endregion
 

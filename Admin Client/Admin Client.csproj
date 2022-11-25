@@ -233,6 +233,7 @@
     <Compile Include="ViewModel\ContentControlModels\OverviewViewModel.cs" />
     <Compile Include="ViewModel\ContentControlModels\ReceiptViewModel.cs" />
     <Compile Include="ViewModel\ContentControlModels\Special\AccountTabViewModel.cs" />
+    <Compile Include="ViewModel\ContentControlModels\Special\BackMenuViewModel.cs" />
     <Compile Include="ViewModel\ContentControlModels\Special\MenuViewModel.cs" />
     <Compile Include="ViewModel\ContentControlModels\GroupListViewModel.cs" />
     <Compile Include="ViewModel\ContentControlModels\TripViewModel.cs" />
@@ -242,6 +243,9 @@
     <Compile Include="ViewModel\WindowModels\Popout\PopoutLogWindowModel.cs" />
     <Compile Include="ViewModel\WindowModels\Popup\PopupParameterChangeWindowModel.cs" />
     <Compile Include="ViewModel\WindowModels\Popup\PopupPasswordChangeWindowModel.cs" />
+    <Compile Include="View\UserControls\Special\BackMenuView.xaml.cs">
+      <DependentUpon>BackMenuView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Windows\Popups\PopupParameterChangeWindow.xaml.cs">
       <DependentUpon>PopupParameterChangeWindow.xaml</DependentUpon>
     </Compile>
@@ -277,6 +281,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\UserControls\Special\AccountTabView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserControls\Special\BackMenuView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
