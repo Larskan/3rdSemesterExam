@@ -234,6 +234,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\UserControls\LoginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\UserControls\OverviewView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -264,6 +268,9 @@
     </Compile>
     <Compile Include="View\UserControls\GroupListView.xaml.cs">
       <DependentUpon>GroupListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserControls\LoginView.xaml.cs">
+      <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControls\OverviewView.xaml.cs">
       <DependentUpon>OverviewView.xaml</DependentUpon>

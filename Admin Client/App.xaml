@@ -4,6 +4,163 @@
              xmlns:local="clr-namespace:Admin_Client"
              StartupUri="\View\Windows\MainWindow.xaml">
     <Application.Resources>
-         
+
+        <!--#region PasswordBox-->
+        
+        <!--PasswordBox Rounded Corners-->
+        <Style TargetType="PasswordBox" x:Key="roundcornerpassword">
+            <Setter Property="PasswordChar" Value="●"/>
+            <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="AllowDrop" Value="true"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="PasswordBox">
+                        <Border CornerRadius="5" x:Name="Bd" Background="White" BorderBrush="Gray" BorderThickness="1" OpacityMask="{x:Null}">
+                            <ScrollViewer SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" x:Name="PART_ContentHost"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <!--#endregion-->
+
+        <!--#region Buttons-->
+
+        <!--Button 5% round-->
+        <ResourceDictionary x:Key="roundcornerbutton5">
+            <Style TargetType="Border">
+                <Setter Property="CornerRadius" Value="5"/>
+            </Style>
+            <Style TargetType="Button">
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                                        <Grid>
+                                            <Border x:Name="background" Background="LightSalmon">
+                                                <Border.Resources>
+                                                    <Style TargetType="Border">
+                                                        <Setter Property="CornerRadius" Value="5"/>
+                                                    </Style>
+                                                </Border.Resources>
+                                            </Border>
+                                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                        </Grid>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="background" Property="Opacity" Value="0.5"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+
+        <!--Button 10% round-->
+        <ResourceDictionary x:Key="roundcornerbutton10">
+            <Style TargetType="Border">
+                <Setter Property="CornerRadius" Value="10"/>
+            </Style>
+            <Style TargetType="Button">
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                                        <Grid>
+                                            <Border x:Name="background" Background="LightSalmon">
+                                                <Border.Resources>
+                                                    <Style TargetType="Border">
+                                                        <Setter Property="CornerRadius" Value="10"/>
+                                                    </Style>
+                                                </Border.Resources>
+                                            </Border>
+                                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                        </Grid>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="background" Property="Opacity" Value="0.5"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+
+        <!--Button 100% round-->
+        <ResourceDictionary x:Key="roundcornerbutton100">
+            <Style TargetType="Border">
+                <Setter Property="CornerRadius" Value="100"/>
+            </Style>
+            <Style TargetType="Button">
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                                        <Grid>
+                                            <Border x:Name="background" Background="LightSalmon">
+                                                <Border.Resources>
+                                                    <Style TargetType="Border">
+                                                        <Setter Property="CornerRadius" Value="100"/>
+                                                    </Style>
+                                                </Border.Resources>
+                                            </Border>
+                                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                        </Grid>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="background" Property="Opacity" Value="0.5"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+        <!--#endregion-->
+
+        <!--#region ButtonToIcons-->
+        
+        <!--Round Icon-->
+        <ResourceDictionary x:Key="roundcornericon100">
+            <Style TargetType="Border">
+                <Setter Property="CornerRadius" Value="100"/>
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="IsHitTestVisible" Value="False"/>
+                <Setter Property="Focusable" Value="False"/>
+            </Style>
+        </ResourceDictionary>
+        
+        <!--#endregion-->
+
+
     </Application.Resources>
 </Application>
