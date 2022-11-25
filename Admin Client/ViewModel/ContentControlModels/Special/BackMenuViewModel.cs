@@ -2,6 +2,7 @@
 using Admin_Client.Singleton;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,6 +34,14 @@ namespace Admin_Client.ViewModel.ContentControlModels.Special
 
 		public void Back(UserControl content)
 		{
+			MainWindowModelSingleton.Instance.IsAccountTabActive(true);
+			if (content.GetType().Name.Equals("OverviewView"))
+			{
+				MainWindowModelSingleton.Instance.IsMenuActive(false);
+			} else
+			{
+				MainWindowModelSingleton.Instance.IsMenuActive(true);
+			}
 			MainWindowModelSingleton.Instance.SetMainContent(content);
 		}
 

@@ -43,7 +43,9 @@ namespace Admin_Client.ViewModel.ContentControlModels.Special
 		}
 		public void ChangeContentToAccount()
 		{
+			MainWindowModelSingleton.Instance.IsMenuActive(MainWindowModelSingleton.Instance.GetMainContent());
 			MainWindowModelSingleton.Instance.SetMainContent(new AccountView());
+			MainWindowModelSingleton.Instance.IsAccountTabActive(false);
 		}
 
 		#endregion

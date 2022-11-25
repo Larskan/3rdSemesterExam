@@ -25,7 +25,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		public OverviewViewModel() 
 		{
-
+			
 		}
 
 		#endregion

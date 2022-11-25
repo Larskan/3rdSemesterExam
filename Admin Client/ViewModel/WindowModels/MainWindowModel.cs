@@ -175,6 +175,11 @@ namespace Admin_Client.ViewModel.WindowModels
 			CControl_Main.Content = content;
 		}
 
+		public UserControl GetMainContent()
+		{
+			return (UserControl)CControl_Main.Content;
+		}
+
 		#endregion
 
 		#region Private Methods

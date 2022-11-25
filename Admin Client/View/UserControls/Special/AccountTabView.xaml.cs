@@ -35,12 +35,12 @@ namespace Admin_Client.View.UserControls.Special
 
 		private void Profile_Click(object sender, RoutedEventArgs e)
 		{
-
+			viewModel.ChangeContentToAccount();
 		}
 
 		private void LogOut_Click(object sender, RoutedEventArgs e)
 		{
-
+			viewModel.Logout();
 		}
 	}
 }
