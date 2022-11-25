@@ -140,7 +140,7 @@ namespace Admin_Client.Model.FileIO
 			}
 			catch
 			{
-				WriteToLogFile(new Log(LogType.Error, "Could not read targetet file " + ToPath(ToFileName(dateTime), "txt")));
+				WriteToLogFile(new Log(LogType.Warning, "Could not read targetet file " + ToPath(ToFileName(dateTime), "txt")));
 				return null;
 			}
 		}

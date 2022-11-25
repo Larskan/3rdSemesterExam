@@ -12,7 +12,6 @@ namespace Admin_Client.Model.Domain
 	public enum LogType
 	{
 		FatalError = 999,
-		Error = 900,
 		Warning = 500,
 		Information = 200,
 		Success = 100,

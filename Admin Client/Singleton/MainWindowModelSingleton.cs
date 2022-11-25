@@ -9,7 +9,6 @@ namespace Admin_Client.Singleton
 {
 	internal class MainWindowModelSingleton : MainWindowModel
 	{
-
 		private MainWindowModelSingleton() { }
 		private static MainWindowModelSingleton instance = null;
 		public static MainWindowModelSingleton Instance

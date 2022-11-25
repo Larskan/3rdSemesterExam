@@ -29,13 +29,11 @@ namespace Admin_Client
 		{
 			InitializeComponent();
 
-			//TEST
-			this.CControl_Account.Children.Add(new AccountTabView());
-			this.CControl_Menu.Children.Add(new MenuView());
 			this.CControl_Main.Content = new LoginView();
-			//TEST
 
 			this.DataContext = MainWindowModelSingleton.Instance;
+
+			MainWindowModelSingleton.Instance.CreateGridRelations(Grid_Menu, Grid_Account);
         }
 
 		/// <summary>
@@ -43,41 +41,81 @@ namespace Admin_Client
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void CControl_Menu_MouseEnter(object sender, MouseEventArgs e)
+		private void Grid_Menu_MouseEnter(object sender, MouseEventArgs e)
 		{
 			Storyboard sb = Resources["OpenMenu"] as Storyboard;
-			sb.Begin(CControl_Menu);
+			sb.Begin(Grid_Menu);
 		}
 		/// <summary>
 		/// Animetion for retracton of the menu, triggered on mouseLeaving
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void CControl_Menu_MouseLeave(object sender, MouseEventArgs e)
+		private void Grid_Menu_MouseLeave(object sender, MouseEventArgs e)
 		{
 			Storyboard sb = Resources["CloseMenu"] as Storyboard;
-			sb.Begin(CControl_Menu);
+			sb.Begin(Grid_Menu);
+		}
+		/// <summary>
+		/// Animation for extention of the menu, triggered on mouseEntering
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void Grid_Menu_GotFocus(object sender, RoutedEventArgs e)
+		{
+			Storyboard sb = Resources["OpenMenu"] as Storyboard;
+			sb.Begin(Grid_Menu);
+		}
+		/// <summary>
+		/// Animetion for retracton of the menu, triggered on mouseLeaving
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void Grid_Menu_LostFocus(object sender, RoutedEventArgs e)
+		{
+			Storyboard sb = Resources["CloseMenu"] as Storyboard;
+			sb.Begin(Grid_Menu);
 		}
 		/// <summary>
 		/// Animation for extention of the account, triggered on mouseEntering
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void CControl_Account_MouseEnter(object sender, MouseEventArgs e)
+		private void Grid_Account_MouseEnter(object sender, MouseEventArgs e)
 		{
 			Storyboard sb = Resources["OpenAccountTab"] as Storyboard;
-			sb.Begin(CControl_Account);
+			sb.Begin(Grid_Account);
 		}
 		/// <summary>
 		/// Animation for retreaction of the account, triggered on mouseLeaving
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void CControl_Account_MouseLeave(object sender, MouseEventArgs e)
+		private void Grid_Account_MouseLeave(object sender, MouseEventArgs e)
 		{
 			Storyboard sb = Resources["CloseAccountTab"] as Storyboard;
-			sb.Begin(CControl_Account);
+			sb.Begin(Grid_Account);
 		}
-		
+		/// <summary>
+		/// Animation for extention of the account, triggered on mouseEntering
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void Grid_Account_GotFocus(object sender, RoutedEventArgs e)
+		{
+			Storyboard sb = Resources["OpenAccountTab"] as Storyboard;
+			sb.Begin(Grid_Account);
+		}
+		/// <summary>
+		/// Animation for retreaction of the account, triggered on mouseLeaving
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void Grid_Account_LostFocus(object sender, RoutedEventArgs e)
+		{
+			Storyboard sb = Resources["CloseAccountTab"] as Storyboard;
+			sb.Begin(Grid_Account);
+		}
+
 	}
 }

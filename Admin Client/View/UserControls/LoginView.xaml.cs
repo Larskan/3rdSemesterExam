@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Admin_Client.Singleton;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,5 +25,11 @@ namespace Admin_Client.View.UserControls
 		{
 			InitializeComponent();
 		}
-	}
+
+		private void Login_Click(object sender, RoutedEventArgs e)
+		{
+			MainWindowModelSingleton.Instance.IsMenuActive(true);
+			MainWindowModelSingleton.Instance.IsAccountTabActive(true);
+		}
+    }
 }

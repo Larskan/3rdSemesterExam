@@ -31,7 +31,7 @@
                     <RowDefinition Height="2*"/>
                 </Grid.RowDefinitions>
 
-                <TextBox x:Name="TextBox_Username" Grid.Row="0" Margin="10" Text="">
+                <TextBox x:Name="TextBox_Username" Grid.Row="0" Margin="10" SelectionBrush="LightSalmon">
                     <TextBox.Style>
                         <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
                             <Style.Resources>
@@ -109,7 +109,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Button Grid.Column="1" Grid.Row="1" Content="Login" FontSize="12" Margin="5" Resources="{StaticResource roundcornerbutton10}"/>
+                    <Button Grid.Column="1" Grid.Row="1" Content="Login" FontSize="12" Margin="5" Resources="{StaticResource roundcornerbutton10}" Click="Login_Click"/>
 
                 </Grid>
 

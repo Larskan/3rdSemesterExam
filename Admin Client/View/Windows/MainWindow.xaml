@@ -31,25 +31,9 @@
 
         <ContentControl x:Name="CControl_Main"/>
 
-        <Grid x:Name="CControl_Menu" Panel.ZIndex="10" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Height="100" MouseEnter="CControl_Menu_MouseEnter" MouseLeave="CControl_Menu_MouseLeave">
-            <Border Grid.Column="1" Grid.Row="2" Background="White" BorderBrush="Gray" BorderThickness="0,0,1,1">
-                <Border.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="0,0,10,0"/>
-                    </Style>
-                </Border.Resources>
-            </Border>
-        </Grid>
+        <Grid x:Name="Grid_Menu" Panel.ZIndex="10" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Height="100" MouseEnter="Grid_Menu_MouseEnter" MouseLeave="Grid_Menu_MouseLeave" GotFocus="Grid_Menu_GotFocus" LostFocus="Grid_Menu_LostFocus"></Grid>
 
-        <Grid x:Name="CControl_Account" Panel.ZIndex="10" HorizontalAlignment="Right" VerticalAlignment="Top" Width="150" Height="35" MouseEnter="CControl_Account_MouseEnter" MouseLeave="CControl_Account_MouseLeave">
-            <Border Grid.Column="1" Grid.Row="2" Background="White" BorderBrush="Gray" BorderThickness="1,0,0,1">
-                <Border.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="0,0,0,10"/>
-                    </Style>
-                </Border.Resources>
-            </Border>
-        </Grid>
+        <Grid x:Name="Grid_Account" Panel.ZIndex="10" HorizontalAlignment="Right" VerticalAlignment="Top" Width="150" Height="35" MouseEnter="Grid_Account_MouseEnter" MouseLeave="Grid_Account_MouseLeave" GotFocus="Grid_Account_GotFocus" LostFocus="Grid_Account_LostFocus"></Grid>
 
     </Grid>
 </Window>

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Admin_Client.ViewModel.ContentControlModels
 {
-	public class OverviewViewModel : NotifyPropertyChangedHandler
+	public class LoginViewModel : NotifyPropertyChangedHandler
 	{
 
 		#region Variables
@@ -22,12 +22,12 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		#region Constructor
 
-		public OverviewViewModel() 
+		public LoginViewModel()
 		{
 
-			if (LogHandlerSingleton.Instance.WriteToLogFile(new Log("Changing CC to OverviewView")))
+			if (LogHandlerSingleton.Instance.WriteToLogFile(new Log("Changing CC to LoginView")))
 			{
-				LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "OverviewView is shown"));
+				LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "LoginView is shown"));
 			}
 
 		}
@@ -35,6 +35,20 @@ namespace Admin_Client.ViewModel.ContentControlModels
 		#endregion
 
 		#region Public Methods
+
+		public void Login()
+		{
+			// LOGIN AUTHENTICATION MISSING
+			if (true)
+			{
+				//CREATE USER
+
+			} else
+			{
+				LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Warning, "Login failed"));
+			}
+
+		}
 
 		#endregion
 

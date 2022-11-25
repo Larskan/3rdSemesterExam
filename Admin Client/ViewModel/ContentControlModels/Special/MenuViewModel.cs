@@ -1,4 +1,5 @@
 ﻿using Admin_Client.Model.Domain;
+using Admin_Client.PropertyChanged;
 using Admin_Client.Singleton;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Admin_Client.ViewModel.ContentControlModels.Special
 {
-	public class MenuViewModel
+	public class MenuViewModel : NotifyPropertyChangedHandler
 	{
 
 		public MenuViewModel() 
