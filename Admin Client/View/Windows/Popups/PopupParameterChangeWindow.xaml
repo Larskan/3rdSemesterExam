@@ -7,6 +7,6 @@
         mc:Ignorable="d"
         Title="PopupParameterChangeWindow" Height="450" Width="800">
     <Grid>
-        
+        <Label Content="PARAMETERCHANGE" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
     </Grid>
 </Window>
