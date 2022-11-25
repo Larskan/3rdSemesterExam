@@ -155,7 +155,7 @@ namespace Admin_Client.Model.FileIO
 		/// <returns>True if cleanUp was a success, false if not</returns>
 		public bool CleanUpFolder()
 		{
-			int amountOfLogFilesStored = 10;
+			int amountOfLogFilesStored = 25;
 			try
 			{
 				string[] logFiles = Directory.GetFiles(PATH);
