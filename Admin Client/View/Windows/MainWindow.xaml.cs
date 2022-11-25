@@ -30,7 +30,7 @@ namespace Admin_Client
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Starting MainWindow"));
 			InitializeComponent();
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "MainWindow is shown"));
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "MainWindow shown"));
 
 			this.CControl_Main.Content = new LoginView();
 

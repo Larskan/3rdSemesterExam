@@ -34,17 +34,19 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		public void Login()
 		{
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Login --> Pending"));
 			// LOGIN AUTHENTICATION MISSING
 			if (true)
 			{
+				LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Login == Success"));
+
 				//CREATE USER OBJECT FOR LATER USE - (USE THE SESSION INFORMATION BUILDER TO DO SO)
 
-				MainWindowModelSingleton.Instance.IsAccountTabActive(true);
-				MainWindowModelSingleton.Instance.SetMainContent(new OverviewView());
+				MainWindowModelSingleton.Instance.SetMainContent(new OverviewView(), false, true);
 
 			} else
 			{
-				LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Warning, "Login failed"));
+				LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Warning, "Login --> Failed"));
 			}
 
 		}

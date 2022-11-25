@@ -26,9 +26,7 @@ namespace Admin_Client.View.Windows.Popout
 		PopoutLogWindowModel windowModel = new PopoutLogWindowModel();
 		public PopoutLogWindow()
 		{
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Poping out PopoutLogWindow"));
 			InitializeComponent();
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "PopoutLogWindow is shown"));
 
 			this.DataContext = windowModel;
 		}

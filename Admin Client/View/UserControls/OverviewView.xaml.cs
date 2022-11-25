@@ -26,9 +26,7 @@ namespace Admin_Client.View.UserControls
 		OverviewViewModel viewModel = new OverviewViewModel();
 		public OverviewView()
 		{
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Changing CC to OverviewView"));
 			InitializeComponent();
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "OverviewView is shown as content"));
 
 			this.DataContext = viewModel;
 		}

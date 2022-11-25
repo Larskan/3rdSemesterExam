@@ -26,9 +26,7 @@ namespace Admin_Client.View.UserControls
 		GroupListViewModel viewModel = new GroupListViewModel();
 		public GroupListView()
 		{
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Changing CC to GroupListView"));
 			InitializeComponent();
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "GroupListView is shown as content"));
 
 			this.DataContext = viewModel;
 		}

@@ -25,9 +25,7 @@ namespace Admin_Client.View.Windows.Popups
 		PopupPasswordChangeWindowModel windowModel = new PopupPasswordChangeWindowModel();
 		public PopupPasswordChangeWindow()
 		{
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Poping up PopupPasswordChangeWindow"));
 			InitializeComponent();
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "PopupPasswordChangeWindow is shown"));
 
 			this.DataContext = windowModel;
 		}

@@ -34,14 +34,12 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		public void SetContentToGroupList()
 		{
-			MainWindowModelSingleton.Instance.SetMainContent(new GroupListView());
-			MainWindowModelSingleton.Instance.IsMenuActive(true);
+			MainWindowModelSingleton.Instance.SetMainContent(new GroupListView(), true);
 		}
 
 		public void SetContentToUserList()
 		{
-			MainWindowModelSingleton.Instance.SetMainContent(new UserListView());
-			MainWindowModelSingleton.Instance.IsMenuActive(true);
+			MainWindowModelSingleton.Instance.SetMainContent(new UserListView(), true);
 		}
 
 		#endregion

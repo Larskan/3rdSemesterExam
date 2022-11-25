@@ -26,9 +26,7 @@ namespace Admin_Client.View.UserControls
 		ReceiptViewModel viewModel = new ReceiptViewModel();
 		public ReceiptView()
 		{
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Changing CC to ReceiptView"));
 			InitializeComponent();
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "ReceiptView is shown as content"));
 
 			this.DataContext = viewModel;
 		}

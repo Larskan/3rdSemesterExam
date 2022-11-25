@@ -26,9 +26,7 @@ namespace Admin_Client.View.UserControls
 		TripViewModel viewModel = new TripViewModel();
 		public TripView()
 		{
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Changing CC to TripView"));
 			InitializeComponent();
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "TripView is shown as content"));
 
 			this.DataContext = viewModel;
 		}

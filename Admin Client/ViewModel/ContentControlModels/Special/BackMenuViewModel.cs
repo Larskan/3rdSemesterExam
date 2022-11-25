@@ -34,15 +34,13 @@ namespace Admin_Client.ViewModel.ContentControlModels.Special
 
 		public void Back(UserControl content)
 		{
-			MainWindowModelSingleton.Instance.IsAccountTabActive(true);
 			if (content.GetType().Name.Equals("OverviewView"))
 			{
-				MainWindowModelSingleton.Instance.IsMenuActive(false);
+				MainWindowModelSingleton.Instance.SetMainContent(content, false, true);
 			} else
 			{
-				MainWindowModelSingleton.Instance.IsMenuActive(true);
+				MainWindowModelSingleton.Instance.SetMainContent(content, true, true);
 			}
-			MainWindowModelSingleton.Instance.SetMainContent(content);
 		}
 
 		#endregion

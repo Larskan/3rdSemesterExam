@@ -26,9 +26,7 @@ namespace Admin_Client.View.UserControls
 		UserListViewModel viewModel = new UserListViewModel();
 		public UserListView()
 		{
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Changing CC to UserListView"));
 			InitializeComponent();
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "UserListView is shown as content"));
 
 			this.DataContext = viewModel;
 		}

@@ -54,10 +54,7 @@ namespace Admin_Client.ViewModel.WindowModels
 
 		public MainWindowModel()
 		{
-			if (LogHandlerSingleton.Instance.WriteToLogFile(new Log("MainWindow is starting")))
-			{
-				LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "MainWindow is shown"));
-			}
+			
 		}
 
 		#endregion
@@ -72,13 +69,78 @@ namespace Admin_Client.ViewModel.WindowModels
 		/// <param name="CC_Main"></param>
 		public void CreateGridRelations(Grid Grid_Menu, Grid Grid_AccTab, ContentControl CC_Main)
 		{
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Grid Relations --> Creating"));
 			this.Grid_Menu = Grid_Menu;
 			this.Grid_AccountTab = Grid_AccTab;
 			this.CControl_Main = CC_Main;
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Grid Relations == Created"));
 		}
 
-		public void IsMenuActive(bool active)
+		public void SetMainContent(UserControl content)
 		{
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Content --> " + content.GetType().Name));
+			CControl_Main.Content = content;
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Content == " + content.GetType().Name));
+		}
+
+		public void SetMainContent(UserControl content, bool isMenuActive)
+		{
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Content --> " + content.GetType().Name));
+			CControl_Main.Content = content;
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Content == " + content.GetType().Name));
+
+			IsMenuActive(isMenuActive);
+		}
+
+		public void SetMainContent(UserControl content, bool isMenuActive = true, bool isAccountTabActive = true)
+		{
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Content --> " + content.GetType().Name));
+			CControl_Main.Content = content;
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Content == " + content.GetType().Name));
+
+			IsMenuActive(isMenuActive);
+			IsAccountTabActive(isAccountTabActive);
+		}
+
+		public void SetMainContent(UserControl content, UserControl backToView, bool isAccountTabActive = true)
+		{
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Content --> " + content.GetType().Name));
+			CControl_Main.Content = content;
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Content == " + content.GetType().Name));
+
+			IsMenuActive(backToView);
+			IsAccountTabActive(isAccountTabActive);
+		}
+
+		public void SetMainContent(UserControl content, UserControl backToView)
+		{
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Content --> " + content.GetType().Name));
+			CControl_Main.Content = content;
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Content == " + content.GetType().Name));
+
+			IsMenuActive(backToView);
+		}
+
+		public UserControl GetMainContent()
+		{
+			return (UserControl)CControl_Main.Content;
+		}
+
+		#endregion
+
+		#region Private Methods
+
+		private void IsMenuActive(bool active)
+		{
+			if (active)
+			{
+				LogHandlerSingleton.Instance.WriteToLogFile(new Log("Menu --> True"));
+			}
+			else
+			{
+				LogHandlerSingleton.Instance.WriteToLogFile(new Log("Menu/BackMenu --> False"));
+			}
+
 			if (active)
 			{
 				int currentMenuElements = this.Grid_Menu.Children.Count;
@@ -86,7 +148,6 @@ namespace Admin_Client.ViewModel.WindowModels
 				{
 					if (currentMenuElements == 2)
 					{
-						LogHandlerSingleton.Instance.WriteToLogFile(new Log("Disabling active BackMenu"));
 						IsMenuActive(false);
 					}
 					Border extraChild = new Border(); // This is created to add one more child so Menu has 3 and BackMenu has 2. Then operations can be handled via the amount of children
@@ -101,25 +162,28 @@ namespace Admin_Client.ViewModel.WindowModels
 					this.Grid_Menu.Children.Add(border);
 
 					this.Grid_Menu.Children.Add(new MenuView());
+					LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Menu == True"));
 				}
 				else
 				{
-					LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Warning, "Menu is already shown"));
+					LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Warning, "Menu == Already Active"));
 				}
-			} else
+			}
+			else
 			{
 				this.Grid_Menu.Children.Clear();
+				LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Menu/BackMenu == False"));
 			}
 		}
 
-		public void IsMenuActive(UserControl backToView)
+		private void IsMenuActive(UserControl backToView)
 		{
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log("BackMenu --> True\t ( --CallBack--> " + backToView.GetType().Name + " )"));
 			int currentMenuElements = this.Grid_Menu.Children.Count;
 			if (currentMenuElements != 2)
 			{
 				if (currentMenuElements == 3)
 				{
-					LogHandlerSingleton.Instance.WriteToLogFile(new Log("Disabling active Menu"));
 					IsMenuActive(false);
 				}
 
@@ -135,15 +199,17 @@ namespace Admin_Client.ViewModel.WindowModels
 				this.Grid_Menu.Children.Add(border);
 
 				this.Grid_Menu.Children.Add(new BackMenuView(backToView));
+				LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "BackMenu == True\t ( --CallBack--> " + backToView.GetType().Name + " )"));
 			}
 			else
 			{
-				LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Warning, "BackMenu is already shown"));
+				LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Warning, "BackMenu == Already Active"));
 			}
 		}
 
-		public void IsAccountTabActive(bool active)
+		private void IsAccountTabActive(bool active)
 		{
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log("AccountTab --> " + active));
 			if (active)
 			{
 				if (this.Grid_AccountTab.Children.Count < 1)
@@ -158,32 +224,19 @@ namespace Admin_Client.ViewModel.WindowModels
 					this.Grid_AccountTab.Children.Add(border);
 
 					this.Grid_AccountTab.Children.Add(new AccountTabView());
+					LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "AccountTab == True"));
 				}
 				else
 				{
-					LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Warning, "AccountTab is already shown"));
+					LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Warning, "AccountTab == Already Active"));
 				}
 			}
 			else
 			{
 				this.Grid_AccountTab.Children.Clear();
+				LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "AccountTab == False"));
 			}
 		}
-
-		public void SetMainContent(UserControl content)
-		{
-			CControl_Main.Content = content;
-		}
-
-		public UserControl GetMainContent()
-		{
-			return (UserControl)CControl_Main.Content;
-		}
-
-		#endregion
-
-		#region Private Methods
-
 
 		#endregion
 

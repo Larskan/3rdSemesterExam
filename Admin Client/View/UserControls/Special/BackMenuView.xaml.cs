@@ -27,9 +27,7 @@ namespace Admin_Client.View.UserControls.Special
 		UserControl userControl;
 		public BackMenuView(UserControl lastUControl)
 		{
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Menu is starting"));
 			InitializeComponent();
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Menu is shown"));
 
 			this.DataContext = viewModel;
 			this.userControl = lastUControl;

@@ -25,9 +25,7 @@ namespace Admin_Client.View.Windows.Popups
 		PopupParameterChangeWindowModel windowModel = new PopupParameterChangeWindowModel();
 		public PopupParameterChangeWindow()
 		{
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Poping up PopupParameterChangeWindow"));
 			InitializeComponent();
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "PopupParameterChangeWindow is shown"));
 
 			this.DataContext = windowModel;
 		}

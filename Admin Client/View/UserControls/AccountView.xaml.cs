@@ -26,9 +26,7 @@ namespace Admin_Client.View.UserControls
 		AccountTabViewModel viewModel = new AccountTabViewModel();
 		public AccountView()
 		{
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Changing CC to AccountView"));
 			InitializeComponent();
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "AccountView is shown as content"));
 
 			this.DataContext= viewModel;
 		}

@@ -34,18 +34,16 @@ namespace Admin_Client.ViewModel.ContentControlModels.Special
 
 		public void Logout()
 		{
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Logout --> Pending"));
 			//REMOVE USER OBJECT FROM SESSION
 
-			MainWindowModelSingleton.Instance.SetMainContent(new LoginView());
+			MainWindowModelSingleton.Instance.SetMainContent(new LoginView(), false, false);
 
-			MainWindowModelSingleton.Instance.IsAccountTabActive(false);
-			MainWindowModelSingleton.Instance.IsMenuActive(false);
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Logout == Success"));
 		}
 		public void ChangeContentToAccount()
 		{
-			MainWindowModelSingleton.Instance.IsMenuActive(MainWindowModelSingleton.Instance.GetMainContent());
-			MainWindowModelSingleton.Instance.SetMainContent(new AccountView());
-			MainWindowModelSingleton.Instance.IsAccountTabActive(false);
+			MainWindowModelSingleton.Instance.SetMainContent(new AccountView(), MainWindowModelSingleton.Instance.GetMainContent(), false);
 		}
 
 		#endregion
