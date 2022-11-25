@@ -161,6 +161,30 @@
         
         <!--#endregion-->
 
+        <!--#region Borders-->
+        
+        <!--Border 5% round-->
+        <ResourceDictionary x:Key="roundborder5">
+            <Style TargetType="Border">
+                <Setter Property="CornerRadius" Value="5"/>
+            </Style>
+        </ResourceDictionary>
+
+        <!--Border 10% round-->
+        <ResourceDictionary x:Key="roundborder10">
+            <Style TargetType="Border">
+                <Setter Property="CornerRadius" Value="10"/>
+            </Style>
+        </ResourceDictionary>
+
+        <!--Border 100% round-->
+        <ResourceDictionary x:Key="roundborder100">
+            <Style TargetType="Border">
+                <Setter Property="CornerRadius" Value="100"/>
+            </Style>
+        </ResourceDictionary>
+
+        <!--#endregion-->
 
     </Application.Resources>
 </Application>

@@ -20,12 +20,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Border Grid.Column="1" Grid.Row="1" Background="White" Margin="10">
-            <Border.Resources>
-                <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="10"/>
-                </Style>
-            </Border.Resources>
+        <Border Grid.Column="1" Grid.Row="1" Background="White" Margin="10" Resources="{StaticResource roundborder10}">
 
             <Grid>
 
@@ -36,7 +31,7 @@
                     <RowDefinition Height="2*"/>
                 </Grid.RowDefinitions>
 
-                <TextBox x:Name="TextBox_Username" Grid.Row="0" Margin="10">
+                <TextBox x:Name="TextBox_Username" Grid.Row="0" Margin="10" Text="">
                     <TextBox.Style>
                         <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
                             <Style.Resources>
@@ -114,8 +109,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Button Grid.Column="1" Grid.Row="1" Content="Login" FontSize="12" Margin="5" Resources="{StaticResource roundcornerbutton10}">
-                    </Button>
+                    <Button Grid.Column="1" Grid.Row="1" Content="Login" FontSize="12" Margin="5" Resources="{StaticResource roundcornerbutton10}"/>
 
                 </Grid>
 
