@@ -21,11 +21,22 @@ namespace Admin_Client.View.UserControls.Special
 	/// </summary>
 	public partial class MenuView : UserControl
 	{
+		MenuViewModel viewModel = new MenuViewModel();
 		public MenuView()
 		{
 			InitializeComponent();
 
-			this.DataContext = new MenuViewModel();
+			this.DataContext = viewModel;
+		}
+
+		private void UserList_Click(object sender, RoutedEventArgs e)
+		{
+			viewModel.ChangeContentToUserList();
+		}
+
+		private void GroupList_Click(object sender, RoutedEventArgs e)
+		{
+			viewModel.ChangeContentToGroupList();
 		}
 	}
 }

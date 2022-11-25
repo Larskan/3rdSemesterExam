@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Admin_Client.ViewModel.ContentControlModels.Special
+namespace Admin_Client.ViewModel.ContentControlModels
 {
-	public class AccountTabViewModel : NotifyPropertyChangedHandler
+	public class GroupListViewModel : NotifyPropertyChangedHandler
 	{
 
 		#region Variables
@@ -22,12 +22,12 @@ namespace Admin_Client.ViewModel.ContentControlModels.Special
 
 		#region Constructor
 
-		public AccountTabViewModel() 
+		public GroupListViewModel()
 		{
 
-			if (LogHandlerSingleton.Instance.WriteToLogFile(new Log("AccountTab is starting")))
+			if (LogHandlerSingleton.Instance.WriteToLogFile(new Log("Changing CC to OverviewView")))
 			{
-				LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "AccountTab is shown"));
+				LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "OverviewView is shown"));
 			}
 
 		}

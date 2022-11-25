@@ -21,11 +21,12 @@ namespace Admin_Client.View.UserControls.Special
 	/// </summary>
 	public partial class AccountTabView : UserControl
 	{
+		AccountTabViewModel viewModel = new AccountTabViewModel();
 		public AccountTabView()
 		{
 			InitializeComponent();
 
-			this.DataContext = new AccountTabViewModel();
+			this.DataContext = viewModel;
 		}
 	}
 }

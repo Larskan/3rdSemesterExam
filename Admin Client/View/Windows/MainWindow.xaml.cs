@@ -33,7 +33,7 @@ namespace Admin_Client
 
 			this.DataContext = MainWindowModelSingleton.Instance;
 
-			MainWindowModelSingleton.Instance.CreateGridRelations(Grid_Menu, Grid_Account);
+			MainWindowModelSingleton.Instance.CreateGridRelations(Grid_Menu, Grid_Account, CControl_Main);
         }
 
 		/// <summary>

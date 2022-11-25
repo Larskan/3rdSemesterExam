@@ -15,7 +15,7 @@
         </Grid.RowDefinitions>
 
 
-        <Button Grid.Column="0" Grid.Row="0" Background="Transparent" BorderThickness="0">
+        <Button Grid.Column="0" Grid.Row="0" Background="Transparent" BorderThickness="0" Click="GroupList_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="0,0,10,0"/>
@@ -52,7 +52,7 @@
             </Button.Resources>
         </Button>
 
-        <Button Grid.Column="0" Grid.Row="2" Background="Transparent" BorderThickness="0">
+        <Button Grid.Column="0" Grid.Row="2" Background="Transparent" BorderThickness="0" Click="UserList_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="0,0,10,0"/>

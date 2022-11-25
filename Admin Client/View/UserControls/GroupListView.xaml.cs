@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Admin_Client.ViewModel.ContentControlModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,12 @@ namespace Admin_Client.View.UserControls
 	/// </summary>
 	public partial class GroupListView : UserControl
 	{
+		GroupListViewModel viewModel = new GroupListViewModel();
 		public GroupListView()
 		{
 			InitializeComponent();
+
+			this.DataContext = viewModel;
 		}
 	}
 }

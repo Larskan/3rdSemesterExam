@@ -31,7 +31,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="1" Grid.Row="1" Content="LOGO" FontSize="25" Resources="{StaticResource roundcornerbutton100}"/>
+            <Button Grid.Column="1" Grid.Row="1" Content="LOGO" FontSize="25" Resources="{StaticResource roundcornericon100}"/>
 
         </Grid>
 
@@ -76,9 +76,9 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <Button Grid.Column="1" Grid.Row="1" Content="G" FontSize="25" Resources="{StaticResource roundcornerbutton100}"/>
+                    <Button Grid.Column="1" Grid.Row="1" Content="G" FontSize="25" Resources="{StaticResource roundcornerbutton100}" Click="GroupList_Click"/>
 
-                    <Button Grid.Column="3" Grid.Row="1" Content="U" FontSize="25" Resources="{StaticResource roundcornerbutton100}"/>
+                    <Button Grid.Column="3" Grid.Row="1" Content="U" FontSize="25" Resources="{StaticResource roundcornerbutton100}" Click="UserList_Click"/>
 
                 </Grid>
             </Border>

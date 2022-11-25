@@ -230,6 +230,8 @@
     <Compile Include="ViewModel\ContentControlModels\OverviewViewModel.cs" />
     <Compile Include="ViewModel\ContentControlModels\Special\AccountTabViewModel.cs" />
     <Compile Include="ViewModel\ContentControlModels\Special\MenuViewModel.cs" />
+    <Compile Include="ViewModel\ContentControlModels\GroupListViewModel.cs" />
+    <Compile Include="ViewModel\ContentControlModels\UserListViewModel.cs" />
     <Compile Include="ViewModel\WindowModels\MainWindowModel.cs" />
     <Page Include="View\UserControls\GroupListView.xaml">
       <SubType>Designer</SubType>
@@ -327,6 +329,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DBHandlerAdmin\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ViewModel\ViewModelTemplate.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -22,6 +22,7 @@ namespace Admin_Client.ViewModel.WindowModels
 
 		private Grid Grid_Menu;
 		private Grid Grid_AccountTab;
+		private ContentControl CControl_Main;
 
 		#endregion
 
@@ -53,12 +54,10 @@ namespace Admin_Client.ViewModel.WindowModels
 
 		public MainWindowModel()
 		{
-
 			if (LogHandlerSingleton.Instance.WriteToLogFile(new Log("MainWindow is starting")))
 			{
 				LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "MainWindow is shown"));
 			}
-
 		}
 
 		#endregion
@@ -66,14 +65,16 @@ namespace Admin_Client.ViewModel.WindowModels
 		#region Public Methods
 
 		/// <summary>
-		/// Create relations to the Grids so they can be manipulated from this class
+		/// Create relations to the Grids and CControl so they can be manipulated from this class
 		/// </summary>
 		/// <param name="Grid_Menu"></param>
 		/// <param name="Grid_AccTab"></param>
-		public void CreateGridRelations(Grid Grid_Menu, Grid Grid_AccTab)
+		/// <param name="CC_Main"></param>
+		public void CreateGridRelations(Grid Grid_Menu, Grid Grid_AccTab, ContentControl CC_Main)
 		{
 			this.Grid_Menu = Grid_Menu;
 			this.Grid_AccountTab = Grid_AccTab;
+			this.CControl_Main = CC_Main;
 		}
 
 		public void IsMenuActive(bool active)
@@ -129,6 +130,11 @@ namespace Admin_Client.ViewModel.WindowModels
 			{
 				this.Grid_AccountTab.Children.Clear();
 			}
+		}
+
+		public void SetMainContent(UserControl content)
+		{
+			CControl_Main.Content = content;
 		}
 
 		#endregion

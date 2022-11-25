@@ -21,11 +21,22 @@ namespace Admin_Client.View.UserControls
 	/// </summary>
 	public partial class OverviewView : UserControl
 	{
+		OverviewViewModel viewModel = new OverviewViewModel();
 		public OverviewView()
 		{
 			InitializeComponent();
 
-			this.DataContext = new OverviewViewModel();
+			this.DataContext = viewModel;
+		}
+
+		private void GroupList_Click(object sender, RoutedEventArgs e)
+		{
+			viewModel.SetContentToGroupList();
+		}
+
+		private void UserList_Click(object sender, RoutedEventArgs e)
+		{
+			viewModel.SetContentToUserList();
 		}
 	}
 }

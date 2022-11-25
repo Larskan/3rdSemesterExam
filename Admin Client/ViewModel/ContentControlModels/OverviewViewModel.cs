@@ -1,6 +1,7 @@
 ﻿using Admin_Client.Model.Domain;
 using Admin_Client.PropertyChanged;
 using Admin_Client.Singleton;
+using Admin_Client.View.UserControls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +36,18 @@ namespace Admin_Client.ViewModel.ContentControlModels
 		#endregion
 
 		#region Public Methods
+
+		public void SetContentToGroupList()
+		{
+			MainWindowModelSingleton.Instance.SetMainContent(new GroupListView());
+			MainWindowModelSingleton.Instance.IsMenuActive(true);
+		}
+
+		public void SetContentToUserList()
+		{
+			MainWindowModelSingleton.Instance.SetMainContent(new UserListView());
+			MainWindowModelSingleton.Instance.IsMenuActive(true);
+		}
 
 		#endregion
 

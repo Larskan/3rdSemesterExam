@@ -1,4 +1,5 @@
 ﻿using Admin_Client.Singleton;
+using Admin_Client.ViewModel.ContentControlModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,15 +22,16 @@ namespace Admin_Client.View.UserControls
 	/// </summary>
 	public partial class LoginView : UserControl
 	{
+		LoginViewModel viewModel = new LoginViewModel();
 		public LoginView()
 		{
 			InitializeComponent();
+			this.DataContext = viewModel;
 		}
 
 		private void Login_Click(object sender, RoutedEventArgs e)
 		{
-			MainWindowModelSingleton.Instance.IsMenuActive(true);
-			MainWindowModelSingleton.Instance.IsAccountTabActive(true);
+			viewModel.Login();
 		}
     }
 }

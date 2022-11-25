@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Admin_Client.ViewModel.ContentControlModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,12 @@ namespace Admin_Client.View.Windows
 	/// </summary>
 	public partial class LogWindow : Window
 	{
+		LoginViewModel viewModel = new LoginViewModel();
 		public LogWindow()
 		{
 			InitializeComponent();
+
+			this.DataContext = viewModel;
 		}
 	}
 }
