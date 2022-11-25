@@ -101,7 +101,15 @@ namespace Admin_Client.Model.FileIO
 			try
 			{
 				string fileContent = ReadLogFile();
-				File.WriteAllText(PATH + LogFilePath, fileContent + "[" + log.DateTime + "] {" + log.LogType + "} " + log.LogTxt + "\n");
+				string spacing = "";
+				switch (log.LogType)
+				{
+					case LogType.Success: spacing = "\t\t"; break;
+					case LogType.Information: spacing = "\t"; break;
+					case LogType.Warning: spacing = "\t\t"; break;
+					case LogType.FatalError: spacing = "\t"; break;
+				}
+				File.WriteAllText(PATH + LogFilePath, fileContent + "[" + log.DateTime + "] {" + log.LogType + "}"+spacing+" " + log.LogTxt + "\n");
 			} catch
 			{
 				return false;

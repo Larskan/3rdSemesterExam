@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Admin_Client.ViewModel.ContentControlModels
+namespace Admin_Client.ViewModel.WindowModels.Popup
 {
-	public class GroupListViewModel : NotifyPropertyChangedHandler
+	public class PopupParameterChangeWindowModel : NotifyPropertyChangedHandler
 	{
 
 		#region Variables
@@ -22,8 +22,13 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		#region Constructor
 
-		public GroupListViewModel()
+		public PopupParameterChangeWindowModel()
 		{
+
+			if (LogHandlerSingleton.Instance.WriteToLogFile(new Log("Open Popup ParameterChangeWindow")))
+			{
+				LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "ParameterChangeWindow is shown"));
+			}
 
 		}
 

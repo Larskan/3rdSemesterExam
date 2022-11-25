@@ -1,4 +1,4 @@
-﻿public class ?Model? : NotifyPropertyChangedHandler
+﻿public class Model : NotifyPropertyChangedHandler
 	{
 
 		#region Variables
@@ -11,13 +11,8 @@
 
 		#region Constructor
 
-		public ?Model?()
+		public Model()
 		{
-
-			if (LogHandlerSingleton.Instance.WriteToLogFile(new Log("Changing CC to ?View?")))
-			{
-				LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "?View? is shown"));
-			}
 
 		}
 

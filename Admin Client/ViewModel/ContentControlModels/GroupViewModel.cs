@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Admin_Client.ViewModel.ContentControlModels
 {
-	public class GroupListViewModel : NotifyPropertyChangedHandler
+	public class GroupViewModel : NotifyPropertyChangedHandler
 	{
 
 		#region Variables
@@ -22,7 +22,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		#region Constructor
 
-		public GroupListViewModel()
+		public GroupViewModel()
 		{
 
 		}

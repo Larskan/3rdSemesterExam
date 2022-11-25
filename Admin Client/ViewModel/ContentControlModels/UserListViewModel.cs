@@ -25,11 +25,6 @@ namespace Admin_Client.ViewModel.ContentControlModels
 		public UserListViewModel()
 		{
 
-			if (LogHandlerSingleton.Instance.WriteToLogFile(new Log("Changing CC to OverviewView")))
-			{
-				LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "OverviewView is shown"));
-			}
-
 		}
 
 		#endregion

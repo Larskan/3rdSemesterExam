@@ -226,14 +226,37 @@
     <Compile Include="PropertyChanged\NotifyPropertyChangedHandler.cs" />
     <Compile Include="Singleton\LogHandlerSingleton.cs" />
     <Compile Include="Singleton\MainWindowModelSingleton.cs" />
+    <Compile Include="ViewModel\ContentControlModels\AccountViewModel.cs" />
+    <Compile Include="ViewModel\ContentControlModels\GroupViewModel.cs" />
     <Compile Include="ViewModel\ContentControlModels\LoginViewModel.cs" />
+    <Compile Include="ViewModel\ContentControlModels\LogListViewModel.cs" />
     <Compile Include="ViewModel\ContentControlModels\OverviewViewModel.cs" />
+    <Compile Include="ViewModel\ContentControlModels\ReceiptViewModel.cs" />
     <Compile Include="ViewModel\ContentControlModels\Special\AccountTabViewModel.cs" />
     <Compile Include="ViewModel\ContentControlModels\Special\MenuViewModel.cs" />
     <Compile Include="ViewModel\ContentControlModels\GroupListViewModel.cs" />
+    <Compile Include="ViewModel\ContentControlModels\TripViewModel.cs" />
     <Compile Include="ViewModel\ContentControlModels\UserListViewModel.cs" />
+    <Compile Include="ViewModel\ContentControlModels\UserViewModel.cs" />
     <Compile Include="ViewModel\WindowModels\MainWindowModel.cs" />
+    <Compile Include="ViewModel\WindowModels\Popout\PopoutLogWindowModel.cs" />
+    <Compile Include="ViewModel\WindowModels\Popup\PopupParameterChangeWindowModel.cs" />
+    <Compile Include="ViewModel\WindowModels\Popup\PopupPasswordChangeWindowModel.cs" />
+    <Compile Include="View\Windows\Popups\PopupParameterChangeWindow.xaml.cs">
+      <DependentUpon>PopupParameterChangeWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\Popups\PopupPasswordChangeWindow.xaml.cs">
+      <DependentUpon>PopupPasswordChangeWindow.xaml</DependentUpon>
+    </Compile>
+    <Page Include="View\UserControls\AccountView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\UserControls\GroupListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserControls\GroupView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -241,7 +264,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\UserControls\LogListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\UserControls\OverviewView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserControls\ReceiptView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -253,11 +284,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\UserControls\TripView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\UserControls\UserListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Windows\LogWindow.xaml">
+    <Page Include="View\UserControls\UserView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\Popout\PopoutLogWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -269,14 +308,26 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="View\UserControls\AccountView.xaml.cs">
+      <DependentUpon>AccountView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\UserControls\GroupListView.xaml.cs">
       <DependentUpon>GroupListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserControls\GroupView.xaml.cs">
+      <DependentUpon>GroupView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControls\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\UserControls\LogListView.xaml.cs">
+      <DependentUpon>LogListView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\UserControls\OverviewView.xaml.cs">
       <DependentUpon>OverviewView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserControls\ReceiptView.xaml.cs">
+      <DependentUpon>ReceiptView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControls\Special\AccountTabView.xaml.cs">
       <DependentUpon>AccountTabView.xaml</DependentUpon>
@@ -284,16 +335,30 @@
     <Compile Include="View\UserControls\Special\MenuView.xaml.cs">
       <DependentUpon>MenuView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\UserControls\TripView.xaml.cs">
+      <DependentUpon>TripView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\UserControls\UserListView.xaml.cs">
       <DependentUpon>UserListView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Windows\LogWindow.xaml.cs">
-      <DependentUpon>LogWindow.xaml</DependentUpon>
+    <Compile Include="View\UserControls\UserView.xaml.cs">
+      <DependentUpon>UserView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\Popout\PopoutLogWindow.xaml.cs">
+      <DependentUpon>PopoutLogWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\Windows\Popups\PopupParameterChangeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\Popups\PopupPasswordChangeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\Controller\temp1.cs" />

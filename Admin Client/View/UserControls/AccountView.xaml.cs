@@ -1,6 +1,6 @@
 ﻿using Admin_Client.Model.Domain;
 using Admin_Client.Singleton;
-using Admin_Client.ViewModel.ContentControlModels;
+using Admin_Client.ViewModel.ContentControlModels.Special;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,18 +19,18 @@ using System.Windows.Shapes;
 namespace Admin_Client.View.UserControls
 {
 	/// <summary>
-	/// Interaction logic for UserListView.xaml
+	/// Interaction logic for AccountView.xaml
 	/// </summary>
-	public partial class UserListView : UserControl
+	public partial class AccountView : UserControl
 	{
-		UserListViewModel viewModel = new UserListViewModel();
-		public UserListView()
+		AccountTabViewModel viewModel = new AccountTabViewModel();
+		public AccountView()
 		{
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Changing CC to UserListView"));
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Changing CC to AccountView"));
 			InitializeComponent();
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "UserListView is shown as content"));
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "AccountView is shown as content"));
 
-			this.DataContext = viewModel;
+			this.DataContext= viewModel;
 		}
 	}
 }

@@ -1,4 +1,5 @@
-﻿using Admin_Client.Singleton;
+﻿using Admin_Client.Model.Domain;
+using Admin_Client.Singleton;
 using Admin_Client.View.UserControls;
 using Admin_Client.View.UserControls.Special;
 using System;
@@ -27,7 +28,9 @@ namespace Admin_Client
 	{
         public MainWindow()
 		{
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Starting MainWindow"));
 			InitializeComponent();
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "MainWindow is shown"));
 
 			this.CControl_Main.Content = new LoginView();
 

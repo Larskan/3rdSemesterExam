@@ -19,28 +19,18 @@ using System.Windows.Shapes;
 namespace Admin_Client.View.UserControls
 {
 	/// <summary>
-	/// Interaction logic for LoginView.xaml
+	/// Interaction logic for GroupView.xaml
 	/// </summary>
-	public partial class OverviewView : UserControl
+	public partial class GroupView : UserControl
 	{
-		OverviewViewModel viewModel = new OverviewViewModel();
-		public OverviewView()
+		GroupViewModel viewModel = new GroupViewModel();
+		public GroupView()
 		{
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Changing CC to OverviewView"));
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Changing CC to GroupView"));
 			InitializeComponent();
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "OverviewView is shown as content"));
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "GroupView is shown as content"));
 
 			this.DataContext = viewModel;
-		}
-
-		private void GroupList_Click(object sender, RoutedEventArgs e)
-		{
-			viewModel.SetContentToGroupList();
-		}
-
-		private void UserList_Click(object sender, RoutedEventArgs e)
-		{
-			viewModel.SetContentToUserList();
 		}
 	}
 }

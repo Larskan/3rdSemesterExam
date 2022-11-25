@@ -25,10 +25,7 @@ namespace Admin_Client.ViewModel.ContentControlModels.Special
 
 		public MenuViewModel() 
 		{
-			if (LogHandlerSingleton.Instance.WriteToLogFile(new Log("Menu is starting")))
-			{
-				LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Menu is shown"));
-			}
+			
 		}
 
 		#endregion

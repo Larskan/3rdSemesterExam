@@ -19,28 +19,18 @@ using System.Windows.Shapes;
 namespace Admin_Client.View.UserControls
 {
 	/// <summary>
-	/// Interaction logic for LoginView.xaml
+	/// Interaction logic for ReceiptView.xaml
 	/// </summary>
-	public partial class OverviewView : UserControl
+	public partial class ReceiptView : UserControl
 	{
-		OverviewViewModel viewModel = new OverviewViewModel();
-		public OverviewView()
+		ReceiptViewModel viewModel = new ReceiptViewModel();
+		public ReceiptView()
 		{
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Changing CC to OverviewView"));
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Changing CC to ReceiptView"));
 			InitializeComponent();
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "OverviewView is shown as content"));
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "ReceiptView is shown as content"));
 
 			this.DataContext = viewModel;
-		}
-
-		private void GroupList_Click(object sender, RoutedEventArgs e)
-		{
-			viewModel.SetContentToGroupList();
-		}
-
-		private void UserList_Click(object sender, RoutedEventArgs e)
-		{
-			viewModel.SetContentToUserList();
 		}
 	}
 }

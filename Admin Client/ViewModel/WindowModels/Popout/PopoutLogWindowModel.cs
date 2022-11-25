@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Admin_Client.ViewModel.ContentControlModels
+namespace Admin_Client.ViewModel.WindowModels.Popout
 {
-	public class GroupListViewModel : NotifyPropertyChangedHandler
+	public class PopoutLogWindowModel : NotifyPropertyChangedHandler
 	{
 
 		#region Variables
@@ -22,8 +22,13 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		#region Constructor
 
-		public GroupListViewModel()
+		public PopoutLogWindowModel()
 		{
+
+			if (LogHandlerSingleton.Instance.WriteToLogFile(new Log("Open Popout LogWindow")))
+			{
+				LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "LogWindow is shown"));
+			}
 
 		}
 

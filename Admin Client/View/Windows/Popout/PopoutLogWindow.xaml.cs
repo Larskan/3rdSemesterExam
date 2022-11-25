@@ -1,6 +1,7 @@
 ﻿using Admin_Client.Model.Domain;
 using Admin_Client.Singleton;
 using Admin_Client.ViewModel.ContentControlModels;
+using Admin_Client.ViewModel.WindowModels.Popout;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,24 +14,23 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Admin_Client.View.UserControls
+namespace Admin_Client.View.Windows.Popout
 {
 	/// <summary>
-	/// Interaction logic for UserListView.xaml
+	/// Interaction logic for LogWindow.xaml
 	/// </summary>
-	public partial class UserListView : UserControl
+	public partial class PopoutLogWindow : Window
 	{
-		UserListViewModel viewModel = new UserListViewModel();
-		public UserListView()
+		PopoutLogWindowModel windowModel = new PopoutLogWindowModel();
+		public PopoutLogWindow()
 		{
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Changing CC to UserListView"));
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Poping out PopoutLogWindow"));
 			InitializeComponent();
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "UserListView is shown as content"));
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "PopoutLogWindow is shown"));
 
-			this.DataContext = viewModel;
+			this.DataContext = windowModel;
 		}
 	}
 }

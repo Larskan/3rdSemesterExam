@@ -1,4 +1,6 @@
-﻿using Admin_Client.ViewModel.ContentControlModels.Special;
+﻿using Admin_Client.Model.Domain;
+using Admin_Client.Singleton;
+using Admin_Client.ViewModel.ContentControlModels.Special;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +26,9 @@ namespace Admin_Client.View.UserControls.Special
 		MenuViewModel viewModel = new MenuViewModel();
 		public MenuView()
 		{
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Menu is starting"));
 			InitializeComponent();
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Menu is shown"));
 
 			this.DataContext = viewModel;
 		}

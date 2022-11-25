@@ -25,11 +25,6 @@ namespace Admin_Client.ViewModel.ContentControlModels.Special
 		public AccountTabViewModel() 
 		{
 
-			if (LogHandlerSingleton.Instance.WriteToLogFile(new Log("AccountTab is starting")))
-			{
-				LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "AccountTab is shown"));
-			}
-
 		}
 
 		#endregion

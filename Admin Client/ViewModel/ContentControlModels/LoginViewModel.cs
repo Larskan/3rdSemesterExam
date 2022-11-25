@@ -26,11 +26,6 @@ namespace Admin_Client.ViewModel.ContentControlModels
 		public LoginViewModel()
 		{
 
-			if (LogHandlerSingleton.Instance.WriteToLogFile(new Log("Changing CC to LoginView")))
-			{
-				LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "LoginView is shown"));
-			}
-
 		}
 
 		#endregion

@@ -1,4 +1,5 @@
-﻿using Admin_Client.Singleton;
+﻿using Admin_Client.Model.Domain;
+using Admin_Client.Singleton;
 using Admin_Client.ViewModel.ContentControlModels;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,10 @@ namespace Admin_Client.View.UserControls
 		LoginViewModel viewModel = new LoginViewModel();
 		public LoginView()
 		{
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Changing CC to LoginView"));
 			InitializeComponent();
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "LoginView is shown as content"));
+
 			this.DataContext = viewModel;
 		}
 
