@@ -177,12 +177,65 @@
             </Style>
         </ResourceDictionary>
 
+        <!--Border 15% round-->
+        <ResourceDictionary x:Key="roundborder15">
+            <Style TargetType="Border">
+                <Setter Property="CornerRadius" Value="15"/>
+            </Style>
+        </ResourceDictionary>
+
+        <!--Border 25% round-->
+        <ResourceDictionary x:Key="roundborder25">
+            <Style TargetType="Border">
+                <Setter Property="CornerRadius" Value="25"/>
+            </Style>
+        </ResourceDictionary>
+
         <!--Border 100% round-->
         <ResourceDictionary x:Key="roundborder100">
             <Style TargetType="Border">
                 <Setter Property="CornerRadius" Value="100"/>
             </Style>
         </ResourceDictionary>
+
+        <!--#endregion-->
+        
+        <!--#region ListBox-->
+        
+        <!--ListBox rounded with empty check-->
+        <Style TargetType="ListBox" x:Key="roundlistboxwithempty" BasedOn="{StaticResource {x:Type ListBox}}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=Items.Count}" Value="0">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <Grid>
+                                    <ListBox Resources="{StaticResource roundborder10}"/>
+                                    <Label Content="Empty" FontSize="20" FontWeight="Bold" Foreground="LightGray" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <!--#endregion-->
+        
+        <!--#region ContextMenu-->
+        
+        <!--ContextMenu rounded-->
+        <Style TargetType="ContextMenu" x:Key="roundcontextmenu">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ContextMenu">
+                        <Border CornerRadius="12" BorderBrush="Gray" BorderThickness="1" Background="White" SnapsToDevicePixels="True">
+                            <ItemsPresenter />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
         <!--#endregion-->
 

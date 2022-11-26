@@ -26,9 +26,9 @@ namespace Admin_Client.View.UserControls
 		GroupViewModel viewModel = new GroupViewModel();
 		public GroupView()
 		{
-			InitializeComponent();
-
 			this.DataContext = viewModel;
+
+			InitializeComponent();
 		}
 	}
 }

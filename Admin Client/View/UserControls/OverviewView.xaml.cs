@@ -26,9 +26,9 @@ namespace Admin_Client.View.UserControls
 		OverviewViewModel viewModel = new OverviewViewModel();
 		public OverviewView()
 		{
-			InitializeComponent();
-
 			this.DataContext = viewModel;
+
+			InitializeComponent();
 		}
 
 		private void GroupList_Click(object sender, RoutedEventArgs e)

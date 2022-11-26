@@ -26,9 +26,9 @@ namespace Admin_Client.View.UserControls
 		LoginViewModel viewModel = new LoginViewModel();
 		public LoginView()
 		{
-			InitializeComponent();
-
 			this.DataContext = viewModel;
+
+			InitializeComponent();
 		}
 
 		private void Login_Click(object sender, RoutedEventArgs e)

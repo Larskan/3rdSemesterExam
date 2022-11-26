@@ -26,9 +26,9 @@ namespace Admin_Client.View.UserControls
 		AccountTabViewModel viewModel = new AccountTabViewModel();
 		public AccountView()
 		{
-			InitializeComponent();
+			this.DataContext = viewModel;
 
-			this.DataContext= viewModel;
+			InitializeComponent();
 		}
 	}
 }

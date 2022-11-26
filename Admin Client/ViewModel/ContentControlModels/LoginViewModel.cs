@@ -35,12 +35,12 @@ namespace Admin_Client.ViewModel.ContentControlModels
 		public void Login()
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Login --> Pending"));
-			// LOGIN AUTHENTICATION MISSING
+			// LOGIN AUTHENTICATION MISSING - TODO
 			if (true)
 			{
 				LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Login == Success"));
 
-				//CREATE USER OBJECT FOR LATER USE - (USE THE SESSION INFORMATION BUILDER TO DO SO)
+				//CREATE USER OBJECT FOR LATER USE - (USE THE SESSION INFORMATION BUILDER TO DO SO) - TODO
 
 				MainWindowModelSingleton.Instance.SetMainContent(new OverviewView(), false, true);
 

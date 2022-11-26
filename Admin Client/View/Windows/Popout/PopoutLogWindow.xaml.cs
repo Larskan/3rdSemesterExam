@@ -26,9 +26,9 @@ namespace Admin_Client.View.Windows.Popout
 		PopoutLogWindowModel windowModel = new PopoutLogWindowModel();
 		public PopoutLogWindow()
 		{
-			InitializeComponent();
-
 			this.DataContext = windowModel;
+
+			InitializeComponent();
 		}
 	}
 }

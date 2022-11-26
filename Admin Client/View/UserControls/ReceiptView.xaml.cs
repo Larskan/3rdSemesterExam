@@ -26,9 +26,9 @@ namespace Admin_Client.View.UserControls
 		ReceiptViewModel viewModel = new ReceiptViewModel();
 		public ReceiptView()
 		{
-			InitializeComponent();
-
 			this.DataContext = viewModel;
+
+			InitializeComponent();
 		}
 	}
 }

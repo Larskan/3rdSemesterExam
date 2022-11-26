@@ -25,11 +25,6 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 		public PopupPasswordChangeWindowModel()
 		{
 
-			if (LogHandlerSingleton.Instance.WriteToLogFile(new Log("Open Popup PasswordChangeWindow")))
-			{
-				LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "PasswordChangeWindow is shown"));
-			}
-
 		}
 
 		#endregion

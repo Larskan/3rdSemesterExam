@@ -25,9 +25,9 @@ namespace Admin_Client.View.Windows.Popups
 		PopupParameterChangeWindowModel windowModel = new PopupParameterChangeWindowModel();
 		public PopupParameterChangeWindow()
 		{
-			InitializeComponent();
-
 			this.DataContext = windowModel;
+
+			InitializeComponent();
 		}
 	}
 }

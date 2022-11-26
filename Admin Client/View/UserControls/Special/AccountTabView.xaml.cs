@@ -26,9 +26,9 @@ namespace Admin_Client.View.UserControls.Special
 		AccountTabViewModel viewModel = new AccountTabViewModel();
 		public AccountTabView()
 		{
-			InitializeComponent();
-
 			this.DataContext = viewModel;
+
+			InitializeComponent();
 		}
 
 		private void Profile_Click(object sender, RoutedEventArgs e)

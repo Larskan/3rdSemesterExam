@@ -27,10 +27,10 @@ namespace Admin_Client.View.UserControls.Special
 		UserControl userControl;
 		public BackMenuView(UserControl lastUControl)
 		{
-			InitializeComponent();
-
 			this.DataContext = viewModel;
 			this.userControl = lastUControl;
+
+			InitializeComponent();
 		}
 
 		private void Back_Click(object sender, RoutedEventArgs e)

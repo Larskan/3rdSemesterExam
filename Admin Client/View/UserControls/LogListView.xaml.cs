@@ -26,9 +26,9 @@ namespace Admin_Client.View.UserControls
 		LogListViewModel viewModel = new LogListViewModel();
 		public LogListView()
 		{
-			InitializeComponent();
-
 			this.DataContext = viewModel;
+
+			InitializeComponent();
 		}
 	}
 }

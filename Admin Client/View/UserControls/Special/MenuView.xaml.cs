@@ -26,9 +26,9 @@ namespace Admin_Client.View.UserControls.Special
 		MenuViewModel viewModel = new MenuViewModel();
 		public MenuView()
 		{
-			InitializeComponent();
-
 			this.DataContext = viewModel;
+
+			InitializeComponent();
 		}
 
 		private void UserList_Click(object sender, RoutedEventArgs e)

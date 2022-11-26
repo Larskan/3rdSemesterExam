@@ -25,9 +25,9 @@ namespace Admin_Client.View.Windows.Popups
 		PopupPasswordChangeWindowModel windowModel = new PopupPasswordChangeWindowModel();
 		public PopupPasswordChangeWindow()
 		{
-			InitializeComponent();
-
 			this.DataContext = windowModel;
+
+			InitializeComponent();
 		}
 	}
 }

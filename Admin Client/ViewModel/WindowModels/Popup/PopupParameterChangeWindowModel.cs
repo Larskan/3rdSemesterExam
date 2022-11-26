@@ -25,11 +25,6 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 		public PopupParameterChangeWindowModel()
 		{
 
-			if (LogHandlerSingleton.Instance.WriteToLogFile(new Log("Open Popup ParameterChangeWindow")))
-			{
-				LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "ParameterChangeWindow is shown"));
-			}
-
 		}
 
 		#endregion

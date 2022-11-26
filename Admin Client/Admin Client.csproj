@@ -241,10 +241,14 @@
     <Compile Include="ViewModel\ContentControlModels\UserViewModel.cs" />
     <Compile Include="ViewModel\WindowModels\MainWindowModel.cs" />
     <Compile Include="ViewModel\WindowModels\Popout\PopoutLogWindowModel.cs" />
+    <Compile Include="ViewModel\WindowModels\Popup\PopupConfirmWindowModel.cs" />
     <Compile Include="ViewModel\WindowModels\Popup\PopupParameterChangeWindowModel.cs" />
     <Compile Include="ViewModel\WindowModels\Popup\PopupPasswordChangeWindowModel.cs" />
     <Compile Include="View\UserControls\Special\BackMenuView.xaml.cs">
       <DependentUpon>BackMenuView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\Popups\PopupConfirmWindow.xaml.cs">
+      <DependentUpon>PopupConfirmWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Windows\Popups\PopupParameterChangeWindow.xaml.cs">
       <DependentUpon>PopupParameterChangeWindow.xaml</DependentUpon>
@@ -359,6 +363,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\Windows\Popups\PopupConfirmWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Windows\Popups\PopupParameterChangeWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

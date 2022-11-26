@@ -26,9 +26,9 @@ namespace Admin_Client.View.UserControls
 		UserViewModel viewModel = new UserViewModel();
 		public UserView()
 		{
-			InitializeComponent();
-
 			this.DataContext = viewModel;
+
+			InitializeComponent();
 		}
 	}
 }

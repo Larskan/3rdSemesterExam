@@ -19,6 +19,7 @@ namespace Admin_Client.ViewModel.WindowModels
 	{
 
 		#region Variables
+		private Window mainWindow;
 
 		private Grid Grid_Menu;
 		private Grid Grid_AccountTab;
@@ -124,6 +125,16 @@ namespace Admin_Client.ViewModel.WindowModels
 		public UserControl GetMainContent()
 		{
 			return (UserControl)CControl_Main.Content;
+		}
+
+		public void SetMainWindow(Window window)
+		{
+			this.mainWindow = window;
+		}
+
+		public Window GetMainWindow()
+		{
+			return mainWindow;
 		}
 
 		#endregion

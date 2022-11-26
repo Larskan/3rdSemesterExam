@@ -28,14 +28,15 @@ namespace Admin_Client
 	{
         public MainWindow()
 		{
+			this.DataContext = MainWindowModelSingleton.Instance;
+
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Starting MainWindow"));
 			InitializeComponent();
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "MainWindow shown"));
 
 			this.CControl_Main.Content = new LoginView();
 
-			this.DataContext = MainWindowModelSingleton.Instance;
-
+			MainWindowModelSingleton.Instance.SetMainWindow(this);
 			MainWindowModelSingleton.Instance.CreateGridRelations(Grid_Menu, Grid_Account, CControl_Main);
         }
 

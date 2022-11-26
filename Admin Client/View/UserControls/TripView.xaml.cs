@@ -26,9 +26,9 @@ namespace Admin_Client.View.UserControls
 		TripViewModel viewModel = new TripViewModel();
 		public TripView()
 		{
-			InitializeComponent();
-
 			this.DataContext = viewModel;
+
+			InitializeComponent();
 		}
 	}
 }
