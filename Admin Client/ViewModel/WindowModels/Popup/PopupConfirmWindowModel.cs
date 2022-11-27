@@ -142,7 +142,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 
 						/*Do Stuff*/
 
-						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + user.FldUserId + " - " + user.FldFirstName + " " + user.FldLastName));
+						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "New: ID " + user.FldUserId + " - " + user.FldFirstName + " " + user.FldLastName));
 						break;
 					}
 				case "TblGroup":
@@ -151,7 +151,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 
 						/*Do Stuff*/
 
-						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + group.FldGroupId + " - " + group.FldGroupName));
+						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "New: ID " + group.FldGroupId + " - " + group.FldGroupName));
 						break;
 					}
 				default: throw new Exception("Has not been implemented: " + target.GetType().Name + "." + action.GetMethodInfo().Name);

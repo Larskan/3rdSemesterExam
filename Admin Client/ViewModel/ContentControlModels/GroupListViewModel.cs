@@ -20,7 +20,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
 	public class GroupListViewModel : NotifyPropertyChangedHandler
 	{
 
-		#region Variables
+		#region Properties
 
 		private ObservableCollection<TblGroup> groups = new ObservableCollection<TblGroup>();
 		public ObservableCollection<TblGroup> Groups

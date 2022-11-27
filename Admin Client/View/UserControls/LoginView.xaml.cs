@@ -1,5 +1,6 @@
 ﻿using Admin_Client.Model.Domain;
 using Admin_Client.Singleton;
+using Admin_Client.View.Windows.Popout;
 using Admin_Client.ViewModel.ContentControlModels;
 using System;
 using System.Collections.Generic;

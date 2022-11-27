@@ -3,6 +3,7 @@ using Admin_Client.Model.FileIO;
 using Admin_Client.PropertyChanged;
 using Admin_Client.Singleton;
 using Admin_Client.View.UserControls.Special;
+using Admin_Client.View.Windows.Popout;
 using Admin_Client.View.Windows.Popups;
 using System;
 using System.Collections.Generic;
@@ -143,12 +144,21 @@ namespace Admin_Client.ViewModel.WindowModels
 			return mainWindow;
 		}
 
+		#endregion
+
+		#region StartWindows
+
 		public void StartPopupConfirm(object o, PopupMethod popupMethod)
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, popupMethod + " Click --> Target " + o.GetType().Name));
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log("PopupConfirm --> Starting"));
 			new PopupConfirmWindow(o, popupMethod).ShowDialog();
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log("PopupConfirm == Closed"));
+		}
+
+		public void StartPopoutLog(DateTime dateTime)
+		{
+			new PopoutLogWindow(dateTime).Show();
 		}
 
 		#endregion

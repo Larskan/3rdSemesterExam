@@ -222,7 +222,7 @@
     <Compile Include="Model\Domain\Log.cs" />
     <Compile Include="Model\FAKEDATABASE.cs" />
     <Compile Include="Model\FileIO\LogHandler.cs" />
-    <Compile Include="Model\Foundation\temp3.cs" />
+    <Compile Include="Model\Foundation\Enums.cs" />
     <Compile Include="PropertyChanged\NotifyPropertyChangedHandler.cs" />
     <Compile Include="Singleton\LogHandlerSingleton.cs" />
     <Compile Include="Singleton\MainWindowModelSingleton.cs" />

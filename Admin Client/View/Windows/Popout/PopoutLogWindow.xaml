@@ -7,6 +7,15 @@
         mc:Ignorable="d"
         Title="LogWindow" Height="450" Width="800">
     <Grid>
-        <Label Content="LOGWINDOW" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" Content="{Binding LogFileName}" FontSize="30" FontWeight="Bold" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+
+        <ListBox Grid.Row="1" ItemsSource="{Binding Logs}" Margin="10" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource logDataTemplate}" Resources="{StaticResource roundborder10}"/>
+
     </Grid>
 </Window>

@@ -18,7 +18,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
 	public class UserListViewModel : NotifyPropertyChangedHandler
 	{
 
-		#region Variables
+		#region Properties
 
 		private ObservableCollection<TblUser> users = new ObservableCollection<TblUser>();
 		public ObservableCollection<TblUser> Users
