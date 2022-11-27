@@ -8,10 +8,6 @@ namespace Client.Model._1_Controller
 {
 	public class temp1
 	{
-        public void Main(string[] args)
-        {
-
-        }
-
+		//
     }
 }
