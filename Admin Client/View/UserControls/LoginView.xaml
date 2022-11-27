@@ -94,7 +94,7 @@
                         </TextBox.Style>
                     </TextBox>
 
-                    <PasswordBox Style="{StaticResource roundcornerpassword}" PasswordChar="*" Margin="10" Visibility="Hidden"/>
+                    <PasswordBox x:Name="PasswordBox_Password" Style="{StaticResource roundcornerpassword}" PasswordChar="*" Margin="10" Visibility="Hidden"/>
 
 
                     <ToggleButton x:Name="TogglePasswordView" Grid.Column="1" Margin="5"></ToggleButton>

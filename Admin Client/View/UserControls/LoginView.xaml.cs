@@ -33,7 +33,13 @@ namespace Admin_Client.View.UserControls
 
 		private void Login_Click(object sender, RoutedEventArgs e)
 		{
-			viewModel.Login();
+			if (PasswordBox_Password.Password.Length > 0)
+			{
+				viewModel.Login(TextBox_Username.Text, PasswordBox_Password.Password);
+			} else
+			{
+				viewModel.Login(TextBox_Username.Text, TextBox_Password.Text);
+			}
 		}
     }
 }

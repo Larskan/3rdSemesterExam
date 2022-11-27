@@ -13,6 +13,7 @@ namespace Admin_Client.Model.Domain
 	{
 		FatalError = 999,
 		Warning = 500,
+		UserAction = 300,
 		Information = 200,
 		Success = 100,
 	}

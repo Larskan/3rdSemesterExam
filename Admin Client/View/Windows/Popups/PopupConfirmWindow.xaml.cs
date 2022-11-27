@@ -1,8 +1,10 @@
 ﻿using Admin_Client.Model.DB;
+using Admin_Client.Model.Domain;
 using Admin_Client.Singleton;
 using Admin_Client.ViewModel.WindowModels.Popup;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +19,7 @@ using System.Windows.Shapes;
 
 namespace Admin_Client.View.Windows.Popups
 {
-	public enum PopupTarget
+	public enum PopupMethod
 	{
 		Edit,
 		Create,
@@ -30,28 +32,11 @@ namespace Admin_Client.View.Windows.Popups
 	public partial class PopupConfirmWindow : Window
 	{
 		PopupConfirmWindowModel windowModel;
-		public PopupConfirmWindow(TblUser user, PopupTarget popupTarget)
+		public PopupConfirmWindow(object target, PopupMethod popupMethod)
 		{
-			switch (popupTarget)
-			{
-				case PopupTarget.Edit: windowModel = new PopupConfirmWindowModel(this, user, Edit); break;
-				case PopupTarget.Create: windowModel = new PopupConfirmWindowModel(this, user, Create); break;
-				case PopupTarget.Delete: windowModel = new PopupConfirmWindowModel(this, user, Delete); break;
-			}
-			this.Owner = MainWindowModelSingleton.Instance.GetMainWindow();
-			MainWindowModelSingleton.Instance.GetMainWindow().IsEnabled = false;
+			windowModel = new PopupConfirmWindowModel(this, target, popupMethod);
+			this.DataContext= windowModel;
 
-			InitializeComponent();
-		}
-
-		public PopupConfirmWindow(TblGroup group, PopupTarget popupTarget)
-		{
-			switch (popupTarget)
-			{
-				case PopupTarget.Edit: windowModel = new PopupConfirmWindowModel(this, group, Edit); break;
-				case PopupTarget.Create: windowModel = new PopupConfirmWindowModel(this, group, Create); break;
-				case PopupTarget.Delete: windowModel = new PopupConfirmWindowModel(this, group, Delete); break;
-			}
 			this.Owner = MainWindowModelSingleton.Instance.GetMainWindow();
 			MainWindowModelSingleton.Instance.GetMainWindow().IsEnabled = false;
 
@@ -60,49 +45,17 @@ namespace Admin_Client.View.Windows.Popups
 
 		private void Confirm_Click(object sender, RoutedEventArgs e)
 		{
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Confirm Click"));
 			windowModel.Confirm();
 			MainWindowModelSingleton.Instance.GetMainWindow().IsEnabled = true;
 		}
 
 		private void Cancel_Click(object sender, RoutedEventArgs e)
 		{
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Cancel Click"));
 			windowModel.Cancel();
 			MainWindowModelSingleton.Instance.GetMainWindow().IsEnabled = true;
 		}
-
-		#region ActionsToSend
-
-		private void Edit(object o)
-		{
-			switch (o.GetType().Name)
-			{
-				case "TblUser": /*Do Stuff*/ break;
-				case "TblGroup": /*Do Stuff*/ break;
-				default: /* */ break;
-			}
-		}
-
-		private void Create(object o)
-		{
-			switch (o.GetType().Name)
-			{
-				case "TblUser": /*Do Stuff*/ break;
-				case "TblGroup": /*Do Stuff*/ break;
-				default: /* */ break;
-			}
-		}
-
-		private void Delete(object o)
-		{
-			switch (o.GetType().Name)
-			{
-				case "TblUser": /*Do Stuff*/ break;
-				case "TblGroup": /*Do Stuff*/ break;
-				default: /* */ break;
-			}
-		}
-
-		#endregion
 
 	}
 }

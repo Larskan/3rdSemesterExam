@@ -44,6 +44,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
 		CancellationTokenSource tokenSource;
 		public void Update()
 		{
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Update Click"));
 			if (tokenSource != null && tokenSource.Token.CanBeCanceled)
 			{
 				tokenSource.Cancel();
@@ -55,17 +56,17 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		public void Create()
 		{
-			new PopupConfirmWindow(new TblUser(), PopupTarget.Create).ShowDialog();
+			MainWindowModelSingleton.Instance.StartPopupConfirm(new TblUser(), PopupMethod.Create);
 		}
 
 		public void Edit(TblUser user)
 		{
-			new PopupConfirmWindow(user, PopupTarget.Create).ShowDialog();
+			MainWindowModelSingleton.Instance.StartPopupConfirm(user, PopupMethod.Edit);
 		}
 
 		public void Delete(TblUser user)
 		{
-			new PopupConfirmWindow(user, PopupTarget.Create).ShowDialog();
+			MainWindowModelSingleton.Instance.StartPopupConfirm(user, PopupMethod.Delete);
 		}
 
 		#endregion

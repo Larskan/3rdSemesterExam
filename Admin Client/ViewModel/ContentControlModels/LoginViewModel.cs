@@ -32,9 +32,11 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		#region Public Methods
 
-		public void Login()
+		public void Login(string username, string password)
 		{
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Login --> Pending"));
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Login Click"));
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Username: " + username));
+
 			// LOGIN AUTHENTICATION MISSING - TODO
 			if (true)
 			{

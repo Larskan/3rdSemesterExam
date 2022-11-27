@@ -104,10 +104,11 @@ namespace Admin_Client.Model.FileIO
 				string spacing = "";
 				switch (log.LogType)
 				{
-					case LogType.Success: spacing = "\t\t"; break;
-					case LogType.Information: spacing = "\t"; break;
-					case LogType.Warning: spacing = "\t\t"; break;
-					case LogType.FatalError: spacing = "\t"; break;
+					case LogType.Success: spacing = "\t\t\t\t\t\t\t\t"; break;
+					case LogType.Information: spacing = "\t\t\t\t\t\t\t"; break;
+					case LogType.UserAction: spacing = "\t"; break;
+					case LogType.Warning: spacing = "\t\t\t\t\t\t\t\t"; break;
+					case LogType.FatalError: spacing = "\t\t\t\t\t\t\t"; break;
 				}
 				File.WriteAllText(PATH + LogFilePath, fileContent + "[" + log.DateTime + "] {" + log.LogType + "}"+spacing+" " + log.LogTxt + "\n");
 			} catch
