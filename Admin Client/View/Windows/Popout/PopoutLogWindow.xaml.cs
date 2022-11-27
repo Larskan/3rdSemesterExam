@@ -23,9 +23,10 @@ namespace Admin_Client.View.Windows.Popout
 	/// </summary>
 	public partial class PopoutLogWindow : Window
 	{
-		PopoutLogWindowModel windowModel = new PopoutLogWindowModel();
-		public PopoutLogWindow()
+		PopoutLogWindowModel windowModel;
+		public PopoutLogWindow(DateTime dateTime)
 		{
+			windowModel = new PopoutLogWindowModel(dateTime);
 			this.DataContext = windowModel;
 
 			InitializeComponent();

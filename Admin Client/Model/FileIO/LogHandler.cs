@@ -100,16 +100,30 @@ namespace Admin_Client.Model.FileIO
 		{
 			try
 			{
-				string fileContent = ReadLogFile();
+				string fileContent = "";
+				string spacingItem = "";
+				foreach (var item in ReadLogFile())
+				{
+					switch (item.LogType)
+					{
+						case LogType.Success: spacingItem = "\t\t\t\t\t\t\t\t"; break;
+						case LogType.Information: spacingItem = "\t\t\t\t\t\t\t"; break;
+						case LogType.UserAction: spacingItem = "\t"; break;
+						case LogType.Warning: spacingItem = "\t\t\t\t\t\t\t\t"; break;
+						case LogType.FatalError: spacingItem = "\t\t\t\t\t\t\t"; break;
+					}
+					fileContent += "[" + item.DateTime + "] {" + item.LogType + "}" + spacingItem + " " + item.LogTxt + "\n";
+				}
 				string spacing = "";
 				switch (log.LogType)
 				{
-					case LogType.Success: spacing = "\t\t"; break;
-					case LogType.Information: spacing = "\t"; break;
-					case LogType.Warning: spacing = "\t\t"; break;
-					case LogType.FatalError: spacing = "\t"; break;
+					case LogType.Success: spacing = "\t\t\t\t\t\t\t\t"; break;
+					case LogType.Information: spacing = "\t\t\t\t\t\t\t"; break;
+					case LogType.UserAction: spacing = "\t"; break;
+					case LogType.Warning: spacing = "\t\t\t\t\t\t\t\t"; break;
+					case LogType.FatalError: spacing = "\t\t\t\t\t\t\t"; break;
 				}
-				File.WriteAllText(PATH + LogFilePath, fileContent + "[" + log.DateTime + "] {" + log.LogType + "}"+spacing+" " + log.LogTxt + "\n");
+				File.WriteAllText(PATH + LogFilePath, fileContent + "[" + log.DateTime + "] {" + log.LogType + "}" + spacing + " " + log.LogTxt + "\n");
 			} catch
 			{
 				return false;
@@ -120,12 +134,12 @@ namespace Admin_Client.Model.FileIO
 		/// <summary>
 		/// Reads the contents of the current log file
 		/// </summary>
-		/// <returns>The logfile's logs as a string</returns>
-		public string ReadLogFile()
+		/// <returns>The logfile's logs as a List</returns>
+		public List<Log> ReadLogFile()
 		{
 			try
 			{
-				return File.ReadAllText(PATH + LogFilePath);
+				return StringsToLogs(File.ReadAllText(PATH + LogFilePath).Split('\n'));
 			}
 			catch
 			{
@@ -137,19 +151,19 @@ namespace Admin_Client.Model.FileIO
 		/// Reads the contents of a log file specified by the date
 		/// </summary>
 		/// <param name="dateTime">The date of the targeted logfile</param>
-		/// <returns>The logfile's logs as a string</returns>
-		public string ReadLogFile(DateTime dateTime)
+		/// <returns>The logfile's logs as a List</returns>
+		public List<Log> ReadLogFile(DateTime dateTime)
 		{
 			try
 			{
-				string content = File.ReadAllText(PATH + ToPath(ToFileName(dateTime), "txt"));
+				List<Log> content = StringsToLogs(File.ReadAllText(PATH + ToPath(ToFileName(dateTime), "txt")).Split('\n'));
 				WriteToLogFile(new Log(LogType.Success, "Read targetet file " + ToPath(ToFileName(dateTime), "txt")));
 				return content;
 			}
 			catch
 			{
-				WriteToLogFile(new Log(LogType.Warning, "Could not read targetet file " + ToPath(ToFileName(dateTime), "txt")));
-				return null;
+				WriteToLogFile(new Log(LogType.Warning, "Could not find/read targetet file " + ToPath(ToFileName(dateTime), "txt")));
+				return new List<Log>();
 			}
 		}
 
@@ -222,6 +236,35 @@ namespace Admin_Client.Model.FileIO
 		private DateTime ToDateTime(string fileName)
 		{
 			return DateTime.Parse(fileName.Replace('_', ':').Replace(".txt", ""));
+		}
+
+		/// <summary>
+		/// TODO
+		/// </summary>
+		/// <param name="strings"></param>
+		/// <returns></returns>
+		private List<Log> StringsToLogs(string[] strings)
+		{
+			List<Log> logs = new List<Log>();
+			foreach (var item in strings)
+			{
+				string fItem = item.Replace("\t", "");
+				string[] fItemParts = fItem.Split(' ');
+
+				if (!fItemParts[0].Equals(""))
+				{
+					DateTime dateTime = DateTime.Parse(fItemParts[0].Substring(1) + " " + fItemParts[1].Substring(0, fItemParts[1].Length - 1));
+					LogType logType = (LogType)Enum.Parse(typeof(LogType), fItemParts[2].Substring(1, fItemParts[2].Length - 2));
+					string text = fItemParts[3];
+					foreach (var parts in fItemParts.Skip(4))
+					{
+						text += " " + parts;
+					}
+
+					logs.Add(new Log(dateTime, logType, text));
+				}
+			}
+			return logs;
 		}
 
 		#endregion

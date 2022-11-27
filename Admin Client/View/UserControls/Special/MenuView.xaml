@@ -18,7 +18,7 @@
         <Button Grid.Column="0" Grid.Row="0" Background="Transparent" BorderThickness="0" Click="GroupList_Click">
             <Button.Resources>
                 <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="0,0,10,0"/>
+                    <Setter Property="CornerRadius" Value="0"/>
                 </Style>
                 <Style TargetType="Button">
                     <Style.Triggers>

@@ -222,6 +222,66 @@
 
         <!--#endregion-->
         
+        <!--#region DataTemplates-->
+        
+        <!--DataTemplate Log-->
+
+        <DataTemplate x:Key="logDataTemplate">
+            <Border Name="border" BorderThickness="3,0,3,0" BorderBrush="Gray">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label x:Name="datetime" Content="{Binding DateTimeString}" Grid.Column="0" HorizontalAlignment="Center" ></Label>
+                    <Label x:Name="logtype" Content="{Binding LogType}" Grid.Column="1" HorizontalAlignment="Left" ></Label>
+                    <Label x:Name="logtext" Content="{Binding LogTxt}" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></Label>
+                </Grid>
+            </Border>
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding Path=LogType}">
+                    <DataTrigger.Value>
+                        <local:LogType>Success</local:LogType>
+                    </DataTrigger.Value>
+                    <Setter TargetName="border" Property="Background" Value="LightGreen" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=LogType}">
+                    <DataTrigger.Value>
+                        <local:LogType>Information</local:LogType>
+                    </DataTrigger.Value>
+                    <Setter TargetName="border" Property="Background" Value="LightGray" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=LogType}">
+                    <DataTrigger.Value>
+                        <local:LogType>UserAction</local:LogType>
+                    </DataTrigger.Value>
+                    <Setter TargetName="border" Property="Background" Value="Pink" />
+                    <Setter TargetName="border" Property="BorderThickness" Value="3,3,3,0" />
+                    <Setter TargetName="datetime" Property="FontWeight" Value="Bold" />
+                    <Setter TargetName="logtype" Property="FontWeight" Value="Bold" />
+                    <Setter TargetName="logtext" Property="FontWeight" Value="Bold" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=LogType}">
+                    <DataTrigger.Value>
+                        <local:LogType>Warning</local:LogType>
+                    </DataTrigger.Value>
+                    <Setter TargetName="border" Property="Background" Value="LightSalmon" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=LogType}">
+                    <DataTrigger.Value>
+                        <local:LogType>FatalError</local:LogType>
+                    </DataTrigger.Value>
+                    <Setter TargetName="border" Property="Background" Value="PaleVioletRed" />
+                    <Setter TargetName="datetime" Property="FontWeight" Value="Bold" />
+                    <Setter TargetName="logtype" Property="FontWeight" Value="Bold" />
+                    <Setter TargetName="logtext" Property="FontWeight" Value="Bold" />
+                </DataTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+
+        <!--#endregion-->
+        
         <!--#region ContextMenu-->
         
         <!--ContextMenu rounded-->

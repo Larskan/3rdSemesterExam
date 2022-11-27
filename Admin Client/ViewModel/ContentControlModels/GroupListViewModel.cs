@@ -20,7 +20,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
 	public class GroupListViewModel : NotifyPropertyChangedHandler
 	{
 
-		#region Variables
+		#region Properties
 
 		private ObservableCollection<TblGroup> groups = new ObservableCollection<TblGroup>();
 		public ObservableCollection<TblGroup> Groups
@@ -46,6 +46,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
 		CancellationTokenSource tokenSource;
 		public void Update()
 		{
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Update Click"));
 			if (tokenSource != null && tokenSource.Token.CanBeCanceled)
 			{
 				tokenSource.Cancel();
@@ -57,17 +58,17 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		public void Create()
 		{
-			new PopupConfirmWindow(new TblGroup(), PopupTarget.Create).ShowDialog();
+			MainWindowModelSingleton.Instance.StartPopupConfirm(new TblGroup(), PopupMethod.Create);
 		}
 
 		public void Edit(TblGroup group)
 		{
-			new PopupConfirmWindow(group, PopupTarget.Create).ShowDialog();
+			MainWindowModelSingleton.Instance.StartPopupConfirm(group, PopupMethod.Edit);
 		}
 
 		public void Delete(TblGroup group)
 		{
-			new PopupConfirmWindow(group, PopupTarget.Create).ShowDialog();
+			MainWindowModelSingleton.Instance.StartPopupConfirm(group, PopupMethod.Delete);
 		}
 
 		#endregion
@@ -76,6 +77,8 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		private void UpdateGroupsListThread(object o)
 		{
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log("ThreadID: " + Thread.CurrentThread.ManagedThreadId + " --> Starting"));
+
 			object[] array = o as object[];
 			CancellationToken token = (CancellationToken)array[0];
 
@@ -90,7 +93,6 @@ namespace Admin_Client.ViewModel.ContentControlModels
 					found= false;
 					foreach (var GroupItem in Groups)
 					{
-						Debug.WriteLine(GroupItem.FldGroupId);
 						if (groupItem.FldGroupId == GroupItem.FldGroupId)
 						{
 							found= true;
@@ -102,8 +104,10 @@ namespace Admin_Client.ViewModel.ContentControlModels
 						App.Current.Dispatcher.BeginInvoke(new Action(() => { Groups.Add(groupItem); }));
 					}
 				}
+				LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "ThreadID: " + Thread.CurrentThread.ManagedThreadId + " ==> Done"));
 				break;
 			}
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "ThreadID: " + Thread.CurrentThread.ManagedThreadId + " ==> Closed"));
 		}
 
 		#endregion

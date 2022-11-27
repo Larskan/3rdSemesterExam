@@ -1,4 +1,5 @@
-﻿using Admin_Client.PropertyChanged;
+﻿using Admin_Client.Model.Domain;
+using Admin_Client.PropertyChanged;
 using Admin_Client.Singleton;
 using System;
 using System.Collections.Generic;
@@ -34,6 +35,7 @@ namespace Admin_Client.ViewModel.ContentControlModels.Special
 
 		public void Back(UserControl content)
 		{
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Back To -->"));
 			if (content.GetType().Name.Equals("OverviewView"))
 			{
 				MainWindowModelSingleton.Instance.SetMainContent(content, false, true);

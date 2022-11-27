@@ -34,7 +34,6 @@ namespace Admin_Client.ViewModel.ContentControlModels.Special
 
 		public void Logout()
 		{
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Logout --> Pending"));
 			//REMOVE USER OBJECT FROM SESSION
 
 			MainWindowModelSingleton.Instance.SetMainContent(new LoginView(), false, false);

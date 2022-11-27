@@ -1,5 +1,6 @@
 ﻿using Admin_Client.Model.Domain;
 using Admin_Client.Singleton;
+using Admin_Client.View.Windows.Popout;
 using Admin_Client.ViewModel.ContentControlModels;
 using System;
 using System.Collections.Generic;
@@ -33,7 +34,13 @@ namespace Admin_Client.View.UserControls
 
 		private void Login_Click(object sender, RoutedEventArgs e)
 		{
-			viewModel.Login();
+			if (PasswordBox_Password.Password.Length > 0)
+			{
+				viewModel.Login(TextBox_Username.Text, PasswordBox_Password.Password);
+			} else
+			{
+				viewModel.Login(TextBox_Username.Text, TextBox_Password.Text);
+			}
 		}
     }
 }

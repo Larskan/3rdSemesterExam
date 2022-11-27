@@ -3,6 +3,8 @@ using Admin_Client.Model.FileIO;
 using Admin_Client.PropertyChanged;
 using Admin_Client.Singleton;
 using Admin_Client.View.UserControls.Special;
+using Admin_Client.View.Windows.Popout;
+using Admin_Client.View.Windows.Popups;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -79,6 +81,7 @@ namespace Admin_Client.ViewModel.WindowModels
 
 		public void SetMainContent(UserControl content)
 		{
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, content.GetType().Name + " Click"));
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Content --> " + content.GetType().Name));
 			CControl_Main.Content = content;
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Content == " + content.GetType().Name));
@@ -86,6 +89,7 @@ namespace Admin_Client.ViewModel.WindowModels
 
 		public void SetMainContent(UserControl content, bool isMenuActive)
 		{
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, content.GetType().Name + " Click"));
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Content --> " + content.GetType().Name));
 			CControl_Main.Content = content;
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Content == " + content.GetType().Name));
@@ -95,6 +99,7 @@ namespace Admin_Client.ViewModel.WindowModels
 
 		public void SetMainContent(UserControl content, bool isMenuActive = true, bool isAccountTabActive = true)
 		{
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, content.GetType().Name + " Click"));
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Content --> " + content.GetType().Name));
 			CControl_Main.Content = content;
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Content == " + content.GetType().Name));
@@ -105,6 +110,7 @@ namespace Admin_Client.ViewModel.WindowModels
 
 		public void SetMainContent(UserControl content, UserControl backToView, bool isAccountTabActive = true)
 		{
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, content.GetType().Name + " Click"));
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Content --> " + content.GetType().Name));
 			CControl_Main.Content = content;
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Content == " + content.GetType().Name));
@@ -115,6 +121,7 @@ namespace Admin_Client.ViewModel.WindowModels
 
 		public void SetMainContent(UserControl content, UserControl backToView)
 		{
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, content.GetType().Name + " Click"));
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Content --> " + content.GetType().Name));
 			CControl_Main.Content = content;
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Content == " + content.GetType().Name));
@@ -135,6 +142,23 @@ namespace Admin_Client.ViewModel.WindowModels
 		public Window GetMainWindow()
 		{
 			return mainWindow;
+		}
+
+		#endregion
+
+		#region StartWindows
+
+		public void StartPopupConfirm(object o, PopupMethod popupMethod)
+		{
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, popupMethod + " Click --> Target " + o.GetType().Name));
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log("PopupConfirm --> Starting"));
+			new PopupConfirmWindow(o, popupMethod).ShowDialog();
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log("PopupConfirm == Closed"));
+		}
+
+		public void StartPopoutLog(DateTime dateTime)
+		{
+			new PopoutLogWindow(dateTime).Show();
 		}
 
 		#endregion

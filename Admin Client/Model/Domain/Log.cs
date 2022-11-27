@@ -6,16 +6,6 @@ using System.Threading.Tasks;
 
 namespace Admin_Client.Model.Domain
 {
-	/// <summary>
-	/// The different types of log states
-	/// </summary>
-	public enum LogType
-	{
-		FatalError = 999,
-		Warning = 500,
-		Information = 200,
-		Success = 100,
-	}
 
 	/// <summary>
 	/// Used to store all data for a log entry
@@ -24,6 +14,7 @@ namespace Admin_Client.Model.Domain
 	{
 
 		public DateTime DateTime { get; set; }
+		public string DateTimeString { get; set; }
 		public LogType LogType { get; set; }
 		public string LogTxt { get; set; }
 
@@ -36,6 +27,7 @@ namespace Admin_Client.Model.Domain
 		public Log(DateTime dateTime, LogType logType, string logTxt)
 		{
 			this.DateTime = dateTime;
+			this.DateTimeString = this.DateTime.ToString();
 			this.LogType = logType;
 			this.LogTxt = logTxt;
 		}
@@ -50,6 +42,7 @@ namespace Admin_Client.Model.Domain
 		public Log(LogType logType, string logTxt)
 		{
 			this.DateTime = DateTime.Now;
+			this.DateTimeString = this.DateTime.ToString();
 			this.LogType = logType;
 			this.LogTxt = logTxt;
 		}
@@ -67,6 +60,7 @@ namespace Admin_Client.Model.Domain
 		public Log(string logTxt)
 		{
 			this.DateTime = DateTime.Now;
+			this.DateTimeString = this.DateTime.ToString();
 			this.LogType = LogType.Information;
 			this.LogTxt = logTxt;
 		}

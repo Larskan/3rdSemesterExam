@@ -2,8 +2,10 @@
 using Admin_Client.Model.Domain;
 using Admin_Client.PropertyChanged;
 using Admin_Client.Singleton;
+using Admin_Client.View.Windows.Popups;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -18,28 +20,68 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 		#region Variables
 
 		private object target;
-		private Action<object> action;
+		private Action action;
 
 		private Window currentWindow;
 
 		#endregion
 
-		#region Constructor
+		#region Properties
 
-		public PopupConfirmWindowModel(Window currentWindow, TblUser user, Action<object> action)
+		private string actionText;
+
+		public string ActionText
 		{
-			this.target = user;
-			this.action = action;
-
-			this.currentWindow = currentWindow;
+			get { return actionText; }
+			set { actionText = value; NotifyPropertyChanged(); }
 		}
 
-		public PopupConfirmWindowModel(Window currentWindow, TblGroup group, Action<object> action)
-		{
-			this.target = group;
-			this.action = action;
+		private string targetText;
 
+		public string TargetText
+		{
+			get { return targetText; }
+			set { targetText = value; NotifyPropertyChanged(); }
+		}
+
+		#endregion
+
+		#region Constructor
+
+		public PopupConfirmWindowModel(Window currentWindow, object target, PopupMethod popupMethod)
+		{
+			switch (popupMethod)
+			{
+				case PopupMethod.Edit: this.action = Edit; break;
+				case PopupMethod.Create: this.action = Create; break;
+				case PopupMethod.Delete: this.action = Delete; break;
+			}
+			this.target = target;
 			this.currentWindow = currentWindow;
+
+			ActionText = action.GetMethodInfo().Name;
+			if (action.GetMethodInfo().Name == "Create")
+			{
+				TargetText = target.GetType().Name;
+			} else
+			{
+				switch (this.target.GetType().Name)
+				{
+					case "TblUser":
+						{
+							TblUser user = (TblUser)target;
+							TargetText = user.FldUserId + " - " + user.FldFirstName + " " + user.FldLastName;
+							break;
+						}
+					case "TblGroup":
+						{
+							TblGroup group = (TblGroup)target;
+							TargetText = group.FldGroupId + " - " + group.FldGroupName;
+							break;
+						}
+					default: break;
+				}
+			}
 		}
 
 		#endregion
@@ -49,31 +91,8 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 		public void Confirm()
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(target.GetType().Name + "." + action.GetMethodInfo().Name + "() --> Invoke"));
-			switch (target.GetType().Name)
-			{
-				case "TblUser":
-					{
-						switch (action.GetType().Name)
-						{
-							case "Create": /*CREATE USER*/ break;
-							case "Edit": /*EDIT USER*/ break;
-							case "Delete": /*DELETE USER*/ break;
-						}
-						break;
-					}
-				case "TblGroup":
-					{
-						switch (action.GetType().Name)
-						{
-							case "Create": /*CREATE GROUP*/ break;
-							case "Edit": /*EDIT GROUP*/ break;
-							case "Delete": /*DELETE GROUP*/ break;
-						}
-						break;
-					}
-				default: LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.FatalError, "Could not confirm action")); break;
-			}
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log(target.GetType().Name + "." + action.GetMethodInfo().Name + "() == Invoked"));
+			action.Invoke();
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, target.GetType().Name + "." + action.GetMethodInfo().Name + "() == Success"));
 
 			currentWindow.Close();
 		}
@@ -86,6 +105,84 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 		#endregion
 
 		#region Private Methods
+
+		private void Edit()
+		{
+			switch (target.GetType().Name)
+			{
+				case "TblUser":
+					{
+						TblUser user = (TblUser)target;
+
+						/*Do Stuff*/
+
+						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + user.FldUserId + " - " + user.FldFirstName + " " + user.FldLastName));
+						break;
+					}
+				case "TblGroup":
+					{
+						TblGroup group = (TblGroup)target;
+
+						/*Do Stuff*/
+
+						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + group.FldGroupId + " - " + group.FldGroupName));
+						break;
+					}
+				default: throw new Exception("Has not been implemented: " + target.GetType().Name + "." + action.GetMethodInfo().Name);
+			}
+		}
+
+		private void Create()
+		{
+			switch (target.GetType().Name)
+			{
+				case "TblUser":
+					{
+						TblUser user = (TblUser)target;
+
+						/*Do Stuff*/
+
+						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "New: ID " + user.FldUserId + " - " + user.FldFirstName + " " + user.FldLastName));
+						break;
+					}
+				case "TblGroup":
+					{
+						TblGroup group = (TblGroup)target;
+
+						/*Do Stuff*/
+
+						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "New: ID " + group.FldGroupId + " - " + group.FldGroupName));
+						break;
+					}
+				default: throw new Exception("Has not been implemented: " + target.GetType().Name + "." + action.GetMethodInfo().Name);
+			}
+		}
+
+		private void Delete()
+		{
+			switch (target.GetType().Name)
+			{
+				case "TblUser":
+					{
+						TblUser user = (TblUser)target;
+
+						/*Do Stuff*/
+
+						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + user.FldUserId + " - " + user.FldFirstName + " " + user.FldLastName));
+						break;
+					}
+				case "TblGroup":
+					{
+						TblGroup group = (TblGroup)target;
+
+						/*Do Stuff*/
+
+						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + group.FldGroupId + " - " + group.FldGroupName));
+						break;
+					}
+				default: throw new Exception("Has not been implemented: " + target.GetType().Name + "." + action.GetMethodInfo().Name);
+			}
+		}
 
 		#endregion
 

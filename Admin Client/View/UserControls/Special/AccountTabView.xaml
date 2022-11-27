@@ -39,7 +39,7 @@
             <Button Grid.Column="0" Content="Profile" FontSize="10" Background="Transparent" BorderThickness="0" Click="Profile_Click">
                 <Button.Resources>
                     <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="0,0,10,0"/>
+                        <Setter Property="CornerRadius" Value="0,0,0,10"/>
                     </Style>
                     <Style TargetType="Button">
                         <Style.Triggers>
@@ -76,7 +76,7 @@
             <Button Grid.Column="1" Content="Log Out" FontSize="10" Background="Transparent" BorderThickness="0" Click="LogOut_Click">
                 <Button.Resources>
                     <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="0,0,10,0"/>
+                        <Setter Property="CornerRadius" Value="0"/>
                     </Style>
                     <Style TargetType="Button">
                         <Style.Triggers>
