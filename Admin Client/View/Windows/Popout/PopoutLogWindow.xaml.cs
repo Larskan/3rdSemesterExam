@@ -31,5 +31,10 @@ namespace Admin_Client.View.Windows.Popout
 
 			InitializeComponent();
 		}
+
+		private void Window_Closed(object sender, EventArgs e)
+		{
+			windowModel.Closed();
+		}
 	}
 }

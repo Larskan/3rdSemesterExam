@@ -1,11 +1,15 @@
-﻿using Admin_Client.Model.Domain;
+﻿using Admin_Client.Model.DB;
+using Admin_Client.Model.Domain;
 using Admin_Client.PropertyChanged;
 using Admin_Client.Singleton;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Admin_Client.ViewModel.WindowModels.Popup
 {
@@ -14,26 +18,82 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 
 		#region Variables
 
+		private Window currentWindow;
+
 		#endregion
 
 		#region Properties
+
+		private string objectName = "";
+
+		public string ObjectName
+		{
+			get { return objectName; }
+			set { objectName = value; }
+		}
+
+		private ObservableCollection<Parameter> parameters = new ObservableCollection<Parameter>();
+
+		public ObservableCollection<Parameter> Parameters
+		{
+			get { return parameters; }
+			set { parameters = value; }
+		}
 
 		#endregion
 
 		#region Constructor
 
-		public PopupParameterChangeWindowModel()
+		public PopupParameterChangeWindowModel(Window currentWindow, object o)
 		{
+			this.currentWindow = currentWindow;
 
+			foreach (var item in o.GetType().GetProperties())
+			{
+				string name = item.Name;
+				string type = item.PropertyType.ToString().Replace("System.","");
+				object value = null;
+				switch (type)
+				{
+					case "String": value = (String)item.GetValue(o); break; 
+					case "Int32": value = (Int32)item.GetValue(o); break;
+					case "Boolean": value = (Boolean)item.GetValue(o); break;
+				}
+				if (name.ToLower().Contains("name"))
+				{
+					// If the object has two or more parts to their name
+					if (ObjectName.Length > 0)
+					{
+						ObjectName += " ";
+					}
+					ObjectName += value.ToString();
+				}
+				if (value != null && !name.ToLower().Contains("id"))
+				{
+					Parameters.Add(new Parameter(name, (ParameterType)Enum.Parse(typeof(ParameterType), type), value.ToString()));
+				}
+			}
 		}
 
 		#endregion
 
 		#region Public Methods
 
-		#endregion
+		public void Change()
+		{
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Change Click"));
 
-		#region Private Methods
+			// CHANGE HAPPENS - TODO
+
+
+			currentWindow.Close();
+		}
+
+		public void Cancel()
+		{
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Cancel Click"));
+			currentWindow.Close();
+		}
 
 		#endregion
 

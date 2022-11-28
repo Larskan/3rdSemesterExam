@@ -17,4 +17,14 @@ namespace Admin_Client
 		Information = 200,
 		Success = 100,
 	}
+
+	/// <summary>
+	/// The different types of parameters
+	/// </summary>
+	public enum ParameterType
+	{
+		String,
+		Int32,
+		Boolean
+	}
 }

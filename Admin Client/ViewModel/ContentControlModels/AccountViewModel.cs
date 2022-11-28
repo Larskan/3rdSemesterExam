@@ -1,4 +1,5 @@
-﻿using Admin_Client.Model.Domain;
+﻿using Admin_Client.Model.DB;
+using Admin_Client.Model.Domain;
 using Admin_Client.PropertyChanged;
 using Admin_Client.Singleton;
 using System;
@@ -23,6 +24,22 @@ namespace Admin_Client.ViewModel.ContentControlModels
 			set { initials = value; NotifyPropertyChanged(); }
 		}
 
+		private string firstname;
+
+		public string Firstname
+		{
+			get { return firstname; }
+			set { firstname = value; NotifyPropertyChanged(); }
+		}
+
+		private string lastname;
+
+		public string Lastname
+		{
+			get { return lastname; }
+			set { lastname = value; NotifyPropertyChanged(); }
+		}
+
 		private string username;
 
 		public string Username
@@ -39,9 +56,9 @@ namespace Admin_Client.ViewModel.ContentControlModels
 			set { email = value; NotifyPropertyChanged(); }
 		}
 
-		private string phonenumber;
+		private int phonenumber;
 
-		public string Phonenumber
+		public int Phonenumber
 		{
 			get { return phonenumber; }
 			set { phonenumber = value; NotifyPropertyChanged(); }
@@ -54,11 +71,14 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		public AccountViewModel()
 		{
-			// Get Current USER
-			this.initials = "FL";
-			this.username = "FirstName LastName";
-			this.email = "First@Last.com";
-			this.phonenumber = "" + 42424242;
+			// Get Current USER - TODO (DO NOT!!!!!!! USE TBLUSER AS PARAMETER)
+			
+			this.Firstname = "FirstName";
+			this.Lastname = "LastName";
+			this.Initials = "" + Firstname.First() + Lastname.First();
+			this.Username = this.Firstname+ " " + this.Lastname;
+			this.Email = "First@Last.com";
+			this.Phonenumber = 42424242;
 		}
 
 		#endregion
@@ -67,7 +87,8 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		public void Edit()
 		{
-			// EDIT POPUP WITH CURRENT USER
+			// EDIT POPUP WITH CURRENT USER - TODO
+			MainWindowModelSingleton.Instance.StartPopupParameterChange(new TblUser() { FldUserId = 0, FldFirstName = Firstname, FldLastName = Lastname, FldEmail = Email, FldPhonenumber = Phonenumber });
 		}
 
 		public void LogTool()

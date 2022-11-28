@@ -280,6 +280,33 @@
             </DataTemplate.Triggers>
         </DataTemplate>
 
+        <!--DataTemplate Log-->
+
+        <DataTemplate x:Key="parameterDataTemplate">
+            <Border Name="border" BorderThickness="0,3,0,0" BorderBrush="Gray" Resources="{StaticResource roundborder10}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label x:Name="name" Content="{Binding ParameterName}" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="type" Content="{Binding ParameterType}" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <TextBox x:Name="value" Text="{Binding ParameterValue}" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" Resources="{StaticResource roundborder10}" ></TextBox>
+                </Grid>
+            </Border>
+            <!--
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding Path=ParameterType}">
+                    <DataTrigger.Value>
+                        <local:ParameterType>String</local:ParameterType>
+                    </DataTrigger.Value>
+                    <Setter TargetName="border" Property="Background" Value="LightGreen" />
+                </DataTrigger>
+            </DataTemplate.Triggers>
+            -->
+        </DataTemplate>
+        
         <!--#endregion-->
         
         <!--#region ContextMenu-->
@@ -295,6 +322,21 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+        </Style>
+
+        <!--#endregion-->
+
+        <!--#region ItemContainerStyle-->
+
+        <!--List item witout focusable-->
+        <Style x:Key="NoTargetRoundedListItem" TargetType="{x:Type ListBoxItem}" Resources="{StaticResource roundborder10}">
+            <Setter Property="Focusable" Value="false"/>
+        </Style>
+
+        <!--List item witout focusable and hover-->
+        <Style x:Key="NoHoverOrTargetRoundedListItem" TargetType="{x:Type ListBoxItem}" Resources="{StaticResource roundborder10}">
+            <Setter Property="Focusable" Value="false"/>
+            <Setter Property="IsHitTestVisible" Value="false"/>
         </Style>
 
         <!--#endregion-->

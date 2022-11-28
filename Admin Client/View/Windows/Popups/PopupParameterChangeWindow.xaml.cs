@@ -22,12 +22,36 @@ namespace Admin_Client.View.Windows.Popups
 	/// </summary>
 	public partial class PopupParameterChangeWindow : Window
 	{
-		PopupParameterChangeWindowModel windowModel = new PopupParameterChangeWindowModel();
-		public PopupParameterChangeWindow()
+		PopupParameterChangeWindowModel windowModel;
+		public PopupParameterChangeWindow(Window owner, object o)
 		{
+			this.windowModel = new PopupParameterChangeWindowModel(this, o);
 			this.DataContext = windowModel;
 
+			this.Owner = owner;
+
 			InitializeComponent();
+
+			// Minimum size
+			if (owner.Height > 300)
+			{
+				this.Height = owner.Height / 1.33;
+				
+			}
+			if (owner.Width > 600)
+			{
+				this.Width = owner.Width / 1.5;
+			}
+		}
+
+		private void Change_Click(object sender, RoutedEventArgs e)
+		{
+			windowModel.Change();
+		}
+
+		private void Cancel_Click(object sender, RoutedEventArgs e)
+		{
+			windowModel.Cancel();
 		}
 	}
 }

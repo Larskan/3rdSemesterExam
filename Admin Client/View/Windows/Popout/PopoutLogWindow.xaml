@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Admin_Client.View.Windows"
         mc:Ignorable="d"
-        Title="LogWindow" Height="600" Width="700">
+        Title="LogWindow" Height="600" Width="700" Closed="Window_Closed">
     <Grid>
 
         <Grid.RowDefinitions>
@@ -15,7 +15,7 @@
 
         <Label Grid.Row="0" Content="{Binding LogFileName}" FontSize="30" FontWeight="Bold" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
 
-        <ListBox Grid.Row="1" ItemsSource="{Binding Logs}" Margin="10" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource logDataTemplate}" Resources="{StaticResource roundborder10}"/>
+        <ListBox Grid.Row="1" ItemsSource="{Binding Logs}" Margin="10" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource logDataTemplate}" ItemContainerStyle="{StaticResource NoHoverOrTargetRoundedListItem}" Resources="{StaticResource roundborder10}"/>
 
     </Grid>
 </Window>
