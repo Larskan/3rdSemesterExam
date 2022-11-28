@@ -79,9 +79,9 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Button Grid.Column="1" Grid.Row="1" Content="Edit" FontSize="16" Click="Edit_Click" Resources="{StaticResource roundborder10}"/>
+            <Button Grid.Column="1" Grid.Row="1" Content="Edit" FontSize="16" Click="Edit_Click" Resources="{StaticResource roundcornerbutton10}"/>
 
-            <Button Grid.Column="3" Grid.Row="1" Content="Log-Tool" FontSize="16" Click="LogTool_Click" Resources="{StaticResource roundborder10}"/>
+            <Button Grid.Column="3" Grid.Row="1" Content="Log-Tool" FontSize="16" Click="LogTool_Click" Resources="{StaticResource roundcornerbutton10}"/>
 
         </Grid>
 

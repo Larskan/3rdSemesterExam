@@ -61,6 +61,11 @@ namespace Admin_Client.ViewModel.WindowModels.Popout
 			MainWindowModelSingleton.Instance.StartPopoutLog(dateTime);
 		}
 
+		public void Closed()
+		{
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "LogTool Close Click"));
+		}
+
 		#endregion
 
 	}

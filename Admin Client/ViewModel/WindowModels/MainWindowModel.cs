@@ -163,7 +163,12 @@ namespace Admin_Client.ViewModel.WindowModels
 
 		public void StartPopoutLogTool()
 		{
-			new PopoutLogToolWindow().Show();
+			new PopoutLogToolWindow(mainWindow).Show();
+		}
+
+		public void StartPopupParameterChange(object o)
+		{
+			new PopupParameterChangeWindow(mainWindow, o).ShowDialog();
 		}
 
 		#endregion

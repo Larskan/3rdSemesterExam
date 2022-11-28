@@ -54,5 +54,14 @@ namespace Admin_Client.ViewModel.WindowModels.Popout
 
 		#endregion
 
+		#region Public Methods
+
+		public void Closed()
+		{
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Log Close Click"));
+		}
+
+		#endregion
+
 	}
 }

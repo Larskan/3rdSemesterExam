@@ -21,9 +21,11 @@ namespace Admin_Client.View.Windows.Popout
 	public partial class PopoutLogToolWindow : Window
 	{
 		PopoutLogToolWindowModel windowModel = new PopoutLogToolWindowModel();
-		public PopoutLogToolWindow()
+		public PopoutLogToolWindow(Window owner)
 		{
 			this.DataContext = windowModel;
+
+			this.Owner = owner;
 
 			InitializeComponent();
 		}
@@ -41,5 +43,10 @@ namespace Admin_Client.View.Windows.Popout
 				}
 			}
         }
-    }
+
+		private void Window_Closed(object sender, EventArgs e)
+		{
+			windowModel.Closed();
+		}
+	}
 }

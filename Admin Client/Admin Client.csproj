@@ -224,6 +224,7 @@
     <Compile Include="Model\DB\IHttpImplementation.cs" />
     <Compile Include="Model\DB\Response.cs" />
     <Compile Include="Model\Domain\Log.cs" />
+    <Compile Include="Model\Domain\Parameter.cs" />
     <Compile Include="Model\FAKEDATABASE.cs" />
     <Compile Include="Model\FileIO\LogHandler.cs" />
     <Compile Include="Model\Foundation\Enums.cs" />
