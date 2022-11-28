@@ -138,7 +138,7 @@ namespace Admin_Client.Model.DB
                     {
                         new KeyValuePair<string, string>("","parameter")
                     });
-                    var response = client.PostAsync("/api/values", content).Result;
+                    var response = client.PostAsync("/values", content).Result;
                     MessageBox.Show(response.ToString());
                     if (!response.IsSuccessStatusCode)
                     {
@@ -183,7 +183,7 @@ namespace Admin_Client.Model.DB
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        async static Task<string> getRequest(string url)
+        async static Task<string> GetRequest(string url)
         {
             string con = "";
             using (HttpClient client = new HttpClient())
@@ -301,47 +301,6 @@ namespace Admin_Client.Model.DB
             return response;
         }
 
-        /*
-        public async Task<object> Save()
-        {
-            var uri = "https://localhost:7002";
-            var httpClient = new HttpClient();
-            HttpResponseMessage res = await httpClient.GetAsync(uri);
-            //var data = await res.Content.ReadAsStreamAsync();
-
-            using (var request = new HttpRequestMessage())
-            {
-                request.RequestUri = new Uri("https://localhost:7002");
-                request.Method = HttpMethod.Get;
-
-                using (var response = await httpClient.SendAsync(request))
-                {
-                    string content = await response.Content.ReadAsStringAsync();
-
-                    var result = JsonConvert.DeserializeObject<IList<dynamic>>(content);
-
-                    foreach(var item in result)
-                    {
-                        Console.WriteLine(item.summary);
-                    }
-
-                    var responsetwo = JsonConvert.DeserializeObject<MyResponse>(content);
-                    foreach(var item in responsetwo.Vouchers)
-                    {
-                        Console.WriteLine(item);
-                    }
-
-                }
-            }
-
-            
-        }
-        */
-
-        public class MyResponse
-        {
-            public IEnumerable<string> Vouchers { get; set; }
-        }
         
 
 
