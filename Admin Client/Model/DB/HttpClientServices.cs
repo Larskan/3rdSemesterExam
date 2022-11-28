@@ -1,17 +1,41 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Admin_Client.Model.DB
 {
+
+    /*Placeholders for the Endpoints
+     * https://localhost:7002/TblGroups
+     * https://localhost:7002/TblGroups/{ID}
+     * https://localhost:7002/TblGroupToMoneys
+     * https://localhost:7002/TblLogins
+     * https://localhost:7002/TblLogins/{ID}
+     * https://localhost:7002/TblReceipts
+     * https://localhost:7002/TblReceipts/{ID}
+     * https://localhost:7002/TblTrips
+     * https://localhost:7002/TblTrips/{ID}
+     * https://localhost:7002/TblTripToUserExpenses
+     * https://localhost:7002/TblTripToUserExpenses/{ID}
+     * https://localhost:7002/TblUserExpenses
+     * https://localhost:7002/TblUserExpenses/{ID}
+     * https://localhost:7002/TblUsers
+     * https://localhost:7002/TblUsers/{ID}
+     * https://localhost:7002/TblUserToGroups
+     * https://localhost:7002/TblUserToGroups/{ID}
+     * 
+     */
     public class HttpClientServices : IHttpImplementation
     {
         //Having it static reduces waste sockets and makes it faster
@@ -20,6 +44,8 @@ namespace Admin_Client.Model.DB
         //Translator from to/from Json -> other format
         private readonly JsonSerializerOptions _options;
 
+        
+
         public HttpClientServices()
         {
             _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
@@ -27,34 +53,69 @@ namespace Admin_Client.Model.DB
            
         }
 
+        //Simple console version that would do the job, now transform it into something that works with the API
+        //Need to grab all bodies from 
+        /*
+        var group = new TblGroup
+             {
+                FldGroupId = 6,
+                FldGroupName = "jsonTest",
+                FldTempBool = true
+             };
+                string fileName = "testingGroup.json";
+                FileStream createStream = File.Create(fileName);
+                await JsonSerializer.SerializeAsync(createStream, group);
+                
+                Console.WriteLine(File.ReadAllText(fileName));
+                //output: {"FldGroupId":"6","FldGroupName":jsonTest,"FldTempBool":"true"}
+         * 
+         * 
+         */
+
         //use [Route], from API controllers for the specific tables
         //Translator from http to json
         //result: [{"fldGroupId":1,"fldGroupName":"Lars Test","fldTempBool":true},{"fldGroupId":3,"fldGroupName":"LarsKan","fldTempBool":true},{"fldGroupId":4,"fldGroupName":"Klasse2","fldTempBool":true}]
 
         public async Task Execute()
         {
-            await GetGroups();
+            await GetTblGroups();
             await GetUsers();
         }
+
+
+        /*
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<TblGroup>>> DoTblGroups()
+        {
+            return await _options.TblGroups.ToListAsync();
+        }
+        */
+
         /// <summary>
-        /// Supposed to create a two-way link between API and DB, at the moment it is one-way
+        /// 
         /// </summary>
         /// <returns></returns>
-        [Route("TblGroup")]
-        public async Task GetGroups()
+        [HttpGet]
+        public async Task GetTblGroups()
         {
-            var response = await _httpClient.GetAsync("tblGroup");
+            var response = await _httpClient.GetAsync("TblGroups");
             response.EnsureSuccessStatusCode();
 
+            string fileName = "testingGroup.json";
+            FileStream createStream = File.Create(fileName);
+            await JsonSerializer.SerializeAsync(createStream, response);
+
             var content = await response.Content.ReadAsStringAsync();
+           
             var groups = JsonSerializer.Deserialize<List<TblGroup>>(content, _options);
+            Console.WriteLine(groups);
         }
 
         /// <summary>
-        /// Supposed to create a two-way link between API and DB, at the moment it is one-way
+        /// 
         /// </summary>
         /// <returns></returns>
-        [Route("TblUser")]
+        [HttpGet]
         public async Task GetUsers()
         {
             var response = await _httpClient.GetAsync("tblUser");
@@ -176,7 +237,7 @@ namespace Admin_Client.Model.DB
             string response = "";
             using(HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:7270/swagger");
+                client.BaseAddress = new Uri("https://localhost:7270/");
                 var content = new FormUrlEncodedContent(new[]
                 {
                     new KeyValuePair<string, string>("","paramter")
@@ -200,7 +261,7 @@ namespace Admin_Client.Model.DB
             string con = "";
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:7270/swagger");
+                client.BaseAddress = new Uri("https://localhost:7270/");
                 var content = new FormUrlEncodedContent(new[]
                 {
                     new KeyValuePair<string, string>("","parameter")
@@ -240,7 +301,48 @@ namespace Admin_Client.Model.DB
             return response;
         }
 
+        /*
+        public async Task<object> Save()
+        {
+            var uri = "https://localhost:7002";
+            var httpClient = new HttpClient();
+            HttpResponseMessage res = await httpClient.GetAsync(uri);
+            //var data = await res.Content.ReadAsStreamAsync();
 
+            using (var request = new HttpRequestMessage())
+            {
+                request.RequestUri = new Uri("https://localhost:7002");
+                request.Method = HttpMethod.Get;
+
+                using (var response = await httpClient.SendAsync(request))
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+
+                    var result = JsonConvert.DeserializeObject<IList<dynamic>>(content);
+
+                    foreach(var item in result)
+                    {
+                        Console.WriteLine(item.summary);
+                    }
+
+                    var responsetwo = JsonConvert.DeserializeObject<MyResponse>(content);
+                    foreach(var item in responsetwo.Vouchers)
+                    {
+                        Console.WriteLine(item);
+                    }
+
+                }
+            }
+
+            
+        }
+        */
+
+        public class MyResponse
+        {
+            public IEnumerable<string> Vouchers { get; set; }
+        }
+        
 
 
     }
