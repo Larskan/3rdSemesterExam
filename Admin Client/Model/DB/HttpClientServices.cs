@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -16,20 +17,30 @@ namespace Admin_Client.Model.DB
         //Having it static reduces waste sockets and makes it faster
         private static readonly HttpClient _httpClient = new HttpClient();
         
+        //Translator from to/from Json -> other format
         private readonly JsonSerializerOptions _options;
 
         public HttpClientServices()
         {
             _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            _httpClient.BaseAddress = new Uri("https://localhost:7270/swagger");
+            _httpClient.BaseAddress = new Uri("https://localhost:7270/");
            
         }
+
+        //use [Route], from API controllers for the specific tables
+        //Translator from http to json
+        //result: [{"fldGroupId":1,"fldGroupName":"Lars Test","fldTempBool":true},{"fldGroupId":3,"fldGroupName":"LarsKan","fldTempBool":true},{"fldGroupId":4,"fldGroupName":"Klasse2","fldTempBool":true}]
 
         public async Task Execute()
         {
             await GetGroups();
             await GetUsers();
         }
+        /// <summary>
+        /// Supposed to create a two-way link between API and DB, at the moment it is one-way
+        /// </summary>
+        /// <returns></returns>
+        [Route("TblGroup")]
         public async Task GetGroups()
         {
             var response = await _httpClient.GetAsync("tblGroup");
@@ -39,6 +50,11 @@ namespace Admin_Client.Model.DB
             var groups = JsonSerializer.Deserialize<List<TblGroup>>(content, _options);
         }
 
+        /// <summary>
+        /// Supposed to create a two-way link between API and DB, at the moment it is one-way
+        /// </summary>
+        /// <returns></returns>
+        [Route("TblUser")]
         public async Task GetUsers()
         {
             var response = await _httpClient.GetAsync("tblUser");
