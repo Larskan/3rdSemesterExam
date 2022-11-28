@@ -161,6 +161,11 @@ namespace Admin_Client.ViewModel.WindowModels
 			new PopoutLogWindow(dateTime).Show();
 		}
 
+		public void StartPopoutLogTool()
+		{
+			new PopoutLogToolWindow().Show();
+		}
+
 		#endregion
 
 		#region Private Methods

@@ -1,0 +1,21 @@
+﻿<Window x:Class="Admin_Client.View.Windows.Popout.PopoutLogToolWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Admin_Client.View.Windows.Popout"
+        mc:Ignorable="d"
+        Title="PopoutLogToolWindow" Height="450" Width="400">
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="75"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Label Content="Local LogFiles" FontSize="25" FontWeight="SemiBold" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" ></Label>
+
+        <ListBox x:Name="ListBox_LogFiles" Grid.Column="1" Grid.Row="2" ItemsSource="{Binding LogFiles}" Margin="10" MouseDoubleClick="ListBox_Groups_MouseDoubleClick" Style="{StaticResource roundlistboxwithempty}" Resources="{StaticResource roundborder10}" ></ListBox>
+
+    </Grid>
+</Window>

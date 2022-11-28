@@ -10,7 +10,7 @@ using FairShareAPI.Models;
 
 namespace FairShareAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class TblUserToGroupsController : ControllerBase
     {

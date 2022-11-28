@@ -1,5 +1,6 @@
 ﻿using Admin_Client.Model.Domain;
 using Admin_Client.Singleton;
+using Admin_Client.ViewModel.ContentControlModels;
 using Admin_Client.ViewModel.ContentControlModels.Special;
 using System;
 using System.Collections.Generic;
@@ -23,12 +24,22 @@ namespace Admin_Client.View.UserControls
 	/// </summary>
 	public partial class AccountView : UserControl
 	{
-		AccountTabViewModel viewModel = new AccountTabViewModel();
+		AccountViewModel viewModel = new AccountViewModel();
 		public AccountView()
 		{
 			this.DataContext = viewModel;
 
 			InitializeComponent();
 		}
-	}
+
+		private void Edit_Click(object sender, RoutedEventArgs e)
+		{
+			viewModel.Edit();
+        }
+
+		private void LogTool_Click(object sender, RoutedEventArgs e)
+		{
+			viewModel.LogTool();
+        }
+    }
 }

@@ -7,6 +7,83 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Label Content="ACCOUNT" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="75"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Column="1" Grid.Row="1">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="1" Grid.Row="1" Content="{Binding Initials}" FontSize="35" Resources="{StaticResource roundcornericon100}"/>
+
+        </Grid>
+
+        <Label Content="{Binding Username}" FontSize="25" FontWeight="SemiBold" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" ></Label>
+
+        <Border Grid.Column="1" Grid.Row="4" Background="White" Resources="{StaticResource roundborder10}">
+            <Grid >
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="0.5"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Content="E-mail:" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right"  Margin="0,0,10,0"/>
+                <Label Content="{Binding Email}" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+
+                <Border Grid.Column="0" Grid.Row="1" Background="Gray" Margin="5,0,5,0"/>
+                <Border Grid.Column="1" Grid.Row="1" Background="Gray" Margin="5,0,5,0"/>
+                
+                <Label Content="Phonenumber:" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,0"/>
+                <Label Content="{Binding Phonenumber}" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+
+            </Grid>
+        </Border>
+
+        <Grid Grid.Column="1" Grid.Row="5">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="0.5*"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Button Grid.Column="1" Grid.Row="1" Content="Edit" FontSize="16" Click="Edit_Click" Resources="{StaticResource roundborder10}"/>
+
+            <Button Grid.Column="3" Grid.Row="1" Content="Log-Tool" FontSize="16" Click="LogTool_Click" Resources="{StaticResource roundborder10}"/>
+
+        </Grid>
+
     </Grid>
 </UserControl>

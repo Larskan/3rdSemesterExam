@@ -1,4 +1,5 @@
 ﻿using Admin_Client.Model.Domain;
+using Admin_Client.Singleton;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -165,6 +166,30 @@ namespace Admin_Client.Model.FileIO
 				WriteToLogFile(new Log(LogType.Warning, "Could not find/read targetet file " + ToPath(ToFileName(dateTime), "txt")));
 				return new List<Log>();
 			}
+		}
+
+		/// <summary>
+		/// Get all logfiles on the local PC
+		/// </summary>
+		/// <returns>A list of names in DateTime format</returns>
+		public List<DateTime> GetLocalLogFiles()
+		{
+			if (!CreateDataDir())
+			{
+				WriteToLogFile(new Log(LogType.Warning, "Could not find DataDir creating new DataDir"));
+			}
+
+			List<DateTime> files = new List<DateTime>();
+
+			foreach (var item in Directory.GetFiles(PATH))
+			{
+				DateTime fileDateTime = ToDateTime(ToFileName(item));
+
+				files.Add(fileDateTime);
+			}
+
+			return files;
+
 		}
 
 		#endregion
