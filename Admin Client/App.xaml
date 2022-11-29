@@ -19,7 +19,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="PasswordBox">
-                        <Border CornerRadius="5" x:Name="Bd" Background="White" BorderBrush="Gray" BorderThickness="1" OpacityMask="{x:Null}">
+                        <Border CornerRadius="10" x:Name="Bd" Background="White" BorderBrush="Gray" BorderThickness="1" OpacityMask="{x:Null}">
                             <ScrollViewer SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" x:Name="PART_ContentHost"/>
                         </Border>
                         <ControlTemplate.Triggers>
