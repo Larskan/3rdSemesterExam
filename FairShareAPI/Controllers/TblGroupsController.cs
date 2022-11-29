@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FairShareAPI.Data;
 using FairShareAPI.Models;
+using Microsoft.AspNetCore.Cors;
 
 namespace FairShareAPI.Controllers
 {
