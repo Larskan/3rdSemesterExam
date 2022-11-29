@@ -54,7 +54,8 @@ namespace Admin_Client.Model.DB
         }
 
         //Simple console version that would do the job, now transform it into something that works with the API
-        //Need to grab all bodies from 
+        //Need to grab all bodies from endpoints
+        //Make httpclient grab the DB to be used for API
         /*
         var group = new TblGroup
              {
@@ -98,6 +99,7 @@ namespace Admin_Client.Model.DB
         [HttpGet]
         public async Task GetTblGroups()
         {
+            _httpClient.BaseAddress = new Uri("https://localhost:7002/TblGroups");
             var response = await _httpClient.GetAsync("TblGroups");
             response.EnsureSuccessStatusCode();
 
