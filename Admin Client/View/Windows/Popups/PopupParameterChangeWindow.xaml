@@ -24,7 +24,7 @@
             <Label Content="{Binding ObjectName}"  FontSize="30" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
         </Viewbox>
 
-        <ListBox Grid.Row="3" ItemsSource="{Binding Parameters}" Margin="10" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource parameterDataTemplate}" ItemContainerStyle="{StaticResource NoTargetRoundedListItem}" Style="{StaticResource roundlistboxwithempty}" Resources="{StaticResource roundborder10}"/>
+        <ListBox x:Name="ListBox_Parameters" Grid.Row="3" ItemsSource="{Binding Parameters}" Margin="10" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource parameterDataTemplate}" ItemContainerStyle="{StaticResource NoTargetRoundedListItem}" Style="{StaticResource roundlistboxwithempty}" Resources="{StaticResource roundborder10}"/>
 
         <Grid Grid.Row="4">
 

@@ -3,6 +3,7 @@ using Admin_Client.Singleton;
 using Admin_Client.ViewModel.WindowModels.Popup;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,7 +47,7 @@ namespace Admin_Client.View.Windows.Popups
 
 		private void Change_Click(object sender, RoutedEventArgs e)
 		{
-			windowModel.Change();
+			windowModel.Change(ListBox_Parameters);
 		}
 
 		private void Cancel_Click(object sender, RoutedEventArgs e)

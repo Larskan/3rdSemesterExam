@@ -35,11 +35,6 @@ namespace Admin_Client.View.UserControls
 
 		private void Login_Click(object sender, RoutedEventArgs e)
 		{
-
-			HttpClientServices s = new HttpClientServices();
-			s.GetTblGroups();
-
-			/*
 			if (PasswordBox_Password.Password.Length > 0)
 			{
 				viewModel.Login(TextBox_Username.Text, PasswordBox_Password.Password);
@@ -47,7 +42,6 @@ namespace Admin_Client.View.UserControls
 			{
 				viewModel.Login(TextBox_Username.Text, TextBox_Password.Text);
 			}
-			*/
 		}
     }
 }
