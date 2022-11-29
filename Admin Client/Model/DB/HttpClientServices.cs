@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -99,16 +100,21 @@ namespace Admin_Client.Model.DB
         public async Task GetTblGroups()
         {
             var response = await _httpClient.GetAsync("TblGroups");
+            Debug.WriteLine("Response" + response);
+
             response.EnsureSuccessStatusCode();
+
+            Debug.WriteLine("Response" + response);
 
             string fileName = "testingGroup.json";
             FileStream createStream = File.Create(fileName);
             await JsonSerializer.SerializeAsync(createStream, response);
 
             var content = await response.Content.ReadAsStringAsync();
-           
+            Debug.WriteLine("Content" + content);
+
             var groups = JsonSerializer.Deserialize<List<TblGroup>>(content, _options);
-            Console.WriteLine(groups);
+            Debug.WriteLine("Groups" + groups);
         }
 
         /// <summary>
