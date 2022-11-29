@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FairShareAPI.Data;
 using FairShareAPI.Models;
-using Newtonsoft.Json;
+using Microsoft.AspNetCore.Cors;
 
 namespace FairShareAPI.Controllers
 {
@@ -29,7 +29,6 @@ namespace FairShareAPI.Controllers
             return await _context.TblGroups.ToListAsync();
         }
 
-       
         // GET: api/TblGroups/5
         [HttpGet("{id}")]
         public async Task<ActionResult<TblGroup>> GetTblGroup(int id)
