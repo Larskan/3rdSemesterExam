@@ -36,17 +36,6 @@ namespace Admin_Client.View.UserControls
 
 		private void Login_Click(object sender, RoutedEventArgs e)
 		{
-			//Testing the service
-
-			HttpClientServices s = new HttpClientServices();
-			Debug.WriteLine("CHECK: " + s.GetAllTblGroups());
-			s.GetAllTblGroups();
-
-			Debug.WriteLine("CHECK2: " + s.GetAllTblGroups());
-			s.GetSpecificGroup();
-            Debug.WriteLine("CHECK3(Specific Group): " + s.GetAllTblGroups());
-
-            /*
 			if (PasswordBox_Password.Password.Length > 0)
 			{
 				viewModel.Login(TextBox_Username.Text, PasswordBox_Password.Password);
@@ -54,7 +43,6 @@ namespace Admin_Client.View.UserControls
 			{
 				viewModel.Login(TextBox_Username.Text, TextBox_Password.Text);
 			}
-			*/
         }
 	}
 }
