@@ -1,5 +1,6 @@
 ﻿using Admin_Client.Model.DB;
 using Admin_Client.Model.Domain;
+using Admin_Client.Model.Foundation;
 using Admin_Client.Singleton;
 using Admin_Client.View.Windows.Popout;
 using Admin_Client.ViewModel.ContentControlModels;
@@ -36,17 +37,18 @@ namespace Admin_Client.View.UserControls
 
 		private void Login_Click(object sender, RoutedEventArgs e)
 		{
-			//Testing the service
 
-			HttpClientServices s = new HttpClientServices();
-			Debug.WriteLine("CHECK: " + s.GetAllTblGroups());
-			s.GetAllTblGroups();
+			/*
+            HttpClientServices s = new HttpClientServices();
+            s.GetAllTblGroups();
+            Debug.WriteLine("RESULT1: " + s);
+            HttpClientServices s2 = new HttpClientServices();
+            s2.GetSpecificGroup(1);
+            Debug.WriteLine("RESULT2: " + s2);
+			*/
 
-			Debug.WriteLine("CHECK2: " + s.GetAllTblGroups());
-			s.GetSpecificGroup();
-            Debug.WriteLine("CHECK3(Specific Group): " + s.GetAllTblGroups());
 
-            /*
+            
 			if (PasswordBox_Password.Password.Length > 0)
 			{
 				viewModel.Login(TextBox_Username.Text, PasswordBox_Password.Password);
@@ -54,7 +56,7 @@ namespace Admin_Client.View.UserControls
 			{
 				viewModel.Login(TextBox_Username.Text, TextBox_Password.Text);
 			}
-			*/
+			
         }
-	}
+    }
 }
