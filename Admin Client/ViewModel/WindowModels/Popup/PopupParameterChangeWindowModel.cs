@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -89,6 +90,8 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 			foreach (var item in listBox.Items)
 			{
 				isValid = false;
+
+				// DATATYPE VALID
 				switch (((Parameter)item).ParameterType)
 				{
 					case ParameterType.String:
@@ -122,17 +125,26 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 						}
 				}
 
-				// EMAIL VALID
+				// EMAIL NOT-VALID
 				if (((Parameter)item).ParameterName.ToLower().Contains("email"))
 				{
-					if (((Parameter)item).ParameterName.Contains("@") && ((Parameter)item).ParameterName.Contains("."))
+					Regex regex = new Regex(@"^((\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*))");
+					if (!regex.IsMatch(((string)((Parameter)item).ParameterValue)))
 					{
-						isValid= true;
+						isValid = false;
+					}
+				}
+				// PHONENUMBER NOT-VALID
+				if (((Parameter)item).ParameterName.ToLower().Contains("phonenumber"))
+				{
+					if (((string)((Parameter)item).ParameterValue).Length != 8)
+					{
+						isValid = false;
 					}
 				}
 
-				// DO / NOT DO
-                if (!isValid)
+				// DO or NOT DO if valid
+				if (!isValid)
 				{
 					((Parameter)item).IsValid = false;
 				} else
