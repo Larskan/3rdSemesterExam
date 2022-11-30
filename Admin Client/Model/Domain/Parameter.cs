@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Admin_Client.PropertyChanged;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,12 +10,20 @@ namespace Admin_Client.Model.Domain
 	/// <summary>
 	/// Used to store parameter information
 	/// </summary>
-	public class Parameter
+	public class Parameter : NotifyPropertyChangedHandler
 	{
 		public string ParameterName { get; set; }
 		public string ParameterTypeString { get; set; }
 		public ParameterType ParameterType { get; set; }
 		public object ParameterValue { get; set; }
+
+		private bool isValid = true;
+
+		public bool IsValid
+		{
+			get { return isValid; }
+			set { isValid = value; NotifyPropertyChanged(); }
+		}
 
 		/// <summary>
 		/// Create a new ParameterContainer

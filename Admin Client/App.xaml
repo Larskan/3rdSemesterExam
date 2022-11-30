@@ -19,7 +19,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="PasswordBox">
-                        <Border CornerRadius="5" x:Name="Bd" Background="White" BorderBrush="Gray" BorderThickness="1" OpacityMask="{x:Null}">
+                        <Border CornerRadius="10" x:Name="Bd" Background="White" BorderBrush="Gray" BorderThickness="1" OpacityMask="{x:Null}">
                             <ScrollViewer SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" x:Name="PART_ContentHost"/>
                         </Border>
                         <ControlTemplate.Triggers>
@@ -286,25 +286,20 @@
             <Border Name="border" BorderThickness="0,3,0,0" BorderBrush="Gray" Resources="{StaticResource roundborder10}">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="100"/>
-                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="125"/>
+                        <ColumnDefinition Width="75"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Label x:Name="name" Content="{Binding ParameterName}" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
                     <Label x:Name="type" Content="{Binding ParameterType}" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
-                    <TextBox x:Name="value" Text="{Binding ParameterValue}" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" Resources="{StaticResource roundborder10}" ></TextBox>
+                    <TextBox x:Name="value" Text="{Binding ParameterValue}" Grid.Column="2" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" Resources="{StaticResource roundborder10}" ></TextBox>
                 </Grid>
             </Border>
-            <!--
             <DataTemplate.Triggers>
-                <DataTrigger Binding="{Binding Path=ParameterType}">
-                    <DataTrigger.Value>
-                        <local:ParameterType>String</local:ParameterType>
-                    </DataTrigger.Value>
-                    <Setter TargetName="border" Property="Background" Value="LightGreen" />
+                <DataTrigger Binding="{Binding IsValid}" Value="false">
+                    <Setter TargetName="border" Property="Background" Value="PaleVioletRed"/>
                 </DataTrigger>
             </DataTemplate.Triggers>
-            -->
         </DataTemplate>
         
         <!--#endregion-->

@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace Admin_Client.ViewModel.WindowModels.Popup
 {
@@ -79,12 +80,67 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 
 		#region Public Methods
 
-		public void Change()
+		public void Change(ListBox listBox)
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Change Click"));
 
-			// CHANGE HAPPENS - TODO
+			Debug.WriteLine("start");
 
+			// CHANGE HAPPENS - TODO
+			bool isValid;
+			foreach (var item in listBox.Items)
+			{
+				Debug.WriteLine("foreach");
+				isValid = false;
+				switch (((Parameter)item).ParameterType)
+				{
+					case ParameterType.String:
+						{
+							try
+							{
+								((Parameter)item).ParameterValue.ToString();
+								isValid= true;
+							} catch { }
+							break;
+						}
+					case ParameterType.Int32:
+						{
+							try
+							{
+								Int32.Parse(((Parameter)item).ParameterValue.ToString());
+								isValid = true;
+							}
+							catch { }
+							break;
+						}
+					case ParameterType.Boolean:
+						{
+							try
+							{
+								Boolean.Parse(((Parameter)item).ParameterValue.ToString());
+								isValid = true;
+							}
+							catch { }
+							break;
+						}
+				}
+				if (!isValid)
+				{
+					((Parameter)item).IsValid = false;
+				} else
+				{
+					((Parameter)item).IsValid = true;
+					// DO STUFF HERE - TODO
+				}
+			}
+
+			foreach (var item in listBox.Items)
+			{
+				if (!((Parameter)item).IsValid)
+				{
+					return;
+				}
+			}
 
 			currentWindow.Close();
 		}

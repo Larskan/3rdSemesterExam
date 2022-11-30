@@ -7,11 +7,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FairShareAPI.Data;
 using FairShareAPI.Models;
+using Microsoft.AspNetCore.Cors;
 
 namespace FairShareAPI.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [EnableCors]
     public class TblTripsController : ControllerBase
     {
         private readonly FairShareDbContext _context;
