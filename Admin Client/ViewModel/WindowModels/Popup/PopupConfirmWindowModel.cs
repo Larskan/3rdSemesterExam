@@ -79,7 +79,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 							TargetText = group.FldGroupId + " - " + group.FldGroupName;
 							break;
 						}
-					default: break;
+                    default: TargetText = ActionText; ActionText = ""; break;
 				}
 			}
 		}
@@ -128,7 +128,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + group.FldGroupId + " - " + group.FldGroupName));
 						break;
 					}
-				default: throw new Exception("Has not been implemented: " + target.GetType().Name + "." + action.GetMethodInfo().Name);
+                default: throw new Exception("Has not been implemented: " + target.GetType().Name + "." + action.GetMethodInfo().Name + "()");
 			}
 		}
 
@@ -154,7 +154,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "New: ID " + group.FldGroupId + " - " + group.FldGroupName));
 						break;
 					}
-				default: throw new Exception("Has not been implemented: " + target.GetType().Name + "." + action.GetMethodInfo().Name);
+				default: throw new Exception("Has not been implemented: " + target.GetType().Name + "." + action.GetMethodInfo().Name + "()");
 			}
 		}
 
@@ -180,7 +180,25 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + group.FldGroupId + " - " + group.FldGroupName));
 						break;
 					}
-				default: throw new Exception("Has not been implemented: " + target.GetType().Name + "." + action.GetMethodInfo().Name);
+                case "TblReceipt":
+                    {
+                        TblReceipt receipt = (TblReceipt)target;
+
+                        /*Do Stuff*/
+
+                        LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + receipt.FldReceiptId + " - " + receipt.FldUserId + " " + receipt.FldUser.FldFirstName + " " + receipt.FldUser.FldLastName));
+                        break;
+                    }
+                case "TblTrip":
+                    {
+                        TblTrip trip = (TblTrip)target;
+
+                        /*Do Stuff*/
+
+                        LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + trip.FldTripId + " - " + trip.TblGroupToMoneys.ToArray()[0].FldGroup.FldGroupName));
+                        break;
+                    }
+                default: throw new Exception("Has not been implemented: " + target.GetType().Name + "." + action.GetMethodInfo().Name + "()");
 			}
 		}
 

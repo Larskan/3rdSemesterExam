@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -84,14 +85,13 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Change Click"));
 
-			Debug.WriteLine("start");
-
 			// CHANGE HAPPENS - TODO
 			bool isValid;
 			foreach (var item in listBox.Items)
 			{
-				Debug.WriteLine("foreach");
 				isValid = false;
+
+				// DATATYPE VALID
 				switch (((Parameter)item).ParameterType)
 				{
 					case ParameterType.String:
@@ -124,6 +124,26 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 							break;
 						}
 				}
+
+				// EMAIL NOT-VALID
+				if (((Parameter)item).ParameterName.ToLower().Contains("email"))
+				{
+					Regex regex = new Regex(@"^((\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*))");
+					if (!regex.IsMatch(((string)((Parameter)item).ParameterValue)))
+					{
+						isValid = false;
+					}
+				}
+				// PHONENUMBER NOT-VALID
+				if (((Parameter)item).ParameterName.ToLower().Contains("phonenumber"))
+				{
+					if (((string)((Parameter)item).ParameterValue).Length != 8)
+					{
+						isValid = false;
+					}
+				}
+
+				// DO or NOT DO if valid
 				if (!isValid)
 				{
 					((Parameter)item).IsValid = false;

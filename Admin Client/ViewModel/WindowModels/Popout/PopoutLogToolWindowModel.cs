@@ -64,6 +64,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popout
 		public void Closed()
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "LogTool Close Click"));
+			MainWindowModelSingleton.Instance.GetMainWindow().Focus();
 		}
 
 		#endregion

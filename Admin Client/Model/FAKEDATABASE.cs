@@ -66,11 +66,11 @@ namespace Admin_Client.Model
 		#region Users
 
 		public static List<TblUser> tblUsers = new List<TblUser> {
-				new TblUser { FldUserId = 1, FldEmail = "email1", FldFirstName = "firstname1", FldLastName = "lastname1", FldPhonenumber = 10101010 },
-				new TblUser { FldUserId = 2, FldEmail = "email2", FldFirstName = "firstname2", FldLastName = "lastname2", FldPhonenumber = 20202020 },
-				new TblUser { FldUserId = 3, FldEmail = "email3", FldFirstName = "firstname3", FldLastName = "lastname3", FldPhonenumber = 30303030 },
-				new TblUser { FldUserId = 4, FldEmail = "email4", FldFirstName = "firstname4", FldLastName = "lastname4", FldPhonenumber = 40404040 },
-				new TblUser { FldUserId = 5, FldEmail = "email5", FldFirstName = "firstname5", FldLastName = "lastname5", FldPhonenumber = 50505050 }
+				new TblUser { FldUserId = 1, FldEmail = "email1", FldFirstName = "firstname1", FldLastName = "lastname1", FldPhonenumber = 10101010, FldIsAdmin = false },
+				new TblUser { FldUserId = 2, FldEmail = "email2", FldFirstName = "firstname2", FldLastName = "lastname2", FldPhonenumber = 20202020, FldIsAdmin = false },
+				new TblUser { FldUserId = 3, FldEmail = "email3", FldFirstName = "firstname3", FldLastName = "lastname3", FldPhonenumber = 30303030, FldIsAdmin = false },
+				new TblUser { FldUserId = 4, FldEmail = "email4", FldFirstName = "firstname4", FldLastName = "lastname4", FldPhonenumber = 40404040, FldIsAdmin = false },
+				new TblUser { FldUserId = 5, FldEmail = "email5", FldFirstName = "firstname5", FldLastName = "lastname5", FldPhonenumber = 50505050, FldIsAdmin = true }
 		};
 
 		public static List<TblUser> GetUsers()
@@ -90,7 +90,7 @@ namespace Admin_Client.Model
 			return null;
 		}
 
-		public static void EditGroup(TblUser tblUser)
+		public static void EditUser(TblUser tblUser)
 		{
 			foreach (var item in tblUsers)
 			{
@@ -118,5 +118,68 @@ namespace Admin_Client.Model
 
 		#endregion
 
-	}
+		#region Receipt
+
+		public static List<TblReceipt> tblReceipts = new List<TblReceipt>
+		{
+			new TblReceipt{ FldReceiptId = 1, FldUserId = 1, FldAmountPaid = 500, FldTripId = 1 },
+			new TblReceipt{ FldReceiptId = 1, FldUserId = 1, FldAmountPaid = 800, FldTripId = 1 },
+			new TblReceipt{ FldReceiptId = 1, FldUserId = 1, FldAmountPaid = 1000, FldTripId = 2 }
+		};
+
+        public static List<TblReceipt> GetReceipts(TblUser user)
+        {
+			List<TblReceipt> userReceipts = new List<TblReceipt>();
+
+            foreach (var item in tblReceipts)
+			{
+				if (user.FldUserId == item.FldUserId)
+				{
+					userReceipts.Add(item);
+				}
+			}
+            return userReceipts;
+        }
+
+        public static TblUser GetReceipt(int FldReceiptId)
+        {
+            foreach (var item in tblUsers)
+            {
+                if (item.FldUserId == FldReceiptId)
+                {
+                    return item;
+                }
+            }
+            return null;
+        }
+
+        public static void EditReceipt(TblReceipt tblReceipt)
+        {
+            foreach (var item in tblReceipts)
+            {
+				if (item.FldReceiptId == tblReceipt.FldReceiptId);
+                {
+                    item.FldUserId = tblReceipt.FldUserId;
+                    item.FldAmountPaid = tblReceipt.FldAmountPaid;
+
+                    item.FldProjectedValue = tblReceipt.FldProjectedValue;
+                    item.FldTripId = tblReceipt.FldTripId;
+                }
+            }
+        }
+
+        public static void DeleteReceipt(int FldReceiptId)
+        {
+            foreach (var item in tblReceipts)
+            {
+                if (item.FldReceiptId == FldReceiptId)
+                {
+                    tblReceipts.Remove(item);
+                }
+            }
+        }
+
+        #endregion
+
+    }
 }

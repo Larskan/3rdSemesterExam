@@ -37,18 +37,6 @@ namespace Admin_Client.View.UserControls
 
 		private void Login_Click(object sender, RoutedEventArgs e)
 		{
-
-			/*
-            HttpClientServices s = new HttpClientServices();
-            s.GetAllTblGroups();
-            Debug.WriteLine("RESULT1: " + s);
-            HttpClientServices s2 = new HttpClientServices();
-            s2.GetSpecificGroup(1);
-            Debug.WriteLine("RESULT2: " + s2);
-			*/
-
-
-            
 			if (PasswordBox_Password.Password.Length > 0)
 			{
 				viewModel.Login(TextBox_Username.Text, PasswordBox_Password.Password);
@@ -56,7 +44,32 @@ namespace Admin_Client.View.UserControls
 			{
 				viewModel.Login(TextBox_Username.Text, TextBox_Password.Text);
 			}
-			
+        }
+
+		private void TextBox_Password_TextChanged(object sender, TextChangedEventArgs e)
+		{
+			PasswordBox_Password.Password = TextBox_Password.Text;
+		}
+
+		private void PasswordBox_Password_PasswordChanged(object sender, RoutedEventArgs e)
+		{
+			TextBox_Password.Text = PasswordBox_Password.Password;
+		}
+
+		private void TogglePasswordView_Checked(object sender, RoutedEventArgs e)
+		{
+			PasswordBox_Password.Visibility = Visibility.Visible;
+			TextBox_Password.Visibility = Visibility.Hidden;
+
+			PasswordBox_Password.Focus();
+		}
+
+		private void TogglePasswordView_Unchecked(object sender, RoutedEventArgs e)
+		{
+            PasswordBox_Password.Visibility = Visibility.Hidden;
+            TextBox_Password.Visibility = Visibility.Visible;
+
+            TextBox_Password.Focus();
         }
     }
 }

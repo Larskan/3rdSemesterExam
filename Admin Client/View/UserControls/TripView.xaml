@@ -7,6 +7,48 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Label Content="TRIP" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="1.5*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Column="1" Grid.Row="1" Margin="5" Background="White" Resources="{StaticResource roundborder10}">
+            <Label Content="{Binding Username}" FontSize="25" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" ></Label>
+        </Border>
+
+        <ListBox x:Name="ListBox_Receipts" Grid.Column="1" Grid.Row="2" ItemsSource="{Binding Receipts}" Margin="5" Style="{StaticResource roundlistboxwithempty}" Resources="{StaticResource roundborder10}" >
+            <ListBox.ContextMenu>
+                <ContextMenu Style="{StaticResource roundcontextmenu}" >
+                    <MenuItem Header="Delete Group" Click="Delete_Click" Resources="{StaticResource roundborder10}" />
+                </ContextMenu>
+            </ListBox.ContextMenu>
+        </ListBox>
+
+        <Grid Grid.Column="1" Grid.Row="3">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Column="2" Content="Trip Amount" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ></Label>
+
+            <Button Grid.Column="4" Content="Delete" Margin="5" Resources="{StaticResource roundcornerbutton10}" Click="Delete_Click" />
+
+        </Grid>
+
     </Grid>
 </UserControl>
