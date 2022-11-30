@@ -35,5 +35,6 @@ namespace Admin_Client.View.UserControls
 		{
 
 		}
+
 	}
 }

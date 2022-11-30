@@ -58,7 +58,7 @@
             <Button Grid.Column="0" Content="Create" Margin="5" Resources="{StaticResource roundcornerbutton10}" Click="Create_Click" />
 
             <Label Grid.Column="2" Content="Group Amount" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ></Label>
-            
+
             <Button Grid.Column="3" Content="Edit" Margin="5" Resources="{StaticResource roundcornerbutton10}" Click="Edit_Click" />
 
             <Button Grid.Column="4" Content="Delete" Margin="5" Resources="{StaticResource roundcornerbutton10}" Click="Delete_Click" />

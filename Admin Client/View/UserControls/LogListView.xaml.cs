@@ -30,5 +30,11 @@ namespace Admin_Client.View.UserControls
 
 			InitializeComponent();
 		}
-	}
+
+        private void Delete_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+    }
 }
