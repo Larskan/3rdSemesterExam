@@ -227,6 +227,7 @@
     <Compile Include="Model\Domain\Parameter.cs" />
     <Compile Include="Model\FAKEDATABASE.cs" />
     <Compile Include="Model\FileIO\LogHandler.cs" />
+    <Compile Include="Model\Foundation\Encryption.cs" />
     <Compile Include="Model\Foundation\Enums.cs" />
     <Compile Include="PropertyChanged\NotifyPropertyChangedHandler.cs" />
     <Compile Include="Singleton\LogHandlerSingleton.cs" />

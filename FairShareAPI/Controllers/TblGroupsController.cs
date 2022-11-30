@@ -13,6 +13,7 @@ namespace FairShareAPI.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [EnableCors]
     public class TblGroupsController : ControllerBase
     {
         private readonly FairShareDbContext _context;

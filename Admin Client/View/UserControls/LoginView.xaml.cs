@@ -1,10 +1,12 @@
 ﻿using Admin_Client.Model.DB;
 using Admin_Client.Model.Domain;
+using Admin_Client.Model.Foundation;
 using Admin_Client.Singleton;
 using Admin_Client.View.Windows.Popout;
 using Admin_Client.ViewModel.ContentControlModels;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -58,12 +60,16 @@ namespace Admin_Client.View.UserControls
 		{
 			TextBox_Password.Visibility = Visibility.Hidden;
 			PasswordBox_Password.Visibility = Visibility.Visible;
+
+			PasswordBox_Password.Focus();
 		}
 
 		private void TogglePasswordView_Unchecked(object sender, RoutedEventArgs e)
 		{
 			PasswordBox_Password.Visibility = Visibility.Hidden;
 			TextBox_Password.Visibility = Visibility.Visible;
-		}
+
+            TextBox_Password.Focus();
+        }
 	}
 }
