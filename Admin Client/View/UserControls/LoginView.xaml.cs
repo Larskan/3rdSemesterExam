@@ -1,6 +1,5 @@
 ﻿using Admin_Client.Model.DB;
 using Admin_Client.Model.Domain;
-using Admin_Client.Model.Foundation;
 using Admin_Client.Singleton;
 using Admin_Client.View.Windows.Popout;
 using Admin_Client.ViewModel.ContentControlModels;
@@ -37,6 +36,17 @@ namespace Admin_Client.View.UserControls
 
 		private void Login_Click(object sender, RoutedEventArgs e)
 		{
+			//Testing the service
+
+			HttpClientServices s = new HttpClientServices();
+			Debug.WriteLine("CHECK: " + s.GetAllTblGroups());
+			s.GetAllTblGroups();
+
+			Debug.WriteLine("CHECK2: " + s.GetAllTblGroups());
+			s.GetSpecificGroup();
+            Debug.WriteLine("CHECK3(Specific Group): " + s.GetAllTblGroups());
+
+            /*
 			if (PasswordBox_Password.Password.Length > 0)
 			{
 				viewModel.Login(TextBox_Username.Text, PasswordBox_Password.Password);
@@ -44,32 +54,7 @@ namespace Admin_Client.View.UserControls
 			{
 				viewModel.Login(TextBox_Username.Text, TextBox_Password.Text);
 			}
-		}
-
-		private void PasswordBox_Password_PasswordChanged(object sender, RoutedEventArgs e)
-		{
-			TextBox_Password.Text = PasswordBox_Password.Password;
-		}
-
-		private void TextBox_Password_TextChanged(object sender, TextChangedEventArgs e)
-		{
-			PasswordBox_Password.Password = TextBox_Password.Text;
-		}
-
-		private void TogglePasswordView_Checked(object sender, RoutedEventArgs e)
-		{
-			TextBox_Password.Visibility = Visibility.Hidden;
-			PasswordBox_Password.Visibility = Visibility.Visible;
-
-			PasswordBox_Password.Focus();
-		}
-
-		private void TogglePasswordView_Unchecked(object sender, RoutedEventArgs e)
-		{
-			PasswordBox_Password.Visibility = Visibility.Hidden;
-			TextBox_Password.Visibility = Visibility.Visible;
-
-            TextBox_Password.Focus();
+			*/
         }
 	}
 }

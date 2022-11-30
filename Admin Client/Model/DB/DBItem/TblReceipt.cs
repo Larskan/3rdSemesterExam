@@ -18,7 +18,7 @@ namespace Admin_Client.Model.DB
 		public double? FldAmountPaid { get; set; }
 
 		[JsonIgnore]
-		public virtual TblTrip FldTrip { get; set; }
+		public virtual TblTrip TblTrip { get; set; }
 
 		[JsonIgnore]
 		public virtual TblUser FldUser { get; set; }

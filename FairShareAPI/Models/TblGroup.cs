@@ -10,7 +10,7 @@ public partial class TblGroup
 
     public string? FldGroupName { get; set; }
 
-    public bool? FldTempBool { get; set; }
+    public bool? FldGroupBoolean { get; set; }
 
     [JsonIgnore]
     public virtual ICollection<TblGroupToMoney> TblGroupToMoneys { get; } = new List<TblGroupToMoney>();

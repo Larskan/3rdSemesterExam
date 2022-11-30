@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Runtime.CompilerServices;
 using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Text.Json;
@@ -18,6 +19,12 @@ namespace Admin_Client.Model.DB
 {
 
     /*Placeholders for the Endpoints
+     * TODO: Get One, Get all, Put, Post, Delete, Edit
+     * TODO: GetRequest
+     * TODO: GetAllRequest - X
+     * Todo: PostRequest
+     * Todo: DeleteRequest
+     * Todo: EditRequest
      * https://localhost:7002/TblGroups
      * https://localhost:7002/TblGroups/{ID}
      * https://localhost:7002/TblGroupToMoneys
@@ -37,7 +44,7 @@ namespace Admin_Client.Model.DB
      * https://localhost:7002/TblUserToGroups/{ID}
      * 
      */
-    public class HttpClientServices : IHttpImplementation
+    public class HttpClientServices
     {
         //Having it static reduces waste sockets and makes it faster
         private static readonly HttpClient _httpClient = new HttpClient();
@@ -54,137 +61,149 @@ namespace Admin_Client.Model.DB
            
         }
 
-        //Simple console version that would do the job, now transform it into something that works with the API
-        //Need to grab all bodies from endpoints
-        //Make httpclient grab the DB to be used for API
-        /*
-        var group = new TblGroup
-             {
-                FldGroupId = 6,
-                FldGroupName = "jsonTest",
-                FldTempBool = true
-             };
-                string fileName = "testingGroup.json";
-                FileStream createStream = File.Create(fileName);
-                await JsonSerializer.SerializeAsync(createStream, group);
-                
-                Console.WriteLine(File.ReadAllText(fileName));
-                //output: {"FldGroupId":"6","FldGroupName":jsonTest,"FldTempBool":"true"}
-         * 
-         * 
-         */
 
         //use [Route], from API controllers for the specific tables
         //Translator from http to json
         //result: [{"fldGroupId":1,"fldGroupName":"Lars Test","fldTempBool":true},{"fldGroupId":3,"fldGroupName":"LarsKan","fldTempBool":true},{"fldGroupId":4,"fldGroupName":"Klasse2","fldTempBool":true}]
 
+        /*
         public async Task Execute()
         {
-            await GetTblGroups();
+            await GetAllTblGroups();
             await GetUsers();
-        }
-
-
-        /*
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<TblGroup>>> DoTblGroups()
-        {
-            return await _options.TblGroups.ToListAsync();
         }
         */
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         [HttpGet]
-        public async Task GetTblGroups()
+        public Task GetSpecificLogin()
         {
-            _httpClient.BaseAddress = new Uri("https://localhost:7002/TblGroups");
-            var response = await _httpClient.GetAsync("TblGroups");
-            Debug.WriteLine("Response" + response);
+            return Task.CompletedTask;
+        }
+        [HttpGet]
+        public Task GetSpecificUser()
+        {
+            return Task.CompletedTask;
+        }
+        [HttpGet]
+        public Task GetSpecificTrip()
+        {
+            return Task.CompletedTask;
+        }
+        [HttpGet]
+        public Task GetSpecificReceipt()
+        {
+            return Task.CompletedTask;
+        }
+        [HttpGet]
+        public Task GetSpecificExpense()
+        {
+            return Task.CompletedTask;
+        }
+        [HttpGet]
+        public Task GetSpecificGroup()
+        {
+            //the id is a placeholder, find way to make it grab the actual one
+            _ = GetHttpResponse("https://localhost:7002/TblGroups", 1);
+            return Task.CompletedTask;
+        }
 
+        #region Get All from a Table
+        [HttpGet]
+        public Task GetAllTblLogin()
+        {
+            _ = GetAllHttpResponse("https://localhost:7002/TblLogins");
+            return Task.CompletedTask;
+        }
+        [HttpGet]
+        public Task GetAllTblReceipts()
+        {
+            _ = GetAllHttpResponse("https://localhost:7002/TblReceipts");
+            return Task.CompletedTask;
+        }
+        [HttpGet]
+        public Task GetAllTblTrips()
+        {
+            _ = GetAllHttpResponse("https://localhost:7002/TblTrips");
+            return Task.CompletedTask;
+        }
+        [HttpGet]
+        public Task GetAllTblUserExpenses()
+        {
+            _ = GetAllHttpResponse("https://localhost:7002/TblTripToUserExpenses");
+            return Task.CompletedTask;
+        }
+        [HttpGet]
+        public Task GetAllTblUsers()
+        {
+            _ = GetAllHttpResponse("https://localhost:7002/TblUsers");
+            return Task.CompletedTask;
+        }
+
+        [HttpGet]
+        public Task GetAllTblGroups()
+        {
+            //Grabs the response and turnd it to http
+            _ = GetAllHttpResponse("https://localhost:7002/TblGroups");
+            Debug.WriteLine("CHECK4: " + GetAllHttpResponse("https://localhost:7002/TblGroups"));
+            return Task.CompletedTask;
+            //Grabs the response and turnd it to http, same as above, different version
+            _ = GetRequest("https://localhost:7002/TblGroups");
+            Debug.WriteLine(GetRequest("CHECK5: " + "https://localhost:7002/TblGroups"));
+            return Task.CompletedTask;
+        }
+        #endregion
+
+        private async static Task<string> GetAllHttpResponse(string url)
+        {
+            //Create a base Get Response
+            _httpClient.BaseAddress = new Uri(url);
+            //Get async request to chosen url and save it as response
+            var response = await _httpClient.GetAsync(url);
+            Debug.WriteLine("Target: " + url);
+          
+            //Makes sure that it gets a 200 code OK
             response.EnsureSuccessStatusCode();
+            Debug.WriteLine("Response: " + response);
 
+            //Makes the response into HTTP through serialization
+            var content = await response.Content.ReadAsStringAsync();
+            Debug.WriteLine("Final: " + content);
+            return content;
+
+        }
+        private async static Task<string> GetHttpResponse(string url, int id)
+        {
+            string res = url + "/" +  id;
+            Debug.WriteLine("Combination: "+res);
+            _httpClient.BaseAddress = new Uri(res);
+            var response = await _httpClient.GetAsync(res);
+            Debug.WriteLine("Response2: " + response);
+            response.EnsureSuccessStatusCode();
+            var content = await response.Content.ReadAsStringAsync();
+            Debug.WriteLine("Final2: " + content);
+            return content;
+        }
+
+        private async static Task<string> PostHttpResponse(string url)
+        {
+            _httpClient.BaseAddress = new Uri(url);
+
+            var response = await _httpClient.GetAsync(url);
+            Debug.WriteLine("Target" + url);
+            response.EnsureSuccessStatusCode();
             Debug.WriteLine("Response" + response);
-
-            string fileName = "testingGroup.json";
-            FileStream createStream = File.Create(fileName);
-            await JsonSerializer.SerializeAsync(createStream, response);
 
             var content = await response.Content.ReadAsStringAsync();
             Debug.WriteLine("Content" + content);
+            //var post = JsonSerializer.Deserialize < List < (url) >> (content, _options);
 
-            var groups = JsonSerializer.Deserialize<List<TblGroup>>(content, _options);
-            Debug.WriteLine("Groups" + groups);
+
+            Debug.WriteLine("Final: " + response);
+            return content;
+            
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task GetUsers()
-        {
-            var response = await _httpClient.GetAsync("tblUser");
-            response.EnsureSuccessStatusCode();
-
-            var content = await response.Content.ReadAsStringAsync();
-            var users = JsonSerializer.Deserialize<List<TblUser>>(content, _options);
-        }
-
-        /// <summary>
-        /// CancelPendingRequests
-        /// </summary>
-        public void PostWithCancelSyntax()
-        {
-            using (var client = new HttpClient())
-            {
-                try
-                {
-                    var content = new FormUrlEncodedContent(new[]
-                    {
-                        new KeyValuePair<string, string>("","parameter")
-                    });
-                    var response = client.PostAsync("/values", content).Result;
-                    MessageBox.Show(response.ToString());
-                    if (!response.IsSuccessStatusCode)
-                    {
-                        MessageBox.Show("Error");
-                    }
-                }
-                catch(Exception Error)
-                {
-                    MessageBox.Show(Error.Message);
-                }
-                finally
-                {
-                    client.CancelPendingRequests();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Delete Async
-        /// </summary>
-        /// <param name="endpoint"></param>
-        /// <returns></returns>
-        public static async Task<HttpResponseMessage> DeleteAsync(string endpoint)
-        {
-            HttpResponseMessage result;
-            using (var client = new HttpClient())
-            {
-                try
-                {
-                    result = await client.DeleteAsync(endpoint);
-                }
-                catch(Exception ex)
-                {
-                    throw ex;
-                }
-            }
-            return result;
-        }
+   
 
         /// <summary>
         /// Get Async
@@ -194,6 +213,18 @@ namespace Admin_Client.Model.DB
         async static Task<string> GetRequest(string url)
         {
             string con = "";
+            using (_httpClient)
+            {
+                using(HttpResponseMessage response = await _httpClient.GetAsync(url))
+                {
+                    using (HttpContent content = response.Content)
+                    {
+                        con = await content.ReadAsStringAsync();
+
+                    }
+                }
+            }
+            /*
             using (HttpClient client = new HttpClient())
             {
                 using(HttpResponseMessage response = await client.GetAsync(url))
@@ -205,33 +236,10 @@ namespace Admin_Client.Model.DB
                     }
                 }
             }
+            */
             return con;
         }
 
-        /// <summary>
-        /// Get Byte Array Async
-        /// </summary>
-        /// <param name="url"></param>
-        /// <returns></returns>
-        private async Task<string> DownloadBase64(string url)
-        {
-            var bytes = await new HttpClient().GetByteArrayAsync(url);
-            return Convert.ToBase64String(bytes);
-        }
-
-        /// <summary>
-        /// Get Stream Async
-        /// </summary>
-        /// <param name="url"></param>
-        /// <returns></returns>
-        public static async Task<Stream> LoadServerResourceAsync(string url)
-        {
-            using (var _httpclient = new HttpClient())
-            {
-                var stream = await _httpclient.GetStreamAsync(url).ConfigureAwait(false);
-                return stream;
-            }
-        }
 
        
 

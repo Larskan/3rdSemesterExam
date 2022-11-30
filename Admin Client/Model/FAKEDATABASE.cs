@@ -14,11 +14,11 @@ namespace Admin_Client.Model
 		#region Groups
 
 		public static List<TblGroup> tblGroups = new List<TblGroup> {
-				new TblGroup { FldGroupId = 1, FldGroupName = "Group1", FldTempBool = false},
-				new TblGroup { FldGroupId = 2, FldGroupName = "Group2", FldTempBool = false},
-				new TblGroup { FldGroupId = 3, FldGroupName = "Group3", FldTempBool = false},
-				new TblGroup { FldGroupId = 4, FldGroupName = "Group4T", FldTempBool = true},
-				new TblGroup { FldGroupId = 5, FldGroupName = "Group5T", FldTempBool = true}
+				new TblGroup { FldGroupId = 1, FldGroupName = "Group1", FldGroupBoolean = false},
+				new TblGroup { FldGroupId = 2, FldGroupName = "Group2", FldGroupBoolean = false},
+				new TblGroup { FldGroupId = 3, FldGroupName = "Group3", FldGroupBoolean = false},
+				new TblGroup { FldGroupId = 4, FldGroupName = "Group4T", FldGroupBoolean = true},
+				new TblGroup { FldGroupId = 5, FldGroupName = "Group5T", FldGroupBoolean = true}
 		};
 
 		public static List<TblGroup> GetGroups()
@@ -45,7 +45,7 @@ namespace Admin_Client.Model
 				if (item.FldGroupId == tblGroup.FldGroupId)
 				{
 					item.FldGroupName = tblGroup.FldGroupName;
-					item.FldTempBool = tblGroup.FldTempBool;
+					item.FldGroupBoolean = tblGroup.FldGroupBoolean;
 				}
 			}
 		}
