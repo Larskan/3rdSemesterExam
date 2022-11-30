@@ -1,4 +1,5 @@
-﻿using Admin_Client.Model.Domain;
+﻿using Admin_Client.Model.DB;
+using Admin_Client.Model.Domain;
 using Admin_Client.Singleton;
 using Admin_Client.ViewModel.ContentControlModels;
 using System;
@@ -23,10 +24,11 @@ namespace Admin_Client.View.UserControls
 	/// </summary>
 	public partial class ReceiptView : UserControl
 	{
-		ReceiptViewModel viewModel = new ReceiptViewModel();
-		public ReceiptView()
+		ReceiptViewModel viewModel;
+		public ReceiptView(TblUser user)
 		{
-			this.DataContext = viewModel;
+            viewModel = new ReceiptViewModel(user);
+            this.DataContext = viewModel;
 
 			InitializeComponent();
 		}
