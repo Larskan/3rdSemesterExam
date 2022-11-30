@@ -1,5 +1,6 @@
 ﻿using Admin_Client.Model.DB;
 using Admin_Client.Model.Domain;
+using Admin_Client.Model.Foundation;
 using Admin_Client.Singleton;
 using Admin_Client.View.Windows.Popout;
 using Admin_Client.ViewModel.ContentControlModels;
@@ -70,5 +71,5 @@ namespace Admin_Client.View.UserControls
 
             TextBox_Password.Focus();
         }
-	}
+    }
 }

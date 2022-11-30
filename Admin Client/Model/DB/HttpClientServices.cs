@@ -72,40 +72,50 @@ namespace Admin_Client.Model.DB
             await GetAllTblGroups();
             await GetUsers();
         }
+        (For testing)
+        HttpClientServices s = new HttpClientServices();
+            s.GetAllTblGroups();
+            Debug.WriteLine("RESULT1: " + s);
+            HttpClientServices s2 = new HttpClientServices();
+            s2.GetSpecificGroup(1);
+            Debug.WriteLine("RESULT2: " + s2);
         */
 
-        [HttpGet]
+        #region Get specific from table
+        [HttpGet("{id}")]
         public Task GetSpecificLogin()
         {
             return Task.CompletedTask;
         }
-        [HttpGet]
+        [HttpGet("{id}")]
         public Task GetSpecificUser()
         {
             return Task.CompletedTask;
         }
-        [HttpGet]
+        [HttpGet("{id}")]
         public Task GetSpecificTrip()
         {
             return Task.CompletedTask;
         }
-        [HttpGet]
+        [HttpGet("{id}")]
         public Task GetSpecificReceipt()
         {
             return Task.CompletedTask;
         }
-        [HttpGet]
+        [HttpGet("{id}")]
         public Task GetSpecificExpense()
         {
             return Task.CompletedTask;
         }
-        [HttpGet]
-        public Task GetSpecificGroup()
+        [HttpGet("{id}")]
+        public Task GetSpecificGroup(int id)
         {
-            //the id is a placeholder, find way to make it grab the actual one
-            _ = GetHttpResponse("https://localhost:7002/TblGroups", 1);
+            //var tblGroup = await _context.TblGroups.FindAsync(id);
+            
+            _ = GetHttpResponse("https://localhost:7002/TblGroups", id);
             return Task.CompletedTask;
         }
+        #endregion
 
         #region Get All from a Table
         [HttpGet]
