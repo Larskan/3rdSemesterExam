@@ -121,7 +121,18 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 							break;
 						}
 				}
-				if (!isValid)
+
+				// EMAIL VALID
+				if (((Parameter)item).ParameterName.ToLower().Contains("email"))
+				{
+					if (((Parameter)item).ParameterName.Contains("@") && ((Parameter)item).ParameterName.Contains("."))
+					{
+						isValid= true;
+					}
+				}
+
+				// DO / NOT DO
+                if (!isValid)
 				{
 					((Parameter)item).IsValid = false;
 				} else
