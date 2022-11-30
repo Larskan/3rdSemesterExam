@@ -20,11 +20,12 @@ namespace Admin_Client.Model.DB
 
     /*Placeholders for the Endpoints
      * TODO: Get One, Get all, Put, Post, Delete, Edit
-     * TODO: GetRequest
+     * TODO: GetRequest - X
      * TODO: GetAllRequest - X
-     * Todo: PostRequest
+     * Todo: PostRequest - X
      * Todo: DeleteRequest
      * Todo: EditRequest
+     * Todo: PutRequest
      * https://localhost:7002/TblGroups
      * https://localhost:7002/TblGroups/{ID}
      * https://localhost:7002/TblGroupToMoneys
@@ -49,70 +50,87 @@ namespace Admin_Client.Model.DB
         //Having it static reduces waste sockets and makes it faster
         private static readonly HttpClient _httpClient = new HttpClient();
         
-        //Translator from to/from Json -> other format
-        private readonly JsonSerializerOptions _options;
-
-        
 
         public HttpClientServices()
         {
-            _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            _httpClient.BaseAddress = new Uri("https://localhost:7270/");
+           _httpClient.BaseAddress = new Uri("https://localhost:7270/");
            
         }
 
-
-        //use [Route], from API controllers for the specific tables
-        //Translator from http to json
-        //result: [{"fldGroupId":1,"fldGroupName":"Lars Test","fldTempBool":true},{"fldGroupId":3,"fldGroupName":"LarsKan","fldTempBool":true},{"fldGroupId":4,"fldGroupName":"Klasse2","fldTempBool":true}]
-
-        /*
-        public async Task Execute()
-        {
-            await GetAllTblGroups();
-            await GetUsers();
-        }
-        (For testing)
-        HttpClientServices s = new HttpClientServices();
-            s.GetAllTblGroups();
-            Debug.WriteLine("RESULT1: " + s);
-            HttpClientServices s2 = new HttpClientServices();
-            s2.GetSpecificGroup(1);
-            Debug.WriteLine("RESULT2: " + s2);
-        */
-
         #region Get specific from table
         [HttpGet("{id}")]
-        public Task GetSpecificLogin()
+        public Task GetSpecificLogin(int id)
         {
+            _ = GetHttpResponse("https://localhost:7002/TblLogins", id);
             return Task.CompletedTask;
         }
         [HttpGet("{id}")]
-        public Task GetSpecificUser()
+        public Task GetSpecificUser(int id)
         {
+            _ = GetHttpResponse("https://localhost:7002/TblUsers", id);
             return Task.CompletedTask;
         }
         [HttpGet("{id}")]
-        public Task GetSpecificTrip()
+        public Task GetSpecificTrip(int id)
         {
+            _ = GetHttpResponse("https://localhost:7002/TblTrips", id);
             return Task.CompletedTask;
         }
         [HttpGet("{id}")]
-        public Task GetSpecificReceipt()
+        public Task GetSpecificReceipt(int id)
         {
+            _ = GetHttpResponse("https://localhost:7002/TblReceipts", id);
             return Task.CompletedTask;
         }
         [HttpGet("{id}")]
-        public Task GetSpecificExpense()
+        public Task GetSpecificExpense(int id)
         {
+            _ = GetHttpResponse("https://localhost:7002/TblUserExpenses", id);
             return Task.CompletedTask;
         }
         [HttpGet("{id}")]
-        public Task GetSpecificGroup(int id)
+        public Task GetSpecificGroup(int id) //WORKS
         {
-            //var tblGroup = await _context.TblGroups.FindAsync(id);
-            
             _ = GetHttpResponse("https://localhost:7002/TblGroups", id);
+            return Task.CompletedTask;
+        }
+        #endregion
+
+        #region Add to Table
+        [HttpPost]
+        public Task AddGroup(string name, bool boll)
+        {
+            _ = PostHttpNewGroup("https://localhost:7002/TblGroups", name, boll);
+            return Task.CompletedTask;
+        }
+        [HttpPost]
+        public Task AddUser(string mail, string firstName, string lastName, int phone, bool admin)
+        {
+            _ = PostHttpNewUser("https://localhost:7002/TblUsers",mail, firstName, lastName, phone, admin);
+            return Task.CompletedTask;
+        }
+        [HttpPost]
+        public Task AddLogin(int userID, string pass)
+        {
+            _ = PostHttpNewLogin("https://localhost:7002/TblLogins", userID, pass);
+            return Task.CompletedTask;
+        }
+        [HttpPost]
+        public Task AddReceipt(int userID, int tripID, double value, double paid)
+        {
+            _ = PostHttpNewReceipt("https://localhost:7002/TblReceipts", userID, tripID, value, paid);
+            return Task.CompletedTask;
+        }
+        [HttpPost]
+        public Task AddTrip(double sum)
+        {
+            _ = PostHttpNewTrip("https://localhost:7002/TblTrips",sum);
+            return Task.CompletedTask;
+        }
+        [HttpPost]
+        public Task AddUserExpense(int userID, double expense, string note, DateTime date)
+        {
+            _ = PostHttpNewUserExpense("https://localhost:7002/TblUserExpenses",userID, expense, note, date);
             return Task.CompletedTask;
         }
         #endregion
@@ -150,19 +168,20 @@ namespace Admin_Client.Model.DB
         }
 
         [HttpGet]
-        public Task GetAllTblGroups()
+        public Task GetAllTblGroups()  //WORKS
         {
             //Grabs the response and turnd it to http
             _ = GetAllHttpResponse("https://localhost:7002/TblGroups");
             Debug.WriteLine("CHECK4: " + GetAllHttpResponse("https://localhost:7002/TblGroups"));
             return Task.CompletedTask;
-            //Grabs the response and turnd it to http, same as above, different version
-            _ = GetRequest("https://localhost:7002/TblGroups");
-            Debug.WriteLine(GetRequest("CHECK5: " + "https://localhost:7002/TblGroups"));
-            return Task.CompletedTask;
         }
         #endregion
 
+        /// <summary>
+        /// Gets the Json Data, turns it into Http data for entire table
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
         private async static Task<string> GetAllHttpResponse(string url)
         {
             //Create a base Get Response
@@ -181,6 +200,13 @@ namespace Admin_Client.Model.DB
             return content;
 
         }
+
+        /// <summary>
+        /// Gets the Json Data, turns it into Http data for an ID
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         private async static Task<string> GetHttpResponse(string url, int id)
         {
             string res = url + "/" +  id;
@@ -194,88 +220,179 @@ namespace Admin_Client.Model.DB
             return content;
         }
 
-        private async static Task<string> PostHttpResponse(string url)
+        #region Post new entry to a group
+        [HttpPost]
+        /// <summary>
+        /// Posts the data as a Json for Group
+        /// </summary>
+        /// <param name="url">Api/TblGroup</param>
+        /// <param name="id">fldGroupID</param>
+        /// <param name="name">fldGroupName</param>
+        /// <param name="groupBool">fldGroupBoolean</param>
+        /// <returns></returns>
+        public async static Task<string> PostHttpNewGroup(string url, string name, bool groupBool)
         {
-            _httpClient.BaseAddress = new Uri(url);
+            var endpoint = _httpClient.BaseAddress = new Uri(url);
 
-            var response = await _httpClient.GetAsync(url);
-            Debug.WriteLine("Target" + url);
-            response.EnsureSuccessStatusCode();
-            Debug.WriteLine("Response" + response);
+            //No ID due to identity having auto increment
+            var newPost = new TblGroup()
+            {
+                FldGroupName = name,
+                FldGroupBoolean = groupBool
 
-            var content = await response.Content.ReadAsStringAsync();
-            Debug.WriteLine("Content" + content);
-            //var post = JsonSerializer.Deserialize < List < (url) >> (content, _options);
+            };
 
+            //Convert the new posting to Json
+            var newPostJson = JsonConvert.SerializeObject(newPost);
+            Debug.WriteLine("Target" + newPostJson);
+            //StringContent: Formatted text appropriate for the http server/client communication.
+            var payload = new StringContent(newPostJson, Encoding.UTF8, "application/json");
+            Debug.WriteLine("Payload" + payload);
+            var result = await _httpClient.PostAsync(endpoint, payload);
+            var final = await result.Content.ReadAsStringAsync();
 
-            Debug.WriteLine("Final: " + response);
-            return content;
+            Debug.WriteLine("Final: " + final);
+            return final;
             
         }
 
-   
 
         /// <summary>
-        /// Get Async
+        /// Posts the data as a Json for User
         /// </summary>
-        /// <param name="url"></param>
+        /// <param name="url">Api/TblUser</param>
+        /// <param name="mail">fldEmail</param>
+        /// <param name="firstName">FldFirstName</param>
+        /// <param name="lastName">FldLastName</param>
+        /// <param name="phone">FldPhonenumber</param>
+        /// <param name="admin">FldIsAdmin</param>
         /// <returns></returns>
-        async static Task<string> GetRequest(string url)
+        public async static Task<string> PostHttpNewUser(string url, string mail, string firstName, string lastName, int phone, bool admin)
         {
-            string con = "";
-            using (_httpClient)
+            var endpoint = _httpClient.BaseAddress = new Uri(url);
+            var newPost = new TblUser()
             {
-                using(HttpResponseMessage response = await _httpClient.GetAsync(url))
-                {
-                    using (HttpContent content = response.Content)
-                    {
-                        con = await content.ReadAsStringAsync();
-
-                    }
-                }
-            }
-            /*
-            using (HttpClient client = new HttpClient())
-            {
-                using(HttpResponseMessage response = await client.GetAsync(url))
-                {
-                    using (HttpContent content = response.Content)
-                    {
-                        con = await content.ReadAsStringAsync();
-                        MessageBox.Show(con);
-                    }
-                }
-            }
-            */
-            return con;
+                FldEmail = mail,
+                FldFirstName = firstName,
+                FldLastName = lastName,
+                FldPhonenumber = phone,
+                FldIsAdmin = admin
+            };
+            //Convert the new posting to Json
+            var newPostJson = JsonConvert.SerializeObject(newPost);
+            //StringContent: Formatted text appropriate for the http server/client communication.
+            var payload = new StringContent(newPostJson, Encoding.UTF8, "application/json");
+            var result = await _httpClient.PostAsync(endpoint, payload);
+            var final = await result.Content.ReadAsStringAsync();
+            return final;
         }
-
-
-       
 
         /// <summary>
-        /// Post Async, used to submit an entity to a specified resource
+        /// Posts the data as a Json for Login
         /// </summary>
-        /// <param name="url"></param>
+        /// <param name="url">Api/TblUser</param>
+        /// <param name="userID">FldUserId</param>
+        /// <param name="pass">FldPassword</param>
         /// <returns></returns>
-        async static Task<string> PostRequest(string url)
+        public async static Task<string> PostHttpNewLogin(string url, int userID, string pass)
         {
-            string response = "";
-            using(HttpClient client = new HttpClient())
+            var endpoint = _httpClient.BaseAddress = new Uri(url);
+            var newPost = new TblLogin()
             {
-                client.BaseAddress = new Uri("https://localhost:7270/");
-                var content = new FormUrlEncodedContent(new[]
-                {
-                    new KeyValuePair<string, string>("","paramter")
-                });
-                var result = await client.PostAsync("/api/values", content);
-                response = await result.Content.ReadAsStringAsync();
-            }
-            return response;
+                FldUserId = userID,
+                FldPassword = pass
+            };
+            //Convert the new posting to Json
+            var newPostJson = JsonConvert.SerializeObject(newPost);
+            //StringContent: Formatted text appropriate for the http server/client communication.
+            var payload = new StringContent(newPostJson, Encoding.UTF8, "application/json");
+            var result = await _httpClient.PostAsync(endpoint, payload);
+            var final = await result.Content.ReadAsStringAsync();
+            return final;
+        }
+
+        /// <summary>
+        /// Posts the data as a Json for Receipt
+        /// </summary>
+        /// <param name="url">Api/TblReceipt</param>
+        /// <param name="userID">FldUserId</param>
+        /// <param name="tripID">FldTripId</param>
+        /// <param name="value">FldProjectedValue</param>
+        /// <param name="paid">FldAmountPaid</param>
+        /// <returns></returns>
+        public async static Task<string> PostHttpNewReceipt(string url, int userID, int tripID, double value, double paid)
+        {
+            var endpoint = _httpClient.BaseAddress = new Uri(url);
+            var newPost = new TblReceipt()
+            {
+                FldUserId = userID,
+                FldTripId = tripID,
+                FldProjectedValue = value,
+                FldAmountPaid = paid
+            };
+            //Convert the new posting to Json
+            var newPostJson = JsonConvert.SerializeObject(newPost);
+            //StringContent: Formatted text appropriate for the http server/client communication.
+            var payload = new StringContent(newPostJson, Encoding.UTF8, "application/json");
+            var result = await _httpClient.PostAsync(endpoint, payload);
+            var final = await result.Content.ReadAsStringAsync();
+            return final;
 
         }
 
-  
+        /// <summary>
+        /// Posts the data as a Json for Trip
+        /// </summary>
+        /// <param name="url">Api/TblTrip</param>
+        /// <param name="sum">FldSum</param>
+        /// <returns></returns>
+        public async static Task<string> PostHttpNewTrip(string url, double sum)
+        {
+            var endpoint = _httpClient.BaseAddress = new Uri(url);
+            var newPost = new TblTrip()
+            {
+                FldSum = sum
+            };
+            //Convert the new posting to Json
+            var newPostJson = JsonConvert.SerializeObject(newPost);
+            //StringContent: Formatted text appropriate for the http server/client communication.
+            var payload = new StringContent(newPostJson, Encoding.UTF8, "application/json");
+            var result = await _httpClient.PostAsync(endpoint, payload);
+            var final = await result.Content.ReadAsStringAsync();
+            return final;
+        }
+
+        /// <summary>
+        /// Posts the data as a Json for User Expense
+        /// </summary>
+        /// <param name="url">Api/TblUserExpenses</param>
+        /// <param name="userID">FldUserId</param>
+        /// <param name="expense">FldExpense</param>
+        /// <param name="note">FldNote</param>
+        /// <param name="date">FldDate</param>
+        /// <returns></returns>
+        public async static Task<string> PostHttpNewUserExpense(string url, int userID, double expense, string note, DateTime date)
+        {
+            var endpoint = _httpClient.BaseAddress = new Uri(url);
+            var newPost = new TblUserExpense()
+            {
+                FldUserId = userID,
+                FldExpense = expense,
+                FldNote = note,
+                FldDate = date
+            };
+            //Convert the new posting to Json
+            var newPostJson = JsonConvert.SerializeObject(newPost);
+            //StringContent: Formatted text appropriate for the http server/client communication.
+            var payload = new StringContent(newPostJson, Encoding.UTF8, "application/json");
+            var result = await _httpClient.PostAsync(endpoint, payload);
+            var final = await result.Content.ReadAsStringAsync();
+            return final;
+        }
+
+        #endregion
+
+
 
         /// <summary>
         /// Put Async
@@ -326,9 +443,6 @@ namespace Admin_Client.Model.DB
             }
             return response;
         }
-
-        
-
 
     }
 }

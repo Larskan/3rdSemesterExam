@@ -37,6 +37,16 @@ namespace Admin_Client.View.UserControls
 
 		private void Login_Click(object sender, RoutedEventArgs e)
 		{
+            HttpClientServices s = new HttpClientServices();
+            s.GetAllTblGroups();
+            Debug.WriteLine("RESULT1: " + s.GetAllTblGroups());
+            //HttpClientServices s2 = new HttpClientServices();
+            //s2.GetSpecificGroup(1);
+            //Debug.WriteLine("RESULT2: " + s2.GetSpecificGroup(1));
+			//HttpClientServices s3 = new HttpClientServices();
+			//s3.AddGroup("DebugTest1", true);
+			//Debug.WriteLine("DebugTest: " + s3.AddGroup("DebugTest1", true));
+            /*
 			if (PasswordBox_Password.Password.Length > 0)
 			{
 				viewModel.Login(TextBox_Username.Text, PasswordBox_Password.Password);
@@ -44,6 +54,7 @@ namespace Admin_Client.View.UserControls
 			{
 				viewModel.Login(TextBox_Username.Text, TextBox_Password.Text);
 			}
+			*/
         }
 
 		private void TextBox_Password_TextChanged(object sender, TextChangedEventArgs e)
