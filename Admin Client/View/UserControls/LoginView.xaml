@@ -16,7 +16,7 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="200"/>
+            <RowDefinition Height="150"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -25,10 +25,9 @@
             <Grid>
 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="2*"/>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
                 <TextBox x:Name="TextBox_Username" Grid.Row="0" Margin="10" SelectionBrush="LightSalmon" BorderThickness="1" VerticalContentAlignment="Center" Resources="{StaticResource roundborder10}">

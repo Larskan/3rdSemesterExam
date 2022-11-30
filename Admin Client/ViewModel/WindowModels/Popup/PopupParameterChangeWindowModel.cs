@@ -84,13 +84,10 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Change Click"));
 
-			Debug.WriteLine("start");
-
 			// CHANGE HAPPENS - TODO
 			bool isValid;
 			foreach (var item in listBox.Items)
 			{
-				Debug.WriteLine("foreach");
 				isValid = false;
 				switch (((Parameter)item).ParameterType)
 				{

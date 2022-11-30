@@ -73,10 +73,11 @@
             </Style>
         </ResourceDictionary>
 
-        <!--Button 10% round-->
+        <!--Button 10% round Default Size-->
         <ResourceDictionary x:Key="roundcornerbutton10">
             <Style TargetType="Border">
                 <Setter Property="CornerRadius" Value="10"/>
+                <Setter Property="Height" Value="25"/>
             </Style>
             <Style TargetType="Button">
                 <Style.Triggers>
