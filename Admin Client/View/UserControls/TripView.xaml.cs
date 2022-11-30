@@ -1,4 +1,5 @@
-﻿using Admin_Client.Model.Domain;
+﻿using Admin_Client.Model.DB;
+using Admin_Client.Model.Domain;
 using Admin_Client.Singleton;
 using Admin_Client.ViewModel.ContentControlModels;
 using System;
@@ -23,9 +24,10 @@ namespace Admin_Client.View.UserControls
 	/// </summary>
 	public partial class TripView : UserControl
 	{
-		TripViewModel viewModel = new TripViewModel();
-		public TripView()
+		TripViewModel viewModel;
+		public TripView(TblGroup group)
 		{
+			viewModel = new TripViewModel(group);
 			this.DataContext = viewModel;
 
 			InitializeComponent();
