@@ -5,6 +5,7 @@ using Admin_Client.View.Windows.Popout;
 using Admin_Client.ViewModel.ContentControlModels;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,11 +36,17 @@ namespace Admin_Client.View.UserControls
 
 		private void Login_Click(object sender, RoutedEventArgs e)
 		{
+			//Testing the service
 
 			HttpClientServices s = new HttpClientServices();
-			s.GetTblGroups();
+			Debug.WriteLine("CHECK: " + s.GetAllTblGroups());
+			s.GetAllTblGroups();
 
-			/*
+			Debug.WriteLine("CHECK2: " + s.GetAllTblGroups());
+			s.GetSpecificGroup();
+            Debug.WriteLine("CHECK3(Specific Group): " + s.GetAllTblGroups());
+
+            /*
 			if (PasswordBox_Password.Password.Length > 0)
 			{
 				viewModel.Login(TextBox_Username.Text, PasswordBox_Password.Password);
@@ -48,6 +55,6 @@ namespace Admin_Client.View.UserControls
 				viewModel.Login(TextBox_Username.Text, TextBox_Password.Text);
 			}
 			*/
-		}
-    }
+        }
+	}
 }

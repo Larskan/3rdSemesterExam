@@ -16,6 +16,7 @@ namespace Admin_Client.Model.DB
 		public string FldLastName { get; set; }
 
 		public int FldPhonenumber { get; set; }
+		public bool FldIsAdmin { get; set; }
 
 		[JsonIgnore]
 		public virtual ICollection<TblLogin> TblLogins { get; } = new List<TblLogin>();

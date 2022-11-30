@@ -52,7 +52,7 @@ public partial class FairShareDbContext : DbContext
                 .HasMaxLength(30)
                 .IsUnicode(false)
                 .HasColumnName("fldGroupName");
-            entity.Property(e => e.FldTempBool).HasColumnName("fldTempBool");
+            entity.Property(e => e.FldGroupBoolean).HasColumnName("fldGroupBoolean");
         });
 
         modelBuilder.Entity<TblGroupToMoney>(entity =>
@@ -162,6 +162,7 @@ public partial class FairShareDbContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("fldLastName");
             entity.Property(e => e.FldPhonenumber).HasColumnName("fldPhonenumber");
+            entity.Property(e => e.FldIsAdmin).HasColumnName("fldIsAdmin");
         });
 
         modelBuilder.Entity<TblUserExpense>(entity =>

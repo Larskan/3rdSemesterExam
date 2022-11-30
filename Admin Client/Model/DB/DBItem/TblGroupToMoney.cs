@@ -7,7 +7,7 @@ namespace Admin_Client.Model.DB
 
 	public partial class TblGroupToMoney
 	{
-		public int FldGroupToMoneyId { get; set; }
+		//public int FldGroupToMoneyId { get; set; }
 
 		public int FldGroupId { get; set; }
 
