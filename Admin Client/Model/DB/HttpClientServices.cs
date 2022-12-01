@@ -22,22 +22,13 @@ namespace Admin_Client.Model.DB
 {
 
     /*Placeholders for the Endpoints
-     * TODO: Get One, Get all, Put, Post, Delete, Edit
-     * TODO: GetRequest - Done
-     * TODO: GetAllRequest - Done
-     * Todo: PostRequest - Done
-     * Todo: DeleteRequest - Done
      * Todo: Edit/Put/ReplaceRequest - Work in progress
      * https://localhost:7002/TblGroups
-     * https://localhost:7002/TblGroupToMoneys
      * https://localhost:7002/TblLogins
      * https://localhost:7002/TblReceipts
      * https://localhost:7002/TblTrips
-     * https://localhost:7002/TblTripToUserExpenses
      * https://localhost:7002/TblUserExpenses
      * https://localhost:7002/TblUsers
-     * https://localhost:7002/TblUserToGroups
-     * 
      */
     public class HttpClientServices
     {
@@ -48,6 +39,7 @@ namespace Admin_Client.Model.DB
         public HttpClientServices()
         {
            _httpClient.BaseAddress = new Uri("https://localhost:7270/");
+            #region From attempt at making more compact code, work in progress
             //var serviceCollection = new ServiceCollection();
             //ConfigureServices(serviceCollection);
             //var services = serviceCollection.BuildServiceProvider();
@@ -57,6 +49,7 @@ namespace Admin_Client.Model.DB
             //var httpClientGroups = httpClientFactory.CreateClient("group");
             //var responseMessage = await httpClientGroups.GetAsync("");
             //TestingCompact().AsyncState.ToString();
+            #endregion
         }
 
         #region Attempt at making more clean and compact code, work in progress
@@ -118,8 +111,6 @@ namespace Admin_Client.Model.DB
 
         }
         #endregion
-
-
 
         #region Get specific from table
         /// <summary>
@@ -290,7 +281,7 @@ namespace Admin_Client.Model.DB
         }
         #endregion
 
-        #region Delete data from tables
+        #region Delete data from Table
 
         [HttpDelete]
         private static HttpResponseMessage ClientDeleteRequest(string RequestURI, int ID)
@@ -334,7 +325,7 @@ namespace Admin_Client.Model.DB
         }
         #endregion
 
-        #region Post new entry to a group
+        #region Post new entry to a Table
         [HttpPost]
         /// <summary>
         /// Posts the data as a Json for Group
@@ -551,33 +542,6 @@ namespace Admin_Client.Model.DB
             }
             return con;
 
-        }
-
-        /// <summary>
-        /// Send Async
-        /// </summary>
-        /// <param name="i"></param>
-        /// <param name="c"></param>
-        /// <returns></returns>
-        static async Task<string> SendURI(Uri u, HttpContent c)
-        {
-            var response = string.Empty;
-            using( var client = new HttpClient())
-            {
-                HttpRequestMessage request = new HttpRequestMessage
-                {
-                    Method = HttpMethod.Post,
-                    RequestUri = u,
-                    Content = c
-                };
-
-                HttpResponseMessage result = await client.SendAsync(request);
-                if (result.IsSuccessStatusCode)
-                {
-                    response = result.StatusCode.ToString();
-                }
-            }
-            return response;
         }
 
     }
