@@ -16,9 +16,26 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{C9C1D606-D6F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairShareAPI", "FairShareAPI\FairShareAPI.csproj", "{5357491C-0A71-4F2E-8EE2-C91620FF49D2}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebClient", "WebClient", "{DE8EAF07-6AC5-43C4-97FD-413DEFE4F0B3}"
-EndProject
-Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "User Client", "User Client\User Client.njsproj", "{50A26EBD-7048-4E3D-B236-815F7E16AC7D}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "User Client", "http://localhost:62353", "{4AB28AA9-A43E-45CF-AA50-47B35896DEED}"
+	ProjectSection(WebsiteProperties) = preProject
+		UseIISExpress = "true"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.8"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_62353"
+		Debug.AspNetCompiler.PhysicalPath = "..\..\..\OneDrive\Documents\My Web Sites\User Client\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_62353\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_62353"
+		Release.AspNetCompiler.PhysicalPath = "..\..\..\OneDrive\Documents\My Web Sites\User Client\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_62353\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		SlnRelativePath = "..\..\..\OneDrive\Documents\My Web Sites\User Client\"
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,18 +71,18 @@ Global
 		{5357491C-0A71-4F2E-8EE2-C91620FF49D2}.Release|x64.Build.0 = Release|Any CPU
 		{5357491C-0A71-4F2E-8EE2-C91620FF49D2}.Release|x86.ActiveCfg = Release|Any CPU
 		{5357491C-0A71-4F2E-8EE2-C91620FF49D2}.Release|x86.Build.0 = Release|Any CPU
-		{50A26EBD-7048-4E3D-B236-815F7E16AC7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{50A26EBD-7048-4E3D-B236-815F7E16AC7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{50A26EBD-7048-4E3D-B236-815F7E16AC7D}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{50A26EBD-7048-4E3D-B236-815F7E16AC7D}.Debug|x64.Build.0 = Debug|Any CPU
-		{50A26EBD-7048-4E3D-B236-815F7E16AC7D}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{50A26EBD-7048-4E3D-B236-815F7E16AC7D}.Debug|x86.Build.0 = Debug|Any CPU
-		{50A26EBD-7048-4E3D-B236-815F7E16AC7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{50A26EBD-7048-4E3D-B236-815F7E16AC7D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{50A26EBD-7048-4E3D-B236-815F7E16AC7D}.Release|x64.ActiveCfg = Release|Any CPU
-		{50A26EBD-7048-4E3D-B236-815F7E16AC7D}.Release|x64.Build.0 = Release|Any CPU
-		{50A26EBD-7048-4E3D-B236-815F7E16AC7D}.Release|x86.ActiveCfg = Release|Any CPU
-		{50A26EBD-7048-4E3D-B236-815F7E16AC7D}.Release|x86.Build.0 = Release|Any CPU
+		{4AB28AA9-A43E-45CF-AA50-47B35896DEED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AB28AA9-A43E-45CF-AA50-47B35896DEED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AB28AA9-A43E-45CF-AA50-47B35896DEED}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4AB28AA9-A43E-45CF-AA50-47B35896DEED}.Debug|x64.Build.0 = Debug|Any CPU
+		{4AB28AA9-A43E-45CF-AA50-47B35896DEED}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4AB28AA9-A43E-45CF-AA50-47B35896DEED}.Debug|x86.Build.0 = Debug|Any CPU
+		{4AB28AA9-A43E-45CF-AA50-47B35896DEED}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AB28AA9-A43E-45CF-AA50-47B35896DEED}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{4AB28AA9-A43E-45CF-AA50-47B35896DEED}.Release|x64.ActiveCfg = Debug|Any CPU
+		{4AB28AA9-A43E-45CF-AA50-47B35896DEED}.Release|x64.Build.0 = Debug|Any CPU
+		{4AB28AA9-A43E-45CF-AA50-47B35896DEED}.Release|x86.ActiveCfg = Debug|Any CPU
+		{4AB28AA9-A43E-45CF-AA50-47B35896DEED}.Release|x86.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -73,8 +90,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{C6B7B0FC-FD71-4DC5-AC70-7F1E10B153AD} = {012B443F-E1D4-4053-A177-0A5426053343}
 		{5357491C-0A71-4F2E-8EE2-C91620FF49D2} = {C9C1D606-D6F3-4012-97B6-8F2CA8079320}
-		{DE8EAF07-6AC5-43C4-97FD-413DEFE4F0B3} = {2B09F1D7-E1F3-4C7F-8952-B0442F20BF30}
-		{50A26EBD-7048-4E3D-B236-815F7E16AC7D} = {DE8EAF07-6AC5-43C4-97FD-413DEFE4F0B3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8B560461-6752-414E-BF2E-77C75D120E94}
