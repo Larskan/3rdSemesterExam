@@ -26,7 +26,7 @@
             <Label Content="{Binding Username}" FontSize="25" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" ></Label>
         </Border>
 
-        <ListBox x:Name="ListBox_Receipts" Grid.Column="1" Grid.Row="2" ItemsSource="{Binding Receipts}" Margin="5" Style="{StaticResource roundlistboxwithempty}" Resources="{StaticResource roundborder10}" >
+        <ListBox x:Name="ListBox_Receipts" Grid.Column="1" Grid.Row="2" ItemsSource="{Binding Logs}" Margin="5" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource logFileDataTemplate}" Style="{StaticResource roundlistboxwithempty}" Resources="{StaticResource roundborder10}"  >
             <ListBox.ContextMenu>
                 <ContextMenu Style="{StaticResource roundcontextmenu}" >
                     <MenuItem Header="Delete Group" Click="Delete_Click" Resources="{StaticResource roundborder10}" />

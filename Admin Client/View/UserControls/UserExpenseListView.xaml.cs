@@ -22,12 +22,12 @@ namespace Admin_Client.View.UserControls
 	/// <summary>
 	/// Interaction logic for TripView.xaml
 	/// </summary>
-	public partial class TripListView : UserControl
+	public partial class UserExpenseListView : UserControl
 	{
-		TripViewModel viewModel;
-		public TripListView(TblGroup group)
+		UserExpenseListViewModel viewModel;
+		public UserExpenseListView(TblGroup group)
 		{
-			viewModel = new TripViewModel(group);
+			viewModel = new UserExpenseListViewModel(group);
 			this.DataContext = viewModel;
 
 			InitializeComponent();

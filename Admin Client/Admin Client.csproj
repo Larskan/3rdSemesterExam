@@ -237,7 +237,10 @@
     <Compile Include="Model\DB\HttpClientServices.cs" />
     <Compile Include="Model\DB\Response.cs" />
     <Compile Include="Model\Domain\Log.cs" />
+    <Compile Include="Model\Domain\LogFile.cs" />
     <Compile Include="Model\Domain\Parameter.cs" />
+    <Compile Include="Model\Domain\Receipt.cs" />
+    <Compile Include="Model\Domain\UserExpense.cs" />
     <Compile Include="Model\FAKEDATABASE.cs" />
     <Compile Include="Model\FileIO\LogHandler.cs" />
     <Compile Include="Model\Foundation\Encryption.cs" />
@@ -256,7 +259,7 @@
     <Compile Include="ViewModel\ContentControlModels\Special\BackMenuViewModel.cs" />
     <Compile Include="ViewModel\ContentControlModels\Special\MenuViewModel.cs" />
     <Compile Include="ViewModel\ContentControlModels\GroupListViewModel.cs" />
-    <Compile Include="ViewModel\ContentControlModels\TripViewModel.cs" />
+    <Compile Include="ViewModel\ContentControlModels\UserExpenseListView.cs" />
     <Compile Include="ViewModel\ContentControlModels\UserListViewModel.cs" />
     <Compile Include="ViewModel\ContentControlModels\UserViewModel.cs" />
     <Compile Include="ViewModel\WindowModels\MainWindowModel.cs" />
@@ -320,7 +323,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\UserControls\TripListView.xaml">
+    <Page Include="View\UserControls\UserExpenseListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -375,8 +378,8 @@
     <Compile Include="View\UserControls\Special\MenuView.xaml.cs">
       <DependentUpon>MenuView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserControls\TripListView.xaml.cs">
-      <DependentUpon>TripListView.xaml</DependentUpon>
+    <Compile Include="View\UserControls\UserExpenseListView.xaml.cs">
+      <DependentUpon>UserExpenseListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControls\UserListView.xaml.cs">
       <DependentUpon>UserListView.xaml</DependentUpon>

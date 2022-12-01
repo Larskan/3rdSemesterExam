@@ -34,14 +34,13 @@ namespace Admin_Client.ViewModel.ContentControlModels
 			set { username = value; NotifyPropertyChanged(); }
 		}
 
-		private ObservableCollection<TblTrip> receipts = new ObservableCollection<TblTrip>();
+		private ObservableCollection<TblTrip> logs = new ObservableCollection<TblTrip>();
 
-		public ObservableCollection<TblTrip> Receipts
+		public ObservableCollection<TblTrip> Logs
 		{
-			get { return receipts; }
-			set { receipts = value; }
+			get { return logs; }
+			set { logs = value; }
 		}
-
 
 		#endregion
 

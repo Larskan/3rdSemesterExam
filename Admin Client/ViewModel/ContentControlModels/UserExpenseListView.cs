@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Admin_Client.ViewModel.ContentControlModels
 {
-	public class TripViewModel : NotifyPropertyChangedHandler
+	public class UserExpenseListViewModel : NotifyPropertyChangedHandler
 	{
 
 		#region Variables
@@ -46,7 +46,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		#region Constructor
 
-		public TripViewModel(TblGroup group)
+		public UserExpenseListViewModel(TblGroup group)
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Information, "Get Trips for Group: " + group.FldGroupId + " " + group.FldGroupName));
 
