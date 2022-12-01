@@ -27,16 +27,43 @@
 
     <!--#region Group Actions  -->
     <div id="Container" class="container">
-      <button id="Actions" class="btn">
+      <button
+        id="Actions"
+        class="btn"
+        href="#"
+        data-toggle="tooltip"
+        title="Create Group"
+      >
         <span class="glyphicon glyphicon-plus"></span>
       </button>
-      <button id="Actions" class="btn">
+
+      <button
+        id="Actions"
+        class="btn"
+        href="#"
+        data-toggle="tooltip"
+        title="Join Group"
+      >
         <span class="glyphicon glyphicon-search"></span>
       </button>
-      <button id="Actions" class="btn">
+
+      <button
+        id="Actions"
+        class="btn"
+        href="#"
+        data-toggle="tooltip"
+        title="PlaceHolder"
+      >
         <span class="glyphicon glyphicon-adjust"></span>
       </button>
-      <button id="Actions" class="btn">
+
+      <button
+        id="Actions"
+        class="btn"
+        href="#"
+        data-toggle="tooltip"
+        title="PlaceHolder"
+      >
         <span class="glyphicon glyphicon-arrow-up"></span>
       </button>
     </div>
@@ -46,18 +73,17 @@
 
     <div id="Container" class="container">
       <div id="Heading" class="panel-heading">
-        <h4>Recent groups <small id="small">Your most recently accessed groups</small></h4>
+        <h4>
+          Recent groups
+          <small id="small">Your most recently accessed groups</small>
+        </h4>
       </div>
 
       <!--#TODO: Make group display aoutonomous, remove this -->
 
       <!--#region main PlaceHolder Recent Groups -->
 
-      <button
-        id="GroupIcon"
-        class="btn btn-default"
-        style="background-color: #7e4a4f8c"
-      >
+      <button id="GroupIcon" class="btn btn-default">
         The Most Recent Group
       </button>
 
@@ -132,4 +158,10 @@
 
     <!--#endregion -->
   </body>
+
+  <script>
+    $(document).ready(function () {
+      $('[data-toggle="tooltip"]').tooltip();
+    });
+  </script>
 </html>
