@@ -1,9 +1,0 @@
-{
-  "name": "testing-web",
-  "version": "0.0.0",
-  "description": "testingWeb",
-  "main": "server.js",
-  "author": {
-    "name": ""
-  }
-}
