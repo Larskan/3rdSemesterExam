@@ -79,17 +79,12 @@ namespace Admin_Client.Model.FileIO
 		/// <returns>True if logfile has been created/exists, false if not</returns>
 		public bool CreateLogFile()
 		{
-			try
-			{
-				DateTime dateTime = DateTime.Now;
-				string dateTimeFileName = ToFileName(dateTime);
-				File.WriteAllText(PATH + ToPath(dateTimeFileName, "txt"), "");
-				LogFilePath = ToPath(dateTimeFileName, "txt");
-				WriteToLogFile(new Log(LogType.Success, "Log file has been created"));
-			} catch
-			{
-				return false;
-			}
+			DateTime dateTime = DateTime.Now;
+			string dateTimeFileName = ToFileName(dateTime);
+			File.WriteAllText(PATH + ToPath(dateTimeFileName, "txt"), "");
+			LogFilePath = ToPath(dateTimeFileName, "txt");
+			Debug.WriteLine(LogFilePath);
+			WriteToLogFile(new Log(LogType.Success, "Log file has been created"));
 			return true;
 		}
 
@@ -103,46 +98,29 @@ namespace Admin_Client.Model.FileIO
 			string fileContent = "";
 			string spacingItem = "";
 
-			while (ReadLogFile() == null)
+			foreach (var item in ReadLogFile())
 			{
-				if (ReadLogFile() != null)
+				switch (item.LogType)
 				{
-					foreach (var item in ReadLogFile())
-					{
-						switch (item.LogType)
-						{
-							case LogType.Success: spacingItem = "\t\t\t\t\t\t\t\t"; break;
-							case LogType.Information: spacingItem = "\t\t\t\t\t\t\t"; break;
-							case LogType.UserAction: spacingItem = "\t"; break;
-							case LogType.Warning: spacingItem = "\t\t\t\t\t\t\t\t"; break;
-							case LogType.FatalError: spacingItem = "\t\t\t\t\t\t\t"; break;
-						}
-						fileContent += "[" + item.DateTime + "] {" + item.LogType + "}" + spacingItem + " " + item.LogTxt + "\n";
-					}
-					string spacing = "";
-					switch (log.LogType)
-					{
-						case LogType.Success: spacing = "\t\t\t\t\t\t\t\t"; break;
-						case LogType.Information: spacing = "\t\t\t\t\t\t\t"; break;
-						case LogType.UserAction: spacing = "\t"; break;
-						case LogType.Warning: spacing = "\t\t\t\t\t\t\t\t"; break;
-						case LogType.FatalError: spacing = "\t\t\t\t\t\t\t"; break;
-					}
-					File.WriteAllText(PATH + LogFilePath, fileContent + "[" + log.DateTime + "] {" + log.LogType + "}" + spacing + " " + log.LogTxt + "\n");
+					case LogType.Success: spacingItem = "\t\t\t\t\t\t\t\t"; break;
+					case LogType.Information: spacingItem = "\t\t\t\t\t\t\t"; break;
+					case LogType.UserAction: spacingItem = "\t"; break;
+					case LogType.Warning: spacingItem = "\t\t\t\t\t\t\t\t"; break;
+					case LogType.FatalError: spacingItem = "\t\t\t\t\t\t\t"; break;
 				}
-				else
-				{
-					Debug.WriteLine("Sleeping");
-					Thread.Sleep(500);
-				}
+				fileContent += "[" + item.DateTime + "] {" + item.LogType + "}" + spacingItem + " " + item.LogTxt + "\n";
 			}
-			try
+			string spacing = "";
+			switch (log.LogType)
 			{
-				
-			} catch
-			{
-				return false;
+				case LogType.Success: spacing = "\t\t\t\t\t\t\t\t"; break;
+				case LogType.Information: spacing = "\t\t\t\t\t\t\t"; break;
+				case LogType.UserAction: spacing = "\t"; break;
+				case LogType.Warning: spacing = "\t\t\t\t\t\t\t\t"; break;
+				case LogType.FatalError: spacing = "\t\t\t\t\t\t\t"; break;
 			}
+			File.WriteAllText(PATH + LogFilePath, fileContent + "[" + log.DateTime + "] {" + log.LogType + "}" + spacing + " " + log.LogTxt + "\n");
+
 			return true;
 		}
 
@@ -152,14 +130,7 @@ namespace Admin_Client.Model.FileIO
 		/// <returns>The logfile's logs as a List</returns>
 		public List<Log> ReadLogFile()
 		{
-			try
-			{
-				return StringsToLogs(File.ReadAllText(PATH + LogFilePath).Split('\n'));
-			}
-			catch
-			{
-				return null;
-			}
+			return StringsToLogs(File.ReadAllText(PATH + LogFilePath).Split('\n'));
 		}
 
 		/// <summary>
@@ -231,14 +202,7 @@ namespace Admin_Client.Model.FileIO
 				}
 				File.Delete(deleteTarget);
 			}
-			try
-			{
-				
-			}
-			catch
-			{
-				return false;
-			}
+
 			return true;
 		}
 
@@ -274,7 +238,7 @@ namespace Admin_Client.Model.FileIO
 		/// <returns>The formattet string</returns>
 		private string ToFileName(DateTime dateTime)
 		{
-			return dateTime.ToString().Replace(':', '_');
+			return dateTime.ToString().Replace(':', '_').Replace('/','-');
 		}
 
 		/// <summary>

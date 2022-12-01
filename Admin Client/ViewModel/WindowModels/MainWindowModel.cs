@@ -8,8 +8,10 @@ using Admin_Client.View.Windows.Popups;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -81,10 +83,22 @@ namespace Admin_Client.ViewModel.WindowModels
 
 		public void SetMainContent(UserControl content)
 		{
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, content.GetType().Name + " Click"));
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Content --> " + content.GetType().Name));
-			CControl_Main.Content = content;
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Content == " + content.GetType().Name));
+			while (true)
+			{
+				try
+				{
+					LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, content.GetType().Name + " Click"));
+					LogHandlerSingleton.Instance.WriteToLogFile(new Log("Content --> " + content.GetType().Name));
+					CControl_Main.Content = content;
+					LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Content == " + content.GetType().Name));
+					return;
+				}
+				catch (IOException)
+				{
+					Debug.WriteLine("Sleeping man");
+					Thread.Sleep(500);
+				}
+			}
 		}
 
 		public void SetMainContent(UserControl content, bool isMenuActive)

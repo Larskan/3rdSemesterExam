@@ -304,7 +304,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\UserControls\ReceiptView.xaml">
+    <Page Include="View\UserControls\ReceiptListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -320,7 +320,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\UserControls\TripView.xaml">
+    <Page Include="View\UserControls\TripListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -366,8 +366,8 @@
     <Compile Include="View\UserControls\OverviewView.xaml.cs">
       <DependentUpon>OverviewView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserControls\ReceiptView.xaml.cs">
-      <DependentUpon>ReceiptView.xaml</DependentUpon>
+    <Compile Include="View\UserControls\ReceiptListView.xaml.cs">
+      <DependentUpon>ReceiptListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControls\Special\AccountTabView.xaml.cs">
       <DependentUpon>AccountTabView.xaml</DependentUpon>
@@ -375,8 +375,8 @@
     <Compile Include="View\UserControls\Special\MenuView.xaml.cs">
       <DependentUpon>MenuView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserControls\TripView.xaml.cs">
-      <DependentUpon>TripView.xaml</DependentUpon>
+    <Compile Include="View\UserControls\TripListView.xaml.cs">
+      <DependentUpon>TripListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControls\UserListView.xaml.cs">
       <DependentUpon>UserListView.xaml</DependentUpon>

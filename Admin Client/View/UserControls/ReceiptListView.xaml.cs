@@ -22,10 +22,10 @@ namespace Admin_Client.View.UserControls
 	/// <summary>
 	/// Interaction logic for ReceiptView.xaml
 	/// </summary>
-	public partial class ReceiptView : UserControl
+	public partial class ReceiptListView : UserControl
 	{
 		ReceiptViewModel viewModel;
-		public ReceiptView(TblUser user)
+		public ReceiptListView(TblUser user)
 		{
             viewModel = new ReceiptViewModel(user);
             this.DataContext = viewModel;
