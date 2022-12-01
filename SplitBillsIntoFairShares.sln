@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32819.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{2B09F1D7-E1F3-4C7F-8952-B0442F20BF30}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Admin Client", "Admin Client", "{012B443F-E1D4-4053-A177-0A5426053343}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Admin Client", "Admin Client\Admin Client.csproj", "{C6B7B0FC-FD71-4DC5-AC70-7F1E10B153AD}"
