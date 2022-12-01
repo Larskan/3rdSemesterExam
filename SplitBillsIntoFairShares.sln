@@ -8,6 +8,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Admin Client", "Admin Client", "{012B443F-E1D4-4053-A177-0A5426053343}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Admin Client", "Admin Client\Admin Client.csproj", "{C6B7B0FC-FD71-4DC5-AC70-7F1E10B153AD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5357491C-0A71-4F2E-8EE2-C91620FF49D2} = {5357491C-0A71-4F2E-8EE2-C91620FF49D2}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{C9C1D606-D6F3-4012-97B6-8F2CA8079320}"
 EndProject
