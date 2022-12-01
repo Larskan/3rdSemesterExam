@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="test.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button
+            type="button"
+            class="navbar-toggle"
+            data-toggle="collapse"
+            data-target="#myNavbar"
+          >
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Logo</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Projects</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="#"
+                ><span class="glyphicon glyphicon-log-in"></span> Login</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid text-center">
+      <div class="row content">
+        <div class="col-sm-2 sidenav">
+          <p><a href="#">Link</a></p>
+          <p><a href="#">Link</a></p>
+          <p><a href="#">Link</a></p>
+        </div>
+        <div class="col-sm-8 text-left">
+          <div id="Center" class="container-fluid">
+            <!--This is here for copy and paste -->
+
+            <!--#region main  -->
+            <!--#endregion -->
+
+            <!--#region Heading  -->
+            <div id="Container" class="container">
+              <h1>Groups <small>Manage, join and create groups here</small></h1>
+            </div>
+            <!--#endregion -->
+
+            <!--#region Group Actions  -->
+            <div id="Container" class="container-fluid">
+              <button
+                id="Actions"
+                class="btn"
+                href="#"
+                data-toggle="tooltip"
+                title="Create Group"
+              >
+                <span class="glyphicon glyphicon-plus"></span>
+              </button>
+
+              <button
+                id="Actions"
+                class="btn"
+                href="#"
+                data-toggle="tooltip"
+                title="Join Group"
+              >
+                <span class="glyphicon glyphicon-search"></span>
+              </button>
+
+              <button
+                id="Actions"
+                class="btn"
+                href="#"
+                data-toggle="tooltip"
+                title="PlaceHolder"
+              >
+                <span class="glyphicon glyphicon-adjust"></span>
+              </button>
+
+              <button
+                id="Actions"
+                class="btn"
+                href="#"
+                data-toggle="tooltip"
+                title="PlaceHolder"
+              >
+                <span class="glyphicon glyphicon-arrow-up"></span>
+              </button>
+            </div>
+            <!--#endregion -->
+
+            <!--#region Recent groups  -->
+
+            <div
+              id="ContainerRecentGroups"
+              class="container-fluid"
+              onload="LoadRecentGroups()"
+            >
+              <div id="Heading" class="panel-heading">
+                <h4>
+                  Recent groups
+                  <small id="small">Your most recently accessed groups</small>
+                </h4>
+              </div>
+            </div>
+            <!--#endregion -->
+
+            <!--#region All Groups  -->
+
+            <div id="ContainerAllGroups" class="container-fluid">
+              <div id="Heading" class="panel-heading">
+                <h4>Groups <small id="small">All of your groups</small></h4>
+              </div>
+              <div id="Footer" class="panel-footer">
+                <input
+                  type="text"
+                  id="GroupSearch"
+                  placeholder="Search your groups . . ."
+                />
+              </div>
+            </div>
+
+            <!--#endregion -->
+          </div>
+        </div>
+        <div class="col-sm-2 sidenav">
+          <div class="well">
+            <img
+              src="https://i.chzbgr.com/full/9192620800/h3099711E/water-meme-organism-yall-better-be-drinking-water"
+              alt="drink water-meme-organism-yall-better-be-drinking-water"
+            />
+          </div>
+          <div class="well"></div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="container-fluid text-center">
+      <p>Footer Text</p>
+      <img
+        src="https://ih1.redbubble.net/image.1210024059.6036/st,small,845x845-pad,1000x1000,f8f8f8.jpg"
+        alt="not funny i cried"
+      />
+    </footer>
+  </body>
+
+  <style>
+    .vl {
+      border-left: 1px solid black;
+      border-right: 1px solid black;
+      height: 500px;
+    }
+  </style>
+
+  <script src="test.js"></script>
+
+  <script>
+    $(document).ready(LoadRecentGroups());
+    $(document).ready(LoadAllGroups());
+  </script>
+
+  <script>
+    $(document).ready(function () {
+      $('[data-toggle="tooltip"]').tooltip();
+    });
+  </script>
+</html>

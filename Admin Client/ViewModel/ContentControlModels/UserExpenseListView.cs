@@ -14,8 +14,14 @@ using System.Threading.Tasks;
 
 namespace Admin_Client.ViewModel.ContentControlModels
 {
-	public class TripViewModel : NotifyPropertyChangedHandler
+	public class UserExpenseListViewModel : NotifyPropertyChangedHandler
 	{
+
+		#region Variables
+
+		private int startupDelay = 500;
+
+		#endregion
 
 		#region Properties
 
@@ -40,7 +46,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		#region Constructor
 
-		public TripViewModel(TblGroup group)
+		public UserExpenseListViewModel(TblGroup group)
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Information, "Get Trips for Group: " + group.FldGroupId + " " + group.FldGroupName));
 
@@ -53,6 +59,8 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		private void UpdateReceiptListThread(object o)
 		{
+			Thread.Sleep(startupDelay);
+
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log("ThreadID: " + Thread.CurrentThread.ManagedThreadId + " --> Starting"));
 
 			object[] array = o as object[];

@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32819.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{2B09F1D7-E1F3-4C7F-8952-B0442F20BF30}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Admin Client", "Admin Client", "{012B443F-E1D4-4053-A177-0A5426053343}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Admin Client", "Admin Client\Admin Client.csproj", "{C6B7B0FC-FD71-4DC5-AC70-7F1E10B153AD}"
@@ -15,27 +13,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{C9C1D606-D6F3-4012-97B6-8F2CA8079320}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairShareAPI", "FairShareAPI\FairShareAPI.csproj", "{5357491C-0A71-4F2E-8EE2-C91620FF49D2}"
-EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "User Client", "http://localhost:62353", "{4AB28AA9-A43E-45CF-AA50-47B35896DEED}"
-	ProjectSection(WebsiteProperties) = preProject
-		UseIISExpress = "true"
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.8"
-		Debug.AspNetCompiler.VirtualPath = "/localhost_62353"
-		Debug.AspNetCompiler.PhysicalPath = "..\..\..\OneDrive\Documents\My Web Sites\User Client\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_62353\"
-		Debug.AspNetCompiler.Updateable = "true"
-		Debug.AspNetCompiler.ForceOverwrite = "true"
-		Debug.AspNetCompiler.FixedNames = "false"
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.VirtualPath = "/localhost_62353"
-		Release.AspNetCompiler.PhysicalPath = "..\..\..\OneDrive\Documents\My Web Sites\User Client\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_62353\"
-		Release.AspNetCompiler.Updateable = "true"
-		Release.AspNetCompiler.ForceOverwrite = "true"
-		Release.AspNetCompiler.FixedNames = "false"
-		Release.AspNetCompiler.Debug = "False"
-		SlnRelativePath = "..\..\..\OneDrive\Documents\My Web Sites\User Client\"
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,18 +48,6 @@ Global
 		{5357491C-0A71-4F2E-8EE2-C91620FF49D2}.Release|x64.Build.0 = Release|Any CPU
 		{5357491C-0A71-4F2E-8EE2-C91620FF49D2}.Release|x86.ActiveCfg = Release|Any CPU
 		{5357491C-0A71-4F2E-8EE2-C91620FF49D2}.Release|x86.Build.0 = Release|Any CPU
-		{4AB28AA9-A43E-45CF-AA50-47B35896DEED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4AB28AA9-A43E-45CF-AA50-47B35896DEED}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4AB28AA9-A43E-45CF-AA50-47B35896DEED}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{4AB28AA9-A43E-45CF-AA50-47B35896DEED}.Debug|x64.Build.0 = Debug|Any CPU
-		{4AB28AA9-A43E-45CF-AA50-47B35896DEED}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{4AB28AA9-A43E-45CF-AA50-47B35896DEED}.Debug|x86.Build.0 = Debug|Any CPU
-		{4AB28AA9-A43E-45CF-AA50-47B35896DEED}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{4AB28AA9-A43E-45CF-AA50-47B35896DEED}.Release|Any CPU.Build.0 = Debug|Any CPU
-		{4AB28AA9-A43E-45CF-AA50-47B35896DEED}.Release|x64.ActiveCfg = Debug|Any CPU
-		{4AB28AA9-A43E-45CF-AA50-47B35896DEED}.Release|x64.Build.0 = Debug|Any CPU
-		{4AB28AA9-A43E-45CF-AA50-47B35896DEED}.Release|x86.ActiveCfg = Debug|Any CPU
-		{4AB28AA9-A43E-45CF-AA50-47B35896DEED}.Release|x86.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
