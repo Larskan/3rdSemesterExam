@@ -5,10 +5,10 @@ body
     font-family: "Kanit", sans-serif;
 }
 
+
 #Container
 {
     margin-bottom: 20px;
-
 }
 
 #Footer
@@ -39,7 +39,13 @@ body
 
     height: 40px;
     width: 40px;
+
     
+}
+
+#Actions:hover
+{
+    background-color: #f0f8ff;
 }
 
 #GroupIcon
@@ -59,6 +65,11 @@ body
 
     max-width: 200px;
     max-height: 200px;
+}
+
+#GroupIcon:hover
+{
+    background-color: #f0f8ff;
 }
 
 #Heading
