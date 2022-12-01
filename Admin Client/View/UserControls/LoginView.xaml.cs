@@ -37,9 +37,13 @@ namespace Admin_Client.View.UserControls
 
 		private void Login_Click(object sender, RoutedEventArgs e)
 		{
+
             HttpClientServices s = new HttpClientServices();
-            s.GetAllTblGroups();
-            Debug.WriteLine("RESULT1: " + s.GetAllTblGroups());
+			//s.GetAllTblGroups();
+			//s.TestingCompact();
+			s.DeleteGroup(1);
+
+            Debug.WriteLine("RESULT1: " + s.DeleteGroup(1));
             //HttpClientServices s2 = new HttpClientServices();
             //s2.GetSpecificGroup(1);
             //Debug.WriteLine("RESULT2: " + s2.GetSpecificGroup(1));

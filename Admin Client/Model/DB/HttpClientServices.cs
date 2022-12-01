@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -13,36 +14,29 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
-using JsonSerializer = System.Text.Json.JsonSerializer;
+using System.Net.Http.Headers;
+
+
 
 namespace Admin_Client.Model.DB
 {
 
     /*Placeholders for the Endpoints
      * TODO: Get One, Get all, Put, Post, Delete, Edit
-     * TODO: GetRequest - X
-     * TODO: GetAllRequest - X
-     * Todo: PostRequest - X
-     * Todo: DeleteRequest
-     * Todo: EditRequest
-     * Todo: PutRequest
+     * TODO: GetRequest - Done
+     * TODO: GetAllRequest - Done
+     * Todo: PostRequest - Done
+     * Todo: DeleteRequest - Done
+     * Todo: Edit/Put/ReplaceRequest - Work in progress
      * https://localhost:7002/TblGroups
-     * https://localhost:7002/TblGroups/{ID}
      * https://localhost:7002/TblGroupToMoneys
      * https://localhost:7002/TblLogins
-     * https://localhost:7002/TblLogins/{ID}
      * https://localhost:7002/TblReceipts
-     * https://localhost:7002/TblReceipts/{ID}
      * https://localhost:7002/TblTrips
-     * https://localhost:7002/TblTrips/{ID}
      * https://localhost:7002/TblTripToUserExpenses
-     * https://localhost:7002/TblTripToUserExpenses/{ID}
      * https://localhost:7002/TblUserExpenses
-     * https://localhost:7002/TblUserExpenses/{ID}
      * https://localhost:7002/TblUsers
-     * https://localhost:7002/TblUsers/{ID}
      * https://localhost:7002/TblUserToGroups
-     * https://localhost:7002/TblUserToGroups/{ID}
      * 
      */
     public class HttpClientServices
@@ -54,10 +48,99 @@ namespace Admin_Client.Model.DB
         public HttpClientServices()
         {
            _httpClient.BaseAddress = new Uri("https://localhost:7270/");
-           
+            //var serviceCollection = new ServiceCollection();
+            //ConfigureServices(serviceCollection);
+            //var services = serviceCollection.BuildServiceProvider();
+            //var httpClientFactory = services.GetRequiredService<IHttpClientFactory>();
+
+            //grabs the service matching group, using its base address
+            //var httpClientGroups = httpClientFactory.CreateClient("group");
+            //var responseMessage = await httpClientGroups.GetAsync("");
+            //TestingCompact().AsyncState.ToString();
         }
 
+        #region Attempt at making more clean and compact code, work in progress
+        public async static Task TestingCompact()
+        {
+            var serviceCollection = new ServiceCollection();
+            ConfigureServices(serviceCollection);
+            var services = serviceCollection.BuildServiceProvider();
+            var httpClientFactory = services.GetRequiredService<IHttpClientFactory>();
+
+            //grabs the service matching group, using its base address
+            var httpClientGroups = httpClientFactory.CreateClient("group");
+            var responseMessage = await httpClientGroups.GetAsync("");
+            responseMessage.EnsureSuccessStatusCode();
+
+            var httpClientUsers = httpClientFactory.CreateClient("user");
+            var responseMessage2 = await httpClientUsers.GetAsync("");
+            responseMessage2.EnsureSuccessStatusCode();
+
+            Console.WriteLine("END");
+        }
+
+        //Work in progress to create a more compact code
+        private static void ConfigureServices(ServiceCollection services)
+        {
+            //Names Client
+            //Whenever I make HttpClient request through "name", it will use the correct table Base Address
+            services.AddHttpClient("groups",options =>
+            {
+                options.BaseAddress = new Uri("https://localhost:7002/TblGroups");
+                //Accept header for Json format
+                options.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            });
+            services.AddHttpClient("login", options =>
+            {
+                options.BaseAddress = new Uri("https://localhost:7002/TblLogins");
+                options.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            });
+            services.AddHttpClient("receipt", options =>
+            {
+                options.BaseAddress = new Uri("https://localhost:7002/TblReceipts");
+                options.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            });
+            services.AddHttpClient("trip", options =>
+            {
+                options.BaseAddress = new Uri("https://localhost:7002/TblTrips");
+                options.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            });
+            services.AddHttpClient("expense", options =>
+            {
+                options.BaseAddress = new Uri("https://localhost:7002/TblUserExpenses");
+                options.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            });
+            services.AddHttpClient("user", options =>
+            {
+                options.BaseAddress = new Uri("https://localhost:7002/TblUsers");
+                options.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            });
+
+        }
+        #endregion
+
+
+
         #region Get specific from table
+        /// <summary>
+        /// Gets the Json Data, turns it into Http data for an ID(Used in Get Specific from Table Region)
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        private async static Task<string> GetHttpResponse(string url, int id)
+        {
+            string res = url + "/" + id;
+            Debug.WriteLine("Combination: " + res);
+            _httpClient.BaseAddress = new Uri(res);
+            var response = await _httpClient.GetAsync(res);
+            Debug.WriteLine("Response2: " + response);
+            response.EnsureSuccessStatusCode();
+            var content = await response.Content.ReadAsStringAsync();
+            Debug.WriteLine("Final2: " + content);
+            return content;
+        }
+
         [HttpGet("{id}")]
         public Task GetSpecificLogin(int id)
         {
@@ -97,6 +180,11 @@ namespace Admin_Client.Model.DB
         #endregion
 
         #region Add to Table
+
+        
+        
+        
+
         [HttpPost]
         public Task AddGroup(string name, bool boll)
         {
@@ -136,6 +224,31 @@ namespace Admin_Client.Model.DB
         #endregion
 
         #region Get All from a Table
+
+        /// <summary>
+        /// Gets the Json Data, turns it into Http data for entire table
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        private async static Task<string> GetAllHttpResponse(string url)
+        {
+            //Create a base Get Response
+            _httpClient.BaseAddress = new Uri(url);
+            //Get async request to chosen url and save it as response
+            var response = await _httpClient.GetAsync(url);
+            Debug.WriteLine("Target: " + url);
+
+            //Makes sure that it gets a 200 code OK
+            response.EnsureSuccessStatusCode();
+            Debug.WriteLine("Response: " + response);
+
+            //Makes the response into HTTP through serialization
+            var content = await response.Content.ReadAsStringAsync();
+            Debug.WriteLine("Final: " + content);
+            return content;
+
+        }
+
         [HttpGet]
         public Task GetAllTblLogin()
         {
@@ -177,48 +290,49 @@ namespace Admin_Client.Model.DB
         }
         #endregion
 
-        /// <summary>
-        /// Gets the Json Data, turns it into Http data for entire table
-        /// </summary>
-        /// <param name="url"></param>
-        /// <returns></returns>
-        private async static Task<string> GetAllHttpResponse(string url)
+        #region Delete data from tables
+
+        [HttpDelete]
+        private static HttpResponseMessage ClientDeleteRequest(string RequestURI, int ID)
         {
-            //Create a base Get Response
-            _httpClient.BaseAddress = new Uri(url);
-            //Get async request to chosen url and save it as response
-            var response = await _httpClient.GetAsync(url);
-            Debug.WriteLine("Target: " + url);
-          
-            //Makes sure that it gets a 200 code OK
-            response.EnsureSuccessStatusCode();
-            Debug.WriteLine("Response: " + response);
-
-            //Makes the response into HTTP through serialization
-            var content = await response.Content.ReadAsStringAsync();
-            Debug.WriteLine("Final: " + content);
-            return content;
-
+            string res = RequestURI + "/" + ID;
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Accept.Clear();
+            HttpResponseMessage response = client.DeleteAsync(res).Result;
+            return response;
         }
 
-        /// <summary>
-        /// Gets the Json Data, turns it into Http data for an ID
-        /// </summary>
-        /// <param name="url"></param>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        private async static Task<string> GetHttpResponse(string url, int id)
+        public Task DeleteGroup(int id)
         {
-            string res = url + "/" +  id;
-            Debug.WriteLine("Combination: "+res);
-            _httpClient.BaseAddress = new Uri(res);
-            var response = await _httpClient.GetAsync(res);
-            Debug.WriteLine("Response2: " + response);
-            response.EnsureSuccessStatusCode();
-            var content = await response.Content.ReadAsStringAsync();
-            Debug.WriteLine("Final2: " + content);
-            return content;
+            ClientDeleteRequest("https://localhost:7002/TblGroups", id);
+            return Task.CompletedTask;
         }
+        public Task DeleteLogin(int id)
+        {
+            ClientDeleteRequest("https://localhost:7002/TblLogins", id);
+            return Task.CompletedTask;
+        }
+        public Task DeleteReceipt(int id)
+        {
+            ClientDeleteRequest("https://localhost:7002/TblReceipts", id);
+            return Task.CompletedTask;
+        }
+        public Task DeleteTrip(int id)
+        {
+            ClientDeleteRequest("https://localhost:7002/TblTrips", id);
+            return Task.CompletedTask;
+        }
+        public Task DeleteUserExpenses(int id)
+        {
+            ClientDeleteRequest("https://localhost:7002/TblUserExpenses", id);
+            return Task.CompletedTask;
+        }
+        public Task DeleteUser(int id)
+        {
+            ClientDeleteRequest("https://localhost:7002/TblUsers", id);
+            return Task.CompletedTask;
+        }
+        #endregion
 
         #region Post new entry to a group
         [HttpPost]
@@ -256,7 +370,7 @@ namespace Admin_Client.Model.DB
             
         }
 
-
+        [HttpPost]
         /// <summary>
         /// Posts the data as a Json for User
         /// </summary>
@@ -287,6 +401,7 @@ namespace Admin_Client.Model.DB
             return final;
         }
 
+        [HttpPost]
         /// <summary>
         /// Posts the data as a Json for Login
         /// </summary>
@@ -311,6 +426,7 @@ namespace Admin_Client.Model.DB
             return final;
         }
 
+        [HttpPost]
         /// <summary>
         /// Posts the data as a Json for Receipt
         /// </summary>
@@ -340,6 +456,7 @@ namespace Admin_Client.Model.DB
 
         }
 
+        [HttpPost]
         /// <summary>
         /// Posts the data as a Json for Trip
         /// </summary>
@@ -362,6 +479,7 @@ namespace Admin_Client.Model.DB
             return final;
         }
 
+        [HttpPost]
         /// <summary>
         /// Posts the data as a Json for User Expense
         /// </summary>
@@ -392,7 +510,25 @@ namespace Admin_Client.Model.DB
 
         #endregion
 
+        #region Put/Replace data with new data - Not Done
+        public async static Task<string> ReplaceContentHttp(string url)
+        {
+            //var endpoint = _httpClient.BaseAddress = new Uri(url);
+            string container = "";
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(url);
+                var content = new FormUrlEncodedContent(new[]
+                {
+                    new KeyValuePair<string, string>("","parameter")
+                });
+                var result = await client.PutAsync("/values", content);
+                container = await result.Content.ReadAsStringAsync();
+            }
+            return container;
 
+        }
+        #endregion
 
         /// <summary>
         /// Put Async
