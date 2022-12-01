@@ -1,0 +1,14 @@
+{
+  "name": "user-client",
+  "version": "0.0.0",
+  "description": "User Client",
+  "main": "server.js",
+  "author": {
+    "name": ""
+  },
+  "devDependencies": {
+    "eslint": "^8.21.0"
+  },
+  "eslintConfig": {
+  }
+}
