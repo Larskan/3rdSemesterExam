@@ -28,9 +28,25 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="create\createUser.css" />
+    <Content Include="create\createUser.html" />
+    <Content Include="create\createUser.js" />
+    <Content Include="homepage\homePage.css" />
+    <Content Include="homepage\homePage.html" />
+    <Content Include="homepage\homePage.js" />
+    <Content Include="images\image.png" />
+    <Content Include="login\darkmode.js" />
+    <Content Include="login\login.css" />
+    <Content Include="login\login.html" />
     <Content Include="server.js" />
     <Content Include="package.json" />
     <Content Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="create\" />
+    <Folder Include="homepage\" />
+    <Folder Include="images\" />
+    <Folder Include="login\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
   <ProjectExtensions>
