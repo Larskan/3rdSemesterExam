@@ -172,10 +172,6 @@ namespace Admin_Client.Model.DB
 
         #region Add to Table
 
-        
-        
-        
-
         [HttpPost]
         public Task AddGroup(string name, bool boll)
         {

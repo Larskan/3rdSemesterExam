@@ -100,32 +100,45 @@ namespace Admin_Client.Model.FileIO
 		/// <returns>True if the file has been read, false if not</returns>
 		public bool WriteToLogFile(Log log)
 		{
+			string fileContent = "";
+			string spacingItem = "";
+
+			while (ReadLogFile() == null)
+			{
+				if (ReadLogFile() != null)
+				{
+					foreach (var item in ReadLogFile())
+					{
+						switch (item.LogType)
+						{
+							case LogType.Success: spacingItem = "\t\t\t\t\t\t\t\t"; break;
+							case LogType.Information: spacingItem = "\t\t\t\t\t\t\t"; break;
+							case LogType.UserAction: spacingItem = "\t"; break;
+							case LogType.Warning: spacingItem = "\t\t\t\t\t\t\t\t"; break;
+							case LogType.FatalError: spacingItem = "\t\t\t\t\t\t\t"; break;
+						}
+						fileContent += "[" + item.DateTime + "] {" + item.LogType + "}" + spacingItem + " " + item.LogTxt + "\n";
+					}
+					string spacing = "";
+					switch (log.LogType)
+					{
+						case LogType.Success: spacing = "\t\t\t\t\t\t\t\t"; break;
+						case LogType.Information: spacing = "\t\t\t\t\t\t\t"; break;
+						case LogType.UserAction: spacing = "\t"; break;
+						case LogType.Warning: spacing = "\t\t\t\t\t\t\t\t"; break;
+						case LogType.FatalError: spacing = "\t\t\t\t\t\t\t"; break;
+					}
+					File.WriteAllText(PATH + LogFilePath, fileContent + "[" + log.DateTime + "] {" + log.LogType + "}" + spacing + " " + log.LogTxt + "\n");
+				}
+				else
+				{
+					Debug.WriteLine("Sleeping");
+					Thread.Sleep(500);
+				}
+			}
 			try
 			{
-				string fileContent = "";
-				string spacingItem = "";
-				foreach (var item in ReadLogFile())
-				{
-					switch (item.LogType)
-					{
-						case LogType.Success: spacingItem = "\t\t\t\t\t\t\t\t"; break;
-						case LogType.Information: spacingItem = "\t\t\t\t\t\t\t"; break;
-						case LogType.UserAction: spacingItem = "\t"; break;
-						case LogType.Warning: spacingItem = "\t\t\t\t\t\t\t\t"; break;
-						case LogType.FatalError: spacingItem = "\t\t\t\t\t\t\t"; break;
-					}
-					fileContent += "[" + item.DateTime + "] {" + item.LogType + "}" + spacingItem + " " + item.LogTxt + "\n";
-				}
-				string spacing = "";
-				switch (log.LogType)
-				{
-					case LogType.Success: spacing = "\t\t\t\t\t\t\t\t"; break;
-					case LogType.Information: spacing = "\t\t\t\t\t\t\t"; break;
-					case LogType.UserAction: spacing = "\t"; break;
-					case LogType.Warning: spacing = "\t\t\t\t\t\t\t\t"; break;
-					case LogType.FatalError: spacing = "\t\t\t\t\t\t\t"; break;
-				}
-				File.WriteAllText(PATH + LogFilePath, fileContent + "[" + log.DateTime + "] {" + log.LogType + "}" + spacing + " " + log.LogTxt + "\n");
+				
 			} catch
 			{
 				return false;
