@@ -1,4 +1,5 @@
-﻿using Admin_Client.Model.DB;
+﻿using Admin_Client.Model;
+using Admin_Client.Model.DB;
 using Admin_Client.Model.Domain;
 using Admin_Client.Model.Foundation;
 using Admin_Client.Singleton;
@@ -37,6 +38,8 @@ namespace Admin_Client.View.UserControls
 
 		private void Login_Click(object sender, RoutedEventArgs e)
 		{
+			HttpClientServicesSingleton.Instance.AddGroup(new TblGroup());
+			
 			if (PasswordBox_Password.Password.Length > 0)
 			{
 				viewModel.Login(TextBox_Username.Text, PasswordBox_Password.Password);
@@ -44,6 +47,7 @@ namespace Admin_Client.View.UserControls
 			{
 				viewModel.Login(TextBox_Username.Text, TextBox_Password.Text);
 			}
+			
 			
         }
 

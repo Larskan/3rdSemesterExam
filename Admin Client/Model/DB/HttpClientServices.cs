@@ -177,8 +177,11 @@ namespace Admin_Client.Model.DB
         
 
         [HttpPost]
-        public Task AddGroup(string name, bool boll)
+        public Task AddGroup(TblGroup group)
         {
+            string name = group.FldGroupName = "";
+            bool boll = (bool)(group.FldGroupBoolean = true);
+            //string name, bool boll
             _ = PostHttpNewGroup("https://localhost:7002/TblGroups", name, boll);
             return Task.CompletedTask;
         }

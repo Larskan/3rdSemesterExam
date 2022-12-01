@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 namespace Admin_Client.Singleton
 {
     //nice, sure, pull?
+    //But I do.. Just normal one
 
     public class HttpClientServicesSingleton : HttpClientServices
     {
