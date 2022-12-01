@@ -15,7 +15,7 @@
 
         <Label Grid.Row="0" Content="{Binding LogFileName}" FontSize="30" FontWeight="Bold" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
 
-        <ListBox Grid.Row="1" ItemsSource="{Binding Logs}" Margin="10" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource logDataTemplate}" ItemContainerStyle="{StaticResource NoHoverOrTargetRoundedListItem}" Resources="{StaticResource roundborder10}"/>
+        <ListBox Grid.Row="1" ItemsSource="{Binding Logs}" Margin="10" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource logDataTemplate}" ItemContainerStyle="{StaticResource NoHoverOrTargetRoundedListItem}" Style="{StaticResource roundlistboxwithempty}" Resources="{StaticResource roundborder10}"/>
 
     </Grid>
 </Window>

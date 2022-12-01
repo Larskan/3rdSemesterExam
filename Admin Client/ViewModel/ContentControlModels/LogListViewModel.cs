@@ -18,6 +18,12 @@ namespace Admin_Client.ViewModel.ContentControlModels
 	public class LogListViewModel : NotifyPropertyChangedHandler
 	{
 
+		#region Variables
+
+		private int startupDelay = 500;
+
+		#endregion
+
 		#region Properties
 
 		private string username;
@@ -28,14 +34,13 @@ namespace Admin_Client.ViewModel.ContentControlModels
 			set { username = value; NotifyPropertyChanged(); }
 		}
 
-		private ObservableCollection<TblTrip> receipts = new ObservableCollection<TblTrip>();
+		private ObservableCollection<TblTrip> logs = new ObservableCollection<TblTrip>();
 
-		public ObservableCollection<TblTrip> Receipts
+		public ObservableCollection<TblTrip> Logs
 		{
-			get { return receipts; }
-			set { receipts = value; }
+			get { return logs; }
+			set { logs = value; }
 		}
-
 
 		#endregion
 
@@ -54,6 +59,8 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		private void UpdateReceiptListThread(object o)
 		{
+			Thread.Sleep(startupDelay);
+
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log("ThreadID: " + Thread.CurrentThread.ManagedThreadId + " --> Starting"));
 
 			object[] array = o as object[];

@@ -226,7 +226,6 @@
         <!--#region DataTemplates-->
         
         <!--DataTemplate Log-->
-
         <DataTemplate x:Key="logDataTemplate">
             <Border Name="border" BorderThickness="3,0,3,0" BorderBrush="Gray">
                 <Grid>
@@ -280,9 +279,8 @@
                 </DataTrigger>
             </DataTemplate.Triggers>
         </DataTemplate>
-
-        <!--DataTemplate Log-->
-
+        
+        <!--DataTemplate Parameter-->
         <DataTemplate x:Key="parameterDataTemplate">
             <Border Name="border" BorderThickness="0,3,0,0" BorderBrush="Gray" Resources="{StaticResource roundborder10}">
                 <Grid>
@@ -302,7 +300,60 @@
                 </DataTrigger>
             </DataTemplate.Triggers>
         </DataTemplate>
-        
+
+        <!--DataTemplate Receipt-->
+        <DataTemplate x:Key="receiptDataTemplate">
+            <Border Name="border" BorderThickness="0,0,0,0" BorderBrush="Gray" Resources="{StaticResource roundborder10}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label x:Name="id" Content="{Binding Id}" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="name" Content="{Binding Name}" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="groupname" Content="{Binding GroupName}" Grid.Column="2" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="projectedvalue" Content="{Binding ProjectedValue}" Grid.Column="3" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="amountpaid" Content="{Binding AmountPaid}" Grid.Column="4" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                </Grid>
+            </Border>
+        </DataTemplate>
+
+        <!--DataTemplate UserExpense-->
+        <DataTemplate x:Key="userExpenseDataTemplate">
+            <Border Name="border" BorderThickness="0,0,0,0" BorderBrush="Gray" Resources="{StaticResource roundborder10}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label x:Name="id" Content="{Binding Id}" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="name" Content="{Binding Name}" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="groupname" Content="{Binding Amount}" Grid.Column="2" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="projectedvalue" Content="{Binding Date}" Grid.Column="3" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                </Grid>
+            </Border>
+        </DataTemplate>
+
+        <!--DataTemplate LogFile-->
+        <DataTemplate x:Key="logFileDataTemplate">
+            <Border Name="border" BorderThickness="0,0,0,0" BorderBrush="Gray" Resources="{StaticResource roundborder10}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label x:Name="id" Content="{Binding Id}" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="date" Content="{Binding Date}" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                </Grid>
+            </Border>
+        </DataTemplate>
+
         <!--#endregion-->
         
         <!--#region ContextMenu-->

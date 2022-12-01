@@ -53,7 +53,7 @@ namespace Admin_Client.Model.DB
         }
 
         #region Attempt at making more clean and compact code, work in progress
-        public async static Task TestingCompact()
+        public async Task TestingCompact()
         {
             var serviceCollection = new ServiceCollection();
             ConfigureServices(serviceCollection);
@@ -119,7 +119,7 @@ namespace Admin_Client.Model.DB
         /// <param name="url"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        private async static Task<string> GetHttpResponse(string url, int id)
+        private async Task<string> GetHttpResponse(string url, int id)
         {
             string res = url + "/" + id;
             Debug.WriteLine("Combination: " + res);
@@ -172,10 +172,6 @@ namespace Admin_Client.Model.DB
 
         #region Add to Table
 
-        
-        
-        
-
         [HttpPost]
         public Task AddGroup(string name, bool boll)
         {
@@ -221,7 +217,7 @@ namespace Admin_Client.Model.DB
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        private async static Task<string> GetAllHttpResponse(string url)
+        private async Task<string> GetAllHttpResponse(string url)
         {
             //Create a base Get Response
             _httpClient.BaseAddress = new Uri(url);
@@ -284,7 +280,7 @@ namespace Admin_Client.Model.DB
         #region Delete data from Table
 
         [HttpDelete]
-        private static HttpResponseMessage ClientDeleteRequest(string RequestURI, int ID)
+        private HttpResponseMessage ClientDeleteRequest(string RequestURI, int ID)
         {
             string res = RequestURI + "/" + ID;
             HttpClient client = new HttpClient();
@@ -335,7 +331,7 @@ namespace Admin_Client.Model.DB
         /// <param name="name">fldGroupName</param>
         /// <param name="groupBool">fldGroupBoolean</param>
         /// <returns></returns>
-        public async static Task<string> PostHttpNewGroup(string url, string name, bool groupBool)
+        public async Task<string> PostHttpNewGroup(string url, string name, bool groupBool)
         {
             var endpoint = _httpClient.BaseAddress = new Uri(url);
 
@@ -372,7 +368,7 @@ namespace Admin_Client.Model.DB
         /// <param name="phone">FldPhonenumber</param>
         /// <param name="admin">FldIsAdmin</param>
         /// <returns></returns>
-        public async static Task<string> PostHttpNewUser(string url, string mail, string firstName, string lastName, int phone, bool admin)
+        public async Task<string> PostHttpNewUser(string url, string mail, string firstName, string lastName, int phone, bool admin)
         {
             var endpoint = _httpClient.BaseAddress = new Uri(url);
             var newPost = new TblUser()
@@ -400,7 +396,7 @@ namespace Admin_Client.Model.DB
         /// <param name="userID">FldUserId</param>
         /// <param name="pass">FldPassword</param>
         /// <returns></returns>
-        public async static Task<string> PostHttpNewLogin(string url, int userID, string pass)
+        public async Task<string> PostHttpNewLogin(string url, int userID, string pass)
         {
             var endpoint = _httpClient.BaseAddress = new Uri(url);
             var newPost = new TblLogin()
@@ -427,7 +423,7 @@ namespace Admin_Client.Model.DB
         /// <param name="value">FldProjectedValue</param>
         /// <param name="paid">FldAmountPaid</param>
         /// <returns></returns>
-        public async static Task<string> PostHttpNewReceipt(string url, int userID, int tripID, double value, double paid)
+        public async Task<string> PostHttpNewReceipt(string url, int userID, int tripID, double value, double paid)
         {
             var endpoint = _httpClient.BaseAddress = new Uri(url);
             var newPost = new TblReceipt()
@@ -454,7 +450,7 @@ namespace Admin_Client.Model.DB
         /// <param name="url">Api/TblTrip</param>
         /// <param name="sum">FldSum</param>
         /// <returns></returns>
-        public async static Task<string> PostHttpNewTrip(string url, double sum)
+        public async Task<string> PostHttpNewTrip(string url, double sum)
         {
             var endpoint = _httpClient.BaseAddress = new Uri(url);
             var newPost = new TblTrip()
@@ -480,7 +476,7 @@ namespace Admin_Client.Model.DB
         /// <param name="note">FldNote</param>
         /// <param name="date">FldDate</param>
         /// <returns></returns>
-        public async static Task<string> PostHttpNewUserExpense(string url, int userID, double expense, string note, DateTime date)
+        public async Task<string> PostHttpNewUserExpense(string url, int userID, double expense, string note, DateTime date)
         {
             var endpoint = _httpClient.BaseAddress = new Uri(url);
             var newPost = new TblUserExpense()
@@ -502,7 +498,7 @@ namespace Admin_Client.Model.DB
         #endregion
 
         #region Put/Replace data with new data - Not Done
-        public async static Task<string> ReplaceContentHttp(string url)
+        public async Task<string> ReplaceContentHttp(string url)
         {
             //var endpoint = _httpClient.BaseAddress = new Uri(url);
             string container = "";
@@ -526,7 +522,7 @@ namespace Admin_Client.Model.DB
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        async static Task<string> PutRequest(string url)
+        async  Task<string> PutRequest(string url)
         {
             string con = "";
             using (HttpClient client = new HttpClient())

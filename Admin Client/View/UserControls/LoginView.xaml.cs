@@ -1,4 +1,5 @@
-﻿using Admin_Client.Model.DB;
+﻿using Admin_Client.Model;
+using Admin_Client.Model.DB;
 using Admin_Client.Model.Domain;
 using Admin_Client.Model.Foundation;
 using Admin_Client.Singleton;
@@ -44,8 +45,7 @@ namespace Admin_Client.View.UserControls
 			{
 				viewModel.Login(TextBox_Username.Text, TextBox_Password.Text);
 			}
-			
-        }
+		}
 
 		private void TextBox_Password_TextChanged(object sender, TextChangedEventArgs e)
 		{
