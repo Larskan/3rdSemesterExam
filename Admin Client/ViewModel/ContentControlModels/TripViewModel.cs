@@ -17,6 +17,12 @@ namespace Admin_Client.ViewModel.ContentControlModels
 	public class TripViewModel : NotifyPropertyChangedHandler
 	{
 
+		#region Variables
+
+		private int startupDelay = 500;
+
+		#endregion
+
 		#region Properties
 
 		private string groupname;
@@ -53,6 +59,8 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		private void UpdateReceiptListThread(object o)
 		{
+			Thread.Sleep(startupDelay);
+
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log("ThreadID: " + Thread.CurrentThread.ManagedThreadId + " --> Starting"));
 
 			object[] array = o as object[];

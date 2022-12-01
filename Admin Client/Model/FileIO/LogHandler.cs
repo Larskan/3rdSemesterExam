@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Markup;
 
 namespace Admin_Client.Model.FileIO
 {
@@ -83,7 +84,6 @@ namespace Admin_Client.Model.FileIO
 			string dateTimeFileName = ToFileName(dateTime);
 			File.WriteAllText(PATH + ToPath(dateTimeFileName, "txt"), "");
 			LogFilePath = ToPath(dateTimeFileName, "txt");
-			Debug.WriteLine(LogFilePath);
 			WriteToLogFile(new Log(LogType.Success, "Log file has been created"));
 			return true;
 		}
@@ -130,7 +130,16 @@ namespace Admin_Client.Model.FileIO
 		/// <returns>The logfile's logs as a List</returns>
 		public List<Log> ReadLogFile()
 		{
-			return StringsToLogs(File.ReadAllText(PATH + LogFilePath).Split('\n'));
+			while (true)
+			{
+				if (IsFileReady(PATH + LogFilePath))
+				{
+					return StringsToLogs(File.ReadAllText(PATH + LogFilePath).Split('\n'));
+				} else
+				{
+					Thread.Sleep(500);
+				}
+			}
 		}
 
 		/// <summary>
@@ -282,6 +291,23 @@ namespace Admin_Client.Model.FileIO
 				}
 			}
 			return logs;
+		}
+
+		#endregion
+
+		#region IsFileLocked
+
+		private bool IsFileReady(string fileName)
+		{
+			try
+			{
+				File.ReadAllText(fileName);
+				return true;
+			}
+			catch (IOException) 
+			{ 
+				return false;
+			}
 		}
 
 		#endregion

@@ -83,22 +83,10 @@ namespace Admin_Client.ViewModel.WindowModels
 
 		public void SetMainContent(UserControl content)
 		{
-			while (true)
-			{
-				try
-				{
-					LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, content.GetType().Name + " Click"));
-					LogHandlerSingleton.Instance.WriteToLogFile(new Log("Content --> " + content.GetType().Name));
-					CControl_Main.Content = content;
-					LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Content == " + content.GetType().Name));
-					return;
-				}
-				catch (IOException)
-				{
-					Debug.WriteLine("Sleeping man");
-					Thread.Sleep(500);
-				}
-			}
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, content.GetType().Name + " Click"));
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Content --> " + content.GetType().Name));
+			CControl_Main.Content = content;
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Content == " + content.GetType().Name));
 		}
 
 		public void SetMainContent(UserControl content, bool isMenuActive)
