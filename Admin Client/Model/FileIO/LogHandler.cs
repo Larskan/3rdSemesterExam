@@ -104,44 +104,28 @@ namespace Admin_Client.Model.FileIO
 			{
 				string fileContent = "";
 				string spacingItem = "";
-				while (ReadLogFile() == null)
+				foreach (var item in ReadLogFile())
 				{
-					int tryes = 5;
-					if (ReadLogFile() != null)
+					switch (item.LogType)
 					{
-						foreach (var item in ReadLogFile())
-						{
-							switch (item.LogType)
-							{
-								case LogType.Success: spacingItem = "\t\t\t\t\t\t\t\t"; break;
-								case LogType.Information: spacingItem = "\t\t\t\t\t\t\t"; break;
-								case LogType.UserAction: spacingItem = "\t"; break;
-								case LogType.Warning: spacingItem = "\t\t\t\t\t\t\t\t"; break;
-								case LogType.FatalError: spacingItem = "\t\t\t\t\t\t\t"; break;
-							}
-							fileContent += "[" + item.DateTime + "] {" + item.LogType + "}" + spacingItem + " " + item.LogTxt + "\n";
-						}
-						string spacing = "";
-						switch (log.LogType)
-						{
-							case LogType.Success: spacing = "\t\t\t\t\t\t\t\t"; break;
-							case LogType.Information: spacing = "\t\t\t\t\t\t\t"; break;
-							case LogType.UserAction: spacing = "\t"; break;
-							case LogType.Warning: spacing = "\t\t\t\t\t\t\t\t"; break;
-							case LogType.FatalError: spacing = "\t\t\t\t\t\t\t"; break;
-						}
-						File.WriteAllText(PATH + LogFilePath, fileContent + "[" + log.DateTime + "] {" + log.LogType + "}" + spacing + " " + log.LogTxt + "\n");
-						
-					} else
-					{
-						if (tryes == 0)
-						{
-							throw new Exception("The Writing to file failed");
-						}
-						tryes--;
-						Thread.Sleep(500);
+						case LogType.Success: spacingItem = "\t\t\t\t\t\t\t\t"; break;
+						case LogType.Information: spacingItem = "\t\t\t\t\t\t\t"; break;
+						case LogType.UserAction: spacingItem = "\t"; break;
+						case LogType.Warning: spacingItem = "\t\t\t\t\t\t\t\t"; break;
+						case LogType.FatalError: spacingItem = "\t\t\t\t\t\t\t"; break;
 					}
+					fileContent += "[" + item.DateTime + "] {" + item.LogType + "}" + spacingItem + " " + item.LogTxt + "\n";
 				}
+				string spacing = "";
+				switch (log.LogType)
+				{
+					case LogType.Success: spacing = "\t\t\t\t\t\t\t\t"; break;
+					case LogType.Information: spacing = "\t\t\t\t\t\t\t"; break;
+					case LogType.UserAction: spacing = "\t"; break;
+					case LogType.Warning: spacing = "\t\t\t\t\t\t\t\t"; break;
+					case LogType.FatalError: spacing = "\t\t\t\t\t\t\t"; break;
+				}
+				File.WriteAllText(PATH + LogFilePath, fileContent + "[" + log.DateTime + "] {" + log.LogType + "}" + spacing + " " + log.LogTxt + "\n");
 			} catch
 			{
 				return false;
@@ -224,20 +208,15 @@ namespace Admin_Client.Model.FileIO
 			string[] logFiles = Directory.GetFiles(PATH);
 			if (logFiles.Length >= amountOfLogFilesStored)
 			{
-				string deleteTarget = "";
-				foreach (var item in logFiles)
+				string deleteTarget = logFiles[0];
+				foreach (var item in logFiles) 
 				{
-					Debug.WriteLine(item);
-
-					Debug.WriteLine(DateTime.Compare(ToDateTime(ToFileName(deleteTarget)), ToDateTime(ToFileName(item))));
-
 					if (DateTime.Compare(ToDateTime(ToFileName(deleteTarget)),ToDateTime(ToFileName(item))) > 0)
 					{
 						deleteTarget = item;
 					}
-					Debug.WriteLine(deleteTarget);
 				}
-				//File.Delete(deleteTarget);
+				File.Delete(deleteTarget);
 			}
 			try
 			{
