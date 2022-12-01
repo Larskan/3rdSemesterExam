@@ -44,8 +44,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		public ReceiptViewModel(TblUser user)
 		{
-            // TODO - GET LOGS FOR USER
-            LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Information, "Get Logs for User: " + user.FldUserId + " " + user.FldFirstName + " " + user.FldFirstName));
+            LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Information, "Get Receipt for User: " + user.FldUserId + " " + user.FldFirstName + " " + user.FldFirstName));
 
             ThreadPool.QueueUserWorkItem(UpdateReceiptListThread, new object[] { user });
         }
