@@ -46,154 +46,8 @@ namespace Admin_Client.Model.DB
         public HttpClientServices()
         {
            _httpClient.BaseAddress = new Uri("https://localhost:7270/");
-            #region From attempt at making more compact code, work in progress
-            //var serviceCollection = new ServiceCollection();
-            //ConfigureServices(serviceCollection);
-            //var services = serviceCollection.BuildServiceProvider();
-            //var httpClientFactory = services.GetRequiredService<IHttpClientFactory>();
-
-            //grabs the service matching group, using its base address
-            //var httpClientGroups = httpClientFactory.CreateClient("group");
-            //var responseMessage = await httpClientGroups.GetAsync("");
-            //TestingCompact().AsyncState.ToString();
-            #endregion
         }
-
-        #region Attempt at making more clean and compact code, work in progress
-        public async Task TestingCompact()
-        {
-            var serviceCollection = new ServiceCollection();
-            ConfigureServices(serviceCollection);
-            var services = serviceCollection.BuildServiceProvider();
-            var httpClientFactory = services.GetRequiredService<IHttpClientFactory>();
-
-            //grabs the service matching group, using its base address
-            var httpClientGroups = httpClientFactory.CreateClient("group");
-            var responseMessage = await httpClientGroups.GetAsync("");
-            responseMessage.EnsureSuccessStatusCode();
-
-            var httpClientUsers = httpClientFactory.CreateClient("user");
-            var responseMessage2 = await httpClientUsers.GetAsync("");
-            responseMessage2.EnsureSuccessStatusCode();
-
-            Console.WriteLine("END");
-        }
-
-        //Work in progress to create a more compact code
-        private static void ConfigureServices(ServiceCollection services)
-        {
-            //Names Client
-            //Whenever I make HttpClient request through "name", it will use the correct table Base Address
-            services.AddHttpClient("groups",options =>
-            {
-                options.BaseAddress = new Uri("https://localhost:7002/TblGroups");
-                //Accept header for Json format
-                options.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            });
-            services.AddHttpClient("login", options =>
-            {
-                options.BaseAddress = new Uri("https://localhost:7002/TblLogins");
-                options.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            });
-            services.AddHttpClient("receipt", options =>
-            {
-                options.BaseAddress = new Uri("https://localhost:7002/TblReceipts");
-                options.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            });
-            services.AddHttpClient("trip", options =>
-            {
-                options.BaseAddress = new Uri("https://localhost:7002/TblTrips");
-                options.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            });
-            services.AddHttpClient("expense", options =>
-            {
-                options.BaseAddress = new Uri("https://localhost:7002/TblUserExpenses");
-                options.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            });
-            services.AddHttpClient("user", options =>
-            {
-                options.BaseAddress = new Uri("https://localhost:7002/TblUsers");
-                options.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            });
-
-        }
-        #endregion
-
-        #region Get specific from table
-        private async Task<string> GetHttpResponse(string url, int id)
-        {
-            string res = url + "/" + id;
-            Debug.WriteLine("Combination: " + res);
-            _httpClient.BaseAddress = new Uri(res);
-            var response = await _httpClient.GetAsync(res);
-            Debug.WriteLine("Response2: " + response);
-            response.EnsureSuccessStatusCode();
-            var content = await response.Content.ReadAsStringAsync();
-            Debug.WriteLine("Final2: " + content);
-            return content;
-        }
-
-        [HttpGet("{id}")]
-        public Task GetSpecificLogin(int id)
-        {
-            _ = GetHttpResponse("https://localhost:7002/TblLogins", id);
-            return Task.CompletedTask;
-        }
-        [HttpGet("{id}")]
-        public Task GetSpecificUser(int id)
-        {
-            _ = GetHttpResponse("https://localhost:7002/TblUsers", id);
-            return Task.CompletedTask;
-        }
-        [HttpGet("{id}")]
-        public Task GetSpecificTrip(int id)
-        {
-            _ = GetHttpResponse("https://localhost:7002/TblTrips", id);
-            return Task.CompletedTask;
-        }
-        [HttpGet("{id}")]
-        public Task GetSpecificReceipt(int id)
-        {
-            _ = GetHttpResponse("https://localhost:7002/TblReceipts", id);
-            return Task.CompletedTask;
-        }
-        [HttpGet("{id}")]
-        public Task GetSpecificExpense(int id)
-        {
-            _ = GetHttpResponse("https://localhost:7002/TblUserExpenses", id);
-            return Task.CompletedTask;
-        }
-        [HttpGet("{id}")]
-        public Task GetSpecificGroup(int id) //WORKS
-        {
-            //Needs to get entire group but also each user connected to the group
-            _ = GetHttpResponse("https://localhost:7002/TblGroups", id);
-            return Task.CompletedTask;
-        }
-        [HttpGet("{id}")]
-        public Task GetGroupNameAndUsersWithGroupID(int id)
-        {
-            TblUserToGroup tbl = new TblUserToGroup
-            {
-                FldGroupId = id
-            };
-
-            UpdateGroupID(tbl);
-            UpdateUserID(tbl);
-            GetAllTblUserToGroup(id);
-            return Task.CompletedTask;
-        }
-        [HttpGet("{id}")]
-        public Task GetUserNameAndGroupsWithUserID(int id)
-        {
-            TblUserToGroup tbl = new TblUserToGroup();
-            UpdateGroupID(tbl);
-            UpdateUserID(tbl);
-            GetAllTblUserToGroup(id);
-            return Task.CompletedTask;
-        }
-
-        #endregion
+   
 
         #region testing
         //TESTING METHOD FOR GETTING USERS AND GROUPS TO DISPLAY TOGETHER, depending on which ID is used
@@ -208,13 +62,13 @@ namespace Admin_Client.Model.DB
             if(id == dot.FldGroupId)
             {
                 //Display group + all users part of that group (1 group has many users)
-                _ = GetHttpResponse("https://localhost:7002/TblUserToGroup", dot.FldGroupId);
+                _ = GetHttpResponse("TblUserToGroup", dot.FldGroupId);
                 return Task.CompletedTask;
             }
             else if(id == dut.FldUserId)
             {
                 //Display user + all groups that user is part of (1 user has many groups)
-                _ = GetHttpResponse("https://localhost:7002/TblUserToGroup", dut.FldUserId);
+                _ = GetHttpResponse("TblUserToGroup", dut.FldUserId);
             }
             return Task.CompletedTask;
         }
@@ -237,7 +91,7 @@ namespace Admin_Client.Model.DB
             if (id == dot.FldGroupId)
             {
                 //Display group + all users part of that group (1 group has many users)
-                _ = GetHttpResponse("https://localhost:7002/TblUserToGroup", dot.FldGroupId);
+                _ = GetHttpResponse("TblUserToGroup", dot.FldGroupId);
 
                 IEnumerable<TblGroup> matchID = (from TblGroup groupItemGroup in groups
                                                  join TblUser groupItemUser in users
@@ -269,7 +123,7 @@ namespace Admin_Client.Model.DB
             else if (id == dut.FldUserId)
             {
                 //Display user + all groups that user is part of (1 user has many groups)
-                _ = GetHttpResponse("https://localhost:7002/TblUserToGroup", dut.FldUserId);
+                _ = GetHttpResponse("TblUserToGroup", dut.FldUserId);
 
                 IEnumerable<TblUser> matchID = (from TblUser groupItemUser in users
                                                 join TblGroup groupItemGroup in groups
@@ -312,7 +166,6 @@ namespace Admin_Client.Model.DB
             //return Task.CompletedTask;
         }
         #endregion
-
 
         #region Add to Table
 
@@ -378,32 +231,42 @@ namespace Admin_Client.Model.DB
         }
         #endregion
 
-        #region Get All from a Table
-
-        [HttpGet]
-        private async Task<string> GetAllHttpResponse(string url)
+        #region Delete data from Table
+        [HttpDelete]
+        public HttpResponseMessage ClientDeleteRequest(string group, int ID)
         {
-            //Create a base Get Response
-            _httpClient.BaseAddress = new Uri(url);
-            //Get async request to chosen url and save it as response
-            var response = await _httpClient.GetAsync(url);
-            Debug.WriteLine("Target: " + url);
-
-            //Makes sure that it gets a 200 code OK
+            var address = _httpClient.BaseAddress = new Uri("https://localhost:7002/");
+            string res = address + group + "/" + ID;
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Accept.Clear();
+            HttpResponseMessage response = client.DeleteAsync(res).Result;
             response.EnsureSuccessStatusCode();
-            Debug.WriteLine("Response: " + response);
 
-            //Testing
-            //var responseBody = response.Content.ReadAsStringAsync().Result;
-            //var myList = JsonConvert.DeserializeObject<List<string>>(responseBody);
+            return response;
+        }
+        #endregion
+
+        #region Get All from a Table
+        [HttpGet]
+        public async Task<string> GetAllHttpResponse(string group)
+        {
+            //Create a Base Address
+            var address = _httpClient.BaseAddress = new Uri("https://localhost:7002/");
+            //Combine address with the selected group and id
+            string res = address + group + "/";
+            Debug.WriteLine("res: " + res);
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            HttpResponseMessage response = client.GetAsync(res).Result;
+            response.EnsureSuccessStatusCode();
+            Debug.WriteLine("response: "+response);
 
             //Makes the response into HTTP through serialization
             var content = await response.Content.ReadAsStringAsync();
-            //List<string> pot = new List<string> { content };
             Debug.WriteLine("Final: " + content);
             return content;
         }
-
+        /*
         [HttpGet]
         public Task GetAllTblLogin()
         {
@@ -449,20 +312,54 @@ namespace Admin_Client.Model.DB
             _ = GetAllHttpResponse("https://localhost:7002/TblUserToGroups"+"/"+id);
             return Task.CompletedTask;
         }
+        */
         #endregion
-
-        #region Delete data from Table
-
-        [HttpDelete]
-        public HttpResponseMessage ClientDeleteRequest(string group, int ID)
+        #region Get specific from table
+        [HttpGet]
+        public async Task<string> GetHttpResponse(string group, int ID)
         {
+            //Create a Base Address
             var address = _httpClient.BaseAddress = new Uri("https://localhost:7002/");
+
             string res = address + group + "/" + ID;
+            Debug.WriteLine("res: " + res);
             HttpClient client = new HttpClient();
-            client.DefaultRequestHeaders.Accept.Clear();
-            HttpResponseMessage response = client.DeleteAsync(res).Result;
-            return response;
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            HttpResponseMessage response = client.GetAsync(res).Result;
+            response.EnsureSuccessStatusCode();
+            Debug.WriteLine("response: " + response);
+
+            //Makes the response into HTTP through serialization
+            var content = await response.Content.ReadAsStringAsync();
+            Debug.WriteLine("Final2: " + content);
+            return content;
         }
+
+        /*
+        [HttpGet("{id}")]
+        public Task GetGroupNameAndUsersWithGroupID(int id)
+        {
+            TblUserToGroup tbl = new TblUserToGroup
+            {
+                FldGroupId = id
+            };
+
+            UpdateGroupID(tbl);
+            UpdateUserID(tbl);
+            GetAllTblUserToGroup(id);
+            return Task.CompletedTask;
+        }
+        [HttpGet("{id}")]
+        public Task GetUserNameAndGroupsWithUserID(int id)
+        {
+            TblUserToGroup tbl = new TblUserToGroup();
+            UpdateGroupID(tbl);
+            UpdateUserID(tbl);
+            GetAllTblUserToGroup(id);
+            return Task.CompletedTask;
+        }
+        */
+
         #endregion
 
         #region Post new entry to a Table
@@ -605,14 +502,8 @@ namespace Admin_Client.Model.DB
             return container;
 
         }
-        #endregion
 
-        /// <summary>
-        /// Put Async - Incomplete code
-        /// </summary>
-        /// <param name="url"></param>
-        /// <returns></returns>
-        async  Task<string> PutRequest(string url)
+        async Task<string> PutRequest(string url)
         {
             string con = "";
             using (HttpClient client = new HttpClient())
@@ -629,6 +520,10 @@ namespace Admin_Client.Model.DB
             return con;
 
         }
+        #endregion
+
+
+
 
 
     }
