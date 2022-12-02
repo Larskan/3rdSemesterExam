@@ -18,30 +18,24 @@ using System.Net.Http.Headers;
 using DocumentFormat.OpenXml.Office2016.Drawing.Command;
 using System.Threading;
 using System.Security.Policy;
+using System.Windows.Input;
+
+
+
 
 namespace Admin_Client.Model.DB
 {
-
-    /*Placeholders for the Endpoints
+    /*
      * Todo: Edit/Put/ReplaceRequest - Work in progress
      * Todo: If I grab a groupID I need to get foreign keys too(Users connected to a group)
-     * Todo: Dictionaries
      * Todo: Make User and Group communicate through tblUserToGroup 
-     * (User and Group was many to many, but by adding TblUserToGroup we get 2 seperate 1 to many)(coupling)
-     * Use LINQ for this
-     * https://localhost:7002/TblGroups
-     * https://localhost:7002/TblLogins
-     * https://localhost:7002/TblReceipts
-     * https://localhost:7002/TblTrips
-     * https://localhost:7002/TblUserExpenses
-     * https://localhost:7002/TblUsers
      */
     public class HttpClientServices
     {
         //Having it static reduces waste sockets and makes it faster
         private static readonly HttpClient _httpClient = new HttpClient();
         
-        
+
 
         public HttpClientServices()
         {
@@ -265,54 +259,7 @@ namespace Admin_Client.Model.DB
             var content = await response.Content.ReadAsStringAsync();
             Debug.WriteLine("Final: " + content);
             return content;
-        }
-        /*
-        [HttpGet]
-        public Task GetAllTblLogin()
-        {
-            _ = GetAllHttpResponse("https://localhost:7002/TblLogins");
-            return Task.CompletedTask;
-        }
-        [HttpGet]
-        public Task GetAllTblReceipts()
-        {
-            _ = GetAllHttpResponse("https://localhost:7002/TblReceipts");
-            return Task.CompletedTask;
-        }
-        [HttpGet]
-        public Task GetAllTblTrips()
-        {
-            _ = GetAllHttpResponse("https://localhost:7002/TblTrips");
-            return Task.CompletedTask;
-        }
-        [HttpGet]
-        public Task GetAllTblUserExpenses()
-        {
-            _ = GetAllHttpResponse("https://localhost:7002/TblTripToUserExpenses");
-            return Task.CompletedTask;
-        }
-        [HttpGet]
-        public Task GetAllTblUsers()
-        {
-            _ = GetAllHttpResponse("https://localhost:7002/TblUsers");
-            return Task.CompletedTask;
-        }
-
-        [HttpGet]
-        public Task GetAllTblGroups()  //WORKS
-        {
-            //Grabs the response and turnd it to http
-            _ = GetAllHttpResponse("https://localhost:7002/TblGroups");
-            return Task.CompletedTask;
-        }
-
-        [HttpGet]
-        public Task GetAllTblUserToGroup(int id)
-        {
-            _ = GetAllHttpResponse("https://localhost:7002/TblUserToGroups"+"/"+id);
-            return Task.CompletedTask;
-        }
-        */
+        }       
         #endregion
         #region Get specific from table
         [HttpGet]
@@ -485,40 +432,67 @@ namespace Admin_Client.Model.DB
         #endregion
 
         #region Put/Replace data with new data - Not Done
-        public async Task<string> ReplaceContentHttp(string url)
+        [HttpPut]
+        public async Task<string> ReplaceContentHttp(string group, int ID)
         {
-            //var endpoint = _httpClient.BaseAddress = new Uri(url);
+            //Grab Group and specific ID inside group - DONE
+            //Load what group contains - DONE
+            //Pick something that isnt primary key to change
+            //update database wíth new data
             string container = "";
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri(url);
+                var address = _httpClient.BaseAddress = new Uri("https://localhost:7002/");
+                string res = address + group + "/" + ID;
+                Debug.WriteLine("Res: " + res);
+
+                var grab = await GetHttpResponse(group, ID);
+                grab.AsQueryable().FirstOrDefault();
+                switch (grab)
+                {
+                    case "TblGroups":
+                        TblGroup tblGroup = new TblGroup();
+                        if(ID != tblGroup.FldGroupId)
+                        {
+                            break;
+                        }
+
+
+                        break;
+                    case "TblUsers":
+                        //
+                        break;
+                    case "TblLogin":
+                        //
+                        break;
+                    case "TblReceipts":
+                        //
+                        break;
+                    case "TblTrips":
+                        //
+                        break;
+                    case "TblUserExpenses":
+                        //
+                        break;
+                }
+
+                //Works fine, but container is empty, need to find a way to insert the new parameters
+                //var json = JsonConvert.SerializeObject();
+                //var stringContent = new StringContent(json,UnicodeEncoding.UTF8, "application/json");
+                //var respo = await client.PutAsync(res, stringContent);
+                //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var content = new FormUrlEncodedContent(new[]
                 {
-                    new KeyValuePair<string, string>("","parameter")
+                    new KeyValuePair<string, string>("fldGroupName","replaceTest2")
                 });
-                var result = await client.PutAsync("/values", content);
+                Debug.WriteLine("Content: " + content);
+
+                var result = await client.PutAsync(res, content);
+                Debug.WriteLine("Result: " + result);
                 container = await result.Content.ReadAsStringAsync();
-            }
+                Debug.WriteLine("Container: " + container);
+            }            
             return container;
-
-        }
-
-        async Task<string> PutRequest(string url)
-        {
-            string con = "";
-            using (HttpClient client = new HttpClient())
-            {
-                client.BaseAddress = new Uri("https://localhost:7270/");
-                var content = new FormUrlEncodedContent(new[]
-                {
-                    new KeyValuePair<string, string>("","parameter")
-                });
-
-                var result = await client.PutAsync("/api/values", content);
-                con = await result.Content.ReadAsStringAsync();
-            }
-            return con;
-
         }
         #endregion
 
