@@ -15,14 +15,20 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Net.Http.Headers;
-
-
+using DocumentFormat.OpenXml.Office2016.Drawing.Command;
+using System.Threading;
+using System.Security.Policy;
 
 namespace Admin_Client.Model.DB
 {
 
     /*Placeholders for the Endpoints
      * Todo: Edit/Put/ReplaceRequest - Work in progress
+     * Todo: If I grab a groupID I need to get foreign keys too(Users connected to a group)
+     * Todo: Dictionaries
+     * Todo: Make User and Group communicate through tblUserToGroup 
+     * (User and Group was many to many, but by adding TblUserToGroup we get 2 seperate 1 to many)(coupling)
+     * Use LINQ for this
      * https://localhost:7002/TblGroups
      * https://localhost:7002/TblLogins
      * https://localhost:7002/TblReceipts
@@ -34,6 +40,7 @@ namespace Admin_Client.Model.DB
     {
         //Having it static reduces waste sockets and makes it faster
         private static readonly HttpClient _httpClient = new HttpClient();
+        
         
 
         public HttpClientServices()
@@ -113,12 +120,6 @@ namespace Admin_Client.Model.DB
         #endregion
 
         #region Get specific from table
-        /// <summary>
-        /// Gets the Json Data, turns it into Http data for an ID(Used in Get Specific from Table Region)
-        /// </summary>
-        /// <param name="url"></param>
-        /// <param name="id"></param>
-        /// <returns></returns>
         private async Task<string> GetHttpResponse(string url, int id)
         {
             string res = url + "/" + id;
@@ -165,10 +166,153 @@ namespace Admin_Client.Model.DB
         [HttpGet("{id}")]
         public Task GetSpecificGroup(int id) //WORKS
         {
+            //Needs to get entire group but also each user connected to the group
             _ = GetHttpResponse("https://localhost:7002/TblGroups", id);
             return Task.CompletedTask;
         }
+        [HttpGet("{id}")]
+        public Task GetGroupNameAndUsersWithGroupID(int id)
+        {
+            TblUserToGroup tbl = new TblUserToGroup
+            {
+                FldGroupId = id
+            };
+
+            UpdateGroupID(tbl);
+            UpdateUserID(tbl);
+            GetAllTblUserToGroup(id);
+            return Task.CompletedTask;
+        }
+        [HttpGet("{id}")]
+        public Task GetUserNameAndGroupsWithUserID(int id)
+        {
+            TblUserToGroup tbl = new TblUserToGroup();
+            UpdateGroupID(tbl);
+            UpdateUserID(tbl);
+            GetAllTblUserToGroup(id);
+            return Task.CompletedTask;
+        }
+
         #endregion
+
+        #region testing
+        //TESTING METHOD FOR GETTING USERS AND GROUPS TO DISPLAY TOGETHER, depending on which ID is used
+        [HttpGet("{id}")]
+        public Task GetGroupAndUsers(int id)
+        {
+            TblGroup dot = new TblGroup();
+            TblUser dut = new TblUser();
+
+            //Can change to switch once it works
+
+            if(id == dot.FldGroupId)
+            {
+                //Display group + all users part of that group (1 group has many users)
+                _ = GetHttpResponse("https://localhost:7002/TblUserToGroup", dot.FldGroupId);
+                return Task.CompletedTask;
+            }
+            else if(id == dut.FldUserId)
+            {
+                //Display user + all groups that user is part of (1 user has many groups)
+                _ = GetHttpResponse("https://localhost:7002/TblUserToGroup", dut.FldUserId);
+            }
+            return Task.CompletedTask;
+        }
+
+
+        [HttpGet("{id}")]
+        public Task InnerJoin(int id)
+        {
+            List<TblGroup> groups = new List<TblGroup>();
+            List<TblUser> users = new List<TblUser>();
+            List<TblUserToGroup> combined = new List<TblUserToGroup>();
+            Debug.WriteLine("List groups: " + groups.Count);
+            Debug.WriteLine("List users: " + users.Count); 
+
+            TblGroup dot = new TblGroup();
+            TblUser dut = new TblUser();
+            TblUserToGroup dit = new TblUserToGroup();
+            
+
+            if (id == dot.FldGroupId)
+            {
+                //Display group + all users part of that group (1 group has many users)
+                _ = GetHttpResponse("https://localhost:7002/TblUserToGroup", dot.FldGroupId);
+
+                IEnumerable<TblGroup> matchID = (from TblGroup groupItemGroup in groups
+                                                 join TblUser groupItemUser in users
+                                                 on groupItemGroup.FldGroupId
+                                                 equals groupItemUser.FldUserId
+                                                 select groupItemGroup);
+
+                
+                /*
+                var q = (from tg in TblGroup
+                         join tutg in TblUserToGroup on tg.FldGroupId equals tutg.FldGroupId
+                         join tu in TblUser on tutg.FldUserId equals tu.FldUserId
+                         orderby tutg.FldUserToGroupId
+                         select new
+                         {
+                             tutg.FldUserToGroupID,
+                             tg.FldGroupId,
+                             tg.FldGroupName,
+                             tu.FldUserId,
+                         });
+                */
+
+
+                //OutputCollectionToConsole(matchID);
+                //Console.ReadKey();
+
+                return (Task)matchID;
+            }
+            else if (id == dut.FldUserId)
+            {
+                //Display user + all groups that user is part of (1 user has many groups)
+                _ = GetHttpResponse("https://localhost:7002/TblUserToGroup", dut.FldUserId);
+
+                IEnumerable<TblUser> matchID = (from TblUser groupItemUser in users
+                                                join TblGroup groupItemGroup in groups
+                                                on groupItemUser.FldUserId
+                                                equals groupItemGroup.FldGroupId
+                                                select groupItemUser);
+                OutputCollectionToConsole(matchID);
+                Console.ReadKey();
+                return (Task)matchID;
+            }
+
+           
+            //else if(id == dut.FldUserId && dot.FldGroupId){  }
+            //return (Task)matchID;
+            return Task.CompletedTask;
+        }
+
+        private static void OutputCollectionToConsole(IEnumerable<object> collectionToOutput)
+        {
+            foreach(object collectionItem in collectionToOutput)
+                Console.WriteLine(collectionItem.ToString());
+        }
+        #endregion
+
+        #region Updating Tables
+        private int UpdateUserID(TblUserToGroup utg)
+        {
+            TblUser user = new TblUser();
+            //GetAllTblUsers();
+            return utg.FldUserId = user.FldUserId;
+            //return Task.CompletedTask;
+
+        }
+        private int UpdateGroupID(TblUserToGroup utg)
+        {
+            TblGroup group = new TblGroup();
+            return utg.FldGroupId= group.FldGroupId;
+            //GetAllTblGroups();
+            //utg.FldGroupId = GetAllTblGroups().Id;
+            //return Task.CompletedTask;
+        }
+        #endregion
+
 
         #region Add to Table
 
@@ -182,32 +326,53 @@ namespace Admin_Client.Model.DB
             return Task.CompletedTask;
         }
         [HttpPost]
-        public Task AddUser(string mail, string firstName, string lastName, int phone, bool admin)
+        public Task AddUser(TblUser user)
         {
-            _ = PostHttpNewUser("https://localhost:7002/TblUsers",mail, firstName, lastName, phone, admin);
+            string mail = user.FldEmail;
+            string fName = user.FldFirstName;
+            string lName = user.FldLastName;
+            int phone = user.FldPhonenumber;
+            bool admin = user.FldIsAdmin;
+
+            //string mail, string firstName, string lastName, int phone, bool admin
+            _ = PostHttpNewUser("https://localhost:7002/TblUsers",mail, fName, lName, phone, admin);
             return Task.CompletedTask;
         }
         [HttpPost]
-        public Task AddLogin(int userID, string pass)
+        public Task AddLogin(TblLogin login)
         {
-            _ = PostHttpNewLogin("https://localhost:7002/TblLogins", userID, pass);
+            int id = login.FldUserId;
+            string pass = login.FldPassword;
+            //int userID, string pass
+            _ = PostHttpNewLogin("https://localhost:7002/TblLogins", id, pass);
             return Task.CompletedTask;
         }
         [HttpPost]
-        public Task AddReceipt(int userID, int tripID, double value, double paid)
+        public Task AddReceipt(TblReceipt receipt)
         {
+            int userID = receipt.FldUserId;
+            int tripID = receipt.FldTripId;
+            double value = receipt.FldProjectedValue;
+            double paid = receipt.FldAmountPaid;
+            //int userID, int tripID, double value, double paid
             _ = PostHttpNewReceipt("https://localhost:7002/TblReceipts", userID, tripID, value, paid);
             return Task.CompletedTask;
         }
         [HttpPost]
-        public Task AddTrip(double sum)
+        public Task AddTrip(TblTrip trip)
         {
+            double sum = trip.FldSum;
             _ = PostHttpNewTrip("https://localhost:7002/TblTrips",sum);
             return Task.CompletedTask;
         }
         [HttpPost]
-        public Task AddUserExpense(int userID, double expense, string note, DateTime date)
+        public Task AddUserExpense(TblUserExpense userExpense)
         {
+            int userID = userExpense.FldUserId;
+            double expense = userExpense.FldExpense;
+            string note = userExpense.FldNote;
+            DateTime date = userExpense.FldDate;
+            //int userID, double expense, string note, DateTime date
             _ = PostHttpNewUserExpense("https://localhost:7002/TblUserExpenses",userID, expense, note, date);
             return Task.CompletedTask;
         }
@@ -215,11 +380,7 @@ namespace Admin_Client.Model.DB
 
         #region Get All from a Table
 
-        /// <summary>
-        /// Gets the Json Data, turns it into Http data for entire table
-        /// </summary>
-        /// <param name="url"></param>
-        /// <returns></returns>
+        [HttpGet]
         private async Task<string> GetAllHttpResponse(string url)
         {
             //Create a base Get Response
@@ -232,11 +393,15 @@ namespace Admin_Client.Model.DB
             response.EnsureSuccessStatusCode();
             Debug.WriteLine("Response: " + response);
 
+            //Testing
+            //var responseBody = response.Content.ReadAsStringAsync().Result;
+            //var myList = JsonConvert.DeserializeObject<List<string>>(responseBody);
+
             //Makes the response into HTTP through serialization
             var content = await response.Content.ReadAsStringAsync();
+            //List<string> pot = new List<string> { content };
             Debug.WriteLine("Final: " + content);
             return content;
-
         }
 
         [HttpGet]
@@ -275,7 +440,13 @@ namespace Admin_Client.Model.DB
         {
             //Grabs the response and turnd it to http
             _ = GetAllHttpResponse("https://localhost:7002/TblGroups");
-            Debug.WriteLine("CHECK4: " + GetAllHttpResponse("https://localhost:7002/TblGroups"));
+            return Task.CompletedTask;
+        }
+
+        [HttpGet]
+        public Task GetAllTblUserToGroup(int id)
+        {
+            _ = GetAllHttpResponse("https://localhost:7002/TblUserToGroups"+"/"+id);
             return Task.CompletedTask;
         }
         #endregion
@@ -283,94 +454,41 @@ namespace Admin_Client.Model.DB
         #region Delete data from Table
 
         [HttpDelete]
-        private HttpResponseMessage ClientDeleteRequest(string RequestURI, int ID)
+        public HttpResponseMessage ClientDeleteRequest(string group, int ID)
         {
-            string res = RequestURI + "/" + ID;
+            var address = _httpClient.BaseAddress = new Uri("https://localhost:7002/");
+            string res = address + group + "/" + ID;
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Clear();
             HttpResponseMessage response = client.DeleteAsync(res).Result;
             return response;
         }
-
-        public Task DeleteGroup(int id)
-        {
-            ClientDeleteRequest("https://localhost:7002/TblGroups", id);
-            return Task.CompletedTask;
-        }
-        public Task DeleteLogin(int id)
-        {
-            ClientDeleteRequest("https://localhost:7002/TblLogins", id);
-            return Task.CompletedTask;
-        }
-        public Task DeleteReceipt(int id)
-        {
-            ClientDeleteRequest("https://localhost:7002/TblReceipts", id);
-            return Task.CompletedTask;
-        }
-        public Task DeleteTrip(int id)
-        {
-            ClientDeleteRequest("https://localhost:7002/TblTrips", id);
-            return Task.CompletedTask;
-        }
-        public Task DeleteUserExpenses(int id)
-        {
-            ClientDeleteRequest("https://localhost:7002/TblUserExpenses", id);
-            return Task.CompletedTask;
-        }
-        public Task DeleteUser(int id)
-        {
-            ClientDeleteRequest("https://localhost:7002/TblUsers", id);
-            return Task.CompletedTask;
-        }
         #endregion
 
         #region Post new entry to a Table
+
         [HttpPost]
-        /// <summary>
-        /// Posts the data as a Json for Group
-        /// </summary>
-        /// <param name="url">Api/TblGroup</param>
-        /// <param name="id">fldGroupID</param>
-        /// <param name="name">fldGroupName</param>
-        /// <param name="groupBool">fldGroupBoolean</param>
-        /// <returns></returns>
         public async Task<string> PostHttpNewGroup(string url, string name, bool groupBool)
         {
             var endpoint = _httpClient.BaseAddress = new Uri(url);
-
-            //No ID due to identity having auto increment
             var newPost = new TblGroup()
             {
                 FldGroupName = name,
                 FldGroupBoolean = groupBool
-
             };
 
             //Convert the new posting to Json
             var newPostJson = JsonConvert.SerializeObject(newPost);
-            Debug.WriteLine("Target" + newPostJson);
             //StringContent: Formatted text appropriate for the http server/client communication.
             var payload = new StringContent(newPostJson, Encoding.UTF8, "application/json");
-            Debug.WriteLine("Payload" + payload);
+            //Debug.WriteLine("Payload" + payload);
             var result = await _httpClient.PostAsync(endpoint, payload);
             var final = await result.Content.ReadAsStringAsync();
 
-            Debug.WriteLine("Final: " + final);
-            return final;
-            
+            return final;  
         }
 
         [HttpPost]
-        /// <summary>
-        /// Posts the data as a Json for User
-        /// </summary>
-        /// <param name="url">Api/TblUser</param>
-        /// <param name="mail">fldEmail</param>
-        /// <param name="firstName">FldFirstName</param>
-        /// <param name="lastName">FldLastName</param>
-        /// <param name="phone">FldPhonenumber</param>
-        /// <param name="admin">FldIsAdmin</param>
-        /// <returns></returns>
         public async Task<string> PostHttpNewUser(string url, string mail, string firstName, string lastName, int phone, bool admin)
         {
             var endpoint = _httpClient.BaseAddress = new Uri(url);
@@ -392,13 +510,6 @@ namespace Admin_Client.Model.DB
         }
 
         [HttpPost]
-        /// <summary>
-        /// Posts the data as a Json for Login
-        /// </summary>
-        /// <param name="url">Api/TblUser</param>
-        /// <param name="userID">FldUserId</param>
-        /// <param name="pass">FldPassword</param>
-        /// <returns></returns>
         public async Task<string> PostHttpNewLogin(string url, int userID, string pass)
         {
             var endpoint = _httpClient.BaseAddress = new Uri(url);
@@ -417,15 +528,6 @@ namespace Admin_Client.Model.DB
         }
 
         [HttpPost]
-        /// <summary>
-        /// Posts the data as a Json for Receipt
-        /// </summary>
-        /// <param name="url">Api/TblReceipt</param>
-        /// <param name="userID">FldUserId</param>
-        /// <param name="tripID">FldTripId</param>
-        /// <param name="value">FldProjectedValue</param>
-        /// <param name="paid">FldAmountPaid</param>
-        /// <returns></returns>
         public async Task<string> PostHttpNewReceipt(string url, int userID, int tripID, double value, double paid)
         {
             var endpoint = _httpClient.BaseAddress = new Uri(url);
@@ -447,12 +549,6 @@ namespace Admin_Client.Model.DB
         }
 
         [HttpPost]
-        /// <summary>
-        /// Posts the data as a Json for Trip
-        /// </summary>
-        /// <param name="url">Api/TblTrip</param>
-        /// <param name="sum">FldSum</param>
-        /// <returns></returns>
         public async Task<string> PostHttpNewTrip(string url, double sum)
         {
             var endpoint = _httpClient.BaseAddress = new Uri(url);
@@ -470,15 +566,6 @@ namespace Admin_Client.Model.DB
         }
 
         [HttpPost]
-        /// <summary>
-        /// Posts the data as a Json for User Expense
-        /// </summary>
-        /// <param name="url">Api/TblUserExpenses</param>
-        /// <param name="userID">FldUserId</param>
-        /// <param name="expense">FldExpense</param>
-        /// <param name="note">FldNote</param>
-        /// <param name="date">FldDate</param>
-        /// <returns></returns>
         public async Task<string> PostHttpNewUserExpense(string url, int userID, double expense, string note, DateTime date)
         {
             var endpoint = _httpClient.BaseAddress = new Uri(url);
@@ -542,6 +629,7 @@ namespace Admin_Client.Model.DB
             return con;
 
         }
+
 
     }
 }

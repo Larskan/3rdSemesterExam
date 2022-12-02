@@ -6,7 +6,7 @@ namespace Admin_Client.Model.DB
 {
     public partial class TblTripToUserExpense
     {
-        public int FldUserToExpense { get; set; }
+        //public int FldUserToExpense { get; set; }
 
         public int FldTripId { get; set; }
 

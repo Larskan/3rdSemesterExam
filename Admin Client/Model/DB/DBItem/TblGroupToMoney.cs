@@ -4,9 +4,9 @@ using System.Text.Json.Serialization;
 
 namespace Admin_Client.Model.DB
 {
-    public partial class TblGroupToMoney
+    public partial class TblGroupToTrip
     {
-        public int FldGroupToMoneyId { get; set; }
+        //public int FldGroupToTripId { get; set; }
 
         public int FldGroupId { get; set; }
 

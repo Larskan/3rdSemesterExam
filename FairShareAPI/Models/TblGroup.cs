@@ -13,7 +13,7 @@ public partial class TblGroup
     public bool? FldGroupBoolean { get; set; }
 
     [JsonIgnore]
-    public virtual ICollection<TblGroupToMoney> TblGroupToMoneys { get; } = new List<TblGroupToMoney>();
+    public virtual ICollection<TblGroupToTrip> TblGroupToMoneys { get; } = new List<TblGroupToTrip>();
 
 	[JsonIgnore]
 	public virtual ICollection<TblUserToGroup> TblUserToGroups { get; } = new List<TblUserToGroup>();

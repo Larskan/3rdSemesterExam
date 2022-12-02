@@ -48,7 +48,7 @@ namespace Admin_Client.Model.DB
 
         public enum Methods
         {
-            DELETE, GET, PATCH, POST, PUT
+            GET, HEAD, POST, PUT, DELETE, OPTIONS, PATCH
         }
 
     
