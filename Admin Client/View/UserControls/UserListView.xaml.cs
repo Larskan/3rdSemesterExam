@@ -1,4 +1,5 @@
-﻿using Admin_Client.Model.DB;
+﻿using Admin_Client.Model;
+using Admin_Client.Model.DB;
 using Admin_Client.Model.Domain;
 using Admin_Client.Singleton;
 using Admin_Client.ViewModel.ContentControlModels;
@@ -24,8 +25,8 @@ namespace Admin_Client.View.UserControls
 	/// </summary>
 	public partial class UserListView : UserControl
 	{
-
-		UserListViewModel viewModel = new UserListViewModel();
+        UserviewSingleton Userview = UserviewSingleton.getInstance();
+        UserListViewModel viewModel = new UserListViewModel();
 		public UserListView()
 		{
 			this.DataContext = viewModel;
@@ -51,20 +52,27 @@ namespace Admin_Client.View.UserControls
 			if (ListBox_Users.SelectedItem != null)
 			{
 				viewModel.Edit((TblUser)ListBox_Users.SelectedItem);
-			}
-		}
+				Userview.SetUserID(FAKEDATABASE.GetUserID((TblUser)ListBox_Users.SelectedItem));
+                MainWindowModelSingleton.Instance.SetMainContent(new UserView(), true);
+            }
+        }
 
-		private void Delete_Click(object sender, RoutedEventArgs e)
+	     private void Delete_Click(object sender, RoutedEventArgs e)
 		{
 			if (ListBox_Users.SelectedItem != null)
 			{
 				viewModel.Delete((TblUser)ListBox_Users.SelectedItem);
 			}
 		}
+        private void OnPageLoaded(object sender, RoutedEventArgs e)
+        {
+            
+            viewModel.Update();
+        }
 
-		#region Filtering
+        #region Filtering
 
-		private void TextBox_Search_TextChanged(object sender, TextChangedEventArgs e)
+        private void TextBox_Search_TextChanged(object sender, TextChangedEventArgs e)
 		{
 			CollectionViewSource.GetDefaultView(ListBox_Users.ItemsSource).Refresh();
 		}
