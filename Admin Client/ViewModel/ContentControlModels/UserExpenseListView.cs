@@ -68,7 +68,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 			/*
 			// CHANGE THE FAKEDATEBASE.GETGROUPS() - TODO
-			List<TblReceipt> receipts = FAKEDATABASE.GetReceipts(user);
+			List<TblReceipts> receipts = FAKEDATABASE.GetReceipts(user);
 
 			bool found;
 			foreach (var receiptItem in receipts)

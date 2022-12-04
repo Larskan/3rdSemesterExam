@@ -41,6 +41,12 @@
     <Reference Include="DocumentFormat.OpenXml, Version=2.18.0.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
       <HintPath>..\packages\DocumentFormat.OpenXml.2.18.0\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNetCore.Authentication.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNetCore.Authentication.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Authentication.Abstractions.dll</HintPath>
       <Private>True</Private>
@@ -236,6 +242,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Text.Encodings.Web, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Text.Encodings.Web.7.0.0\lib\net462\System.Text.Encodings.Web.dll</HintPath>
       <Private>True</Private>
@@ -277,6 +284,16 @@
     <Compile Include="Model\DB\DBItem\TblUser.cs" />
     <Compile Include="Model\DB\DBItem\TblUserExpense.cs" />
     <Compile Include="Model\DB\DBItem\TblUserToGroup.cs" />
+    <Compile Include="Model\DB\EF Test\HttpDbContext.cs" />
+    <Compile Include="Model\DB\EF Test\tblGroup.cs" />
+    <Compile Include="Model\DB\EF Test\tblGroupToTrip.cs" />
+    <Compile Include="Model\DB\EF Test\tblLogin.cs" />
+    <Compile Include="Model\DB\EF Test\tblReceipt.cs" />
+    <Compile Include="Model\DB\EF Test\tblTrip.cs" />
+    <Compile Include="Model\DB\EF Test\tblTripToUserExpense.cs" />
+    <Compile Include="Model\DB\EF Test\tblUser.cs" />
+    <Compile Include="Model\DB\EF Test\tblUserExpense.cs" />
+    <Compile Include="Model\DB\EF Test\tblUserToGroup.cs" />
     <Compile Include="Model\DB\HttpClientServices.cs" />
     <Compile Include="Model\DB\Response.cs" />
     <Compile Include="Model\Domain\Log.cs" />

@@ -19,9 +19,8 @@ using DocumentFormat.OpenXml.Office2016.Drawing.Command;
 using System.Threading;
 using System.Security.Policy;
 using System.Windows.Input;
-
-
-
+using Admin_Client.Model.DB.EF_Test;
+using System.Data.Entity;
 
 namespace Admin_Client.Model.DB
 {
@@ -30,7 +29,7 @@ namespace Admin_Client.Model.DB
      * Todo: If I grab a groupID I need to get foreign keys too(Users connected to a group)
      * Todo: Make User and Group communicate through tblUserToGroup 
      */
-    public class HttpClientServices
+    public class HttpClientServices : HttpDbContext
     {
         //Having it static reduces waste sockets and makes it faster
         private static readonly HttpClient _httpClient = new HttpClient();
@@ -56,13 +55,13 @@ namespace Admin_Client.Model.DB
             if(id == dot.FldGroupId)
             {
                 //Display group + all users part of that group (1 group has many users)
-                _ = GetHttpResponse("TblUserToGroup", dot.FldGroupId);
+                _ = GetHttpResponse("TblUserToGroups", dot.FldGroupId);
                 return Task.CompletedTask;
             }
             else if(id == dut.FldUserId)
             {
                 //Display user + all groups that user is part of (1 user has many groups)
-                _ = GetHttpResponse("TblUserToGroup", dut.FldUserId);
+                _ = GetHttpResponse("TblUserToGroups", dut.FldUserId);
             }
             return Task.CompletedTask;
         }
@@ -85,7 +84,7 @@ namespace Admin_Client.Model.DB
             if (id == dot.FldGroupId)
             {
                 //Display group + all users part of that group (1 group has many users)
-                _ = GetHttpResponse("TblUserToGroup", dot.FldGroupId);
+                _ = GetHttpResponse("TblUserToGroups", dot.FldGroupId);
 
                 IEnumerable<TblGroup> matchID = (from TblGroup groupItemGroup in groups
                                                  join TblUser groupItemUser in users
@@ -95,9 +94,9 @@ namespace Admin_Client.Model.DB
 
                 
                 /*
-                var q = (from tg in TblGroup
-                         join tutg in TblUserToGroup on tg.FldGroupId equals tutg.FldGroupId
-                         join tu in TblUser on tutg.FldUserId equals tu.FldUserId
+                var q = (from tg in TblGroups
+                         join tutg in TblUserToGroups on tg.FldGroupId equals tutg.FldGroupId
+                         join tu in TblUsers on tutg.FldUserId equals tu.FldUserId
                          orderby tutg.FldUserToGroupId
                          select new
                          {
@@ -117,7 +116,7 @@ namespace Admin_Client.Model.DB
             else if (id == dut.FldUserId)
             {
                 //Display user + all groups that user is part of (1 user has many groups)
-                _ = GetHttpResponse("TblUserToGroup", dut.FldUserId);
+                _ = GetHttpResponse("TblUserToGroups", dut.FldUserId);
 
                 IEnumerable<TblUser> matchID = (from TblUser groupItemUser in users
                                                 join TblGroup groupItemGroup in groups
@@ -220,7 +219,7 @@ namespace Admin_Client.Model.DB
             string note = userExpense.FldNote;
             DateTime date = userExpense.FldDate;
             //int userID, double expense, string note, DateTime date
-            _ = PostHttpNewUserExpense("https://localhost:7002/TblUserExpenses",userID, expense, note, date);
+            _ = PostHttpNewUserExpense("https://localhost:7002/TblUserExpensess",userID, expense, note, date);
             return Task.CompletedTask;
         }
         #endregion
@@ -248,19 +247,20 @@ namespace Admin_Client.Model.DB
             var address = _httpClient.BaseAddress = new Uri("https://localhost:7002/");
             //Combine address with the selected group and id
             string res = address + group + "/";
-            Debug.WriteLine("res: " + res);
+            ///Debug.WriteLine("res: " + res);
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             HttpResponseMessage response = client.GetAsync(res).Result;
             response.EnsureSuccessStatusCode();
-            Debug.WriteLine("response: "+response);
+            ///Debug.WriteLine("response: "+response);
 
             //Makes the response into HTTP through serialization
             var content = await response.Content.ReadAsStringAsync();
-            Debug.WriteLine("Final: " + content);
+            ///Debug.WriteLine("Final: " + content);
             return content;
         }       
         #endregion
+
         #region Get specific from table
         [HttpGet]
         public async Task<string> GetHttpResponse(string group, int ID)
@@ -269,43 +269,119 @@ namespace Admin_Client.Model.DB
             var address = _httpClient.BaseAddress = new Uri("https://localhost:7002/");
 
             string res = address + group + "/" + ID;
-            Debug.WriteLine("res: " + res);
+            ///Debug.WriteLine("res: " + res);
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             HttpResponseMessage response = client.GetAsync(res).Result;
             response.EnsureSuccessStatusCode();
-            Debug.WriteLine("response: " + response);
+            ///Debug.WriteLine("response: " + response);
 
             //Makes the response into HTTP through serialization
             var content = await response.Content.ReadAsStringAsync();
-            Debug.WriteLine("Final2: " + content);
+            ///Debug.WriteLine("Final2: " + content);
             return content;
         }
 
-        /*
-        [HttpGet("{id}")]
-        public Task GetGroupNameAndUsersWithGroupID(int id)
+        #endregion
+        #region Get Specific with linked properties (ex: 1 group and all users connected to it)
+        //GET with group id, grab that specific group + tblUsers inner join that matches group ID.
+        //So when groupID is called, it displays that group + all users connected to that group,which it knows from inner join
+        //and other way around
+      
+        public async Task<string> TestingGrab(string group, int id)
         {
-            TblUserToGroup tbl = new TblUserToGroup
-            {
-                FldGroupId = id
-            };
+            TblUser tblUser = new TblUser();
+            TblGroup tblGroup= new TblGroup();
+            var handler = GetHttpResponse(group, id);
+            var address = _httpClient.BaseAddress = new Uri("https://localhost:7002/");
+            var res = address + group + "/" + id;
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            UpdateGroupID(tbl);
-            UpdateUserID(tbl);
-            GetAllTblUserToGroup(id);
-            return Task.CompletedTask;
+            var query1 = from fldGroupID in TblGroups select fldGroupID;
+            var query2 = from fldUserID in TblUsers select fldUserID;
+            var query3 = from fldGroupID in TblUserToGroups select fldGroupID;
+            Debug.WriteLine("Query1"+ query1);
+            Debug.WriteLine("Query2"+ query2);
+            Debug.WriteLine("Query3"+ query3);
+
+            //it does the query1-3 but not innerjoins, exception thrown
+            var innerJoinQuery =
+                from fldGroupID in TblGroups
+                join fldUserID in TblUsers on fldGroupID.tblUserToGroup equals fldUserID.tblUserToGroup
+                select fldUserID;
+            Debug.WriteLine("InnerJoinQuery: "+innerJoinQuery.ToString());
+            var content = await innerJoinQuery.ToListAsync();
+            Debug.WriteLine("Content: " +content);
+            Debug.WriteLine("ContentToArray: "+content.ToArray());
+            Debug.WriteLine("ContentToList: " +content.ToList());
+            Debug.WriteLine("ContentToString: " + content.ToString());
+            return content.ToString();
         }
-        [HttpGet("{id}")]
-        public Task GetUserNameAndGroupsWithUserID(int id)
+
+        
+        //Select entire group + all user ID's part of that group
+        public async Task<string> TestingGrabGroupAndUsers(int input)
         {
-            TblUserToGroup tbl = new TblUserToGroup();
-            UpdateGroupID(tbl);
-            UpdateUserID(tbl);
-            GetAllTblUserToGroup(id);
-            return Task.CompletedTask;
+            //grab group and its users
+            /*
+             * SQL Version:
+             * select *
+             * from(tblGroup
+             * inner join tblUserToGroup on tblGroup.fldGroupID = tblUserToGroup.fldGroupUD)
+             * inner join tblUser on tblUserToGroup.fldUserID = tblUser.fldUserID
+             * where tblUser.fldUserID = '1';
+             */
+
+            var result = (from g in TblGroups
+                          where g.fldGroupID.Equals(input)
+                          join gtu in TblUserToGroups on g.fldGroupID
+                          equals gtu.fldGroupID 
+                          join gtut in TblUsers on gtu.fldUserID equals gtut.fldUserID
+                          select new{
+                            gtu.fldGroupID,
+                            gtu.fldUserID   
+                          });
+            Debug.WriteLine("Result1: " + result.ToString());
+            Debug.WriteLine("Result1: " + result);
+            var content = await result.ToListAsync();
+
+            Debug.WriteLine("result pls work: " + content);
+            Console.Write(content.ToArray());
+            return content.ToString();
         }
-        */
+        //Select entire user + all group ID's part of that user
+        public async Task<string> TestingGrabUserAndGroups(int input)
+        {
+            //grab user and its groups
+            /*
+             * SQL Version:
+             * select *
+             * from(tblUser
+             * inner join tblUserToGroup on tblUser.fldUserID = tblUserToGroup.fldUserID)
+             * inner join tblGroup on tblUserToGroup.fldGroupID = tblGroup.fldGroupID
+             * where tblGroup.fldGroupID = '1';
+             */
+
+            var result = (from u in TblUsers
+                         where u.fldUserID == input
+                         join gtu in TblUserToGroups on u.fldUserID
+                         equals gtu.fldUserID
+                         join gtut in TblGroups on gtu.fldGroupID equals gtut.fldGroupID
+                         select new
+                         {
+                             gtu.fldUserID,
+                             gtu.fldGroupID
+                         });
+            Debug.WriteLine("Result2: "+result.ToString());
+            Debug.WriteLine("Result2: " + result);
+
+            var content = await result.ToListAsync();
+
+            Debug.WriteLine("result pls work: " + content);
+            Console.Write(content);
+            return content.ToString();
+        }
 
         #endregion
 
@@ -462,7 +538,7 @@ namespace Admin_Client.Model.DB
                     case "TblUsers":
                         //
                         break;
-                    case "TblLogin":
+                    case "TblLogins":
                         //
                         break;
                     case "TblReceipts":
@@ -471,7 +547,7 @@ namespace Admin_Client.Model.DB
                     case "TblTrips":
                         //
                         break;
-                    case "TblUserExpenses":
+                    case "TblUserExpensess":
                         //
                         break;
                 }
