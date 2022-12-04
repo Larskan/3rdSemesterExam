@@ -1,4 +1,5 @@
-﻿using Admin_Client.Model.Domain;
+﻿using Admin_Client.Model.DB;
+using Admin_Client.Model.Domain;
 using Admin_Client.Singleton;
 using Admin_Client.ViewModel.WindowModels.Popup;
 using System;
@@ -22,12 +23,33 @@ namespace Admin_Client.View.Windows.Popups
 	/// </summary>
 	public partial class PopupPasswordChangeWindow : Window
 	{
-		PopupPasswordChangeWindowModel windowModel = new PopupPasswordChangeWindowModel();
-		public PopupPasswordChangeWindow()
+		PopupPasswordChangeWindowModel windowModel;
+		public PopupPasswordChangeWindow(Window owner, TblUser user)
 		{
+			this.windowModel= new PopupPasswordChangeWindowModel(this, user);
 			this.DataContext = windowModel;
+
+			this.Owner = owner;
 
 			InitializeComponent();
 		}
+
+		private void Change_Click(object sender, RoutedEventArgs e)
+		{
+			if (TextBox_Password.Text.Equals(TextBox_RetypePassword.Text))
+			{
+				windowModel.Change();
+			} else
+			{
+				TextBox_Password.Text = "";
+				TextBox_RetypePassword.Text = "";
+			}
+		}
+
+		private void Cancel_Click(object sender, RoutedEventArgs e)
+		{
+			windowModel.Cancel();
+		}
+
 	}
 }

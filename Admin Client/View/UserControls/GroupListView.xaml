@@ -36,7 +36,7 @@
 
         </Grid>
 
-        <ListBox x:Name="ListBox_Groups" Grid.Column="1" Grid.Row="2" ItemsSource="{Binding Groups}" Margin="5" Style="{StaticResource roundlistboxwithempty}" Resources="{StaticResource roundborder10}" >
+        <ListBox x:Name="ListBox_Groups" Grid.Column="1" Grid.Row="2" ItemsSource="{Binding Groups}" Margin="5" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource groupDataTemplate}" ItemContainerStyle="{StaticResource RoundedListItem}" Style="{StaticResource roundlistboxwithempty}" Resources="{StaticResource roundborder10}" >
             <ListBox.ContextMenu>
                 <ContextMenu Style="{StaticResource roundcontextmenu}" >
                     <MenuItem Header="Edit Group" Click="Edit_Click" Resources="{StaticResource roundborder10}" />

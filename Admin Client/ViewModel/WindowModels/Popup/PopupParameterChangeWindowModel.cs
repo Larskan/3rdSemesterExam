@@ -26,6 +26,15 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 
 		#region Properties
 
+		private string actionName = "";
+
+		public string ActionName
+		{
+			get { return actionName; }
+			set { actionName = value; }
+		}
+
+
 		private string objectName = "";
 
 		public string ObjectName
@@ -48,6 +57,8 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 
 		public PopupParameterChangeWindowModel(Window currentWindow, object o)
 		{
+			bool isNewObject = false;
+
 			this.currentWindow = currentWindow;
 
 			foreach (var item in o.GetType().GetProperties())
@@ -68,12 +79,33 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 					{
 						ObjectName += " ";
 					}
-					ObjectName += value.ToString();
+					if (value != null)
+					{
+						ObjectName += value.ToString();
+					}
 				}
-				if (value != null && !name.ToLower().Contains("id"))
+				if (!name.ToLower().Contains("id") && Enum.GetNames(typeof(ParameterType)).Contains(type))
 				{
-					Parameters.Add(new Parameter(name, (ParameterType)Enum.Parse(typeof(ParameterType), type), value.ToString()));
+					if (value != null)
+					{
+						Parameters.Add(new Parameter(name, (ParameterType)Enum.Parse(typeof(ParameterType), type), value.ToString()));
+					} else
+					{
+						Parameters.Add(new Parameter(name, (ParameterType)Enum.Parse(typeof(ParameterType), type), ""));
+						if (!isNewObject)
+						{
+							isNewObject = true;
+						}
+					}
 				}
+			}
+			if (isNewObject)
+			{
+				this.ActionName = "Create New";
+				this.ObjectName = o.GetType().Name;
+			} else
+			{
+				this.ActionName = "Change Parameters For";
 			}
 		}
 
@@ -85,7 +117,6 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Change Click"));
 
-			// CHANGE HAPPENS - TODO
 			bool isValid;
 			foreach (var item in listBox.Items)
 			{
@@ -163,12 +194,14 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 			}
 
 			currentWindow.Close();
+			MainWindowModelSingleton.Instance.GetMainWindow().IsEnabled = true;
 		}
 
 		public void Cancel()
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Cancel Click"));
 			currentWindow.Close();
+			MainWindowModelSingleton.Instance.GetMainWindow().IsEnabled = true;
 		}
 
 		#endregion

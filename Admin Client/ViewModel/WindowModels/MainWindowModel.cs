@@ -1,4 +1,5 @@
-﻿using Admin_Client.Model.Domain;
+﻿using Admin_Client.Model.DB;
+using Admin_Client.Model.Domain;
 using Admin_Client.Model.FileIO;
 using Admin_Client.PropertyChanged;
 using Admin_Client.Singleton;
@@ -150,14 +151,6 @@ namespace Admin_Client.ViewModel.WindowModels
 
 		#region StartWindows
 
-		public void StartPopupConfirm(object o, PopupMethod popupMethod)
-		{
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, popupMethod + " Click --> Target " + o.GetType().Name));
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log("PopupConfirm --> Starting"));
-			new PopupConfirmWindow(o, popupMethod).ShowDialog();
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log("PopupConfirm == Closed"));
-		}
-
 		public void StartPopoutLog(DateTime dateTime)
 		{
 			new PopoutLogWindow(dateTime).Show();
@@ -168,9 +161,29 @@ namespace Admin_Client.ViewModel.WindowModels
 			new PopoutLogToolWindow(mainWindow).Show();
 		}
 
+		public void StartPopupConfirm(object o, PopupMethod popupMethod)
+		{
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, popupMethod + " Click --> Target " + o.GetType().Name));
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log("PopupConfirm --> Starting"));
+
+			MainWindowModelSingleton.Instance.GetMainWindow().IsEnabled = false;
+			new PopupConfirmWindow(o, popupMethod).ShowDialog();
+
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log("PopupConfirm == Closed"));
+		}
+
 		public void StartPopupParameterChange(object o)
 		{
+			MainWindowModelSingleton.Instance.GetMainWindow().IsEnabled = false;
+
 			new PopupParameterChangeWindow(mainWindow, o).ShowDialog();
+		}
+
+		public void StartPopupPasswordChange(TblUser user)
+		{
+			MainWindowModelSingleton.Instance.GetMainWindow().IsEnabled = false;
+
+			new PopupPasswordChangeWindow(mainWindow, user).ShowDialog();
 		}
 
 		#endregion

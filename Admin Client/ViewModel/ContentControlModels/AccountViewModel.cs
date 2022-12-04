@@ -91,6 +91,12 @@ namespace Admin_Client.ViewModel.ContentControlModels
 			MainWindowModelSingleton.Instance.StartPopupParameterChange(new TblUser() { FldUserId = 0, FldFirstName = Firstname, FldLastName = Lastname, FldEmail = Email, FldPhonenumber = Phonenumber });
 		}
 
+		public void EditPassword()
+		{
+			// EDITPASSWORD POPUP WITH CURRENT USER - TODO
+			MainWindowModelSingleton.Instance.StartPopupPasswordChange(new TblUser() { FldUserId = 0, FldFirstName = Firstname, FldLastName = Lastname, FldEmail = Email, FldPhonenumber = Phonenumber });
+		}
+
 		public void LogTool()
 		{
 			MainWindowModelSingleton.Instance.StartPopoutLogTool();
