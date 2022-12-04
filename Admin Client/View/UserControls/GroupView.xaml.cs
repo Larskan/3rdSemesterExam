@@ -18,17 +18,42 @@ using System.Windows.Shapes;
 
 namespace Admin_Client.View.UserControls
 {
-	/// <summary>
-	/// Interaction logic for GroupView.xaml
-	/// </summary>
-	public partial class GroupView : UserControl
-	{
-		GroupViewModel viewModel = new GroupViewModel();
-		public GroupView()
-		{
-			this.DataContext = viewModel;
+    /// <summary>
+    /// Interaction logic for GroupView.xaml
+    /// </summary>
+    public partial class GroupView : UserControl
+    {
+        GroupViewModel viewModel = new GroupViewModel();
+        public GroupView()
+        {
+            this.DataContext = viewModel;
 
-			InitializeComponent();
-		}
-	}
+            InitializeComponent();
+        }
+
+        private void Delete_Trip(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Edit_Trip(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Create_Trip(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Remove_Member(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Add_Member(object sender, RoutedEventArgs e)
+        {
+
+        }
+    }
 }
