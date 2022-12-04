@@ -37,9 +37,14 @@ namespace Admin_Client.View.UserControls
 			viewModel.Edit();
         }
 
+		private void EditPassword_Click(object sender, RoutedEventArgs e)
+		{
+			viewModel.EditPassword();
+		}
+
 		private void LogTool_Click(object sender, RoutedEventArgs e)
 		{
 			viewModel.LogTool();
         }
-    }
+	}
 }

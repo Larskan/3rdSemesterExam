@@ -67,9 +67,11 @@
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="110"/>
                 <ColumnDefinition Width="0.5*"/>
-                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="110"/>
+                <ColumnDefinition Width="0.5*"/>
+                <ColumnDefinition Width="110"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
@@ -79,9 +81,11 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Button Grid.Column="1" Grid.Row="1" Content="Edit" FontSize="16" Click="Edit_Click" Resources="{StaticResource roundcornerbutton10}"/>
+            <Button Grid.Column="1" Grid.Row="1" Content="Edit Info" FontSize="16" Click="Edit_Click" Resources="{StaticResource roundcornerbutton10}"/>
 
-            <Button Grid.Column="3" Grid.Row="1" Content="Log-Tool" FontSize="16" Click="LogTool_Click" Resources="{StaticResource roundcornerbutton10}"/>
+            <Button Grid.Column="3" Grid.Row="1" Content="Edit Password" FontSize="16" Click="EditPassword_Click" Resources="{StaticResource roundcornerbutton10}"/>
+            
+            <Button Grid.Column="5" Grid.Row="1" Content="Log Tool" FontSize="16" Click="LogTool_Click" Resources="{StaticResource roundcornerbutton10}"/>
 
         </Grid>
 

@@ -17,7 +17,7 @@
         </Grid.RowDefinitions>
 
         <Viewbox Grid.Row="1">
-            <Label Content="Change Parameters"  FontSize="20" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+            <Label Content="{Binding ActionName}"  FontSize="20" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
         </Viewbox>
 
         <Viewbox Grid.Row="2">

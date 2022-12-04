@@ -90,16 +90,20 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 
 		public void Confirm()
 		{
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Confirm Click"));
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(target.GetType().Name + "." + action.GetMethodInfo().Name + "() --> Invoke"));
 			action.Invoke();
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, target.GetType().Name + "." + action.GetMethodInfo().Name + "() == Success"));
 
 			currentWindow.Close();
+			MainWindowModelSingleton.Instance.GetMainWindow().IsEnabled = true;
 		}
 
 		public void Cancel()
 		{
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Cancel Click"));
 			currentWindow.Close();
+			MainWindowModelSingleton.Instance.GetMainWindow().IsEnabled = true;
 		}
 
 		#endregion
@@ -140,7 +144,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 					{
 						TblUser user = (TblUser)target;
 
-						/*Do Stuff*/
+						MainWindowModelSingleton.Instance.StartPopupParameterChange(user);
 
 						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "New: ID " + user.FldUserId + " - " + user.FldFirstName + " " + user.FldLastName));
 						break;
@@ -149,7 +153,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 					{
 						TblGroup group = (TblGroup)target;
 
-						/*Do Stuff*/
+						MainWindowModelSingleton.Instance.StartPopupParameterChange(group);
 
 						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "New: ID " + group.FldGroupId + " - " + group.FldGroupName));
 						break;

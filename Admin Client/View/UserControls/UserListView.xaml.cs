@@ -52,8 +52,10 @@ namespace Admin_Client.View.UserControls
 			if (ListBox_Users.SelectedItem != null)
 			{
 				viewModel.Edit((TblUser)ListBox_Users.SelectedItem);
-				Userview.SetUserID(FAKEDATABASE.GetUserID((TblUser)ListBox_Users.SelectedItem));
-                MainWindowModelSingleton.Instance.SetMainContent(new UserView(), true);
+
+				// NOPE
+				//Userview.SetUserID(FAKEDATABASE.GetUserID((TblUser)ListBox_Users.SelectedItem));
+                //MainWindowModelSingleton.Instance.SetMainContent(new UserView(), true);
             }
         }
 
