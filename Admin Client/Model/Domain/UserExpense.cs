@@ -1,4 +1,5 @@
 ﻿using Admin_Client.Model.DB;
+using Admin_Client.Model.DB.EF_Test;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace Admin_Client.Model.Domain
 
 		public string Date { get; set; }
 
-		public UserExpense(TblUserExpense userExpense) 
+		public UserExpense(tblUserExpense userExpense) 
 		{
 			this.Id = 1;
 			this.Name = "Expense 1";

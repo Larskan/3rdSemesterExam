@@ -1,4 +1,4 @@
-﻿using Admin_Client.Model.DB;
+﻿using Admin_Client.Model.Controller;
 using Admin_Client.Model.Domain;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Admin_Client.Singleton
 {
-	public class GlobalInformationBuilderSingleton : GlobalInformation
+	public class GlobalInformationBuilderSingleton : GlobalInformationBuilder
 	{
 		private GlobalInformationBuilderSingleton() { }
 		private static GlobalInformationBuilderSingleton instance = null;

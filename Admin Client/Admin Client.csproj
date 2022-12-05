@@ -277,15 +277,6 @@
     </ApplicationDefinition>
     <Compile Include="Model\Controller\AbstractGlobalInformationBuilder.cs" />
     <Compile Include="Model\Controller\GlobalInformationBuilder.cs" />
-    <Compile Include="Model\DB\DBItem\TblGroup.cs" />
-    <Compile Include="Model\DB\DBItem\TblGroupToMoney.cs" />
-    <Compile Include="Model\DB\DBItem\TblLogin.cs" />
-    <Compile Include="Model\DB\DBItem\TblReceipt.cs" />
-    <Compile Include="Model\DB\DBItem\TblTrip.cs" />
-    <Compile Include="Model\DB\DBItem\TblTripToUserExpense.cs" />
-    <Compile Include="Model\DB\DBItem\TblUser.cs" />
-    <Compile Include="Model\DB\DBItem\TblUserExpense.cs" />
-    <Compile Include="Model\DB\DBItem\TblUserToGroup.cs" />
     <Compile Include="Model\DB\EF Test\HttpDbContext.cs" />
     <Compile Include="Model\DB\EF Test\tblGroup.cs" />
     <Compile Include="Model\DB\EF Test\tblGroupToTrip.cs" />
@@ -336,6 +327,9 @@
     <Compile Include="ViewModel\WindowModels\Popup\PopupPasswordChangeWindowModel.cs" />
     <Compile Include="View\UserControls\Special\BackMenuView.xaml.cs">
       <DependentUpon>BackMenuView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\Popout\PopoutLogTextWindow.xaml.cs">
+      <DependentUpon>PopoutLogTextWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Windows\Popout\PopoutLogToolWindow.xaml.cs">
       <DependentUpon>PopoutLogToolWindow.xaml</DependentUpon>
@@ -398,6 +392,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\UserControls\UserView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\Popout\PopoutLogTextWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

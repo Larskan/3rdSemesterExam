@@ -47,21 +47,21 @@ namespace Admin_Client.Model.DB
         [HttpGet("{id}")]
         public Task GetGroupAndUsers(int id)
         {
-            TblGroup dot = new TblGroup();
-            TblUser dut = new TblUser();
+            tblGroup dot = new tblGroup();
+            tblUser dut = new tblUser();
 
             //Can change to switch once it works
 
-            if(id == dot.FldGroupId)
+            if(id == dot.fldGroupID)
             {
                 //Display group + all users part of that group (1 group has many users)
-                _ = GetHttpResponse("TblUserToGroups", dot.FldGroupId);
+                _ = GetHttpResponse("tblUserToGroups", dot.fldGroupID);
                 return Task.CompletedTask;
             }
-            else if(id == dut.FldUserId)
+            else if(id == dut.fldUserID)
             {
                 //Display user + all groups that user is part of (1 user has many groups)
-                _ = GetHttpResponse("TblUserToGroups", dut.FldUserId);
+                _ = GetHttpResponse("tblUserToGroups", dut.fldUserID);
             }
             return Task.CompletedTask;
         }
@@ -70,40 +70,40 @@ namespace Admin_Client.Model.DB
         [HttpGet("{id}")]
         public Task InnerJoin(int id)
         {
-            List<TblGroup> groups = new List<TblGroup>();
-            List<TblUser> users = new List<TblUser>();
-            List<TblUserToGroup> combined = new List<TblUserToGroup>();
+            List<tblGroup> groups = new List<tblGroup>();
+            List<tblUser> users = new List<tblUser>();
+            List<tblUserToGroup> combined = new List<tblUserToGroup>();
             Debug.WriteLine("List groups: " + groups.Count);
             Debug.WriteLine("List users: " + users.Count); 
 
-            TblGroup dot = new TblGroup();
-            TblUser dut = new TblUser();
-            TblUserToGroup dit = new TblUserToGroup();
+            tblGroup dot = new tblGroup();
+            tblUser dut = new tblUser();
+            tblUserToGroup dit = new tblUserToGroup();
             
 
-            if (id == dot.FldGroupId)
+            if (id == dot.fldGroupID)
             {
                 //Display group + all users part of that group (1 group has many users)
-                _ = GetHttpResponse("TblUserToGroups", dot.FldGroupId);
+                _ = GetHttpResponse("tblUserToGroups", dot.fldGroupID);
 
-                IEnumerable<TblGroup> matchID = (from TblGroup groupItemGroup in groups
-                                                 join TblUser groupItemUser in users
-                                                 on groupItemGroup.FldGroupId
-                                                 equals groupItemUser.FldUserId
+                IEnumerable<tblGroup> matchID = (from tblGroup groupItemGroup in groups
+                                                 join tblUser groupItemUser in users
+                                                 on groupItemGroup.fldGroupID
+                                                 equals groupItemUser.fldUserID
                                                  select groupItemGroup);
 
                 
                 /*
-                var q = (from tg in TblGroups
-                         join tutg in TblUserToGroups on tg.FldGroupId equals tutg.FldGroupId
-                         join tu in TblUsers on tutg.FldUserId equals tu.FldUserId
+                var q = (from tg in tblGroups
+                         join tutg in tblUserToGroups on tg.fldGroupID equals tutg.fldGroupID
+                         join tu in tblUsers on tutg.fldUserID equals tu.fldUserID
                          orderby tutg.FldUserToGroupId
                          select new
                          {
                              tutg.FldUserToGroupID,
-                             tg.FldGroupId,
-                             tg.FldGroupName,
-                             tu.FldUserId,
+                             tg.fldGroupID,
+                             tg.fldGroupName,
+                             tu.fldUserID,
                          });
                 */
 
@@ -113,15 +113,15 @@ namespace Admin_Client.Model.DB
 
                 return (Task)matchID;
             }
-            else if (id == dut.FldUserId)
+            else if (id == dut.fldUserID)
             {
                 //Display user + all groups that user is part of (1 user has many groups)
-                _ = GetHttpResponse("TblUserToGroups", dut.FldUserId);
+                _ = GetHttpResponse("tblUserToGroups", dut.fldUserID);
 
-                IEnumerable<TblUser> matchID = (from TblUser groupItemUser in users
-                                                join TblGroup groupItemGroup in groups
-                                                on groupItemUser.FldUserId
-                                                equals groupItemGroup.FldGroupId
+                IEnumerable<tblUser> matchID = (from tblUser groupItemUser in users
+                                                join tblGroup groupItemGroup in groups
+                                                on groupItemUser.fldUserID
+                                                equals groupItemGroup.fldGroupID
                                                 select groupItemUser);
                 OutputCollectionToConsole(matchID);
                 Console.ReadKey();
@@ -129,7 +129,7 @@ namespace Admin_Client.Model.DB
             }
 
            
-            //else if(id == dut.FldUserId && dot.FldGroupId){  }
+            //else if(id == dut.fldUserID && dot.fldGroupID){  }
             //return (Task)matchID;
             return Task.CompletedTask;
         }
@@ -142,20 +142,20 @@ namespace Admin_Client.Model.DB
         #endregion
 
         #region Updating Tables
-        private int UpdateUserID(TblUserToGroup utg)
+        private int UpdateUserID(tblUserToGroup utg)
         {
-            TblUser user = new TblUser();
-            //GetAllTblUsers();
-            return utg.FldUserId = user.FldUserId;
+            tblUser user = new tblUser();
+            //GetAlltblUsers();
+            return utg.fldUserID = user.fldUserID;
             //return Task.CompletedTask;
 
         }
-        private int UpdateGroupID(TblUserToGroup utg)
+        private int UpdateGroupID(tblUserToGroup utg)
         {
-            TblGroup group = new TblGroup();
-            return utg.FldGroupId= group.FldGroupId;
-            //GetAllTblGroups();
-            //utg.FldGroupId = GetAllTblGroups().Id;
+            tblGroup group = new tblGroup();
+            return utg.fldGroupID= group.fldGroupID;
+            //GetAlltblGroups();
+            //utg.fldGroupID = GetAlltblGroups().Id;
             //return Task.CompletedTask;
         }
         #endregion
@@ -163,63 +163,63 @@ namespace Admin_Client.Model.DB
         #region Add to Table
 
         [HttpPost]
-        public Task AddGroup(TblGroup group)
+        public Task AddGroup(tblGroup group)
         {
-            string name = group.FldGroupName = "";
-            bool boll = (bool)(group.FldGroupBoolean = true);
+            string name = group.fldGroupName = "";
+            bool boll = (bool)(group.fldGroupBoolean = true);
             //string name, bool boll
-            _ = PostHttpNewGroup("https://localhost:7002/TblGroups", name, boll);
+            _ = PostHttpNewGroup("https://localhost:7002/tblGroups", name, boll);
             return Task.CompletedTask;
         }
         [HttpPost]
-        public Task AddUser(TblUser user)
+        public Task AddUser(tblUser user)
         {
-            string mail = user.FldEmail;
-            string fName = user.FldFirstName;
-            string lName = user.FldLastName;
-            int phone = user.FldPhonenumber;
-            bool admin = user.FldIsAdmin;
+            string mail = user.fldEmail;
+            string fName = user.fldFirstName;
+            string lName = user.fldLastName;
+            int? phone = user.fldPhonenumber;
+            bool? admin = user.fldIsAdmin;
 
             //string mail, string firstName, string lastName, int phone, bool admin
-            _ = PostHttpNewUser("https://localhost:7002/TblUsers",mail, fName, lName, phone, admin);
+            _ = PostHttpNewUser("https://localhost:7002/tblUsers",mail, fName, lName, phone, admin);
             return Task.CompletedTask;
         }
         [HttpPost]
-        public Task AddLogin(TblLogin login)
+        public Task AddLogin(tblLogin login)
         {
-            int id = login.FldUserId;
-            string pass = login.FldPassword;
+            int? id = login.fldUserID;
+            string pass = login.fldPassword;
             //int userID, string pass
-            _ = PostHttpNewLogin("https://localhost:7002/TblLogins", id, pass);
+            _ = PostHttpNewLogin("https://localhost:7002/tblLogins", id, pass);
             return Task.CompletedTask;
         }
         [HttpPost]
-        public Task AddReceipt(TblReceipt receipt)
+        public Task AddReceipt(tblReceipt receipt)
         {
-            int userID = receipt.FldUserId;
-            int tripID = receipt.FldTripId;
-            double value = receipt.FldProjectedValue;
-            double paid = receipt.FldAmountPaid;
+            int? userID = receipt.fldUserID;
+            int? tripID = receipt.fldTripID;
+            double? value = receipt.fldProjectedValue;
+            double? paid = receipt.fldAmountPaid;
             //int userID, int tripID, double value, double paid
-            _ = PostHttpNewReceipt("https://localhost:7002/TblReceipts", userID, tripID, value, paid);
+            _ = PostHttpNewReceipt("https://localhost:7002/tblReceipts", userID, tripID, value, paid);
             return Task.CompletedTask;
         }
         [HttpPost]
-        public Task AddTrip(TblTrip trip)
+        public Task AddTrip(tblTrip trip)
         {
-            double sum = trip.FldSum;
-            _ = PostHttpNewTrip("https://localhost:7002/TblTrips",sum);
+            double? sum = trip.fldSum;
+            _ = PostHttpNewTrip("https://localhost:7002/tblTrips",sum);
             return Task.CompletedTask;
         }
         [HttpPost]
-        public Task AddUserExpense(TblUserExpense userExpense)
+        public Task AddUserExpense(tblUserExpense userExpense)
         {
-            int userID = userExpense.FldUserId;
-            double expense = userExpense.FldExpense;
-            string note = userExpense.FldNote;
-            DateTime date = userExpense.FldDate;
+            int? userID = userExpense.fldUserID;
+            double? expense = userExpense.fldExpense;
+            string note = userExpense.fldNote;
+            DateTime? date = userExpense.fldDate;
             //int userID, double expense, string note, DateTime date
-            _ = PostHttpNewUserExpense("https://localhost:7002/TblUserExpensess",userID, expense, note, date);
+            _ = PostHttpNewUserExpense("https://localhost:7002/tblUserExpensess",userID, expense, note, date);
             return Task.CompletedTask;
         }
         #endregion
@@ -290,25 +290,25 @@ namespace Admin_Client.Model.DB
       
         public async Task<string> TestingGrab(string group, int id)
         {
-            TblUser tblUser = new TblUser();
-            TblGroup tblGroup= new TblGroup();
+            tblUser tblUser = new tblUser();
+            tblGroup tblGroup= new tblGroup();
             var handler = GetHttpResponse(group, id);
             var address = _httpClient.BaseAddress = new Uri("https://localhost:7002/");
             var res = address + group + "/" + id;
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var query1 = from fldGroupID in TblGroups select fldGroupID;
-            var query2 = from fldUserID in TblUsers select fldUserID;
-            var query3 = from fldGroupID in TblUserToGroups select fldGroupID;
+            var query1 = from fldGroupID in tblGroups select fldGroupID;
+            var query2 = from fldUserID in tblUsers select fldUserID;
+            var query3 = from fldGroupID in tblUserToGroups select fldGroupID;
             Debug.WriteLine("Query1"+ query1);
             Debug.WriteLine("Query2"+ query2);
             Debug.WriteLine("Query3"+ query3);
 
             //it does the query1-3 but not innerjoins, exception thrown
             var innerJoinQuery =
-                from fldGroupID in TblGroups
-                join fldUserID in TblUsers on fldGroupID.tblUserToGroup equals fldUserID.tblUserToGroup
+                from fldGroupID in tblGroups
+                join fldUserID in tblUsers on fldGroupID.tblUserToGroup equals fldUserID.tblUserToGroup
                 select fldUserID;
             Debug.WriteLine("InnerJoinQuery: "+innerJoinQuery.ToString());
             var content = await innerJoinQuery.ToListAsync();
@@ -333,11 +333,11 @@ namespace Admin_Client.Model.DB
              * where tblUser.fldUserID = '1';
              */
 
-            var result = (from g in TblGroups
+            var result = (from g in tblGroups
                           where g.fldGroupID.Equals(input)
-                          join gtu in TblUserToGroups on g.fldGroupID
+                          join gtu in tblUserToGroups on g.fldGroupID
                           equals gtu.fldGroupID 
-                          join gtut in TblUsers on gtu.fldUserID equals gtut.fldUserID
+                          join gtut in tblUsers on gtu.fldUserID equals gtut.fldUserID
                           select new{
                             gtu.fldGroupID,
                             gtu.fldUserID   
@@ -363,11 +363,11 @@ namespace Admin_Client.Model.DB
              * where tblGroup.fldGroupID = '1';
              */
 
-            var result = (from u in TblUsers
+            var result = (from u in tblUsers
                          where u.fldUserID == input
-                         join gtu in TblUserToGroups on u.fldUserID
+                         join gtu in tblUserToGroups on u.fldUserID
                          equals gtu.fldUserID
-                         join gtut in TblGroups on gtu.fldGroupID equals gtut.fldGroupID
+                         join gtut in tblGroups on gtu.fldGroupID equals gtut.fldGroupID
                          select new
                          {
                              gtu.fldUserID,
@@ -391,10 +391,10 @@ namespace Admin_Client.Model.DB
         public async Task<string> PostHttpNewGroup(string url, string name, bool groupBool)
         {
             var endpoint = _httpClient.BaseAddress = new Uri(url);
-            var newPost = new TblGroup()
+            var newPost = new tblGroup()
             {
-                FldGroupName = name,
-                FldGroupBoolean = groupBool
+                fldGroupName = name,
+                fldGroupBoolean = groupBool
             };
 
             //Convert the new posting to Json
@@ -409,16 +409,16 @@ namespace Admin_Client.Model.DB
         }
 
         [HttpPost]
-        public async Task<string> PostHttpNewUser(string url, string mail, string firstName, string lastName, int phone, bool admin)
+        public async Task<string> PostHttpNewUser(string url, string mail, string firstName, string lastName, int? phone, bool? admin)
         {
             var endpoint = _httpClient.BaseAddress = new Uri(url);
-            var newPost = new TblUser()
+            var newPost = new tblUser()
             {
-                FldEmail = mail,
-                FldFirstName = firstName,
-                FldLastName = lastName,
-                FldPhonenumber = phone,
-                FldIsAdmin = admin
+                fldEmail = mail,
+                fldFirstName = firstName,
+                fldLastName = lastName,
+                fldPhonenumber = phone,
+                fldIsAdmin = admin
             };
             //Convert the new posting to Json
             var newPostJson = JsonConvert.SerializeObject(newPost);
@@ -430,13 +430,13 @@ namespace Admin_Client.Model.DB
         }
 
         [HttpPost]
-        public async Task<string> PostHttpNewLogin(string url, int userID, string pass)
+        public async Task<string> PostHttpNewLogin(string url, int? userID, string pass)
         {
             var endpoint = _httpClient.BaseAddress = new Uri(url);
-            var newPost = new TblLogin()
+            var newPost = new tblLogin()
             {
-                FldUserId = userID,
-                FldPassword = pass
+                fldUserID = userID,
+                fldPassword = pass
             };
             //Convert the new posting to Json
             var newPostJson = JsonConvert.SerializeObject(newPost);
@@ -448,15 +448,15 @@ namespace Admin_Client.Model.DB
         }
 
         [HttpPost]
-        public async Task<string> PostHttpNewReceipt(string url, int userID, int tripID, double value, double paid)
+        public async Task<string> PostHttpNewReceipt(string url, int? userID, int? tripID, double? value, double? paid)
         {
             var endpoint = _httpClient.BaseAddress = new Uri(url);
-            var newPost = new TblReceipt()
+            var newPost = new tblReceipt()
             {
-                FldUserId = userID,
-                FldTripId = tripID,
-                FldProjectedValue = value,
-                FldAmountPaid = paid
+                fldUserID = userID,
+                fldTripID = tripID,
+                fldProjectedValue = value,
+                fldAmountPaid = paid
             };
             //Convert the new posting to Json
             var newPostJson = JsonConvert.SerializeObject(newPost);
@@ -469,12 +469,12 @@ namespace Admin_Client.Model.DB
         }
 
         [HttpPost]
-        public async Task<string> PostHttpNewTrip(string url, double sum)
+        public async Task<string> PostHttpNewTrip(string url, double? sum)
         {
             var endpoint = _httpClient.BaseAddress = new Uri(url);
-            var newPost = new TblTrip()
+            var newPost = new tblTrip()
             {
-                FldSum = sum
+                fldSum = sum
             };
             //Convert the new posting to Json
             var newPostJson = JsonConvert.SerializeObject(newPost);
@@ -486,15 +486,15 @@ namespace Admin_Client.Model.DB
         }
 
         [HttpPost]
-        public async Task<string> PostHttpNewUserExpense(string url, int userID, double expense, string note, DateTime date)
+        public async Task<string> PostHttpNewUserExpense(string url, int? userID, double? expense, string note, DateTime? date)
         {
             var endpoint = _httpClient.BaseAddress = new Uri(url);
-            var newPost = new TblUserExpense()
+            var newPost = new tblUserExpense()
             {
-                FldUserId = userID,
-                FldExpense = expense,
-                FldNote = note,
-                FldDate = date
+                fldUserID = userID,
+                fldExpense = expense,
+                fldNote = note,
+                fldDate = date
             };
             //Convert the new posting to Json
             var newPostJson = JsonConvert.SerializeObject(newPost);
@@ -526,28 +526,28 @@ namespace Admin_Client.Model.DB
                 grab.AsQueryable().FirstOrDefault();
                 switch (grab)
                 {
-                    case "TblGroups":
-                        TblGroup tblGroup = new TblGroup();
-                        if(ID != tblGroup.FldGroupId)
+                    case "tblGroups":
+                        tblGroup tblGroup = new tblGroup();
+                        if(ID != tblGroup.fldGroupID)
                         {
                             break;
                         }
 
 
                         break;
-                    case "TblUsers":
+                    case "tblUsers":
                         //
                         break;
-                    case "TblLogins":
+                    case "tblLogins":
                         //
                         break;
-                    case "TblReceipts":
+                    case "tblReceipts":
                         //
                         break;
-                    case "TblTrips":
+                    case "tblTrips":
                         //
                         break;
-                    case "TblUserExpensess":
+                    case "tblUserExpensess":
                         //
                         break;
                 }

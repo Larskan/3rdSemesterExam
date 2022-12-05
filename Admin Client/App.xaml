@@ -252,12 +252,12 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="0.25*"/>
                     </Grid.ColumnDefinitions>
-                    <Label x:Name="id" Content="{Binding FldUserId}" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
-                    <Label x:Name="email" Content="{Binding FldEmail}" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
-                    <Label x:Name="firstname" Content="{Binding FldFirstName}" Grid.Column="2" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
-                    <Label x:Name="lastname" Content="{Binding FldLastName}" Grid.Column="3" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
-                    <Label x:Name="phonenum" Content="{Binding FldPhonenumber}" Grid.Column="4" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
-                    <Label x:Name="isadmin" Content="{Binding FldIsAdmin}" Grid.Column="5" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="id" Content="{Binding fldUserID}" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="email" Content="{Binding fldEmail}" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="firstname" Content="{Binding fldFirstName}" Grid.Column="2" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="lastname" Content="{Binding fldLastName}" Grid.Column="3" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="phonenum" Content="{Binding fldPhonenumber}" Grid.Column="4" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="isadmin" Content="{Binding fldIsAdmin}" Grid.Column="5" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
                 </Grid>
             </Border>
         </DataTemplate>
@@ -271,9 +271,9 @@
                         <ColumnDefinition Width="3*"/>
                         <ColumnDefinition Width="0.25*"/>
                     </Grid.ColumnDefinitions>
-                    <Label x:Name="id" Content="{Binding FldGroupId}" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
-                    <Label x:Name="name" Content="{Binding FldGroupName}" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
-                    <Label x:Name="boolean" Content="{Binding FldGroupBoolean}" Grid.Column="2" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="id" Content="{Binding fldGroupID}" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="name" Content="{Binding fldGroupName}" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="boolean" Content="{Binding fldGroupBoolean}" Grid.Column="2" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
                 </Grid>
             </Border>
         </DataTemplate>

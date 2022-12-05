@@ -1,4 +1,5 @@
 ﻿using Admin_Client.Model.DB;
+using Admin_Client.Model.DB.EF_Test;
 using Admin_Client.Model.Domain;
 using Admin_Client.PropertyChanged;
 using Admin_Client.Singleton;
@@ -18,7 +19,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 		#region Variables
 
 		private Window currentWindow;
-		private TblUser user;
+		private tblUser user;
 
 		#endregion
 
@@ -36,12 +37,12 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 
 		#region Constructor
 
-		public PopupPasswordChangeWindowModel(Window currentWindow, TblUser user)
+		public PopupPasswordChangeWindowModel(Window currentWindow, tblUser user)
 		{
 			this.currentWindow = currentWindow;
 			this.user = user;
 
-			ObjectName = this.user.FldUserId + ": " + this.user.FldFirstName + " " + this.user.FldLastName;
+			ObjectName = this.user.fldUserID + ": " + this.user.fldFirstName + " " + this.user.fldLastName;
 		}
 
 		#endregion

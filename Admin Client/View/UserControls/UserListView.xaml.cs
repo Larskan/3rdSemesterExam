@@ -1,5 +1,6 @@
 ﻿using Admin_Client.Model;
 using Admin_Client.Model.DB;
+using Admin_Client.Model.DB.EF_Test;
 using Admin_Client.Model.Domain;
 using Admin_Client.Singleton;
 using Admin_Client.ViewModel.ContentControlModels;
@@ -51,10 +52,10 @@ namespace Admin_Client.View.UserControls
 		{
 			if (ListBox_Users.SelectedItem != null)
 			{
-				viewModel.Edit((TblUser)ListBox_Users.SelectedItem);
+				viewModel.Edit((tblUser)ListBox_Users.SelectedItem);
 
 				// NOPE
-				//Userview.SetUserID(FAKEDATABASE.GetUserID((TblUser)ListBox_Users.SelectedItem));
+				//Userview.SetUserID(FAKEDATABASE.GetUserID((tblUser)ListBox_Users.SelectedItem));
                 //MainWindowModelSingleton.Instance.SetMainContent(new UserView(), true);
             }
         }
@@ -63,7 +64,7 @@ namespace Admin_Client.View.UserControls
 		{
 			if (ListBox_Users.SelectedItem != null)
 			{
-				viewModel.Delete((TblUser)ListBox_Users.SelectedItem);
+				viewModel.Delete((tblUser)ListBox_Users.SelectedItem);
 			}
 		}
         private void OnPageLoaded(object sender, RoutedEventArgs e)
@@ -83,8 +84,18 @@ namespace Admin_Client.View.UserControls
 		{
 			if (String.IsNullOrEmpty(TextBox_Search.Text))
 				return true;
+			else if (((string)((tblUser)item).fldFirstName + " " + ((tblUser)item).fldLastName).IndexOf(TextBox_Search.Text, StringComparison.OrdinalIgnoreCase) >= 0)
+				return true;
+			else if (((tblUser)item).fldLastName.IndexOf(TextBox_Search.Text, StringComparison.OrdinalIgnoreCase) >= 0)
+				return true;
+			else if (((tblUser)item).fldEmail.IndexOf(TextBox_Search.Text, StringComparison.OrdinalIgnoreCase) >= 0)
+				return true;
+			else if (((tblUser)item).fldPhonenumber.ToString().IndexOf(TextBox_Search.Text, StringComparison.OrdinalIgnoreCase) >= 0)
+				return true;
+			else if (((tblUser)item).fldUserID.ToString().IndexOf(TextBox_Search.Text, StringComparison.OrdinalIgnoreCase) >= 0)
+				return true;
 			else
-				return (item.ToString().IndexOf(TextBox_Search.Text, StringComparison.OrdinalIgnoreCase) >= 0);
+				return (((tblUser)item).fldIsAdmin.ToString().IndexOf(TextBox_Search.Text, StringComparison.OrdinalIgnoreCase) >= 0);
 		}
 
 		#endregion

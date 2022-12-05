@@ -1,12 +1,9 @@
 ﻿using Admin_Client.Model.Domain;
 using Admin_Client.Singleton;
-using Admin_Client.ViewModel.ContentControlModels;
-using Admin_Client.ViewModel.WindowModels.Popout;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,27 +17,23 @@ using System.Windows.Shapes;
 namespace Admin_Client.View.Windows.Popout
 {
 	/// <summary>
-	/// Interaction logic for LogWindow.xaml
+	/// Interaction logic for PopoutLogTextWindow.xaml
 	/// </summary>
-	public partial class PopoutLogWindow : Window
+	public partial class PopoutLogTextWindow : Window
 	{
-		PopoutLogWindowModel windowModel;
-		public PopoutLogWindow(DateTime dateTime)
+		public PopoutLogTextWindow(Window owner,string logFileName, string content)
 		{
+			this.Owner = owner;
+
 			InitializeComponent();
 
-			windowModel = new PopoutLogWindowModel(dateTime, ListBox_Logs, CheckBox_AutoScroll, this);
-			this.DataContext = windowModel;
+			Label_LogFileName.Content = logFileName;
+			TextBlock_Content.Text = content;
 		}
 
 		private void Window_Closed(object sender, EventArgs e)
 		{
-			windowModel.Closed();
-		}
-
-		private void ToText_Click(object sender, RoutedEventArgs e)
-		{
-			windowModel.ToText();
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "LogText Close Click"));
 		}
 	}
 }
