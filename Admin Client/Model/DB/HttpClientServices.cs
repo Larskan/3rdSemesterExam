@@ -46,106 +46,163 @@ namespace Admin_Client.Model.DB
         }
 
 
-        #region testing
-        //TESTING METHOD FOR GETTING USERS AND GROUPS TO DISPLAY TOGETHER, depending on which ID is used
+        #region Testing - Hardcoding attempt for group+its users
+        //Attempt at Hardcoding
         [HttpGet("{id}")]
         public Task GetGroupAndUsers(int id)
         {
-            TblGroup dot = new TblGroup();
-            TblUser dut = new TblUser();
+            tblGroup dot = new tblGroup();
+            tblUser dut = new tblUser();
 
             //Can change to switch once it works
 
-            if (id == dot.FldGroupId)
+            if (id == dot.fldGroupID)
             {
                 //Display group + all users part of that group (1 group has many users)
-                _ = GetHttpResponse("TblUserToGroups", dot.FldGroupId);
+                _ = GetHttpResponse("TblUserToGroups", dot.fldGroupID);
+                _ = GetHttpResponse("TblGroups", dot.fldGroupID);
+                _ = GetHttpResponse("TblUsers", dut.fldUserID);
+                while (true)
+                {
+                    _ = GetAllHttpResponse("TblUsers");
+                }
                 return Task.CompletedTask;
             }
-            else if (id == dut.FldUserId)
+            else if (id == dut.fldUserID)
             {
                 //Display user + all users that user is part of (1 user has many users)
-                _ = GetHttpResponse("TblUserToGroups", dut.FldUserId);
+                _ = GetHttpResponse("TblUserToGroups", dut.fldUserID);
             }
             return Task.CompletedTask;
         }
-
-
-        [HttpGet("{id}")]
-        public Task InnerJoin(int id)
-        {
-            List<TblGroup> groups = new List<TblGroup>();
-            List<TblUser> users = new List<TblUser>();
-            List<TblUserToGroup> combined = new List<TblUserToGroup>();
-            Debug.WriteLine("List users: " + groups.Count);
-            Debug.WriteLine("List users: " + users.Count);
-
-            TblGroup dot = new TblGroup();
-            TblUser dut = new TblUser();
-            TblUserToGroup dit = new TblUserToGroup();
-
-
-            if (id == dot.FldGroupId)
-            {
-                //Display group + all users part of that group (1 group has many users)
-                _ = GetHttpResponse("TblUserToGroups", dot.FldGroupId);
-
-                IEnumerable<TblGroup> matchID = (from TblGroup groupItemGroup in groups
-                                                 join TblUser groupItemUser in users
-                                                 on groupItemGroup.FldGroupId
-                                                 equals groupItemUser.FldUserId
-                                                 select groupItemGroup);
-
-
-                /*
-                var q = (from tg in TblGroups
-                         join tutg in TblUserToGroups on tg.FldGroupId equals tutg.FldGroupId
-                         join tu in TblUsers on tutg.FldUserId equals tu.FldUserId
-                         orderby tutg.FldUserToGroupId
-                         select new
-                         {
-                             tutg.FldUserToGroupID,
-                             tg.FldGroupId,
-                             tg.FldGroupName,
-                             tu.FldUserId,
-                         });
-                */
-
-
-                //OutputCollectionToConsole(matchID);
-                //Console.ReadKey();
-
-                return (Task)matchID;
-            }
-            else if (id == dut.FldUserId)
-            {
-                //Display user + all users that user is part of (1 user has many users)
-                _ = GetHttpResponse("TblUserToGroups", dut.FldUserId);
-
-                IEnumerable<TblUser> matchID = (from TblUser groupItemUser in users
-                                                join TblGroup groupItemGroup in groups
-                                                on groupItemUser.FldUserId
-                                                equals groupItemGroup.FldGroupId
-                                                select groupItemUser);
-                OutputCollectionToConsole(matchID);
-                Console.ReadKey();
-                return (Task)matchID;
-            }
-
-
-            //else if(id == dut.FldUserId && dot.FldGroupId){  }
-            //return (Task)matchID;
-            return Task.CompletedTask;
-        }
-
+        #endregion
+        #region Testing - Collection Output attempt
+        
         private static void OutputCollectionToConsole(IEnumerable<object> collectionToOutput)
         {
             foreach (object collectionItem in collectionToOutput)
                 Console.WriteLine(collectionItem.ToString());
         }
         #endregion
+        #region Testting - Grab group+its users and user+their groups with inner join
+        public Task<string> TestingGrab(string group, int id)
+        {
+            tblUser bruger = new tblUser();
+            tblGroup gruppe = new tblGroup();
+            var handler = GetHttpResponse(group, id);
+            var address = _httpClient.BaseAddress = new Uri("https://localhost:7002/");
+            var res = address + group + "/" + id;
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-        #region Updating Tables
+
+            var innerJoinQuery =
+                from g in TblGroups
+                where g.fldGroupID.Equals(id)
+                join gtu in TblUserToGroups on g.fldGroupID equals gtu.fldGroupID
+                join gtut in TblUsers on gtu.fldUserID equals gtut.fldUserID
+                select new
+                {
+                    gtu.fldGroupID,
+                    gtut.fldUserID,
+                    gtut.fldFirstName
+                };
+
+            var a = JsonConvert.DeserializeAnonymousType(res, innerJoinQuery);
+            Debug.WriteLine("aaaaaa: " + a);
+            //var b = JsonConvert.DeserializeObject(innerJoinQuery.ToString());
+            //Debug.WriteLine("bbbbb: " + b);
+            Debug.WriteLine("InnerJoinQuery: " + innerJoinQuery);
+            var content = client.GetAsync(a.ToString()).Result;
+
+            using (StreamReader sr = new StreamReader(content.Content.ReadAsStreamAsync().Result))
+            {
+                Debug.WriteLine("WAAAAHHHH: " + sr.ReadToEnd());
+            }
+
+            Debug.WriteLine("Content: " + content);
+            Debug.WriteLine("ContentToString: " + content.ToString());
+            return Task.FromResult(content.ToString());
+        }
+
+        //Select entire group + all user ID's part of that group - In theory it should work
+        public async Task<List<object>> TestingGrabGroupAndUsers(int input)
+        {
+            //grab group and its users
+            /*
+             * SQL Version:
+             * select *
+             * from(tblGroup
+             * inner join tblUserToGroup on tblGroup.fldGroupID = tblUserToGroup.fldGroupUD)
+             * inner join tblUser on tblUserToGroup.fldUserID = tblUser.fldUserID
+             * where tblUser.fldUserID = '1';
+             */
+
+            var result = (from g in TblGroups
+                          where g.fldGroupID.Equals(input)
+                          join gtu in TblUserToGroups on g.fldGroupID
+                          equals gtu.fldGroupID
+                          join gtut in TblUsers on gtu.fldUserID equals gtut.fldUserID
+                          select new
+                          {
+                              gtu.fldGroupID,
+                              gtu.fldUserID
+                          });
+            Debug.WriteLine("Result1: " + result.ToString());
+            Debug.WriteLine("Result1: " + result);
+            var content = await result.ToListAsync();
+
+            List<object> list = new List<object>();
+            foreach (var item in content)
+            {
+                list.Add(item);
+            }
+
+            Debug.WriteLine("result pls work: " + content);
+            Console.Write(content.ToArray());
+            return list;
+        }
+        //Select entire user + all group ID's part of that user
+        public async Task<List<object>> TestingGrabUserAndGroups(int input)
+        {
+            //grab user and its users
+            /*
+             * SQL Version:
+             * select *
+             * from(tblUser
+             * inner join tblUserToGroup on tblUser.fldUserID = tblUserToGroup.fldUserID)
+             * inner join tblGroup on tblUserToGroup.fldGroupID = tblGroup.fldGroupID
+             * where tblGroup.fldGroupID = '1';
+             */
+
+            var result = from u in TblUsers
+                         where u.fldUserID == input
+                         join gtu in TblUserToGroups on u.fldUserID equals gtu.fldUserID
+                         join gtut in TblGroups on gtu.fldGroupID equals gtut.fldGroupID
+                         select new
+                         {
+                             gtu.fldUserID,
+                             gtut.fldGroupID,
+                             gtut.fldGroupName,
+                             gtut.fldGroupBoolean
+
+                         };
+            Debug.WriteLine("Result2: " + result);
+
+            var content = await result.ToListAsync();
+            Debug.WriteLine("Result4: " + content);
+            List<object> list = new List<object>();
+            foreach (var item in content)
+            {
+                list.Add(item);
+            }
+
+            Debug.WriteLine("result pls work: " + content);
+            Console.Write(content);
+            return list;
+        }
+        #endregion
+        #region Testing - Updating Tables(EDIT)
         private int UpdateUserID(TblUserToGroup utg)
         {
             TblUser user = new TblUser();
@@ -379,131 +436,17 @@ namespace Admin_Client.Model.DB
         }
 
         #endregion
-        #region Get Specific with linked properties (ex: 1 group and all users connected to it)
+        #region Get Specific with linked properties (ex: 1 group and all users connected to it) - Not tested
         //GET with group id, grab that specific group + tblUsers inner join that matches group ID.
         //So when groupID is called, it displays that group + all users connected to that group,which it knows from inner join
         //and other way around
 
-        public Task<string> TestingGrab(string group, int id)
-        {
-            tblUser bruger = new tblUser();
-            tblGroup gruppe = new tblGroup();
-            var handler = GetHttpResponse(group, id);
-            var address = _httpClient.BaseAddress = new Uri("https://localhost:7002/");
-            var res = address + group + "/" + id;
-            HttpClient client = new HttpClient();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-
-            var innerJoinQuery =
-                from g in TblGroups
-                where g.fldGroupID.Equals(id)
-                join gtu in TblUserToGroups on g.fldGroupID equals gtu.fldGroupID
-                join gtut in TblUsers on gtu.fldUserID equals gtut.fldUserID
-                select new
-                {
-                    gtu.fldGroupID,
-                    gtut.fldUserID,
-                    gtut.fldFirstName
-                };
-
-            var a = JsonConvert.DeserializeAnonymousType(res, innerJoinQuery);
-            Debug.WriteLine("aaaaaa: " + a);
-            //var b = JsonConvert.DeserializeObject(innerJoinQuery.ToString());
-            //Debug.WriteLine("bbbbb: " + b);
-            Debug.WriteLine("InnerJoinQuery: " + innerJoinQuery);
-            var content = client.GetAsync(a.ToString()).Result;
-
-            using (StreamReader sr = new StreamReader(content.Content.ReadAsStreamAsync().Result))
-            {
-                Debug.WriteLine("WAAAAHHHH: "+sr.ReadToEnd());
-            }
-
-            Debug.WriteLine("Content: " + content);
-            Debug.WriteLine("ContentToString: " + content.ToString());
-            return Task.FromResult(content.ToString());
-        }
-
-
-        //Select entire group + all user ID's part of that group - In theory it should work
-        public async Task<List<object>> TestingGrabGroupAndUsers(int input)
-        {
-            //grab group and its users
-            /*
-             * SQL Version:
-             * select *
-             * from(tblGroup
-             * inner join tblUserToGroup on tblGroup.fldGroupID = tblUserToGroup.fldGroupUD)
-             * inner join tblUser on tblUserToGroup.fldUserID = tblUser.fldUserID
-             * where tblUser.fldUserID = '1';
-             */
-
-            var result = (from g in TblGroups
-                          where g.fldGroupID.Equals(input)
-                          join gtu in TblUserToGroups on g.fldGroupID
-                          equals gtu.fldGroupID
-                          join gtut in TblUsers on gtu.fldUserID equals gtut.fldUserID
-                          select new {
-                              gtu.fldGroupID,
-                              gtu.fldUserID
-                          });
-            Debug.WriteLine("Result1: " + result.ToString());
-            Debug.WriteLine("Result1: " + result);
-            var content = await result.ToListAsync();
-
-            List<object> list = new List<object>();
-            foreach (var item in content)
-            {
-                list.Add(item);
-            }
-
-            Debug.WriteLine("result pls work: " + content);
-            Console.Write(content.ToArray());
-            return list;
-        }
-        //Select entire user + all group ID's part of that user
-        public async Task<List<object>> TestingGrabUserAndGroups(int input)
-        {
-            //grab user and its users
-            /*
-             * SQL Version:
-             * select *
-             * from(tblUser
-             * inner join tblUserToGroup on tblUser.fldUserID = tblUserToGroup.fldUserID)
-             * inner join tblGroup on tblUserToGroup.fldGroupID = tblGroup.fldGroupID
-             * where tblGroup.fldGroupID = '1';
-             */
-
-            var result = from u in TblUsers
-                          where u.fldUserID == input
-                          join gtu in TblUserToGroups on u.fldUserID equals gtu.fldUserID
-                          join gtut in TblGroups on gtu.fldGroupID equals gtut.fldGroupID
-                          select new
-                          {
-                              gtu.fldUserID,
-                              gtut.fldGroupID,
-                              gtut.fldGroupName,
-                              gtut.fldGroupBoolean
-                              
-                          };
-            Debug.WriteLine("Result2: " + result);
-
-            var content = await result.ToListAsync();
-            Debug.WriteLine("Result4: " + content);
-            List<object> list = new List<object>();
-            foreach (var item in content)
-            {
-                list.Add(item);
-            }
-
-            Debug.WriteLine("result pls work: " + content);
-            Console.Write(content);
-            return list;
-        }
+   
+       
 
         #endregion
 
-        #region Post new entry to a Table
+        #region Post new entry to a Table - WORKS, can be prettified
 
         [HttpPost]
         public async Task<string> PostHttpNewGroup(string url, string name, bool groupBool)
