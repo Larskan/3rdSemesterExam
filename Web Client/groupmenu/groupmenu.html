@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="groupmenu.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>groupmenu</title>
   </head>
 
   <body>
@@ -67,47 +68,44 @@
 
             <!--#region Group Actions  -->
             <div id="Container" class="container-fluid">
-              <a
-                id="Actions"
-                class="btn"
-                href="create.html"
-                data-toggle="tooltip"
-                title="Create Group"
-              >
-                <span class="glyphicon glyphicon-plus"></span>
+              <a id="Actions" class="btn" href="create.html">
+                <span class="glyphicon glyphicon-plus"></span> Create
               </a>
 
               <a
                 id="Actions"
                 class="btn"
-                href="join.html"
-                data-toggle="tooltip"
-                title="Join Group"
+                data-toggle="collapse"
+                data-target="#search"
               >
                 <span class="glyphicon glyphicon-search"></span>
-              </a>
-
-              <a
-                id="Actions"
-                class="btn"
-                href="#"
-                data-toggle="tooltip"
-                title="PlaceHolder"
-              >
-                <span class="glyphicon glyphicon-adjust"></span>
-              </a>
-
-              <a
-                id="Actions"
-                class="btn"
-                href="#"
-                data-toggle="tooltip"
-                title="PlaceHolder"
-              >
-                <span class="glyphicon glyphicon-arrow-up"></span>
+                Join
               </a>
             </div>
             <!--#endregion -->
+            <div id="search" class="collapse">
+              <div style="border: transparent" class="panel panel-default">
+                <div id="Heading" class="panel-heading">Search</div>
+                <div class="panel-body">
+                  <input
+                    type="text"
+                    id=""
+                    placeholder="Search for Group name"
+                  />
+                  <input
+                    type="text"
+                    id=""
+                    placeholder="Search for Group owner"
+                  />
+                  <button id="Actions" class="button button-default">
+                    Search
+                  </button>
+                  <br />
+                  <br />
+                  Search Results here
+                </div>
+              </div>
+            </div>
 
             <!--#region Recent groups  -->
 
@@ -174,6 +172,11 @@
   <script>
     $(document).ready(function () {
       $('[data-toggle="tooltip"]').tooltip();
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $('[data-toggle="popover"]').popover();
     });
   </script>
 </html>
