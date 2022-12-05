@@ -1,4 +1,5 @@
 ﻿using Admin_Client.Model.DB;
+using Admin_Client.Model.DB.EF_Test;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,27 +11,40 @@ namespace Admin_Client.Model.Domain
 	public class GlobalInformation
 	{
 
-		private TblUser currentUser;
+		private tblUser currentUser;
 
-		private List<TblUser> users;
-		private List<TblGroup> groups;
+		private List<tblUser> userList;
+		private List<tblGroup> groupList;
 
 		public GlobalInformation() { }
 
-		public void SetCurrentUser(TblUser user) 
-		{ 
-			this.currentUser = user;
-		}
+		#region CurrentUser
 
-		public void SetCurrentUser(List<TblUser> users)
-		{
-			this.users = users;
-		}
+		public void SetCurrentUser(tblUser user) { this.currentUser = user; }
 
-		public void SetCurrentUser(List<TblGroup> groups)
-		{
-			this.groups = groups;
-		}
+		public tblUser GetCurrentUser() { return this.currentUser; }
+
+		#endregion
+
+		#region UserList
+
+		public void SetUserList(List<tblUser> userList) { this.userList = userList; }
+
+		public void AddUserList(tblUser user) { this.userList.Add(user); }
+
+		public void RemoveUserList(tblUser user) { this.userList.Remove(user); }
+
+		public List<tblUser> GetUserList() { return this.userList; }
+
+		#endregion
+
+		public void SetGroupList(List<tblGroup> groupList) { this.groupList = groupList; }
+
+		public void AddGroupList(tblGroup group) { this.groupList.Add(group); }
+
+		public void RemoveGroupList(tblGroup group) { this.groupList.Remove(group); }
+
+		public List<tblGroup> GetGroupList() { return this.groupList; }
 
 	}
 }

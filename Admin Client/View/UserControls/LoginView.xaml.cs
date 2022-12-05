@@ -1,4 +1,5 @@
 ﻿using Admin_Client.Model;
+using Admin_Client.Model.Controller;
 using Admin_Client.Model.DB;
 using Admin_Client.Model.Domain;
 using Admin_Client.Model.Foundation;
@@ -37,15 +38,14 @@ namespace Admin_Client.View.UserControls
 		}
 
 		private void Login_Click(object sender, RoutedEventArgs e)
-		{	
+		{
             if (PasswordBox_Password.Password.Length > 0)
 			{
 				viewModel.Login(TextBox_Username.Text, PasswordBox_Password.Password);
 			} else
 			{
 				viewModel.Login(TextBox_Username.Text, TextBox_Password.Text);
-			}	
-							
+			}				
         }
 
         private void TextBox_Password_TextChanged(object sender, TextChangedEventArgs e)

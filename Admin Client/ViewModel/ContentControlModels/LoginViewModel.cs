@@ -1,4 +1,5 @@
-﻿using Admin_Client.Model.Domain;
+﻿using Admin_Client.Model.DB.EF_Test;
+using Admin_Client.Model.Domain;
 using Admin_Client.PropertyChanged;
 using Admin_Client.Singleton;
 using Admin_Client.View.UserControls;
@@ -42,7 +43,8 @@ namespace Admin_Client.ViewModel.ContentControlModels
 			{
 				LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Login == Success"));
 
-				//CREATE USER OBJECT FOR LATER USE - (USE THE SESSION INFORMATION BUILDER TO DO SO) - TODO
+				// TODO
+				GlobalInformationBuilderSingleton.Instance.BuildCurrentUser(new tblUser());
 
 				MainWindowModelSingleton.Instance.SetMainContent(new OverviewView(), false, true);
 
