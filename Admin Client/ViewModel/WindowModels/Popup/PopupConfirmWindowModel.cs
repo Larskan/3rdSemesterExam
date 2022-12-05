@@ -50,6 +50,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 
 		public PopupConfirmWindowModel(Window currentWindow, object target, PopupMethod popupMethod)
 		{
+			// Set the methods and other object related info
 			switch (popupMethod)
 			{
 				case PopupMethod.Edit: this.action = Edit; break;
@@ -67,13 +68,13 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 			{
 				switch (this.target.GetType().Name)
 				{
-					case "TblUsers":
+					case "TblUser":
 						{
 							TblUser user = (TblUser)target;
 							TargetText = user.FldUserId + " - " + user.FldFirstName + " " + user.FldLastName;
 							break;
 						}
-					case "TblGroups":
+					case "TblGroup":
 						{
 							TblGroup group = (TblGroup)target;
 							TargetText = group.FldGroupId + " - " + group.FldGroupName;
@@ -114,7 +115,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 		{
 			switch (target.GetType().Name)
 			{
-				case "TblUsers":
+				case "TblUser":
 					{
 						TblUser user = (TblUser)target;
 
@@ -123,7 +124,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + user.FldUserId + " - " + user.FldFirstName + " " + user.FldLastName));
 						break;
 					}
-				case "TblGroups":
+				case "TblGroup":
 					{
 						TblGroup group = (TblGroup)target;
 
@@ -166,7 +167,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 		{
 			switch (target.GetType().Name)
 			{
-				case "TblUsers":
+				case "TblUser":
 					{
 						TblUser user = (TblUser)target;
 
@@ -175,7 +176,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + user.FldUserId + " - " + user.FldFirstName + " " + user.FldLastName));
 						break;
 					}
-				case "TblGroups":
+				case "TblGroup":
 					{
 						TblGroup group = (TblGroup)target;
 
@@ -184,7 +185,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + group.FldGroupId + " - " + group.FldGroupName));
 						break;
 					}
-                case "TblReceipts":
+                case "TblReceipt":
                     {
                         TblReceipt receipt = (TblReceipt)target;
 
@@ -193,7 +194,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
                         LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + receipt.FldReceiptId + " - " + receipt.FldUserId + " " + receipt.FldUser.FldFirstName + " " + receipt.FldUser.FldLastName));
                         break;
                     }
-                case "TblTrips":
+                case "TblTrip":
                     {
                         TblTrip trip = (TblTrip)target;
 
