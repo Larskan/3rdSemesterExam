@@ -24,6 +24,7 @@ using System.Data.Entity;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 using DocumentFormat.OpenXml.Office2010.Excel;
 using System.Web.Http.ModelBinding.Binders;
+using NPOI.SS.Formula.Functions;
 
 namespace Admin_Client.Model.DB
 {
@@ -42,12 +43,16 @@ namespace Admin_Client.Model.DB
 
         private bool useDefaultCredentials = false;
 
-        public ApiClient(string requestUrl, string baseUrl)
+        public HttpClientServices(string requestUrl, string baseUrl)
         {
+            //_httpClient.BaseAddress = new Uri("https://localhost:7270/");
             this.requestUrl = requestUrl;
             this.baseUrl = baseUrl;
         }
-        public ApiClient(string requestUrl) : this(requestUrl, "https://localhost:7002/") { }
+
+        public HttpClientServices(string requestUrl) : this(requestUrl, "https://localhost:7002/") { }
+        public HttpClientServices() { }
+       
 
         public void UseDefaultCredentials()
         {
@@ -62,23 +67,134 @@ namespace Admin_Client.Model.DB
             return clientHandler;
         }
 
+        #region New Attempt at getting Objects
+        /// <summary>
+        /// Basic GET with HttpClient
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<T>> Get()
         {
             using(HttpClient client = new HttpClient(GetHandler()))
             {
                 client.BaseAddress = new Uri(baseUrl);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                try
+                {
+                    var result = client.GetAsync(requestUrl).Result;
+                    if (result.IsSuccessStatusCode)
+                    {
+                        return await result.Content.ReadAsAsync<IEnumerable<T>>();
+                    }
+                    throw new UnSuccesfulRequest(result.StatusCode.ToString());
+                }
+                catch(Exception e) { throw e; }
             }
         }
 
-
-
-
-
-        public HttpClientServices()
+        /// <summary>
+        /// Basic GET based on ID with HttpClient
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<T> Get(Object id)
         {
-            _httpClient.BaseAddress = new Uri("https://localhost:7270/");
+            using(HttpClient client = new HttpClient(GetHandler()))
+            {
+                client.BaseAddress = new Uri(baseUrl);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                try
+                {
+                    var result = client.GetAsync(requestUrl+"/"+id).Result;
+                    if (result.IsSuccessStatusCode)
+                    {
+                        return await result.Content.ReadAsAsync<T>();
+                    }
+                    throw new UnSuccesfulRequest(result.StatusCode.ToString());
+                }
+                catch(Exception e) { throw e; }
+            }
         }
+
+        /// <summary>
+        /// Basic POST with HttpClient
+        /// </summary>
+        /// <param name="Obj"></param>
+        /// <returns></returns>
+        public async Task<T> Post(T Obj)
+        {
+            using(HttpClient client = new HttpClient(GetHandler()))
+            {
+                client.BaseAddress = new Uri(baseUrl);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                try
+                {
+                    var result = client.PostAsJsonAsync(requestUrl,Obj).Result;
+                    if (result.IsSuccessStatusCode)
+                    {
+                        return await result.Content.ReadAsAsync<T>();
+                    }
+                    throw new UnSuccesfulRequest(result.StatusCode.ToString());
+                }
+                catch(Exception e) { throw e; } 
+            }
+        }
+
+        /// <summary>
+        /// Basic Update/EDIT with HttpClient
+        /// </summary>
+        /// <param name="updateId"></param>
+        /// <param name="Obj"></param>
+        /// <returns></returns>
+        public async Task<T> Update(Object updateId, T Obj)
+        {
+            using(HttpClient client = new HttpClient(GetHandler()))
+            {
+                client.BaseAddress = new Uri(baseUrl);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                try
+                {
+                    var result = client.PutAsJsonAsync(requestUrl+"/"+updateId,Obj).Result;
+                    if (result.IsSuccessStatusCode)
+                    {
+                        return Obj;
+                    }
+                    throw new UnSuccesfulRequest(result.StatusCode.ToString());
+                }
+                catch(Exception e) { throw e; }
+            }
+        }
+
+        /// <summary>
+        /// Basic DELETE with HttpClient
+        /// </summary>
+        /// <param name="updateId"></param>
+        /// <returns></returns>
+        public async Task<bool> Delete(Object updateId)
+        {
+            using(HttpClient client = new HttpClient(GetHandler()))
+            {
+                client.BaseAddress = new Uri(baseUrl);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                try
+                {
+                    var result = client.DeleteAsync(requestUrl+"/"+updateId).Result;
+                    if (result.IsSuccessStatusCode)
+                    {
+                        return true;
+                    }
+                    throw new UnSuccesfulRequest(result.StatusCode.ToString());
+
+                }
+                catch(Exception e) { throw e; }
+            }
+        }
+        #endregion
+
 
 
         #region Testing - Hardcoding attempt for group+its users
@@ -632,4 +748,14 @@ namespace Admin_Client.Model.DB
         #endregion
 
     }
+
+    #region Selfmade Exceptions
+    public class UnSuccesfulRequest : Exception
+    {
+        public UnSuccesfulRequest() { }
+
+        public UnSuccesfulRequest(string message) : base(message) { }
+        public UnSuccesfulRequest(string message, Exception innerException) : base(message, innerException) { }
+    }
+    #endregion
 }

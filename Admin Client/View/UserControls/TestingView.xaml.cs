@@ -3,6 +3,7 @@ using Admin_Client.Singleton;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,9 +40,9 @@ namespace Admin_Client.View.UserControls
 
         private void Confirm_Click(object sender, RoutedEventArgs e)
         {
-            HttpClientServicesSingleton.Instance.TestingGrab("TblGroups", 1);
+            //HttpClientServicesSingleton.Instance.TestingGrab("TblGroups", 1);
             //ResultList = HttpClientServicesSingleton.Instance.TestingGrabGroupAndUsers(1);
-            
+
             /*
             Groups.Add(new tblGroup());
             var dub = HttpClientServicesSingleton.Instance.TestingGrabUserAndGroups(1).Result;
@@ -50,7 +51,7 @@ namespace Admin_Client.View.UserControls
                 Groups.Add((tblGroup)item);
             }
             */
-            
+
             //_ = HttpClientServicesSingleton.Instance.GetHttpResponse("tblGroup", 1);
             //HttpClientServicesSingleton.Instance.RegisterUser(new tblUser());
             //HttpClientServicesSingleton.Instance.AddGroup(new tblGroup());
@@ -66,7 +67,10 @@ namespace Admin_Client.View.UserControls
             // }
             //var dubn = HttpClientServicesSingleton.Instance.TestGET();
             //var dub = HttpClientServicesSingleton.Instance.TestGETTWO();
-           // TextResult.Text = dub.Result;
+            // TextResult.Text = dub.Result;
+
+            var sup = HttpClientServicesSingleton.Instance.Get();
+            Debug.WriteLine("Sup: " + sup);
         }
 
         private void ListRestult_SelectionChanged(object sender, SelectionChangedEventArgs e)
