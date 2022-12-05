@@ -10,10 +10,10 @@ namespace Admin_Client.Model.DB
 
         public string FldGroupName { get; set; }
 
-        public bool? FldGroupBoolean { get; set; }
+        public bool FldGroupBoolean { get; set; }
 
         [JsonIgnore]
-        public virtual ICollection<TblGroupToMoney> TblGroupToMoneys { get; } = new List<TblGroupToMoney>();
+        public virtual ICollection<TblGroupToTrip> TblGroupToMoneys { get; } = new List<TblGroupToTrip>();
 
         [JsonIgnore]
         public virtual ICollection<TblUserToGroup> TblUserToGroups { get; } = new List<TblUserToGroup>();

@@ -38,23 +38,18 @@ namespace Admin_Client.View.Windows.Popups
 			this.DataContext= windowModel;
 
 			this.Owner = MainWindowModelSingleton.Instance.GetMainWindow();
-			MainWindowModelSingleton.Instance.GetMainWindow().IsEnabled = false;
 
 			InitializeComponent();
 		}
 
 		private void Confirm_Click(object sender, RoutedEventArgs e)
 		{
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Confirm Click"));
 			windowModel.Confirm();
-			MainWindowModelSingleton.Instance.GetMainWindow().IsEnabled = true;
 		}
 
 		private void Cancel_Click(object sender, RoutedEventArgs e)
 		{
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Cancel Click"));
 			windowModel.Cancel();
-			MainWindowModelSingleton.Instance.GetMainWindow().IsEnabled = true;
 		}
 
 	}

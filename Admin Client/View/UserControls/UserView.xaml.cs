@@ -18,17 +18,43 @@ using System.Windows.Shapes;
 
 namespace Admin_Client.View.UserControls
 {
-	/// <summary>
-	/// Interaction logic for UserView.xaml
-	/// </summary>
-	public partial class UserView : UserControl
-	{
-		UserViewModel viewModel = new UserViewModel();
-		public UserView()
-		{
-			this.DataContext = viewModel;
+    /// <summary>
+    /// Interaction logic for UserView.xaml
+    /// </summary>
+    public partial class UserView : UserControl
+    {
+        UserViewModel viewModel = new UserViewModel();
+        public UserView()
+        {
+            this.DataContext = viewModel;
 
-			InitializeComponent();
-		}
-	}
+            InitializeComponent();
+        }
+
+        private void ChangeMobileNumberClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ChangeEmailClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ChangeNameClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void SeeLogClick(object sender, RoutedEventArgs e)
+        {
+            //MainWindowModelSingleton.Instance.SetMainContent(new LogListView(), true);
+        }
+
+        private void CheckReceiptClick(object sender, RoutedEventArgs e)
+        {
+            //doesnt work, what do u want me to pass to the receiptview lol
+           // MainWindowModelSingleton.Instance.SetMainContent(new ReceiptView(), true);
+        }
+    }
 }

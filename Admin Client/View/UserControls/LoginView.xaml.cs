@@ -37,24 +37,33 @@ namespace Admin_Client.View.UserControls
 		}
 
 		private void Login_Click(object sender, RoutedEventArgs e)
-		{
-			if (PasswordBox_Password.Password.Length > 0)
+		{	
+            if (PasswordBox_Password.Password.Length > 0)
 			{
 				viewModel.Login(TextBox_Username.Text, PasswordBox_Password.Password);
 			} else
 			{
 				viewModel.Login(TextBox_Username.Text, TextBox_Password.Text);
-			}
-		}
+			}	
+							
+        }
 
-		private void TextBox_Password_TextChanged(object sender, TextChangedEventArgs e)
+        private void TextBox_Password_TextChanged(object sender, TextChangedEventArgs e)
 		{
-			PasswordBox_Password.Password = TextBox_Password.Text;
+			if (TextBox_Password.IsFocused)
+			{
+				PasswordBox_Password.Password = TextBox_Password.Text;
+				PasswordBox_Password.SelectAll();
+			}
 		}
 
 		private void PasswordBox_Password_PasswordChanged(object sender, RoutedEventArgs e)
 		{
-			TextBox_Password.Text = PasswordBox_Password.Password;
+			if (PasswordBox_Password.IsFocused)
+			{
+				TextBox_Password.Text = PasswordBox_Password.Password;
+				TextBox_Password.Select(TextBox_Password.Text.Length, 0);
+			}
 		}
 
 		private void TogglePasswordView_Checked(object sender, RoutedEventArgs e)
@@ -72,5 +81,6 @@ namespace Admin_Client.View.UserControls
 
             TextBox_Password.Focus();
         }
-    }
+
+	}
 }

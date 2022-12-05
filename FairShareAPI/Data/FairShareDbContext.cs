@@ -19,7 +19,7 @@ public partial class FairShareDbContext : DbContext
 
     public virtual DbSet<TblGroup> TblGroups { get; set; }
 
-    public virtual DbSet<TblGroupToMoney> TblGroupToMoneys { get; set; }
+    public virtual DbSet<TblGroupToTrip> TblGroupToTrips { get; set; }
 
     public virtual DbSet<TblLogin> TblLogins { get; set; }
 
@@ -55,13 +55,13 @@ public partial class FairShareDbContext : DbContext
             entity.Property(e => e.FldGroupBoolean).HasColumnName("fldGroupBoolean");
         });
 
-        modelBuilder.Entity<TblGroupToMoney>(entity =>
+        modelBuilder.Entity<TblGroupToTrip>(entity =>
         {
-            entity.HasKey(e => e.FldGroupToMoneyId).HasName("PK__tblGroup__C215EEF18CA2C599");
+            entity.HasKey(e => e.FldGroupToTripId).HasName("PK__tblGroup__C215EEF18CA2C599");
 
-            entity.ToTable("tblGroupToMoney");
+            entity.ToTable("tblGroupToTrip");
 
-            entity.Property(e => e.FldGroupToMoneyId).HasColumnName("fldGroupToMoneyID");
+            entity.Property(e => e.FldGroupToTripId).HasColumnName("fldGroupToTripID");
             entity.Property(e => e.FldGroupId).HasColumnName("fldGroupID");
             entity.Property(e => e.FldTripId).HasColumnName("fldTripID");
 
@@ -189,7 +189,10 @@ public partial class FairShareDbContext : DbContext
 
         modelBuilder.Entity<TblUserToGroup>(entity =>
         {
+            //entity.HasNoKey();
             entity.HasKey(e => e.FldUserToGroupId).HasName("PK__tblUserT__19DCF06B1673C2D9");
+            //entity.HasAlternateKey(e => e.FldUserId);
+            //entity.HasAlternateKey(e => e.FldGroupId);
 
             entity.ToTable("tblUserToGroup");
 

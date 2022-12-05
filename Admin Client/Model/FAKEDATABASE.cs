@@ -60,12 +60,25 @@ namespace Admin_Client.Model
 				}
 			}
 		}
+        public static int GetGroupID(TblGroup tblGroup)
+        {
+            foreach (var item in tblGroups)
+            {
+                if (item.FldGroupId == tblGroup.FldGroupId)
+                {
+                    return item.FldGroupId;
+                }
+            }
 
-		#endregion
+            //fix return? although this return will never be reached
+            return 0;
+        }
 
-		#region Users
+        #endregion
 
-		public static List<TblUser> tblUsers = new List<TblUser> {
+        #region Users
+
+        public static List<TblUser> tblUsers = new List<TblUser> {
 				new TblUser { FldUserId = 1, FldEmail = "email1", FldFirstName = "firstname1", FldLastName = "lastname1", FldPhonenumber = 10101010, FldIsAdmin = false },
 				new TblUser { FldUserId = 2, FldEmail = "email2", FldFirstName = "firstname2", FldLastName = "lastname2", FldPhonenumber = 20202020, FldIsAdmin = false },
 				new TblUser { FldUserId = 3, FldEmail = "email3", FldFirstName = "firstname3", FldLastName = "lastname3", FldPhonenumber = 30303030, FldIsAdmin = false },
@@ -115,12 +128,23 @@ namespace Admin_Client.Model
 				}
 			}
 		}
+        public static int GetUserID(TblUser tblUser)
+        {
+            foreach (var item in tblUsers)
+            {
+                if (item.FldUserId == tblUser.FldUserId)
+                {
+                    return item.FldUserId;
+                }
+            }
+            return 0;
+        }
 
-		#endregion
+        #endregion
 
-		#region Receipt
+        #region Receipt
 
-		public static List<TblReceipt> tblReceipts = new List<TblReceipt>
+        public static List<TblReceipt> tblReceipts = new List<TblReceipt>
 		{
 			new TblReceipt{ FldReceiptId = 1, FldUserId = 1, FldAmountPaid = 500, FldTripId = 1 },
 			new TblReceipt{ FldReceiptId = 1, FldUserId = 1, FldAmountPaid = 800, FldTripId = 1 },

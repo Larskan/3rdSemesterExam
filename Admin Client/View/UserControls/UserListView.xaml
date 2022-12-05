@@ -1,4 +1,5 @@
 ﻿<UserControl x:Class="Admin_Client.View.UserControls.UserListView"
+             Loaded="OnPageLoaded"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -35,7 +36,7 @@
 
         </Grid>
 
-        <ListBox x:Name="ListBox_Users" Grid.Column="1" Grid.Row="2" ItemsSource="{Binding Users}" Margin="5" Style="{StaticResource roundlistboxwithempty}" Resources="{StaticResource roundborder10}" >
+        <ListBox x:Name="ListBox_Users" Grid.Column="1" Grid.Row="2" ItemsSource="{Binding Users}" Margin="5"  VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource userDataTemplate}" ItemContainerStyle="{StaticResource RoundedListItem}" Style="{StaticResource roundlistboxwithempty}" Resources="{StaticResource roundborder10}" >
             <ListBox.ContextMenu>
                 <ContextMenu Style="{StaticResource roundcontextmenu}" >
                     <MenuItem Header="Edit Group" Click="Edit_Click" Resources="{StaticResource roundborder10}" />

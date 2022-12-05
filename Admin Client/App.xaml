@@ -5,6 +5,17 @@
              StartupUri="\View\Windows\MainWindow.xaml">
     <Application.Resources>
 
+        <!--#region Coloration-->
+
+        <SolidColorBrush x:Key="Item.MouseOver.Background" Color="LightSalmon"/>
+        <SolidColorBrush x:Key="Item.MouseOver.Border" Color="LightSalmon"/>
+        <SolidColorBrush x:Key="Item.SelectedInactive.Background" Color="DarkSalmon"/>
+        <SolidColorBrush x:Key="Item.SelectedInactive.Border" Color="DarkSalmon"/>
+        <SolidColorBrush x:Key="Item.SelectedActive.Background" Color="DarkSalmon"/>
+        <SolidColorBrush x:Key="Item.SelectedActive.Border" Color="DarkSalmon"/>
+
+        <!--#endregion-->
+        
         <!--#region PasswordBox-->
         
         <!--PasswordBox Rounded Corners-->
@@ -24,7 +35,7 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsEnabled" Value="false">
-                                <Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                                <Setter Property="Background" TargetName="Bd" Value="{StaticResource Item.SelectedActive.Background}"/>
                                 <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
@@ -35,6 +46,10 @@
         
         <!--#endregion-->
 
+        <!--#region TextBox-->
+
+        <!--#endregion-->
+        
         <!--#region Buttons-->
 
         <!--Button 5% round-->
@@ -224,10 +239,48 @@
         <!--#endregion-->
         
         <!--#region DataTemplates-->
-        
+
+        <!--DataTemplate User-->
+        <DataTemplate x:Key="userDataTemplate">
+            <Border Name="border" BorderThickness="0,0,0,0" BorderBrush="Gray" Resources="{StaticResource roundborder10}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="0.25*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label x:Name="id" Content="{Binding FldUserId}" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="email" Content="{Binding FldEmail}" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="firstname" Content="{Binding FldFirstName}" Grid.Column="2" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="lastname" Content="{Binding FldLastName}" Grid.Column="3" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="phonenum" Content="{Binding FldPhonenumber}" Grid.Column="4" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="isadmin" Content="{Binding FldIsAdmin}" Grid.Column="5" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                </Grid>
+            </Border>
+        </DataTemplate>
+
+        <!--DataTemplate Group-->
+        <DataTemplate x:Key="groupDataTemplate">
+            <Border Name="border" BorderThickness="0,0,0,0" BorderBrush="Gray" Resources="{StaticResource roundborder10}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="0.25*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label x:Name="id" Content="{Binding FldGroupId}" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="name" Content="{Binding FldGroupName}" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="boolean" Content="{Binding FldGroupBoolean}" Grid.Column="2" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                </Grid>
+            </Border>
+        </DataTemplate>
+
         <!--DataTemplate Log-->
         <DataTemplate x:Key="logDataTemplate">
-            <Border Name="border" BorderThickness="3,0,3,0" BorderBrush="Gray">
+            <Border Name="border" BorderThickness="3,0,3,0">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="150"/>
@@ -245,18 +298,21 @@
                         <local:LogType>Success</local:LogType>
                     </DataTrigger.Value>
                     <Setter TargetName="border" Property="Background" Value="LightGreen" />
+                    <Setter TargetName="border" Property="BorderBrush" Value="ForestGreen" />
                 </DataTrigger>
                 <DataTrigger Binding="{Binding Path=LogType}">
                     <DataTrigger.Value>
                         <local:LogType>Information</local:LogType>
                     </DataTrigger.Value>
                     <Setter TargetName="border" Property="Background" Value="LightGray" />
+                    <Setter TargetName="border" Property="BorderBrush" Value="Gray" />
                 </DataTrigger>
                 <DataTrigger Binding="{Binding Path=LogType}">
                     <DataTrigger.Value>
                         <local:LogType>UserAction</local:LogType>
                     </DataTrigger.Value>
                     <Setter TargetName="border" Property="Background" Value="Pink" />
+                    <Setter TargetName="border" Property="BorderBrush" Value="LightPink" />
                     <Setter TargetName="border" Property="BorderThickness" Value="3,3,3,0" />
                     <Setter TargetName="datetime" Property="FontWeight" Value="Bold" />
                     <Setter TargetName="logtype" Property="FontWeight" Value="Bold" />
@@ -267,12 +323,19 @@
                         <local:LogType>Warning</local:LogType>
                     </DataTrigger.Value>
                     <Setter TargetName="border" Property="Background" Value="LightSalmon" />
+                    <Setter TargetName="border" Property="BorderBrush" Value="Salmon" />
+                    <Setter TargetName="border" Property="BorderThickness" Value="3,0,3,3" />
+                    <Setter TargetName="datetime" Property="FontWeight" Value="Bold" />
+                    <Setter TargetName="logtype" Property="FontWeight" Value="Bold" />
+                    <Setter TargetName="logtext" Property="FontWeight" Value="Bold" />
                 </DataTrigger>
                 <DataTrigger Binding="{Binding Path=LogType}">
                     <DataTrigger.Value>
                         <local:LogType>FatalError</local:LogType>
                     </DataTrigger.Value>
                     <Setter TargetName="border" Property="Background" Value="PaleVioletRed" />
+                    <Setter TargetName="border" Property="BorderThickness" Value="3,3,3,3" />
+                    <Setter TargetName="border" Property="BorderBrush" Value="Red" />
                     <Setter TargetName="datetime" Property="FontWeight" Value="Bold" />
                     <Setter TargetName="logtype" Property="FontWeight" Value="Bold" />
                     <Setter TargetName="logtext" Property="FontWeight" Value="Bold" />
@@ -375,9 +438,101 @@
 
         <!--#region ItemContainerStyle-->
 
+        <!--List item-->
+        <Style x:Key="RoundedListItem" TargetType="{x:Type ListBoxItem}" Resources="{StaticResource roundborder10}">
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="Padding" Value="4,1"/>
+            <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+            <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                        <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsMouseOver" Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Background" TargetName="Bd" Value="{StaticResource Item.MouseOver.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource Item.MouseOver.Border}"/>
+                            </MultiTrigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="Selector.IsSelectionActive" Value="False"/>
+                                    <Condition Property="IsSelected" Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Background" TargetName="Bd" Value="{StaticResource Item.SelectedInactive.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource Item.SelectedInactive.Border}"/>
+                            </MultiTrigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="Selector.IsSelectionActive" Value="True"/>
+                                    <Condition Property="IsSelected" Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Background" TargetName="Bd" Value="{StaticResource Item.SelectedActive.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource Item.SelectedActive.Border}"/>
+                            </MultiTrigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="TextElement.Foreground" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <!--List item witout focusable-->
         <Style x:Key="NoTargetRoundedListItem" TargetType="{x:Type ListBoxItem}" Resources="{StaticResource roundborder10}">
             <Setter Property="Focusable" Value="false"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="Padding" Value="4,1"/>
+            <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+            <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                        <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsMouseOver" Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Background" TargetName="Bd" Value="{StaticResource Item.MouseOver.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource Item.MouseOver.Border}"/>
+                            </MultiTrigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="Selector.IsSelectionActive" Value="False"/>
+                                    <Condition Property="IsSelected" Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Background" TargetName="Bd" Value="{StaticResource Item.SelectedInactive.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource Item.SelectedInactive.Border}"/>
+                            </MultiTrigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="Selector.IsSelectionActive" Value="True"/>
+                                    <Condition Property="IsSelected" Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Background" TargetName="Bd" Value="{StaticResource Item.SelectedActive.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource Item.SelectedActive.Border}"/>
+                            </MultiTrigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="TextElement.Foreground" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
 
         <!--List item witout focusable and hover-->
