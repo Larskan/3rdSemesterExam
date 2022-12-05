@@ -12,11 +12,14 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
-namespace Admin_Client.ViewModel.ContentControlModels
+namespace Admin_Client.ViewModel.WindowModels.Popup
 {
-	public class GroupViewModel : NotifyPropertyChangedHandler
-	{
+    public class PopupAddUserWindowModel : NotifyPropertyChangedHandler
+    {
+        private Window currentWindow;
+
 
         private ObservableCollection<TblUser> users = new ObservableCollection<TblUser>();
         public ObservableCollection<TblUser> Users
@@ -24,15 +27,36 @@ namespace Admin_Client.ViewModel.ContentControlModels
             get { return users; }
             set { users = value; }
         }
+        public string Searchbar { get; set; }
+        
 
-        public GroupViewModel()
+        public PopupAddUserWindowModel(Window currentWindow, object o)
         {
+            this.currentWindow = currentWindow;
+        }
+        List<TblUser> userList = FAKEDATABASE.GetUsers();
+        public void Add(ListBox listBox)
+        {
+            Console.WriteLine("ayy");
+        }
+        public void Search()
+        {
+            
+            Console.WriteLine(Searchbar);
+            userList = new List<TblUser>(userList.Where(x => x.FldFirstName.IndexOf(Searchbar, StringComparison.InvariantCultureIgnoreCase) >= 0));
+            //Users = new ObservableCollection<TblUser>(userList.Where(x => x.FldFirstName.IndexOf(Searchbar, StringComparison.InvariantCultureIgnoreCase) >= 0));
+            Update();
+            Console.WriteLine(userList.Count);
+            
+        }
 
-        }
-        public void Add()
+        public void Cancel()
         {
-            MainWindowModelSingleton.Instance.StartPopupConfirm(new TblUser(), PopupMethod.Add);
+            LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Cancel Click"));
+            currentWindow.Close();
+            MainWindowModelSingleton.Instance.GetMainWindow().IsEnabled = true;
         }
+
 
         CancellationTokenSource tokenSource;
         public void Update()
@@ -46,9 +70,6 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
             ThreadPool.QueueUserWorkItem(UpdateUsersListThread, new object[] { tokenSource.Token });
         }
-     
-
-
         private void UpdateUsersListThread(object o)
         {
             object[] array = o as object[];
@@ -57,31 +78,29 @@ namespace Admin_Client.ViewModel.ContentControlModels
             while (!token.IsCancellationRequested)
             {
                 // CHANGE THE FAKEDATEBASE.GETUSERS() - TODO
-                List<TblUser> users = FAKEDATABASE.GetUsers();  
+                
 
                 bool found;
-                    foreach (var userItem in users)
+                foreach (var userItem in userList)
+                {
+                    Console.WriteLine(userList.Count);
+                    found = false;
+                    foreach (var UserItem in Users)
                     {
-                        found = false;
-                        foreach (var UserItem in Users)
+                        if (userItem.FldUserId == UserItem.FldUserId)
                         {
-                            if (userItem.FldUserId == UserItem.FldUserId)
-                            {
-                                found = true;
-                                break;
-                            }
+                            found = true;
+                            break;
                         }
-                        if (!found)
-                        {
-                        //(change this) temp nested if statement to sort a group by its users admin level, this can easily be changed to be based on the groups associated userIDs
-                        if (userItem.FldIsAdmin.Equals(false)) {
+                    }
+                    if (!found)
+                    {
                             App.Current.Dispatcher.BeginInvoke(new Action(() => { Users.Add(userItem); }));
-                        }
                     }
                 }
                 break;
             }
         }
-
     }
+
 }

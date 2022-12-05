@@ -186,6 +186,13 @@ namespace Admin_Client.ViewModel.WindowModels
 			new PopupPasswordChangeWindow(mainWindow, user).ShowDialog();
 		}
 
+		public void StartPopupAddUser(TblUser user)
+		{
+            MainWindowModelSingleton.Instance.GetMainWindow().IsEnabled = false;
+
+            new PopupAddUserWindow(mainWindow, user).ShowDialog();
+        }
+
 		#endregion
 
 		#region Private Methods

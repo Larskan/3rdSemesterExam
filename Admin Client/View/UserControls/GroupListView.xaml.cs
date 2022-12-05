@@ -57,7 +57,7 @@ namespace Admin_Client.View.UserControls
 
 				// NOPE
                 //Overview.SetGroupID(FAKEDATABASE.GetGroupID((TblGroup)ListBox_Groups.SelectedItem));
-                //MainWindowModelSingleton.Instance.SetMainContent(new GroupView(), true);
+                MainWindowModelSingleton.Instance.SetMainContent(new GroupView(), true);
             }
         }
 

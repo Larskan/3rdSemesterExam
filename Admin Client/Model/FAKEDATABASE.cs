@@ -66,7 +66,7 @@ namespace Admin_Client.Model
             {
                 if (item.FldGroupId == tblGroup.FldGroupId)
                 {
-                    return item.FldGroupId;
+                    return item.FldGroupId;	
                 }
             }
 
@@ -103,7 +103,9 @@ namespace Admin_Client.Model
 			return null;
 		}
 
-		public static void EditUser(TblUser tblUser)
+		
+
+        public static void EditUser(TblUser tblUser)
 		{
 			foreach (var item in tblUsers)
 			{

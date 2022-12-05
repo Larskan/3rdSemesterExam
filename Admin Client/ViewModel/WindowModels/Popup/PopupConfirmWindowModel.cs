@@ -55,6 +55,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 				case PopupMethod.Edit: this.action = Edit; break;
 				case PopupMethod.Create: this.action = Create; break;
 				case PopupMethod.Delete: this.action = Delete; break;
+				case PopupMethod.Add: this.action = Add; break;
 			}
 			this.target = target;
 			this.currentWindow = currentWindow;
@@ -67,13 +68,13 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 			{
 				switch (this.target.GetType().Name)
 				{
-					case "TblUsers":
+					case "TblUser":
 						{
 							TblUser user = (TblUser)target;
 							TargetText = user.FldUserId + " - " + user.FldFirstName + " " + user.FldLastName;
 							break;
 						}
-					case "TblGroups":
+					case "TblGroup":
 						{
 							TblGroup group = (TblGroup)target;
 							TargetText = group.FldGroupId + " - " + group.FldGroupName;
@@ -114,7 +115,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 		{
 			switch (target.GetType().Name)
 			{
-				case "TblUsers":
+				case "TblUser":
 					{
 						TblUser user = (TblUser)target;
 
@@ -123,7 +124,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + user.FldUserId + " - " + user.FldFirstName + " " + user.FldLastName));
 						break;
 					}
-				case "TblGroups":
+				case "TblGroup":
 					{
 						TblGroup group = (TblGroup)target;
 
@@ -140,7 +141,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 		{
 			switch (target.GetType().Name)
 			{
-				case "TblUsers":
+				case "TblUser":
 					{
 						TblUser user = (TblUser)target;
 
@@ -149,7 +150,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "New: ID " + user.FldUserId + " - " + user.FldFirstName + " " + user.FldLastName));
 						break;
 					}
-				case "TblGroups":
+				case "TblGroup":
 					{
 						TblGroup group = (TblGroup)target;
 
@@ -166,7 +167,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 		{
 			switch (target.GetType().Name)
 			{
-				case "TblUsers":
+				case "TblUser":
 					{
 						TblUser user = (TblUser)target;
 
@@ -175,7 +176,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + user.FldUserId + " - " + user.FldFirstName + " " + user.FldLastName));
 						break;
 					}
-				case "TblGroups":
+				case "TblGroup":
 					{
 						TblGroup group = (TblGroup)target;
 
@@ -184,7 +185,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + group.FldGroupId + " - " + group.FldGroupName));
 						break;
 					}
-                case "TblReceipts":
+                case "TblReceipt":
                     {
                         TblReceipt receipt = (TblReceipt)target;
 
@@ -193,7 +194,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
                         LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + receipt.FldReceiptId + " - " + receipt.FldUserId + " " + receipt.FldUser.FldFirstName + " " + receipt.FldUser.FldLastName));
                         break;
                     }
-                case "TblTrips":
+                case "TblTrip":
                     {
                         TblTrip trip = (TblTrip)target;
 
@@ -204,6 +205,23 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
                     }
                 default: throw new Exception("Has not been implemented: " + target.GetType().Name + "." + action.GetMethodInfo().Name + "()");
 			}
+		}
+
+		private void Add()
+		{
+			switch (target.GetType().Name)
+			{
+				case "TblUser":
+					{
+                        TblUser user = (TblUser)target;
+                        MainWindowModelSingleton.Instance.StartPopupAddUser(user);
+
+                        break;
+                    }
+                default: throw new Exception("Has not been implemented: " + target.GetType().Name + "." + action.GetMethodInfo().Name + "()");
+            }
+
+
 		}
 
 		#endregion

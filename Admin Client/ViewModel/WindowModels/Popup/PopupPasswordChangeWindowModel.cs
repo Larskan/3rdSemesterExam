@@ -50,7 +50,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 
 		public void Change()
 		{
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Change Click"));
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Add Click"));
 
 			//DO STUFF TO LOGIN WITH USER ID
 			// ENCRYPT AND SEND TO DATABASE

@@ -327,6 +327,7 @@
     <Compile Include="ViewModel\WindowModels\MainWindowModel.cs" />
     <Compile Include="ViewModel\WindowModels\Popout\PopoutLogToolWindowModel.cs" />
     <Compile Include="ViewModel\WindowModels\Popout\PopoutLogWindowModel.cs" />
+    <Compile Include="ViewModel\WindowModels\Popup\PopupAddUserWindowModel.cs" />
     <Compile Include="ViewModel\WindowModels\Popup\PopupConfirmWindowModel.cs" />
     <Compile Include="ViewModel\WindowModels\Popup\PopupParameterChangeWindowModel.cs" />
     <Compile Include="ViewModel\WindowModels\Popup\PopupPasswordChangeWindowModel.cs" />
@@ -344,6 +345,9 @@
     </Compile>
     <Compile Include="View\Windows\Popups\PopupPasswordChangeWindow.xaml.cs">
       <DependentUpon>PopupPasswordChangeWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\Popups\PopupAddUserWindow.xaml.cs">
+      <DependentUpon>PopupAddUserWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="View\UserControls\AccountView.xaml">
       <SubType>Designer</SubType>
@@ -465,6 +469,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Windows\Popups\PopupPasswordChangeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\Popups\PopupAddUserWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
