@@ -12,9 +12,9 @@ namespace Admin_Client.Model.DB.EF_Test
         [Key]
         public int fldUserToGroupID { get; set; }
 
-        public int? fldUserID { get; set; }
+        public int fldUserID { get; set; }
 
-        public int? fldGroupID { get; set; }
+        public int fldGroupID { get; set; }
 
         public virtual tblGroup tblGroup { get; set; }
 
