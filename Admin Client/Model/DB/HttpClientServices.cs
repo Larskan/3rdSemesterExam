@@ -37,6 +37,41 @@ namespace Admin_Client.Model.DB
         private static readonly HttpClient _httpClient = new HttpClient();
 
         List<object> Buffer = new List<object>();
+        private string baseUrl = "";
+        private string requestUrl = "";
+
+        private bool useDefaultCredentials = false;
+
+        public ApiClient(string requestUrl, string baseUrl)
+        {
+            this.requestUrl = requestUrl;
+            this.baseUrl = baseUrl;
+        }
+        public ApiClient(string requestUrl) : this(requestUrl, "https://localhost:7002/") { }
+
+        public void UseDefaultCredentials()
+        {
+            useDefaultCredentials= true;
+        }
+
+        private HttpClientHandler GetHandler()
+        {
+            HttpClientHandler clientHandler = new HttpClientHandler();
+            clientHandler.UseDefaultCredentials = useDefaultCredentials;
+
+            return clientHandler;
+        }
+
+        public async Task<IEnumerable<T>> Get()
+        {
+            using(HttpClient client = new HttpClient(GetHandler()))
+            {
+                client.BaseAddress = new Uri(baseUrl);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            }
+        }
+
+
 
 
 
