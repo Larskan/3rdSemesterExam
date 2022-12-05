@@ -144,7 +144,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popout
 					}
 				}));
 				// Sleep
-				Debug.WriteLine(Thread.CurrentThread + " : Sleeping for 5 sec");
+				Debug.WriteLine(Thread.CurrentThread + " : Sleeping for 2.5 sec");
 				Thread.Sleep(2500);
 			}
 			Debug.WriteLine(Thread.CurrentThread + " : Closing");
