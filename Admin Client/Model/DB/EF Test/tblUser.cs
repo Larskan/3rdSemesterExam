@@ -30,9 +30,9 @@ namespace Admin_Client.Model.DB.EF_Test
         [StringLength(30)]
         public string fldLastName { get; set; }
 
-        public int? fldPhonenumber { get; set; }
+        public int fldPhonenumber { get; set; }
 
-        public bool? fldIsAdmin { get; set; }
+        public bool fldIsAdmin { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblLogin> tblLogin { get; set; }
