@@ -56,16 +56,16 @@ namespace Admin_Client.Model.DB
 
             //Can change to switch once it works
 
-            if (id == dot.FldGroupId)
+            if (id == dot.fldGroupID)
             {
                 //Display group + all users part of that group (1 group has many users)
                 _ = GetHttpResponse("tblUserToGroups", dot.fldGroupID);
                 return Task.CompletedTask;
             }
-            else if (id == dut.FldUserId)
+            else if (id == dut.fldUserID)
             {
                 //Display user + all users that user is part of (1 user has many users)
-                _ = GetHttpResponse("TblUserToGroups", dut.FldUserId);
+                _ = GetHttpResponse("TblUserToGroups", dut.fldUserID);
             }
             return Task.CompletedTask;
         }
@@ -74,15 +74,15 @@ namespace Admin_Client.Model.DB
         [HttpGet("{id}")]
         public Task InnerJoin(int id)
         {
-            List<TblGroup> groups = new List<TblGroup>();
-            List<TblUser> users = new List<TblUser>();
-            List<TblUserToGroup> combined = new List<TblUserToGroup>();
+            List<tblGroup> groups = new List<tblGroup>();
+            List<tblUser> users = new List<tblUser>();
+            List<tblUserToGroup> combined = new List<tblUserToGroup>();
             Debug.WriteLine("List users: " + groups.Count);
             Debug.WriteLine("List users: " + users.Count);
 
-            TblGroup dot = new TblGroup();
-            TblUser dut = new TblUser();
-            TblUserToGroup dit = new TblUserToGroup();
+            tblGroup dot = new tblGroup();
+            tblUser dut = new tblUser();
+            tblUserToGroup dit = new tblUserToGroup();
 
 
             if (id == dot.fldGroupID)
@@ -120,7 +120,7 @@ namespace Admin_Client.Model.DB
             else if (id == dut.fldUserID)
             {
                 //Display user + all users that user is part of (1 user has many users)
-                _ = GetHttpResponse("TblUserToGroups", dut.FldUserId);
+                _ = GetHttpResponse("TblUserToGroups", dut.fldUserID);
 
                 IEnumerable<tblUser> matchID = (from tblUser groupItemUser in users
                                                 join tblGroup groupItemGroup in groups
@@ -156,8 +156,8 @@ namespace Admin_Client.Model.DB
         }
         private int UpdateGroupID(tblUserToGroup utg)
         {
-            TblGroup group = new TblGroup();
-            return utg.FldGroupId = group.FldGroupId;
+            tblGroup group = new tblGroup();
+            return utg.fldGroupID = group.fldGroupID;
             //GetAllTblGroups();
             //utg.FldGroupId = GetAllTblGroups().Id;
             //return Task.CompletedTask;
@@ -213,7 +213,7 @@ namespace Admin_Client.Model.DB
             return content;
         }
         [HttpPost]
-        public object AddUser(TblUser user)
+        public object AddUser(tblUser user)
         {
             string mail = user.fldEmail;
             string fName = user.fldFirstName;
@@ -228,7 +228,7 @@ namespace Admin_Client.Model.DB
             return content;
         }
         [HttpPost]
-        public object AddLogin(TblLogin login)
+        public object AddLogin(tblLogin login)
         {
             int? id = login.fldUserID;
             string pass = login.fldPassword;
@@ -239,7 +239,7 @@ namespace Admin_Client.Model.DB
             return content;
         }
         [HttpPost]
-        public object AddReceipt(TblReceipt receipt)
+        public object AddReceipt(tblReceipt receipt)
         {
             int? userID = receipt.fldUserID;
             int? tripID = receipt.fldTripID;
@@ -252,16 +252,16 @@ namespace Admin_Client.Model.DB
             return content;
         }
         [HttpPost]
-        public object AddTrip(TblTrip trip)
+        public object AddTrip(tblTrip trip)
         {
-            double sum = trip.FldSum;
+            double? sum = trip.fldSum;
             var result = PostHttpNewTrip("https://localhost:7002/TblTrips", sum);
             result.Wait();
             var content = result.Result;
             return content;
         }
         [HttpPost]
-        public object AddUserExpense(TblUserExpense userExpense)
+        public object AddUserExpense(tblUserExpense userExpense)
         {
             int? userID = userExpense.fldUserID;
             double? expense = userExpense.fldExpense;
@@ -396,10 +396,10 @@ namespace Admin_Client.Model.DB
 
 
             var innerJoinQuery =
-                from g in TblGroups
+                from g in tblGroups
                 where g.fldGroupID.Equals(id)
-                join gtu in TblUserToGroups on g.fldGroupID equals gtu.fldGroupID
-                join gtut in TblUsers on gtu.fldUserID equals gtut.fldUserID
+                join gtu in tblUserToGroups on g.fldGroupID equals gtu.fldGroupID
+                join gtut in tblUsers on gtu.fldUserID equals gtut.fldUserID
                 select new
                 {
                     gtu.fldGroupID,
@@ -440,9 +440,9 @@ namespace Admin_Client.Model.DB
 
             var result = (from g in tblGroups
                           where g.fldGroupID.Equals(input)
-                          join gtu in TblUserToGroups on g.fldGroupID
+                          join gtu in tblUserToGroups on g.fldGroupID
                           equals gtu.fldGroupID
-                          join gtut in TblUsers on gtu.fldUserID equals gtut.fldUserID
+                          join gtut in tblUsers on gtu.fldUserID equals gtut.fldUserID
                           select new {
                               gtu.fldGroupID,
                               gtu.fldUserID
@@ -474,10 +474,10 @@ namespace Admin_Client.Model.DB
              * where tblGroup.fldGroupID = '1';
              */
 
-            var result = from u in TblUsers
+            var result = from u in tblUsers
                           where u.fldUserID == input
-                          join gtu in TblUserToGroups on u.fldUserID equals gtu.fldUserID
-                          join gtut in TblGroups on gtu.fldGroupID equals gtut.fldGroupID
+                          join gtu in tblUserToGroups on u.fldUserID equals gtu.fldUserID
+                          join gtut in tblGroups on gtu.fldGroupID equals gtut.fldGroupID
                           select new
                           {
                               gtu.fldUserID,

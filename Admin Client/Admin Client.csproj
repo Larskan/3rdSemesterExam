@@ -338,6 +338,9 @@
     <Compile Include="View\UserControls\TestingView.xaml.cs">
       <DependentUpon>TestingView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Windows\Popout\PopoutLogTextWindow.xaml.cs">
+      <DependentUpon>PopoutLogTextWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Windows\Popout\PopoutLogToolWindow.xaml.cs">
       <DependentUpon>PopoutLogToolWindow.xaml</DependentUpon>
     </Compile>
