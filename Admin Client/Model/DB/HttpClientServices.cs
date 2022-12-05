@@ -97,10 +97,10 @@ namespace Admin_Client.Model.DB
 
 
             var innerJoinQuery =
-                from g in TblGroups
+                from g in tblGroups
                 where g.fldGroupID.Equals(id)
-                join gtu in TblUserToGroups on g.fldGroupID equals gtu.fldGroupID
-                join gtut in TblUsers on gtu.fldUserID equals gtut.fldUserID
+                join gtu in tblUserToGroups on g.fldGroupID equals gtu.fldGroupID
+                join gtut in tblUsers on gtu.fldUserID equals gtut.fldUserID
                 select new
                 {
                     gtu.fldGroupID,
@@ -138,11 +138,11 @@ namespace Admin_Client.Model.DB
              * where tblUser.fldUserID = '1';
              */
 
-            var result = (from g in TblGroups
+            var result = (from g in tblGroups
                           where g.fldGroupID.Equals(input)
-                          join gtu in TblUserToGroups on g.fldGroupID
+                          join gtu in tblUserToGroups on g.fldGroupID
                           equals gtu.fldGroupID
-                          join gtut in TblUsers on gtu.fldUserID equals gtut.fldUserID
+                          join gtut in tblUsers on gtu.fldUserID equals gtut.fldUserID
                           select new
                           {
                               gtu.fldGroupID,
@@ -175,10 +175,10 @@ namespace Admin_Client.Model.DB
              * where tblGroup.fldGroupID = '1';
              */
 
-            var result = from u in TblUsers
+            var result = from u in tblUsers
                          where u.fldUserID == input
-                         join gtu in TblUserToGroups on u.fldUserID equals gtu.fldUserID
-                         join gtut in TblGroups on gtu.fldGroupID equals gtut.fldGroupID
+                         join gtu in tblUserToGroups on u.fldUserID equals gtu.fldUserID
+                         join gtut in tblGroups on gtu.fldGroupID equals gtut.fldGroupID
                          select new
                          {
                              gtu.fldUserID,
@@ -203,18 +203,18 @@ namespace Admin_Client.Model.DB
         }
         #endregion
         #region Testing - Updating Tables(EDIT)
-        private int UpdateUserID(TblUserToGroup utg)
+        private int UpdateUserID(tblUserToGroup utg)
         {
-            TblUser user = new TblUser();
+            tblUser user = new tblUser();
             //GetAllTblUsers();
-            return utg.FldUserId = user.FldUserId;
+            return utg.fldUserID = user.fldUserID;
             //return Task.CompletedTask;
 
         }
-        private int UpdateGroupID(TblUserToGroup utg)
+        private int UpdateGroupID(tblUserToGroup utg)
         {
-            TblGroup group = new TblGroup();
-            return utg.FldGroupId = group.FldGroupId;
+            tblGroup group = new tblGroup();
+            return utg.fldGroupID = group.fldGroupID;
             //GetAllTblGroups();
             //utg.FldGroupId = GetAllTblGroups().Id;
             //return Task.CompletedTask;
@@ -270,13 +270,13 @@ namespace Admin_Client.Model.DB
             return content;
         }
         [HttpPost]
-        public object AddUser(TblUser user)
+        public object AddUser(tblUser user)
         {
-            string mail = user.FldEmail;
-            string fName = user.FldFirstName;
-            string lName = user.FldLastName;
-            int phone = user.FldPhonenumber;
-            bool admin = user.FldIsAdmin;
+            string mail = user.fldEmail;
+            string fName = user.fldFirstName;
+            string lName = user.fldLastName;
+            int phone = (int)user.fldPhonenumber;
+            bool admin = (bool)user.fldIsAdmin;
 
             //string mail, string firstName, string lastName, int phone, bool admin
             var result = PostHttpNewUser("https://localhost:7002/TblUsers", mail, fName, lName, phone, admin);
@@ -285,10 +285,10 @@ namespace Admin_Client.Model.DB
             return content;
         }
         [HttpPost]
-        public object AddLogin(TblLogin login)
+        public object AddLogin(tblLogin login)
         {
-            int id = login.FldUserId;
-            string pass = login.FldPassword;
+            int id = (int)login.fldUserID;
+            string pass = login.fldPassword;
             //int userID, string pass
             var result = PostHttpNewLogin("https://localhost:7002/TblLogins", id, pass);
             result.Wait();
@@ -296,12 +296,12 @@ namespace Admin_Client.Model.DB
             return content;
         }
         [HttpPost]
-        public object AddReceipt(TblReceipt receipt)
+        public object AddReceipt(tblReceipt receipt)
         {
-            int userID = receipt.FldUserId;
-            int tripID = receipt.FldTripId;
-            double value = receipt.FldProjectedValue;
-            double paid = receipt.FldAmountPaid;
+            int userID = (int)receipt.fldUserID;
+            int tripID = (int)receipt.fldTripID;
+            double value = (double)receipt.fldProjectedValue;
+            double paid = (double)receipt.fldAmountPaid;
             //int userID, int tripID, double value, double paid
             var result = PostHttpNewReceipt("https://localhost:7002/TblReceipts", userID, tripID, value, paid);
             result.Wait();
@@ -309,21 +309,21 @@ namespace Admin_Client.Model.DB
             return content;
         }
         [HttpPost]
-        public object AddTrip(TblTrip trip)
+        public object AddTrip(tblTrip trip)
         {
-            double sum = trip.FldSum;
+            double sum = (double)trip.fldSum;
             var result = PostHttpNewTrip("https://localhost:7002/TblTrips", sum);
             result.Wait();
             var content = result.Result;
             return content;
         }
         [HttpPost]
-        public object AddUserExpense(TblUserExpense userExpense)
+        public object AddUserExpense(tblUserExpense userExpense)
         {
-            int userID = userExpense.FldUserId;
-            double expense = userExpense.FldExpense;
-            string note = userExpense.FldNote;
-            DateTime date = userExpense.FldDate;
+            int userID = (int)userExpense.fldUserID;
+            double expense = (double)userExpense.fldExpense;
+            string note = userExpense.fldNote;
+            DateTime date = (DateTime)userExpense.fldDate;
             //int userID, double expense, string note, DateTime date
             var result = PostHttpNewUserExpense("https://localhost:7002/TblUserExpensess", userID, expense, note, date);
             result.Wait();
@@ -452,10 +452,10 @@ namespace Admin_Client.Model.DB
         public async Task<string> PostHttpNewGroup(string url, string name, bool groupBool)
         {
             var endpoint = _httpClient.BaseAddress = new Uri(url);
-            var newPost = new TblGroup()
+            var newPost = new tblGroup()
             {
-                FldGroupName = name,
-                FldGroupBoolean = groupBool
+                fldGroupName = name,
+                fldGroupBoolean = groupBool
             };
 
             //Convert the new posting to Json
@@ -473,13 +473,13 @@ namespace Admin_Client.Model.DB
         public async Task<string> PostHttpNewUser(string url, string mail, string firstName, string lastName, int phone, bool admin)
         {
             var endpoint = _httpClient.BaseAddress = new Uri(url);
-            var newPost = new TblUser()
+            var newPost = new tblUser()
             {
-                FldEmail = mail,
-                FldFirstName = firstName,
-                FldLastName = lastName,
-                FldPhonenumber = phone,
-                FldIsAdmin = admin
+                fldEmail = mail,
+                fldFirstName = firstName,
+                fldLastName = lastName,
+                fldPhonenumber = phone,
+                fldIsAdmin = admin
             };
             //Convert the new posting to Json
             var newPostJson = JsonConvert.SerializeObject(newPost);
@@ -494,10 +494,10 @@ namespace Admin_Client.Model.DB
         public async Task<string> PostHttpNewLogin(string url, int userID, string pass)
         {
             var endpoint = _httpClient.BaseAddress = new Uri(url);
-            var newPost = new TblLogin()
+            var newPost = new tblLogin()
             {
-                FldUserId = userID,
-                FldPassword = pass
+                fldUserID = userID,
+                fldPassword = pass
             };
             //Convert the new posting to Json
             var newPostJson = JsonConvert.SerializeObject(newPost);
@@ -512,12 +512,12 @@ namespace Admin_Client.Model.DB
         public async Task<string> PostHttpNewReceipt(string url, int userID, int tripID, double value, double paid)
         {
             var endpoint = _httpClient.BaseAddress = new Uri(url);
-            var newPost = new TblReceipt()
+            var newPost = new tblReceipt()
             {
-                FldUserId = userID,
-                FldTripId = tripID,
-                FldProjectedValue = value,
-                FldAmountPaid = paid
+                fldUserID = userID,
+                fldTripID = tripID,
+                fldProjectedValue = value,
+                fldAmountPaid = paid
             };
             //Convert the new posting to Json
             var newPostJson = JsonConvert.SerializeObject(newPost);
@@ -533,9 +533,9 @@ namespace Admin_Client.Model.DB
         public async Task<string> PostHttpNewTrip(string url, double sum)
         {
             var endpoint = _httpClient.BaseAddress = new Uri(url);
-            var newPost = new TblTrip()
+            var newPost = new tblTrip()
             {
-                FldSum = sum
+                fldSum = sum
             };
             //Convert the new posting to Json
             var newPostJson = JsonConvert.SerializeObject(newPost);
@@ -550,12 +550,12 @@ namespace Admin_Client.Model.DB
         public async Task<string> PostHttpNewUserExpense(string url, int userID, double expense, string note, DateTime date)
         {
             var endpoint = _httpClient.BaseAddress = new Uri(url);
-            var newPost = new TblUserExpense()
+            var newPost = new tblUserExpense()
             {
-                FldUserId = userID,
-                FldExpense = expense,
-                FldNote = note,
-                FldDate = date
+                fldUserID = userID,
+                fldExpense = expense,
+                fldNote = note,
+                fldDate = date
             };
             //Convert the new posting to Json
             var newPostJson = JsonConvert.SerializeObject(newPost);
