@@ -1,5 +1,3 @@
-
-
 function LoadRecentGroups() {
 
     const node = document.getElementById("ContainerRecentGroups");
