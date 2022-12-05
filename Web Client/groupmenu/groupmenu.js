@@ -8,6 +8,7 @@ function LoadRecentGroups() {
     {
         let btn = document.createElement("button"); 
         //idk if we can make the functionality for buttons in here properly, pls figure out
+            //funcitonality we need is have it open the group page and load the selected group
         btn.id = "GroupIcon";
         btn.className = "btn btn=default";
 
@@ -26,7 +27,7 @@ function LoadAllGroups() {
 
     for (i = 1; i < 22; i++)
     {
-        let btn = document.createElement("button");
+        let btn = document.createElement("button"); // same as the method above
         btn.id = "GroupIcon";
         btn.className = "btn btn=default";
     
