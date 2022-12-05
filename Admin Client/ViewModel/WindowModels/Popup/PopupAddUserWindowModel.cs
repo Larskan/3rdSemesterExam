@@ -20,7 +20,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
     {
         private Window currentWindow;
 
-
+        #region Properties
         private ObservableCollection<TblUser> users = new ObservableCollection<TblUser>();
         public ObservableCollection<TblUser> Users
         {
@@ -28,26 +28,27 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
             set { users = value; }
         }
         public string Searchbar { get; set; }
-        
+        List<TblUser> templist = FAKEDATABASE.GetUsers();
+        List<TblUser> userList = FAKEDATABASE.GetUsers();
+        #endregion
 
+        #region Constructor
         public PopupAddUserWindowModel(Window currentWindow, object o)
         {
             this.currentWindow = currentWindow;
         }
-        List<TblUser> userList = FAKEDATABASE.GetUsers();
+        #endregion
+
+        #region Public Methods
         public void Add(ListBox listBox)
         {
-            Console.WriteLine("ayy");
+
         }
         public void Search()
         {
-            
-            Console.WriteLine(Searchbar);
-            userList = new List<TblUser>(userList.Where(x => x.FldFirstName.IndexOf(Searchbar, StringComparison.InvariantCultureIgnoreCase) >= 0));
-            //Users = new ObservableCollection<TblUser>(userList.Where(x => x.FldFirstName.IndexOf(Searchbar, StringComparison.InvariantCultureIgnoreCase) >= 0));
-            Update();
-            Console.WriteLine(userList.Count);
-            
+            //created a temp list to use for searching and not ruining the original list it is based on
+            //also need to find a way to search by anything in the list, and not specify by say fldfirstname
+            templist = new List<TblUser>(userList.Where(x => x.FldFirstName.IndexOf(Searchbar, StringComparison.InvariantCultureIgnoreCase) >= 0));
         }
 
         public void Cancel()
@@ -61,6 +62,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
         CancellationTokenSource tokenSource;
         public void Update()
         {
+            Users.Clear();
             LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Update Click"));
             if (tokenSource != null && tokenSource.Token.CanBeCanceled)
             {
@@ -70,6 +72,9 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 
             ThreadPool.QueueUserWorkItem(UpdateUsersListThread, new object[] { tokenSource.Token });
         }
+        #endregion
+
+        #region Private Methods
         private void UpdateUsersListThread(object o)
         {
             object[] array = o as object[];
@@ -81,9 +86,8 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
                 
 
                 bool found;
-                foreach (var userItem in userList)
+                foreach (var userItem in templist)
                 {
-                    Console.WriteLine(userList.Count);
                     found = false;
                     foreach (var UserItem in Users)
                     {
@@ -101,6 +105,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
                 break;
             }
         }
+        #endregion
     }
 
 }

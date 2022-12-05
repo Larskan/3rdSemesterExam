@@ -2,6 +2,7 @@
 using Admin_Client.Model.Domain;
 using Admin_Client.PropertyChanged;
 using Admin_Client.Singleton;
+using Admin_Client.View.UserControls;
 using Admin_Client.View.Windows.Popups;
 using System;
 using System.Collections.Generic;
@@ -80,6 +81,12 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 							TargetText = group.FldGroupId + " - " + group.FldGroupName;
 							break;
 						}
+                    case "TblTrip":
+                        {
+                            TblTrip trip = (TblTrip)target;
+                            TargetText ="Trip: " + trip.FldTripID;
+                            break;
+                        }
                     default: TargetText = ActionText; ActionText = ""; break;
 				}
 			}
@@ -128,9 +135,9 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 					{
 						TblGroup group = (TblGroup)target;
 
-						/*Do Stuff*/
-
-						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + group.FldGroupId + " - " + group.FldGroupName));
+                        /*Do Stuff*/
+                        MainWindowModelSingleton.Instance.SetMainContent(new GroupView(), true);
+                        LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + group.FldGroupId + " - " + group.FldGroupName));
 						break;
 					}
                 default: throw new Exception("Has not been implemented: " + target.GetType().Name + "." + action.GetMethodInfo().Name + "()");
@@ -159,7 +166,16 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "New: ID " + group.FldGroupId + " - " + group.FldGroupName));
 						break;
 					}
-				default: throw new Exception("Has not been implemented: " + target.GetType().Name + "." + action.GetMethodInfo().Name + "()");
+                case "TblTrip":
+                    {
+                        TblTrip trip = (TblTrip)target;
+
+                        MainWindowModelSingleton.Instance.StartPopupParameterChange(trip);
+
+                       // LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "New: ID " + group.FldGroupId + " - " + group.FldGroupName));
+                        break;
+                    }
+                default: throw new Exception("Has not been implemented: " + target.GetType().Name + "." + action.GetMethodInfo().Name + "()");
 			}
 		}
 
@@ -200,7 +216,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 
                         /*Do Stuff*/
 
-                        LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + trip.FldTripId + " - " + trip.TblGroupToMoneys.ToArray()[0].FldGroup.FldGroupName));
+                        LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + trip.FldTripID + " - " + trip.TblGroupToMoneys.ToArray()[0].FldGroup.FldGroupName));
                         break;
                     }
                 default: throw new Exception("Has not been implemented: " + target.GetType().Name + "." + action.GetMethodInfo().Name + "()");

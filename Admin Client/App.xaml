@@ -289,7 +289,19 @@
                 </StackPanel>
             </Border>
         </DataTemplate>
-        
+
+        <!--DataTemplate tripList-->
+        <DataTemplate x:Key="tripListTemplate">
+            <Border Name="border" BorderThickness="0,0,0,0" BorderBrush="Gray" Resources="{StaticResource roundborder10}">
+                <StackPanel Orientation="Vertical">
+                    <WrapPanel>
+                        <TextBlock Text="Trip: " Grid.Column="3"  VerticalAlignment="Center" FontWeight="Bold"/>
+                        <TextBlock x:Name="tripID" Text="{Binding FldTripID}" Grid.Column="2" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></TextBlock>
+                    </WrapPanel>
+                </StackPanel>
+            </Border>
+        </DataTemplate>
+
         <!--DataTemplate Group-->
         <DataTemplate x:Key="groupDataTemplate">
             <Border Name="border" BorderThickness="0,0,0,0" BorderBrush="Gray" Resources="{StaticResource roundborder10}">

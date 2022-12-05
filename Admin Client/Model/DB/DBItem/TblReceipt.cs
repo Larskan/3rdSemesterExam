@@ -21,6 +21,8 @@ namespace Admin_Client.Model.DB
 
         [JsonIgnore]
         public virtual TblUser FldUser { get; set; }
+
+
     }
 }
 

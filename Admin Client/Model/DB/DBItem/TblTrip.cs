@@ -6,7 +6,9 @@ namespace Admin_Client.Model.DB
 {
     public partial class TblTrip
     {
-        public int FldTripId { get; set; }
+        public int FldTripID { get; set; }
+        public int FldGroupID { get; set; }
+        public int FldGroupToTripID { get; set; }
 
         public double FldSum { get; set; }
 

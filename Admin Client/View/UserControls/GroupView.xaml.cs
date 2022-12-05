@@ -48,7 +48,7 @@ namespace Admin_Client.View.UserControls
 
         private void Create_Trip(object sender, RoutedEventArgs e)
         {
-
+            viewModel.Create();
         }
 
         private void Remove_Member(object sender, RoutedEventArgs e)
@@ -64,7 +64,8 @@ namespace Admin_Client.View.UserControls
         private void OnPageLoaded(object sender, RoutedEventArgs e)
         {
 
-            viewModel.Update();
+            viewModel.Update("User");
+            viewModel.Update("Trip");
         }
     }
 }

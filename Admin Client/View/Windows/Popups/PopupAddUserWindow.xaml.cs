@@ -42,8 +42,7 @@ namespace Admin_Client.View.Windows.Popups
             {
                 this.Width = owner.Width / 1.5;
             }
-            CollectionView groupView = (CollectionView)CollectionViewSource.GetDefaultView(ListBox_Parameters.ItemsSource);
-            groupView.Filter = FilterList;
+
             
         }
 
@@ -59,25 +58,16 @@ namespace Admin_Client.View.Windows.Popups
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            
-            //CollectionViewSource.GetDefaultView(ListBox_Parameters.ItemsSource).Refresh();
-
+            windowModel.Search();
+           
             
         }
 
         private void ListBox_Parameters_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-           // CollectionViewSource.GetDefaultView(ListBox_Parameters.ItemsSource).Refresh();
+          
         }
-        private bool FilterList(object item)
-        {
-            if (String.IsNullOrEmpty(Searchbar.Text))
-                return true;
-            else
-                Console.WriteLine((item.ToString().IndexOf(Searchbar.Text) >= 0));
-                return (item.ToString().IndexOf(Searchbar.Text, StringComparison.OrdinalIgnoreCase) >= 0);
-            
-        }
+ 
         private void OnPageLoaded(object sender, RoutedEventArgs e)
         {
 
@@ -86,7 +76,8 @@ namespace Admin_Client.View.Windows.Popups
 
         private void Update_Click(object sender, RoutedEventArgs e)
         {
-            windowModel.Search();
+            
+            windowModel.Update();
         }
     }
 }

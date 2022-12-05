@@ -205,7 +205,19 @@ namespace Admin_Client.Model
             }
         }
 
-        #endregion
+		#endregion
+		#region Trips
+		public static List<TblTrip> tblTrips = new List<TblTrip>
+        {
+            new TblTrip{FldGroupToTripID = 1, FldGroupID = 1, FldTripID = 1},
+            new TblTrip{FldGroupToTripID = 2, FldGroupID = 1, FldTripID = 2},
+            new TblTrip{FldGroupToTripID = 3, FldGroupID = 2, FldTripID = 3}
+        };
+        public static List<TblTrip> GetTrips()
+        {
+            return tblTrips;
+        }
 
+        #endregion
     }
 }

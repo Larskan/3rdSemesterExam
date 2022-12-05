@@ -58,7 +58,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		public void Create()
 		{
-			MainWindowModelSingleton.Instance.StartPopupConfirm(new TblUser(), PopupMethod.Create);
+			MainWindowModelSingleton.Instance.StartPopupConfirm(new TblGroup(), PopupMethod.Create);
 		}
 
 		public void Edit(TblGroup group)
