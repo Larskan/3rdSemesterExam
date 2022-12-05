@@ -281,6 +281,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\Controller\AbstractGlobalInformationBuilder.cs" />
+    <Compile Include="Model\Controller\GlobalInformationBuilder.cs" />
     <Compile Include="Model\DB\DBItem\TblGroup.cs" />
     <Compile Include="Model\DB\DBItem\TblGroupToMoney.cs" />
     <Compile Include="Model\DB\DBItem\TblLogin.cs" />
@@ -302,6 +304,7 @@
     <Compile Include="Model\DB\EF Test\tblUserToGroup.cs" />
     <Compile Include="Model\DB\HttpClientServices.cs" />
     <Compile Include="Model\DB\Response.cs" />
+    <Compile Include="Model\Domain\GlobalInformation.cs" />
     <Compile Include="Model\Domain\Log.cs" />
     <Compile Include="Model\Domain\LogFile.cs" />
     <Compile Include="Model\Domain\Parameter.cs" />
@@ -312,6 +315,7 @@
     <Compile Include="Model\Foundation\Encryption.cs" />
     <Compile Include="Model\Foundation\Enums.cs" />
     <Compile Include="PropertyChanged\NotifyPropertyChangedHandler.cs" />
+    <Compile Include="Singleton\GlobalInformationBuilderSingleton.cs" />
     <Compile Include="Singleton\OverviewSingleton.cs" />
     <Compile Include="Singleton\UserviewSingleton.cs" />
     <Compile Include="Singleton\HttpClientServicesSingleton.cs" />
@@ -484,8 +488,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Controller\temp1.cs" />
-    <Compile Include="Model\Business\temp2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
