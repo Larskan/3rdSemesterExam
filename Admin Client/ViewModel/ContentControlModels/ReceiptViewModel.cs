@@ -1,5 +1,6 @@
 ﻿using Admin_Client.Model;
 using Admin_Client.Model.DB;
+using Admin_Client.Model.DB.EF_Test;
 using Admin_Client.Model.Domain;
 using Admin_Client.PropertyChanged;
 using Admin_Client.Singleton;
@@ -21,7 +22,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		#region Variables
 
-        private int startupDelay = 500;
+		private int startupDelay = 500;
 
 		#endregion
 
@@ -30,15 +31,15 @@ namespace Admin_Client.ViewModel.ContentControlModels
 		private string username;
 
 		public string Username
-        {
+		{
 			get { return username; }
 			set { username = value; NotifyPropertyChanged(); }
 		}
 
-		private ObservableCollection<TblReceipt> receipts = new ObservableCollection<TblReceipt>();
+		private ObservableCollection<tblReceipt> receipts = new ObservableCollection<tblReceipt>();
 
-		public ObservableCollection<TblReceipt> Receipts
-        {
+		public ObservableCollection<tblReceipt> Receipts
+		{
 			get { return receipts; }
 			set { receipts = value; }
 		}
@@ -48,52 +49,52 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		#region Constructor
 
-		public ReceiptViewModel(TblUser user)
+		public ReceiptViewModel(tblUser user)
 		{
-            LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Information, "Get Receipt for User: " + user.FldUserId + " " + user.FldFirstName + " " + user.FldFirstName));
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Information, "Get Receipt for User: " + user.fldUserID + " " + user.fldFirstName + " " + user.fldFirstName));
 
-            ThreadPool.QueueUserWorkItem(UpdateReceiptListThread, new object[] { user });
-        }
+			ThreadPool.QueueUserWorkItem(UpdateReceiptListThread, new object[] { user });
+		}
 
-        #endregion
+		#endregion
 
-        #region Public Methods
+		#region Public Methods
 
-        private void UpdateReceiptListThread(object o)
-        {
-            Thread.Sleep(startupDelay);
+		private void UpdateReceiptListThread(object o)
+		{
+			Thread.Sleep(startupDelay);
 
-            LogHandlerSingleton.Instance.WriteToLogFile(new Log("ThreadID: " + Thread.CurrentThread.ManagedThreadId + " --> Starting"));
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log("ThreadID: " + Thread.CurrentThread.ManagedThreadId + " --> Starting"));
 
-            object[] array = o as object[];
-            TblUser user = (TblUser)array[0];
+			object[] array = o as object[];
+			tblUser user = (tblUser)array[0];
 
-            // CHANGE THE FAKEDATEBASE.GETGROUPS() - TODO
-            List<TblReceipt> receipts = FAKEDATABASE.GetReceipts(user);
+			// CHANGE THE FAKEDATEBASE.GETGROUPS() - TODO
+			List<tblReceipt> receipts = FAKEDATABASE.GetReceipts(user);
 
-            bool found;
-            foreach (var receiptItem in receipts)
-            {
-                found = false;
-                foreach (var ReceiptItem in Receipts)
-                {
-                    if (receiptItem.FldReceiptId == ReceiptItem.FldReceiptId)
-                    {
-                        found = true;
-                        break;
-                    }
-                }
-                if (!found)
-                {
-                    App.Current.Dispatcher.BeginInvoke(new Action(() => { Receipts.Add(receiptItem); }));
-                }
-            }
-            LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "ThreadID: " + Thread.CurrentThread.ManagedThreadId + " ==> Done"));
+			bool found;
+			foreach (var receiptItem in receipts)
+			{
+				found = false;
+				foreach (var ReceiptItem in Receipts)
+				{
+					if (receiptItem.fldReceiptID == ReceiptItem.fldReceiptID)
+					{
+						found = true;
+						break;
+					}
+				}
+				if (!found)
+				{
+					App.Current.Dispatcher.BeginInvoke(new Action(() => { Receipts.Add(receiptItem); }));
+				}
+			}
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "ThreadID: " + Thread.CurrentThread.ManagedThreadId + " ==> Done"));
 
-            LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "ThreadID: " + Thread.CurrentThread.ManagedThreadId + " ==> Closed"));
-        }
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "ThreadID: " + Thread.CurrentThread.ManagedThreadId + " ==> Closed"));
+		}
 
-        public void Delete(TblReceipt receipt)
+		public void Delete(tblReceipt receipt)
 		{
 			MainWindowModelSingleton.Instance.StartPopupConfirm(receipt, PopupMethod.Delete);
 		}

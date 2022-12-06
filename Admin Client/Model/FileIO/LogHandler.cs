@@ -23,6 +23,7 @@ namespace Admin_Client.Model.FileIO
 		private static string PATH = ROOTPATH + @"Data";
 
 		private string LogFilePath = "";
+		private object currentFileKey = new object();
 
 		#endregion
 
@@ -102,7 +103,7 @@ namespace Admin_Client.Model.FileIO
 			{
 				switch (item.LogType)
 				{
-					case LogType.Success: spacingItem = "\t\t\t\t\t\t\t\t"; break;
+					case LogType.Success: spacingItem = "\t\t\t\t\t\t\t"; break;
 					case LogType.Information: spacingItem = "\t\t\t\t\t\t\t"; break;
 					case LogType.UserAction: spacingItem = "\t"; break;
 					case LogType.Warning: spacingItem = "\t\t\t\t\t\t\t\t"; break;
@@ -113,13 +114,18 @@ namespace Admin_Client.Model.FileIO
 			string spacing = "";
 			switch (log.LogType)
 			{
-				case LogType.Success: spacing = "\t\t\t\t\t\t\t\t"; break;
+				case LogType.Success: spacing = "\t\t\t\t\t\t\t"; break;
 				case LogType.Information: spacing = "\t\t\t\t\t\t\t"; break;
 				case LogType.UserAction: spacing = "\t"; break;
 				case LogType.Warning: spacing = "\t\t\t\t\t\t\t\t"; break;
 				case LogType.FatalError: spacing = "\t\t\t\t\t\t\t"; break;
 			}
-			File.WriteAllText(PATH + LogFilePath, fileContent + "[" + log.DateTime + "] {" + log.LogType + "}" + spacing + " " + log.LogTxt + "\n");
+
+			// If the writing is used by another process, then it waits
+			lock (currentFileKey)
+			{
+				File.WriteAllText(PATH + LogFilePath, fileContent + "[" + log.DateTime + "] {" + log.LogType + "}" + spacing + " " + log.LogTxt + "\n");
+			}
 
 			return true;
 		}
@@ -130,15 +136,9 @@ namespace Admin_Client.Model.FileIO
 		/// <returns>The logfile's logs as a List</returns>
 		public List<Log> ReadLogFile()
 		{
-			while (true)
+			lock (currentFileKey)
 			{
-				if (IsFileReady(PATH + LogFilePath))
-				{
-					return StringsToLogs(File.ReadAllText(PATH + LogFilePath).Split('\n'));
-				} else
-				{
-					Thread.Sleep(500);
-				}
+				return StringsToLogs(File.ReadAllText(PATH + LogFilePath).Split('\n'));
 			}
 		}
 
@@ -147,12 +147,15 @@ namespace Admin_Client.Model.FileIO
 		/// </summary>
 		/// <param name="dateTime">The date of the targeted logfile</param>
 		/// <returns>The logfile's logs as a List</returns>
-		public List<Log> ReadLogFile(DateTime dateTime)
+		public List<Log> ReadLogFile(DateTime dateTime, bool writeLog)
 		{
 			try
 			{
 				List<Log> content = StringsToLogs(File.ReadAllText(PATH + ToPath(ToFileName(dateTime), "txt")).Split('\n'));
-				WriteToLogFile(new Log(LogType.Success, "Read targetet file " + ToPath(ToFileName(dateTime), "txt")));
+				if (writeLog)
+				{
+					WriteToLogFile(new Log(LogType.Success, "Read targetet file " + ToPath(ToFileName(dateTime), "txt")));
+				}
 				return content;
 			}
 			catch
@@ -177,7 +180,7 @@ namespace Admin_Client.Model.FileIO
 
 			foreach (var item in Directory.GetFiles(PATH))
 			{
-				DateTime fileDateTime = ToDateTime(ToFileName(item));
+				DateTime fileDateTime = ToDateTime(ToFilePathWithName(item));
 
 				files.Add(fileDateTime);
 			}
@@ -202,9 +205,9 @@ namespace Admin_Client.Model.FileIO
 			if (logFiles.Length >= amountOfLogFilesStored)
 			{
 				string deleteTarget = logFiles[0];
-				foreach (var item in logFiles) 
+				foreach (var item in logFiles)
 				{
-					if (DateTime.Compare(ToDateTime(ToFileName(deleteTarget)),ToDateTime(ToFileName(item))) > 0)
+					if (DateTime.Compare(ToDateTime(ToFilePathWithName(deleteTarget)), ToDateTime(ToFilePathWithName(item))) > 0)
 					{
 						deleteTarget = item;
 					}
@@ -235,7 +238,7 @@ namespace Admin_Client.Model.FileIO
 		/// </summary>
 		/// <param name="path">The path to the file</param>
 		/// <returns>The formatted string</returns>
-		private string ToFileName(string path)
+		private string ToFilePathWithName(string path)
 		{
 			return path.Split('\\').Last();
 		}
@@ -247,7 +250,7 @@ namespace Admin_Client.Model.FileIO
 		/// <returns>The formattet string</returns>
 		private string ToFileName(DateTime dateTime)
 		{
-			return dateTime.ToString().Replace(':', '_').Replace('/','-');
+			return dateTime.ToString().Replace(':', '_').Replace('/', '-');
 		}
 
 		/// <summary>
@@ -291,23 +294,6 @@ namespace Admin_Client.Model.FileIO
 				}
 			}
 			return logs;
-		}
-
-		#endregion
-
-		#region IsFileLocked
-
-		private bool IsFileReady(string fileName)
-		{
-			try
-			{
-				File.ReadAllText(fileName);
-				return true;
-			}
-			catch (IOException) 
-			{ 
-				return false;
-			}
 		}
 
 		#endregion

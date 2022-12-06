@@ -15,9 +15,9 @@
         <SolidColorBrush x:Key="Item.SelectedActive.Border" Color="DarkSalmon"/>
 
         <!--#endregion-->
-        
+
         <!--#region PasswordBox-->
-        
+
         <!--PasswordBox Rounded Corners-->
         <Style TargetType="PasswordBox" x:Key="roundcornerpassword">
             <Setter Property="PasswordChar" Value="●"/>
@@ -43,13 +43,13 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
+
         <!--#endregion-->
 
         <!--#region TextBox-->
 
         <!--#endregion-->
-        
+
         <!--#region Buttons-->
 
         <!--Button 5% round-->
@@ -163,7 +163,7 @@
         <!--#endregion-->
 
         <!--#region ButtonToIcons-->
-        
+
         <!--Round Icon-->
         <ResourceDictionary x:Key="roundcornericon100">
             <Style TargetType="Border">
@@ -174,11 +174,11 @@
                 <Setter Property="Focusable" Value="False"/>
             </Style>
         </ResourceDictionary>
-        
+
         <!--#endregion-->
 
         <!--#region Borders-->
-        
+
         <!--Border 5% round-->
         <ResourceDictionary x:Key="roundborder5">
             <Style TargetType="Border">
@@ -215,9 +215,9 @@
         </ResourceDictionary>
 
         <!--#endregion-->
-        
+
         <!--#region ListBox-->
-        
+
         <!--ListBox rounded with empty check-->
         <Style TargetType="ListBox" x:Key="roundlistboxwithempty" BasedOn="{StaticResource {x:Type ListBox}}">
             <Style.Triggers>
@@ -237,7 +237,7 @@
         </Style>
 
         <!--#endregion-->
-        
+
         <!--#region DataTemplates-->
 
         <!--DataTemplate User-->
@@ -252,53 +252,13 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="0.25*"/>
                     </Grid.ColumnDefinitions>
-                    <Label x:Name="id" Content="{Binding FldUserId}" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
-                    <Label x:Name="email" Content="{Binding FldEmail}" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
-                    <Label x:Name="firstname" Content="{Binding FldFirstName}" Grid.Column="2" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
-                    <Label x:Name="lastname" Content="{Binding FldLastName}" Grid.Column="3" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
-                    <Label x:Name="phonenum" Content="{Binding FldPhonenumber}" Grid.Column="4" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
-                    <Label x:Name="isadmin" Content="{Binding FldIsAdmin}" Grid.Column="5" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="id" Content="{Binding fldUserID}" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="email" Content="{Binding fldEmail}" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="firstname" Content="{Binding fldFirstName}" Grid.Column="2" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="lastname" Content="{Binding fldLastName}" Grid.Column="3" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="phonenum" Content="{Binding fldPhonenumber}" Grid.Column="4" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="isadmin" Content="{Binding fldIsAdmin}" Grid.Column="5" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
                 </Grid>
-            </Border>
-        </DataTemplate>
-
-        <!--DataTemplate userView-->
-        <DataTemplate x:Key="userViewTemplate">
-            <Border Name="border" BorderThickness="0,0,0,0" BorderBrush="Gray" Resources="{StaticResource roundborder10}">
-                <StackPanel Orientation="Vertical">
-                    <WrapPanel>
-                        <TextBlock Text="First name: " Grid.Column="3"  VerticalAlignment="Center" FontWeight="Bold"/>
-                        <TextBlock x:Name="firstname" Text="{Binding FldFirstName}" Grid.Column="2" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></TextBlock>
-                    </WrapPanel>
-                    <WrapPanel>
-                        <TextBlock Text="Last name: " Grid.Column="3"  VerticalAlignment="Center" FontWeight="Bold"/>
-                        <TextBlock x:Name="lastname" Text="{Binding FldLastName}" Grid.Column="3" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></TextBlock>
-                    </WrapPanel>
-                    <WrapPanel>
-                        <TextBlock Text="ID: " Grid.Column="3"  VerticalAlignment="Center" FontWeight="Bold"/>
-                        <TextBlock x:Name="id" Text="{Binding FldUserId}" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" ></TextBlock>
-                    </WrapPanel>
-                    <WrapPanel>
-                        <TextBlock Text="Email: " Grid.Column="3"  VerticalAlignment="Center" FontWeight="Bold"/>
-                        <TextBlock x:Name="email" Text="{Binding FldEmail}" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" ></TextBlock>
-                    </WrapPanel>
-                    <WrapPanel>
-                        <TextBlock Text="Phone Number: " Grid.Column="3" VerticalAlignment="Center" FontWeight="Bold"/>
-                        <TextBlock x:Name="phonenum" Text="{Binding FldPhonenumber}" Grid.Column="4" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></TextBlock>
-                    </WrapPanel>
-                </StackPanel>
-            </Border>
-        </DataTemplate>
-
-        <!--DataTemplate tripList-->
-        <DataTemplate x:Key="tripListTemplate">
-            <Border Name="border" BorderThickness="0,0,0,0" BorderBrush="Gray" Resources="{StaticResource roundborder10}">
-                <StackPanel Orientation="Vertical">
-                    <WrapPanel>
-                        <TextBlock Text="Trip: " Grid.Column="3"  VerticalAlignment="Center" FontWeight="Bold"/>
-                        <TextBlock x:Name="tripID" Text="{Binding FldTripID}" Grid.Column="2" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></TextBlock>
-                    </WrapPanel>
-                </StackPanel>
             </Border>
         </DataTemplate>
 
@@ -311,9 +271,9 @@
                         <ColumnDefinition Width="3*"/>
                         <ColumnDefinition Width="0.25*"/>
                     </Grid.ColumnDefinitions>
-                    <Label x:Name="id" Content="{Binding FldGroupId}" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
-                    <Label x:Name="name" Content="{Binding FldGroupName}" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
-                    <Label x:Name="boolean" Content="{Binding FldGroupBoolean}" Grid.Column="2" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="id" Content="{Binding fldGroupID}" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="name" Content="{Binding fldGroupName}" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="boolean" Content="{Binding fldGroupBoolean}" Grid.Column="2" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
                 </Grid>
             </Border>
         </DataTemplate>
@@ -382,7 +342,7 @@
                 </DataTrigger>
             </DataTemplate.Triggers>
         </DataTemplate>
-        
+
         <!--DataTemplate Parameter-->
         <DataTemplate x:Key="parameterDataTemplate">
             <Border Name="border" BorderThickness="0,3,0,0" BorderBrush="Gray" Resources="{StaticResource roundborder10}">
@@ -458,9 +418,9 @@
         </DataTemplate>
 
         <!--#endregion-->
-        
+
         <!--#region ContextMenu-->
-        
+
         <!--ContextMenu rounded-->
         <Style TargetType="ContextMenu" x:Key="roundcontextmenu">
             <Setter Property="Template">

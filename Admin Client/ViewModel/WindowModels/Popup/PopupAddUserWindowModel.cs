@@ -1,5 +1,6 @@
 ﻿using Admin_Client.Model;
 using Admin_Client.Model.DB;
+using Admin_Client.Model.DB.EF_Test;
 using Admin_Client.Model.Domain;
 using Admin_Client.PropertyChanged;
 using Admin_Client.Singleton;
@@ -21,15 +22,15 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
         private Window currentWindow;
 
         #region Properties
-        private ObservableCollection<TblUser> users = new ObservableCollection<TblUser>();
-        public ObservableCollection<TblUser> Users
+        private ObservableCollection<tblUser> users = new ObservableCollection<tblUser>();
+        public ObservableCollection<tblUser> Users
         {
             get { return users; }
             set { users = value; }
         }
         public string Searchbar { get; set; }
-        List<TblUser> templist = FAKEDATABASE.GetUsers();
-        List<TblUser> userList = FAKEDATABASE.GetUsers();
+        List<tblUser> templist = FAKEDATABASE.GetUsers();
+        List<tblUser> userList = FAKEDATABASE.GetUsers();
         #endregion
 
         #region Constructor
@@ -48,7 +49,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
         {
             //created a temp list to use for searching and not ruining the original list it is based on
             //also need to find a way to search by anything in the list, and not specify by say fldfirstname
-            templist = new List<TblUser>(userList.Where(x => x.FldFirstName.IndexOf(Searchbar, StringComparison.InvariantCultureIgnoreCase) >= 0));
+            templist = new List<tblUser>(userList.Where(x => x.fldFirstName.IndexOf(Searchbar, StringComparison.InvariantCultureIgnoreCase) >= 0));
         }
 
         public void Cancel()
@@ -91,7 +92,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
                     found = false;
                     foreach (var UserItem in Users)
                     {
-                        if (userItem.FldUserId == UserItem.FldUserId)
+                        if (userItem.fldUserID == UserItem.fldUserID)
                         {
                             found = true;
                             break;

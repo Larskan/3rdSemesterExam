@@ -1,5 +1,6 @@
 ﻿using Admin_Client.Model;
 using Admin_Client.Model.DB;
+using Admin_Client.Model.DB.EF_Test;
 using Admin_Client.Model.Domain;
 using Admin_Client.PropertyChanged;
 using Admin_Client.Singleton;
@@ -34,9 +35,9 @@ namespace Admin_Client.ViewModel.ContentControlModels
 			set { username = value; NotifyPropertyChanged(); }
 		}
 
-		private ObservableCollection<TblTrip> logs = new ObservableCollection<TblTrip>();
+		private ObservableCollection<tblTrip> logs = new ObservableCollection<tblTrip>();
 
-		public ObservableCollection<TblTrip> Logs
+		public ObservableCollection<tblTrip> Logs
 		{
 			get { return logs; }
 			set { logs = value; }
@@ -46,9 +47,9 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		#region Constructor
 
-		public LogListViewModel(TblUser user)
+		public LogListViewModel(tblUser user)
 		{
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Information, "Get Logs for User: " + user.FldUserId + " " + user.FldFirstName + " " + user.FldFirstName));
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Information, "Get Logs for User: " + user.fldUserID + " " + user.fldFirstName + " " + user.fldFirstName));
 
 			ThreadPool.QueueUserWorkItem(UpdateReceiptListThread, new object[] { user });
 		}
@@ -64,11 +65,11 @@ namespace Admin_Client.ViewModel.ContentControlModels
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log("ThreadID: " + Thread.CurrentThread.ManagedThreadId + " --> Starting"));
 
 			object[] array = o as object[];
-			TblUser user = (TblUser)array[0];
+			tblUser user = (tblUser)array[0];
 
 			/*
 			// CHANGE THE FAKEDATEBASE.GETGROUPS() - TODO
-			List<TblReceipts> receipts = FAKEDATABASE.GetReceipts(user);
+			List<tblReceipts> receipts = FAKEDATABASE.GetReceipts(user);
 
 			bool found;
 			foreach (var receiptItem in receipts)
@@ -76,7 +77,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
 				found = false;
 				foreach (var ReceiptItem in Receipts)
 				{
-					if (receiptItem.FldReceiptId == ReceiptItem.FldReceiptId)
+					if (receiptItem.fldReceiptId == ReceiptItem.fldReceiptId)
 					{
 						found = true;
 						break;
@@ -93,7 +94,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "ThreadID: " + Thread.CurrentThread.ManagedThreadId + " ==> Closed"));
 		}
 
-		public void Delete(TblTrip trip)
+		public void Delete(tblTrip trip)
 		{
 			MainWindowModelSingleton.Instance.StartPopupConfirm(trip, PopupMethod.Delete);
 		}

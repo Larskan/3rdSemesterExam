@@ -1,5 +1,6 @@
 ﻿using Admin_Client.Model;
 using Admin_Client.Model.DB;
+using Admin_Client.Model.DB.EF_Test;
 using Admin_Client.Model.Domain;
 using Admin_Client.PropertyChanged;
 using Admin_Client.Singleton;
@@ -22,8 +23,8 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		#region Properties
 
-		private ObservableCollection<TblGroup> groups = new ObservableCollection<TblGroup>();
-		public ObservableCollection<TblGroup> Groups
+		private ObservableCollection<tblGroup> groups = new ObservableCollection<tblGroup>();
+		public ObservableCollection<tblGroup> Groups
 		{
 			get { return groups; }
 			set { groups = value; }
@@ -36,7 +37,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		public GroupListViewModel()
 		{
-			
+
 		}
 
 		#endregion
@@ -51,22 +52,22 @@ namespace Admin_Client.ViewModel.ContentControlModels
 			{
 				tokenSource.Cancel();
 			}
-			tokenSource= new CancellationTokenSource();
+			tokenSource = new CancellationTokenSource();
 
 			ThreadPool.QueueUserWorkItem(UpdateGroupsListThread, new object[] { tokenSource.Token });
 		}
 
 		public void Create()
 		{
-			MainWindowModelSingleton.Instance.StartPopupConfirm(new TblGroup(), PopupMethod.Create);
+			MainWindowModelSingleton.Instance.StartPopupConfirm(new tblGroup(), PopupMethod.Create);
 		}
 
-		public void Edit(TblGroup group)
+		public void Edit(tblGroup group)
 		{
 			MainWindowModelSingleton.Instance.StartPopupConfirm(group, PopupMethod.Edit);
 		}
 
-		public void Delete(TblGroup group)
+		public void Delete(tblGroup group)
 		{
 			MainWindowModelSingleton.Instance.StartPopupConfirm(group, PopupMethod.Delete);
 		}
@@ -85,17 +86,17 @@ namespace Admin_Client.ViewModel.ContentControlModels
 			while (!token.IsCancellationRequested)
 			{
 				// CHANGE THE FAKEDATEBASE.GETGROUPS() - TODO
-				List<TblGroup> groups = FAKEDATABASE.GetGroups();
+				List<tblGroup> groups = FAKEDATABASE.GetGroups();
 
 				bool found;
 				foreach (var groupItem in groups)
 				{
-					found= false;
+					found = false;
 					foreach (var GroupItem in Groups)
 					{
-						if (groupItem.FldGroupId == GroupItem.FldGroupId)
+						if (groupItem.fldGroupID == GroupItem.fldGroupID)
 						{
-							found= true;
+							found = true;
 							break;
 						}
 					}

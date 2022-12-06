@@ -1,8 +1,8 @@
 ﻿using Admin_Client.Model.DB;
+using Admin_Client.Model.DB.EF_Test;
 using Admin_Client.Model.Domain;
 using Admin_Client.PropertyChanged;
 using Admin_Client.Singleton;
-using Admin_Client.View.UserControls;
 using Admin_Client.View.Windows.Popups;
 using System;
 using System.Collections.Generic;
@@ -51,12 +51,12 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 
 		public PopupConfirmWindowModel(Window currentWindow, object target, PopupMethod popupMethod)
 		{
+			// Set the methods and other object related info
 			switch (popupMethod)
 			{
 				case PopupMethod.Edit: this.action = Edit; break;
 				case PopupMethod.Create: this.action = Create; break;
 				case PopupMethod.Delete: this.action = Delete; break;
-				case PopupMethod.Add: this.action = Add; break;
 			}
 			this.target = target;
 			this.currentWindow = currentWindow;
@@ -65,29 +65,24 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 			if (action.GetMethodInfo().Name == "Create")
 			{
 				TargetText = target.GetType().Name;
-			} else
+			}
+			else
 			{
 				switch (this.target.GetType().Name)
 				{
-					case "TblUser":
+					case "tblUser":
 						{
-							TblUser user = (TblUser)target;
-							TargetText = user.FldUserId + " - " + user.FldFirstName + " " + user.FldLastName;
+							tblUser user = (tblUser)target;
+							TargetText = user.fldUserID + " - " + user.fldFirstName + " " + user.fldLastName;
 							break;
 						}
-					case "TblGroup":
+					case "tblGroup":
 						{
-							TblGroup group = (TblGroup)target;
-							TargetText = group.FldGroupId + " - " + group.FldGroupName;
+							tblGroup group = (tblGroup)target;
+							TargetText = group.fldGroupID + " - " + group.fldGroupName;
 							break;
 						}
-                    case "TblTrip":
-                        {
-                            TblTrip trip = (TblTrip)target;
-                            TargetText ="Trip: " + trip.FldTripID;
-                            break;
-                        }
-                    default: TargetText = ActionText; ActionText = ""; break;
+					default: TargetText = ActionText; ActionText = ""; break;
 				}
 			}
 		}
@@ -122,25 +117,25 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 		{
 			switch (target.GetType().Name)
 			{
-				case "TblUser":
+				case "tblUser":
 					{
-						TblUser user = (TblUser)target;
+						tblUser user = (tblUser)target;
 
 						/*Do Stuff*/
 
-						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + user.FldUserId + " - " + user.FldFirstName + " " + user.FldLastName));
+						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + user.fldUserID + " - " + user.fldFirstName + " " + user.fldLastName));
 						break;
 					}
-				case "TblGroup":
+				case "tblGroup":
 					{
-						TblGroup group = (TblGroup)target;
+						tblGroup group = (tblGroup)target;
 
-                        /*Do Stuff*/
-                        MainWindowModelSingleton.Instance.SetMainContent(new GroupView(), true);
-                        LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + group.FldGroupId + " - " + group.FldGroupName));
+						/*Do Stuff*/
+
+						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + group.fldGroupID + " - " + group.fldGroupName));
 						break;
 					}
-                default: throw new Exception("Has not been implemented: " + target.GetType().Name + "." + action.GetMethodInfo().Name + "()");
+				default: throw new Exception("Has not been implemented: " + target.GetType().Name + "." + action.GetMethodInfo().Name + "()");
 			}
 		}
 
@@ -148,34 +143,25 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 		{
 			switch (target.GetType().Name)
 			{
-				case "TblUser":
+				case "tblUser":
 					{
-						TblUser user = (TblUser)target;
+						tblUser user = (tblUser)target;
 
 						MainWindowModelSingleton.Instance.StartPopupParameterChange(user);
 
-						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "New: ID " + user.FldUserId + " - " + user.FldFirstName + " " + user.FldLastName));
+						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "New: ID " + user.fldUserID + " - " + user.fldFirstName + " " + user.fldLastName));
 						break;
 					}
-				case "TblGroup":
+				case "tblGroup":
 					{
-						TblGroup group = (TblGroup)target;
+						tblGroup group = (tblGroup)target;
 
 						MainWindowModelSingleton.Instance.StartPopupParameterChange(group);
 
-						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "New: ID " + group.FldGroupId + " - " + group.FldGroupName));
+						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "New: ID " + group.fldGroupID + " - " + group.fldGroupName));
 						break;
 					}
-                case "TblTrip":
-                    {
-                        TblTrip trip = (TblTrip)target;
-
-                        MainWindowModelSingleton.Instance.StartPopupParameterChange(trip);
-
-                       // LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "New: ID " + group.FldGroupId + " - " + group.FldGroupName));
-                        break;
-                    }
-                default: throw new Exception("Has not been implemented: " + target.GetType().Name + "." + action.GetMethodInfo().Name + "()");
+				default: throw new Exception("Has not been implemented: " + target.GetType().Name + "." + action.GetMethodInfo().Name + "()");
 			}
 		}
 
@@ -183,61 +169,44 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 		{
 			switch (target.GetType().Name)
 			{
-				case "TblUser":
+				case "tblUser":
 					{
-						TblUser user = (TblUser)target;
+						tblUser user = (tblUser)target;
 
 						/*Do Stuff*/
 
-						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + user.FldUserId + " - " + user.FldFirstName + " " + user.FldLastName));
+						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + user.fldUserID + " - " + user.fldFirstName + " " + user.fldLastName));
 						break;
 					}
-				case "TblGroup":
+				case "tblGroup":
 					{
-						TblGroup group = (TblGroup)target;
+						tblGroup group = (tblGroup)target;
 
 						/*Do Stuff*/
 
-						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + group.FldGroupId + " - " + group.FldGroupName));
+						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + group.fldGroupID + " - " + group.fldGroupName));
 						break;
 					}
-                case "TblReceipt":
-                    {
-                        TblReceipt receipt = (TblReceipt)target;
+				case "tblReceipt":
+					{
+						tblReceipt receipt = (tblReceipt)target;
 
-                        /*Do Stuff*/
+						/*Do Stuff*/
 
-                        LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + receipt.FldReceiptId + " - " + receipt.FldUserId + " " + receipt.FldUser.FldFirstName + " " + receipt.FldUser.FldLastName));
-                        break;
-                    }
-                case "TblTrip":
-                    {
-                        TblTrip trip = (TblTrip)target;
+						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + receipt.fldReceiptID + " - " + receipt.fldUserID + " " + receipt.tblUser.fldFirstName + " " + receipt.tblUser.fldLastName));
+						break;
+					}
+				case "tblTrip":
+					{
+						tblTrip trip = (tblTrip)target;
 
-                        /*Do Stuff*/
+						/*Do Stuff*/
 
-                        LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + trip.FldTripID + " - " + trip.TblGroupToMoneys.ToArray()[0].FldGroup.FldGroupName));
-                        break;
-                    }
-                default: throw new Exception("Has not been implemented: " + target.GetType().Name + "." + action.GetMethodInfo().Name + "()");
+						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + trip.fldTripID + " - UserID: " + trip.tblTripToUserExpense.ToArray()[0].tblUserExpense.fldUserID));
+						break;
+					}
+				default: throw new Exception("Has not been implemented: " + target.GetType().Name + "." + action.GetMethodInfo().Name + "()");
 			}
-		}
-
-		private void Add()
-		{
-			switch (target.GetType().Name)
-			{
-				case "TblUser":
-					{
-                        TblUser user = (TblUser)target;
-                        MainWindowModelSingleton.Instance.StartPopupAddUser(user);
-
-                        break;
-                    }
-                default: throw new Exception("Has not been implemented: " + target.GetType().Name + "." + action.GetMethodInfo().Name + "()");
-            }
-
-
 		}
 
 		#endregion

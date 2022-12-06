@@ -26,7 +26,7 @@ namespace Admin_Client
 	/// </summary>
 	public partial class MainWindow : Window
 	{
-        public MainWindow()
+		public MainWindow()
 		{
 			this.DataContext = MainWindowModelSingleton.Instance;
 
@@ -38,7 +38,9 @@ namespace Admin_Client
 
 			MainWindowModelSingleton.Instance.SetMainWindow(this);
 			MainWindowModelSingleton.Instance.CreateGridRelations(Grid_Menu, Grid_Account, CControl_Main);
-        }
+
+			GlobalInformationBuilderSingleton.Instance.BuildStartInfo();
+		}
 
 		/// <summary>
 		/// Animation for extention of the menu, triggered on mouseEntering
