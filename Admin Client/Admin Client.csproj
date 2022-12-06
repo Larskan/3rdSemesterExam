@@ -321,13 +321,7 @@
     <Compile Include="Model\DB\EF Test\tblUser.cs" />
     <Compile Include="Model\DB\EF Test\tblUserExpense.cs" />
     <Compile Include="Model\DB\EF Test\tblUserToGroup.cs" />
-    <Compile Include="Model\DB\Empty.cs" />
-    <Compile Include="Model\DB\HttpClientException.cs" />
     <Compile Include="Model\DB\HttpClientServices.cs" />
-    <Compile Include="Model\DB\HttpClientSettings.cs" />
-    <Compile Include="Model\DB\HttpContentBody.cs" />
-    <Compile Include="Model\DB\IHttpClientSettings.cs" />
-    <Compile Include="Model\DB\ResponseHandler.cs" />
     <Compile Include="Model\Domain\GlobalInformation.cs" />
     <Compile Include="Model\Domain\Log.cs" />
     <Compile Include="Model\Domain\LogFile.cs" />
