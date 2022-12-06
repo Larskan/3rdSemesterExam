@@ -15,7 +15,7 @@
     <title>Group</title>
   </head>
 
-  <body>
+  <body onload="PopulateTripTable()">
     <nav
       class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top"
       style="background-color: white"
@@ -63,7 +63,7 @@
 
             <!--#region Heading  -->
             <div id="Container" class="container">
-              <h1>Placeholder <small>To be replaced with group name</small></h1>
+              <h1>The favorite kids</h1>
             </div>
             <!--#endregion -->
 
@@ -71,20 +71,36 @@
               <div class="row">
                 <div class="col-sm-8">
                   <h3>Trips</h3>
+                  <table id="TripTable" class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Created</th>
+                        <th>Sum</th>
+                      </tr>
+                    </thead>
+                    <tbody id="TripTableBody"></tbody>
+                  </table>
                   <!-- TODO: replace with script for loading trip list from DB -->
-                  <p>Placeholder for Trips</p>
-                  <p>Placeholder for Trips</p>
-                  <p>Placeholder for Trips</p>
                 </div>
                 <div class="col-sm-4">
                   <div id="Panel" class="panel panel-default">
                     <div id="Heading" class="panel-heading">Members</div>
-                    <div class="panel-body">
-                      <!-- TODO: replace with script for loading user list from DB -->
-                      <p>Placeholder for List</p>
-                      <p>Placeholder for List</p>
-                      <p>Placeholder for List</p>
-                    </div>
+                    <table class="table table-hover">
+                      <tbody>
+                        <tr>
+                          <td>John</td>
+                        </tr>
+                        <tr>
+                          <td>Mary</td>
+                        </tr>
+                        <tr>
+                          <td>July</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <!-- TODO: replace with script for loading user list from DB -->
+                    <!-- Will probably need to hold the user ID here somehow-->
                   </div>
                 </div>
               </div>
@@ -100,12 +116,4 @@
   </body>
 
   <script src="group.js"></script>
-
-  <script></script>
-
-  <script>
-    $(document).ready(function () {
-      $('[data-toggle="tooltip"]').tooltip();
-    });
-  </script>
 </html>
