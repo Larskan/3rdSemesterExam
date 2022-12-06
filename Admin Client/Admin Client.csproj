@@ -293,8 +293,6 @@
     <Compile Include="Model\DB\EF Test\tblUser.cs" />
     <Compile Include="Model\DB\EF Test\tblUserExpense.cs" />
     <Compile Include="Model\DB\EF Test\tblUserToGroup.cs" />
-    <Compile Include="Model\DB\HttpClientServices.cs" />
-    <Compile Include="Model\DB\Response.cs" />
     <Compile Include="Model\DB\HttpAPIClient.cs" />
     <Compile Include="Model\Domain\GlobalInformation.cs" />
     <Compile Include="Model\Domain\Log.cs" />
@@ -310,7 +308,6 @@
     <Compile Include="Singleton\GlobalInformationBuilderSingleton.cs" />
     <Compile Include="Singleton\OverviewSingleton.cs" />
     <Compile Include="Singleton\UserviewSingleton.cs" />
-    <Compile Include="Singleton\HttpClientServicesSingleton.cs" />
     <Compile Include="Singleton\LogHandlerSingleton.cs" />
     <Compile Include="Singleton\MainWindowModelSingleton.cs" />
     <Compile Include="ViewModel\ContentControlModels\AccountViewModel.cs" />
