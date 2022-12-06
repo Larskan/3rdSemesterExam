@@ -1,5 +1,4 @@
 ﻿using Admin_Client.Model.DB;
-using Admin_Client.Model.DB.EF_Test;
 using Admin_Client.Model.Domain;
 using Admin_Client.PropertyChanged;
 using Admin_Client.Singleton;
@@ -19,7 +18,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 		#region Variables
 
 		private Window currentWindow;
-		private tblUser user;
+		private TblUser user;
 
 		#endregion
 
@@ -37,12 +36,12 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 
 		#region Constructor
 
-		public PopupPasswordChangeWindowModel(Window currentWindow, tblUser user)
+		public PopupPasswordChangeWindowModel(Window currentWindow, TblUser user)
 		{
 			this.currentWindow = currentWindow;
 			this.user = user;
 
-			ObjectName = this.user.fldUserID + ": " + this.user.fldFirstName + " " + this.user.fldLastName;
+			ObjectName = this.user.FldUserId + ": " + this.user.FldFirstName + " " + this.user.FldLastName;
 		}
 
 		#endregion
@@ -51,7 +50,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 
 		public void Change()
 		{
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Change Click"));
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Add Click"));
 
 			//DO STUFF TO LOGIN WITH USER ID
 			// ENCRYPT AND SEND TO DATABASE

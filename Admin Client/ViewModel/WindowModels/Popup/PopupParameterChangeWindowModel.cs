@@ -105,7 +105,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 				this.ObjectName = o.GetType().Name;
 			} else
 			{
-				this.ActionName = "Change Parameters For";
+				this.ActionName = "Add Parameters For";
 			}
 		}
 
@@ -115,7 +115,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 
 		public void Change(ListBox listBox)
 		{
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Change Click"));
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Add Click"));
 
 			bool isValid;
 			foreach (var item in listBox.Items)

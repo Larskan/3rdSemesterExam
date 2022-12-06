@@ -1,6 +1,5 @@
 ﻿using Admin_Client.Model;
 using Admin_Client.Model.DB;
-using Admin_Client.Model.DB.EF_Test;
 using Admin_Client.Model.Domain;
 using Admin_Client.PropertyChanged;
 using Admin_Client.Singleton;
@@ -23,8 +22,8 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		#region Properties
 
-		private ObservableCollection<tblGroup> groups = new ObservableCollection<tblGroup>();
-		public ObservableCollection<tblGroup> Groups
+		private ObservableCollection<TblGroup> groups = new ObservableCollection<TblGroup>();
+		public ObservableCollection<TblGroup> Groups
 		{
 			get { return groups; }
 			set { groups = value; }
@@ -59,15 +58,15 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		public void Create()
 		{
-			MainWindowModelSingleton.Instance.StartPopupConfirm(new tblGroup(), PopupMethod.Create);
+			MainWindowModelSingleton.Instance.StartPopupConfirm(new TblGroup(), PopupMethod.Create);
 		}
 
-		public void Edit(tblGroup group)
+		public void Edit(TblGroup group)
 		{
 			MainWindowModelSingleton.Instance.StartPopupConfirm(group, PopupMethod.Edit);
 		}
 
-		public void Delete(tblGroup group)
+		public void Delete(TblGroup group)
 		{
 			MainWindowModelSingleton.Instance.StartPopupConfirm(group, PopupMethod.Delete);
 		}
@@ -86,7 +85,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
 			while (!token.IsCancellationRequested)
 			{
 				// CHANGE THE FAKEDATEBASE.GETGROUPS() - TODO
-				List<tblGroup> groups = FAKEDATABASE.GetGroups();
+				List<TblGroup> groups = FAKEDATABASE.GetGroups();
 
 				bool found;
 				foreach (var groupItem in groups)
@@ -94,7 +93,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
 					found= false;
 					foreach (var GroupItem in Groups)
 					{
-						if (groupItem.fldGroupID == GroupItem.fldGroupID)
+						if (groupItem.FldGroupId == GroupItem.FldGroupId)
 						{
 							found= true;
 							break;

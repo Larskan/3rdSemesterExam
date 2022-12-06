@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="../universal.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <!-- Replace with trip name -->
+    <title>Trip</title>
+  </head>
+  <body>
+    <nav
+      class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top"
+      style="background-color: white"
+    >
+      <div class="container-fluid">
+        <a
+          class="navbar-brand"
+          id="MenuBtn"
+          data-bs-toggle="collapse"
+          href="#collapseExample"
+          role="button"
+          aria-expanded="false"
+          aria-controls="collapseExample"
+          >Menu</a
+        >
+        <a class="navbar-brand" href="menu.html">Home</a>
+        <div>
+          <div class="container">
+            <div class="row">
+              <a class="col-sm navbar-brand navbar-right" href="settings.html"
+                ><span class="glyphicon glyphicon-cog"></span> Settings</a
+              >
+              <a class="col-sm navbar-brand navbar-right" href="user.html"
+                ><span class="glyphicon glyphicon-user"></span> My profile</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid text-center" style="margin-top: 70px">
+      <div class="row content">
+        <div class="col-sm-2 sidenav">
+          <p><a href="#">Link</a></p>
+          <p><a href="#">Link</a></p>
+          <p><a href="#">Link</a></p>
+        </div>
+        <div class="col-sm-8 text-left">
+          <div id="Center" class="container-fluid">
+            <!--This is here for copy and paste -->
+
+            <!--#region main  -->
+            <!--#endregion -->
+
+            <!--#region Heading  -->
+            <div id="Container" class="container">
+              <h1>Placeholder <small>To be replaced with trip name</small></h1>
+            </div>
+            <!--#endregion -->
+
+            <div class="container text-left">
+              <div class="row">
+                <div class="col-sm-6">
+                  <h2>Sum <small>$1,000,000.00</small></h2>
+                  <div id="Panel" class="panel panel-default">
+                    <div id="Heading" class="panel-heading">
+                      Recent expenses
+                    </div>
+                    <div class="panel-body">
+                      <p>Placeholder for Recent Expense</p>
+                      <p>Placeholder for Recent Expense</p>
+                      <p>Placeholder for Recent Expense</p>
+                    </div>
+                  </div>
+                  <!-- TODO: replace with script for loading trip list from DB -->
+                </div>
+                <div class="col-sm-4">
+                  <img
+                    src="https://cdn.discordapp.com/attachments/1048158439974645811/1049273996589412352/barchart.png"
+                    alt="bar chart"
+                  />
+                  <br />
+                  <img
+                    src="https://cdn.discordapp.com/attachments/1048158439974645811/1049273997101109299/piechart.png"
+                    alt="pie chart"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

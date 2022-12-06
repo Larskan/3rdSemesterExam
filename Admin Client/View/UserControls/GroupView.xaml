@@ -1,4 +1,5 @@
 ﻿<UserControl x:Class="Admin_Client.View.UserControls.GroupView"
+             Loaded="OnPageLoaded"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -21,8 +22,8 @@
             <RowDefinition Height="10*"/>
 
         </Grid.RowDefinitions>
-        <ListBox Margin="0,98,3,3" Style="{StaticResource roundlistboxwithempty}" Resources="{StaticResource roundborder10}" Grid.Column="1"/>
-        <ListBox Margin="3,98,1,3" Style="{StaticResource roundlistboxwithempty}" Resources="{StaticResource roundborder10}" Grid.Column="3"/>
+        <ListBox Margin="0,98,3,3" Style="{StaticResource roundlistboxwithempty}" ItemsSource="{Binding Users}"  Resources="{StaticResource roundborder10}" ItemTemplate="{StaticResource userViewTemplate}" Grid.Column="1"/>
+        <ListBox Margin="3,98,1,3" Style="{StaticResource roundlistboxwithempty}" ItemsSource="{Binding Trips}" Resources="{StaticResource roundborder10}" ItemTemplate="{StaticResource tripListTemplate}" Grid.Column="3"/>
         <Button Grid.Column="3" Content="Delete Trip" Margin="276,0,1,0" Resources="{StaticResource roundcornerbutton10}" Click="Delete_Trip" Grid.Row="1" />
         <Button Grid.Column="3" Content="Edit Trip" Margin="140,0,135,0" Resources="{StaticResource roundcornerbutton10}" Click="Edit_Trip" Grid.Row="1" />
         <Button Grid.Column="3" Content="Create Trip" Margin="3,0,271,0" Resources="{StaticResource roundcornerbutton10}" Click="Create_Trip" Grid.Row="1" />

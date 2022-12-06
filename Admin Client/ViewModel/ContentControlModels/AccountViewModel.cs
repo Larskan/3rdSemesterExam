@@ -1,5 +1,4 @@
 ﻿using Admin_Client.Model.DB;
-using Admin_Client.Model.DB.EF_Test;
 using Admin_Client.Model.Domain;
 using Admin_Client.PropertyChanged;
 using Admin_Client.Singleton;
@@ -89,13 +88,13 @@ namespace Admin_Client.ViewModel.ContentControlModels
 		public void Edit()
 		{
 			// EDIT POPUP WITH CURRENT USER - TODO
-			MainWindowModelSingleton.Instance.StartPopupParameterChange(new tblUser() { fldUserID = 0, fldFirstName = Firstname, fldLastName = Lastname, fldEmail = Email, fldPhonenumber = Phonenumber });
+			MainWindowModelSingleton.Instance.StartPopupParameterChange(new TblUser() { FldUserId = 0, FldFirstName = Firstname, FldLastName = Lastname, FldEmail = Email, FldPhonenumber = Phonenumber });
 		}
 
 		public void EditPassword()
 		{
 			// EDITPASSWORD POPUP WITH CURRENT USER - TODO
-			MainWindowModelSingleton.Instance.StartPopupPasswordChange(new tblUser() { fldUserID = 0, fldFirstName = Firstname, fldLastName = Lastname, fldEmail = Email, fldPhonenumber = Phonenumber });
+			MainWindowModelSingleton.Instance.StartPopupPasswordChange(new TblUser() { FldUserId = 0, FldFirstName = Firstname, FldLastName = Lastname, FldEmail = Email, FldPhonenumber = Phonenumber });
 		}
 
 		public void LogTool()

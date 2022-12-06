@@ -38,8 +38,6 @@ namespace Admin_Client
 
 			MainWindowModelSingleton.Instance.SetMainWindow(this);
 			MainWindowModelSingleton.Instance.CreateGridRelations(Grid_Menu, Grid_Account, CControl_Main);
-
-			GlobalInformationBuilderSingleton.Instance.BuildStartInfo();
         }
 
 		/// <summary>
