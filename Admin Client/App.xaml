@@ -3,8 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Admin_Client"
              StartupUri="\View\Windows\MainWindow.xaml">
-    <!--\View\UserControls\TestingView.xaml-->
-    <!--\View\Windows\MainWindow.xaml-->
     <Application.Resources>
 
         <!--#region Coloration-->
@@ -254,13 +252,53 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="0.25*"/>
                     </Grid.ColumnDefinitions>
-                    <Label x:Name="id" Content="{Binding fldUserID}" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
-                    <Label x:Name="email" Content="{Binding fldEmail}" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
-                    <Label x:Name="firstname" Content="{Binding fldFirstName}" Grid.Column="2" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
-                    <Label x:Name="lastname" Content="{Binding fldLastName}" Grid.Column="3" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
-                    <Label x:Name="phonenum" Content="{Binding fldPhonenumber}" Grid.Column="4" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
-                    <Label x:Name="isadmin" Content="{Binding fldIsAdmin}" Grid.Column="5" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="id" Content="{Binding FldUserId}" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="email" Content="{Binding FldEmail}" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="firstname" Content="{Binding FldFirstName}" Grid.Column="2" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="lastname" Content="{Binding FldLastName}" Grid.Column="3" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="phonenum" Content="{Binding FldPhonenumber}" Grid.Column="4" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="isadmin" Content="{Binding FldIsAdmin}" Grid.Column="5" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
                 </Grid>
+            </Border>
+        </DataTemplate>
+
+        <!--DataTemplate userView-->
+        <DataTemplate x:Key="userViewTemplate">
+            <Border Name="border" BorderThickness="0,0,0,0" BorderBrush="Gray" Resources="{StaticResource roundborder10}">
+                <StackPanel Orientation="Vertical">
+                    <WrapPanel>
+                        <TextBlock Text="First name: " Grid.Column="3"  VerticalAlignment="Center" FontWeight="Bold"/>
+                        <TextBlock x:Name="firstname" Text="{Binding FldFirstName}" Grid.Column="2" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></TextBlock>
+                    </WrapPanel>
+                    <WrapPanel>
+                        <TextBlock Text="Last name: " Grid.Column="3"  VerticalAlignment="Center" FontWeight="Bold"/>
+                        <TextBlock x:Name="lastname" Text="{Binding FldLastName}" Grid.Column="3" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></TextBlock>
+                    </WrapPanel>
+                    <WrapPanel>
+                        <TextBlock Text="ID: " Grid.Column="3"  VerticalAlignment="Center" FontWeight="Bold"/>
+                        <TextBlock x:Name="id" Text="{Binding FldUserId}" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" ></TextBlock>
+                    </WrapPanel>
+                    <WrapPanel>
+                        <TextBlock Text="Email: " Grid.Column="3"  VerticalAlignment="Center" FontWeight="Bold"/>
+                        <TextBlock x:Name="email" Text="{Binding FldEmail}" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" ></TextBlock>
+                    </WrapPanel>
+                    <WrapPanel>
+                        <TextBlock Text="Phone Number: " Grid.Column="3" VerticalAlignment="Center" FontWeight="Bold"/>
+                        <TextBlock x:Name="phonenum" Text="{Binding FldPhonenumber}" Grid.Column="4" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></TextBlock>
+                    </WrapPanel>
+                </StackPanel>
+            </Border>
+        </DataTemplate>
+
+        <!--DataTemplate tripList-->
+        <DataTemplate x:Key="tripListTemplate">
+            <Border Name="border" BorderThickness="0,0,0,0" BorderBrush="Gray" Resources="{StaticResource roundborder10}">
+                <StackPanel Orientation="Vertical">
+                    <WrapPanel>
+                        <TextBlock Text="Trip: " Grid.Column="3"  VerticalAlignment="Center" FontWeight="Bold"/>
+                        <TextBlock x:Name="tripID" Text="{Binding FldTripID}" Grid.Column="2" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></TextBlock>
+                    </WrapPanel>
+                </StackPanel>
             </Border>
         </DataTemplate>
 
@@ -273,9 +311,9 @@
                         <ColumnDefinition Width="3*"/>
                         <ColumnDefinition Width="0.25*"/>
                     </Grid.ColumnDefinitions>
-                    <Label x:Name="id" Content="{Binding fldGroupID}" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
-                    <Label x:Name="name" Content="{Binding fldGroupName}" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
-                    <Label x:Name="boolean" Content="{Binding fldGroupBoolean}" Grid.Column="2" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="id" Content="{Binding FldGroupId}" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="name" Content="{Binding FldGroupName}" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="boolean" Content="{Binding FldGroupBoolean}" Grid.Column="2" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
                 </Grid>
             </Border>
         </DataTemplate>

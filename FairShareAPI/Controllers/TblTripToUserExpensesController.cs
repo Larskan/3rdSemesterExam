@@ -14,27 +14,27 @@ namespace FairShareAPI.Controllers
     [Route("[controller]")]
     [ApiController]
     [EnableCors]
-    public class TblTripToUserExpensesController : ControllerBase
+    public class tblTripToUserExpensesController : ControllerBase
     {
         private readonly FairShareDbContext _context;
 
-        public TblTripToUserExpensesController(FairShareDbContext context)
+        public tblTripToUserExpensesController(FairShareDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/TblTripToUserExpenses
+        // GET: api/tblTripToUserExpenses
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TblTripToUserExpense>>> GetTblTripToUserExpenses()
+        public async Task<ActionResult<IEnumerable<tblTripToUserExpense>>> GettblTripToUserExpenses()
         {
-            return await _context.TblTripToUserExpenses.ToListAsync();
+            return await _context.tblTripToUserExpenses.ToListAsync();
         }
 
-        // GET: api/TblTripToUserExpenses/5
+        // GET: api/tblTripToUserExpenses/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<TblTripToUserExpense>> GetTblTripToUserExpense(int id)
+        public async Task<ActionResult<tblTripToUserExpense>> GettblTripToUserExpense(int id)
         {
-            var tblTripToUserExpense = await _context.TblTripToUserExpenses.FindAsync(id);
+            var tblTripToUserExpense = await _context.tblTripToUserExpenses.FindAsync(id);
 
             if (tblTripToUserExpense == null)
             {
@@ -44,12 +44,12 @@ namespace FairShareAPI.Controllers
             return tblTripToUserExpense;
         }
 
-        // PUT: api/TblTripToUserExpenses/5
+        // PUT: api/tblTripToUserExpenses/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTblTripToUserExpense(int id, TblTripToUserExpense tblTripToUserExpense)
+        public async Task<IActionResult> PuttblTripToUserExpense(int id, tblTripToUserExpense tblTripToUserExpense)
         {
-            if (id != tblTripToUserExpense.FldUserToExpense)
+            if (id != tblTripToUserExpense.fldUserToExpense)
             {
                 return BadRequest();
             }
@@ -62,7 +62,7 @@ namespace FairShareAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TblTripToUserExpenseExists(id))
+                if (!tblTripToUserExpenseExists(id))
                 {
                     return NotFound();
                 }
@@ -75,36 +75,36 @@ namespace FairShareAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/TblTripToUserExpenses
+        // POST: api/tblTripToUserExpenses
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<TblTripToUserExpense>> PostTblTripToUserExpense(TblTripToUserExpense tblTripToUserExpense)
+        public async Task<ActionResult<tblTripToUserExpense>> PosttblTripToUserExpense(tblTripToUserExpense tblTripToUserExpense)
         {
-            _context.TblTripToUserExpenses.Add(tblTripToUserExpense);
+            _context.tblTripToUserExpenses.Add(tblTripToUserExpense);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTblTripToUserExpense", new { id = tblTripToUserExpense.FldUserToExpense }, tblTripToUserExpense);
+            return CreatedAtAction("GettblTripToUserExpense", new { id = tblTripToUserExpense.fldUserToExpense }, tblTripToUserExpense);
         }
 
-        // DELETE: api/TblTripToUserExpenses/5
+        // DELETE: api/tblTripToUserExpenses/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTblTripToUserExpense(int id)
+        public async Task<IActionResult> DeletetblTripToUserExpense(int id)
         {
-            var tblTripToUserExpense = await _context.TblTripToUserExpenses.FindAsync(id);
+            var tblTripToUserExpense = await _context.tblTripToUserExpenses.FindAsync(id);
             if (tblTripToUserExpense == null)
             {
                 return NotFound();
             }
 
-            _context.TblTripToUserExpenses.Remove(tblTripToUserExpense);
+            _context.tblTripToUserExpenses.Remove(tblTripToUserExpense);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool TblTripToUserExpenseExists(int id)
+        private bool tblTripToUserExpenseExists(int id)
         {
-            return _context.TblTripToUserExpenses.Any(e => e.FldUserToExpense == id);
+            return _context.tblTripToUserExpenses.Any(e => e.fldUserToExpense == id);
         }
     }
 }

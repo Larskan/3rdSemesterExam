@@ -17,23 +17,23 @@ public partial class FairShareDbContext : DbContext
     {
     }
 
-    public virtual DbSet<TblGroup> TblGroups { get; set; }
+    public virtual DbSet<tblGroup> tblGroups { get; set; }
 
-    public virtual DbSet<TblGroupToTrip> TblGroupToTrips { get; set; }
+    public virtual DbSet<tblGroupToTrip> tblGroupToTrips { get; set; }
 
-    public virtual DbSet<TblLogin> TblLogins { get; set; }
+    public virtual DbSet<tblLogin> tblLogins { get; set; }
 
-    public virtual DbSet<TblReceipt> TblReceipts { get; set; }
+    public virtual DbSet<tblReceipt> tblReceipts { get; set; }
 
-    public virtual DbSet<TblTrip> TblTrips { get; set; }
+    public virtual DbSet<tblTrip> tblTrips { get; set; }
 
-    public virtual DbSet<TblTripToUserExpense> TblTripToUserExpenses { get; set; }
+    public virtual DbSet<tblTripToUserExpense> tblTripToUserExpenses { get; set; }
 
-    public virtual DbSet<TblUser> TblUsers { get; set; }
+    public virtual DbSet<tblUser> tblUsers { get; set; }
 
-    public virtual DbSet<TblUserExpense> TblUserExpenses { get; set; }
+    public virtual DbSet<tblUserExpense> tblUserExpenses { get; set; }
 
-    public virtual DbSet<TblUserToGroup> TblUserToGroups { get; set; }
+    public virtual DbSet<tblUserToGroup> tblUserToGroups { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
@@ -41,171 +41,171 @@ public partial class FairShareDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<TblGroup>(entity =>
+        modelBuilder.Entity<tblGroup>(entity =>
         {
-            entity.HasKey(e => e.FldGroupId).HasName("PK__tblGroup__346DE83CB9DE401A");
+            entity.HasKey(e => e.fldGroupId).HasName("PK__tblGroup__346DE83CB9DE401A");
 
             entity.ToTable("tblGroup");
 
-            entity.Property(e => e.FldGroupId).HasColumnName("fldGroupID");
-            entity.Property(e => e.FldGroupName)
+            entity.Property(e => e.fldGroupId).HasColumnName("fldGroupID");
+            entity.Property(e => e.fldGroupName)
                 .HasMaxLength(30)
                 .IsUnicode(false)
                 .HasColumnName("fldGroupName");
-            entity.Property(e => e.FldGroupBoolean).HasColumnName("fldGroupBoolean");
+            entity.Property(e => e.fldGroupBoolean).HasColumnName("fldGroupBoolean");
         });
 
-        modelBuilder.Entity<TblGroupToTrip>(entity =>
+        modelBuilder.Entity<tblGroupToTrip>(entity =>
         {
-            entity.HasKey(e => e.FldGroupToTripId).HasName("PK__tblGroup__C215EEF18CA2C599");
+            entity.HasKey(e => e.fldGroupToTripId).HasName("PK__tblGroup__C215EEF18CA2C599");
 
             entity.ToTable("tblGroupToTrip");
 
-            entity.Property(e => e.FldGroupToTripId).HasColumnName("fldGroupToTripID");
-            entity.Property(e => e.FldGroupId).HasColumnName("fldGroupID");
-            entity.Property(e => e.FldTripId).HasColumnName("fldTripID");
+            entity.Property(e => e.fldGroupToTripId).HasColumnName("fldGroupToTripID");
+            entity.Property(e => e.fldGroupId).HasColumnName("fldGroupID");
+            entity.Property(e => e.fldTripId).HasColumnName("fldTripID");
 
-            entity.HasOne(d => d.FldGroup).WithMany(p => p.TblGroupToMoneys)
-                .HasForeignKey(d => d.FldGroupId)
+            entity.HasOne(d => d.fldGroup).WithMany(p => p.tblGroupToMoneys)
+                .HasForeignKey(d => d.fldGroupId)
                 .HasConstraintName("FK__tblGroupT__fldGr__30F848ED");
 
-            entity.HasOne(d => d.FldTrip).WithMany(p => p.TblGroupToMoneys)
-                .HasForeignKey(d => d.FldTripId)
+            entity.HasOne(d => d.fldTrip).WithMany(p => p.tblGroupToMoneys)
+                .HasForeignKey(d => d.fldTripId)
                 .HasConstraintName("FK__tblGroupT__fldTr__31EC6D26");
         });
 
-        modelBuilder.Entity<TblLogin>(entity =>
+        modelBuilder.Entity<tblLogin>(entity =>
         {
-            entity.HasKey(e => e.FldLoginId).HasName("PK__tblLogin__5FFDE57FA6EADA6D");
+            entity.HasKey(e => e.fldLoginId).HasName("PK__tblLogin__5FFDE57FA6EADA6D");
 
             entity.ToTable("tblLogin");
 
-            entity.Property(e => e.FldLoginId).HasColumnName("fldLoginID");
-            entity.Property(e => e.FldPassword)
+            entity.Property(e => e.fldLoginId).HasColumnName("fldLoginID");
+            entity.Property(e => e.fldPassword)
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("fldPassword");
-            entity.Property(e => e.FldUserId).HasColumnName("fldUserID");
+            entity.Property(e => e.fldUserId).HasColumnName("fldUserID");
 
-            entity.HasOne(d => d.FldUser).WithMany(p => p.TblLogins)
-                .HasForeignKey(d => d.FldUserId)
+            entity.HasOne(d => d.fldUser).WithMany(p => p.tblLogins)
+                .HasForeignKey(d => d.fldUserId)
                 .HasConstraintName("FK__tblLogin__fldUse__2A4B4B5E");
         });
 
-        modelBuilder.Entity<TblReceipt>(entity =>
+        modelBuilder.Entity<tblReceipt>(entity =>
         {
-            entity.HasKey(e => e.FldReceiptId).HasName("PK__tblRecei__E502712E5AF2287A");
+            entity.HasKey(e => e.fldReceiptId).HasName("PK__tblRecei__E502712E5AF2287A");
 
             entity.ToTable("tblReceipt");
 
-            entity.Property(e => e.FldReceiptId).HasColumnName("fldReceiptID");
-            entity.Property(e => e.FldAmountPaid).HasColumnName("fldAmountPaid");
-            entity.Property(e => e.FldProjectedValue).HasColumnName("fldProjectedValue");
-            entity.Property(e => e.FldTripId).HasColumnName("fldTripID");
-            entity.Property(e => e.FldUserId).HasColumnName("fldUserID");
+            entity.Property(e => e.fldReceiptId).HasColumnName("fldReceiptID");
+            entity.Property(e => e.fldAmountPaid).HasColumnName("fldAmountPaid");
+            entity.Property(e => e.fldProjectedValue).HasColumnName("fldProjectedValue");
+            entity.Property(e => e.fldTripId).HasColumnName("fldTripID");
+            entity.Property(e => e.fldUserId).HasColumnName("fldUserID");
 
-            entity.HasOne(d => d.FldTrip).WithMany(p => p.TblReceipts)
-                .HasForeignKey(d => d.FldTripId)
+            entity.HasOne(d => d.fldTrip).WithMany(p => p.tblReceipts)
+                .HasForeignKey(d => d.fldTripId)
                 .HasConstraintName("FK__tblReceip__fldTr__3C69FB99");
 
-            entity.HasOne(d => d.FldUser).WithMany(p => p.TblReceipts)
-                .HasForeignKey(d => d.FldUserId)
+            entity.HasOne(d => d.fldUser).WithMany(p => p.tblReceipts)
+                .HasForeignKey(d => d.fldUserId)
                 .HasConstraintName("FK__tblReceip__fldUs__3B75D760");
         });
 
-        modelBuilder.Entity<TblTrip>(entity =>
+        modelBuilder.Entity<tblTrip>(entity =>
         {
-            entity.HasKey(e => e.FldTripId).HasName("PK__tblTrip__8AEEDFA23CF9C1F2");
+            entity.HasKey(e => e.fldTripId).HasName("PK__tblTrip__8AEEDFA23CF9C1F2");
 
             entity.ToTable("tblTrip");
 
-            entity.Property(e => e.FldTripId).HasColumnName("fldTripID");
-            entity.Property(e => e.FldSum).HasColumnName("fldSum");
+            entity.Property(e => e.fldTripId).HasColumnName("fldTripID");
+            entity.Property(e => e.fldSum).HasColumnName("fldSum");
         });
 
-        modelBuilder.Entity<TblTripToUserExpense>(entity =>
+        modelBuilder.Entity<tblTripToUserExpense>(entity =>
         {
-            entity.HasKey(e => e.FldUserToExpense).HasName("PK__tblTripT__E9A07F6E6CCF54D8");
+            entity.HasKey(e => e.fldUserToExpense).HasName("PK__tblTripT__E9A07F6E6CCF54D8");
 
             entity.ToTable("tblTripToUserExpenses");
 
-            entity.Property(e => e.FldUserToExpense).HasColumnName("fldUserToExpense");
-            entity.Property(e => e.FldExpensesId).HasColumnName("fldExpensesID");
-            entity.Property(e => e.FldTripId).HasColumnName("fldTripID");
+            entity.Property(e => e.fldUserToExpense).HasColumnName("fldUserToExpense");
+            entity.Property(e => e.fldExpensesId).HasColumnName("fldExpensesID");
+            entity.Property(e => e.fldTripId).HasColumnName("fldTripID");
 
-            entity.HasOne(d => d.FldExpenses).WithMany(p => p.TblTripToUserExpenses)
-                .HasForeignKey(d => d.FldExpensesId)
+            entity.HasOne(d => d.fldExpenses).WithMany(p => p.tblTripToUserExpenses)
+                .HasForeignKey(d => d.fldExpensesId)
                 .HasConstraintName("FK__tblTripTo__fldEx__38996AB5");
 
-            entity.HasOne(d => d.FldTrip).WithMany(p => p.TblTripToUserExpenses)
-                .HasForeignKey(d => d.FldTripId)
+            entity.HasOne(d => d.fldTrip).WithMany(p => p.tblTripToUserExpenses)
+                .HasForeignKey(d => d.fldTripId)
                 .HasConstraintName("FK__tblTripTo__fldTr__37A5467C");
         });
 
-        modelBuilder.Entity<TblUser>(entity =>
+        modelBuilder.Entity<tblUser>(entity =>
         {
-            entity.HasKey(e => e.FldUserId).HasName("PK__tblUser__DBF596A7CE2706D0");
+            entity.HasKey(e => e.fldUserId).HasName("PK__tblUser__DBF596A7CE2706D0");
 
             entity.ToTable("tblUser");
 
-            entity.Property(e => e.FldUserId).HasColumnName("fldUserID");
-            entity.Property(e => e.FldEmail)
+            entity.Property(e => e.fldUserId).HasColumnName("fldUserID");
+            entity.Property(e => e.fldEmail)
                 .HasMaxLength(30)
                 .IsUnicode(false)
                 .HasColumnName("fldEmail");
-            entity.Property(e => e.FldFirstName)
+            entity.Property(e => e.fldFirstName)
                 .HasMaxLength(30)
                 .IsUnicode(false)
                 .HasColumnName("fldFirstName");
-            entity.Property(e => e.FldLastName)
+            entity.Property(e => e.fldLastName)
                 .HasMaxLength(30)
                 .IsUnicode(false)
                 .HasColumnName("fldLastName");
-            entity.Property(e => e.FldPhonenumber).HasColumnName("fldPhonenumber");
-            entity.Property(e => e.FldIsAdmin).HasColumnName("fldIsAdmin");
+            entity.Property(e => e.fldPhonenumber).HasColumnName("fldPhonenumber");
+            entity.Property(e => e.fldIsAdmin).HasColumnName("fldIsAdmin");
         });
 
-        modelBuilder.Entity<TblUserExpense>(entity =>
+        modelBuilder.Entity<tblUserExpense>(entity =>
         {
-            entity.HasKey(e => e.FldExpensesId).HasName("PK__tblUserE__8B84BEB85F4F3DA2");
+            entity.HasKey(e => e.fldExpensesId).HasName("PK__tblUserE__8B84BEB85F4F3DA2");
 
             entity.ToTable("tblUserExpenses");
 
-            entity.Property(e => e.FldExpensesId).HasColumnName("fldExpensesID");
-            entity.Property(e => e.FldDate)
+            entity.Property(e => e.fldExpensesId).HasColumnName("fldExpensesID");
+            entity.Property(e => e.fldDate)
                 .HasColumnType("date")
                 .HasColumnName("fldDate");
-            entity.Property(e => e.FldExpense).HasColumnName("fldExpense");
-            entity.Property(e => e.FldNote)
+            entity.Property(e => e.fldExpense).HasColumnName("fldExpense");
+            entity.Property(e => e.fldNote)
                 .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("fldNote");
-            entity.Property(e => e.FldUserId).HasColumnName("fldUserID");
+            entity.Property(e => e.fldUserId).HasColumnName("fldUserID");
 
-            entity.HasOne(d => d.FldUser).WithMany(p => p.TblUserExpenses)
-                .HasForeignKey(d => d.FldUserId)
+            entity.HasOne(d => d.fldUser).WithMany(p => p.tblUserExpenses)
+                .HasForeignKey(d => d.fldUserId)
                 .HasConstraintName("FK__tblUserEx__fldUs__34C8D9D1");
         });
 
-        modelBuilder.Entity<TblUserToGroup>(entity =>
+        modelBuilder.Entity<tblUserToGroup>(entity =>
         {
             //entity.HasNoKey();
-            entity.HasKey(e => e.FldUserToGroupId).HasName("PK__tblUserT__19DCF06B1673C2D9");
-            //entity.HasAlternateKey(e => e.FldUserId);
-            //entity.HasAlternateKey(e => e.FldGroupId);
+            entity.HasKey(e => e.fldUserToGroupId).HasName("PK__tblUserT__19DCF06B1673C2D9");
+            //entity.HasAlternateKey(e => e.fldUserId);
+            //entity.HasAlternateKey(e => e.fldGroupId);
 
             entity.ToTable("tblUserToGroup");
 
-            entity.Property(e => e.FldUserToGroupId).HasColumnName("fldUserToGroupID");
-            entity.Property(e => e.FldGroupId).HasColumnName("fldGroupID");
-            entity.Property(e => e.FldUserId).HasColumnName("fldUserID");
+            entity.Property(e => e.fldUserToGroupId).HasColumnName("fldUserToGroupID");
+            entity.Property(e => e.fldGroupId).HasColumnName("fldGroupID");
+            entity.Property(e => e.fldUserId).HasColumnName("fldUserID");
 
-            entity.HasOne(d => d.FldGroup).WithMany(p => p.TblUserToGroups)
-                .HasForeignKey(d => d.FldGroupId)
+            entity.HasOne(d => d.fldGroup).WithMany(p => p.tblUserToGroups)
+                .HasForeignKey(d => d.fldGroupId)
                 .HasConstraintName("FK__tblUserTo__fldGr__2E1BDC42");
 
-            entity.HasOne(d => d.FldUser).WithMany(p => p.TblUserToGroups)
-                .HasForeignKey(d => d.FldUserId)
+            entity.HasOne(d => d.fldUser).WithMany(p => p.tblUserToGroups)
+                .HasForeignKey(d => d.fldUserId)
                 .HasConstraintName("FK__tblUserTo__fldUs__2D27B809");
         });
 

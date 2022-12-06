@@ -1,5 +1,4 @@
 ﻿using Admin_Client.Model.DB;
-using Admin_Client.Model.DB.EF_Test;
 using Admin_Client.Model.Domain;
 using Admin_Client.Singleton;
 using Admin_Client.ViewModel.WindowModels.Popup;
@@ -25,7 +24,7 @@ namespace Admin_Client.View.Windows.Popups
 	public partial class PopupPasswordChangeWindow : Window
 	{
 		PopupPasswordChangeWindowModel windowModel;
-		public PopupPasswordChangeWindow(Window owner, tblUser user)
+		public PopupPasswordChangeWindow(Window owner, TblUser user)
 		{
 			this.windowModel= new PopupPasswordChangeWindowModel(this, user);
 			this.DataContext = windowModel;

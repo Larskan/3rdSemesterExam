@@ -1,16 +1,18 @@
 ﻿using Admin_Client.Model;
-using Admin_Client.Model.Controller;
 using Admin_Client.Model.DB;
+using Admin_Client.Model.DB.EF_Test;
 using Admin_Client.Model.Domain;
 using Admin_Client.Model.Foundation;
 using Admin_Client.Singleton;
 using Admin_Client.View.Windows.Popout;
 using Admin_Client.ViewModel.ContentControlModels;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -38,17 +40,18 @@ namespace Admin_Client.View.UserControls
 		}
 
 		private void Login_Click(object sender, RoutedEventArgs e)
-		{
+		{	
             if (PasswordBox_Password.Password.Length > 0)
 			{
 				viewModel.Login(TextBox_Username.Text, PasswordBox_Password.Password);
 			} else
 			{
 				viewModel.Login(TextBox_Username.Text, TextBox_Password.Text);
-			}				
+			}	
+							
         }
 
-        private void TextBox_Password_TextChanged(object sender, TextChangedEventArgs e)
+		private void TextBox_Password_TextChanged(object sender, TextChangedEventArgs e)
 		{
 			if (TextBox_Password.IsFocused)
 			{

@@ -14,27 +14,27 @@ namespace FairShareAPI.Controllers
     [Route("[controller]")]
     [ApiController]
     [EnableCors]
-    public class TblGroupsController : ControllerBase
+    public class tblGroupsController : ControllerBase
     {
         private readonly FairShareDbContext _context;
 
-        public TblGroupsController(FairShareDbContext context)
+        public tblGroupsController(FairShareDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/TblGroups
+        // GET: api/tblGroups
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TblGroup>>> GetTblGroups()
+        public async Task<ActionResult<IEnumerable<tblGroup>>> GettblGroups()
         {
-            return await _context.TblGroups.ToListAsync();
+            return await _context.tblGroups.ToListAsync();
         }
 
-        // GET: api/TblGroups/5
+        // GET: api/tblGroups/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<TblGroup>> GetTblGroup(int id)
+        public async Task<ActionResult<tblGroup>> GettblGroup(int id)
         {
-            var tblGroup = await _context.TblGroups.FindAsync(id);
+            var tblGroup = await _context.tblGroups.FindAsync(id);
 
             if (tblGroup == null)
             {
@@ -44,12 +44,12 @@ namespace FairShareAPI.Controllers
             return tblGroup;
         }
 
-        // PUT: api/TblGroups/5
+        // PUT: api/tblGroups/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTblGroup(int id, TblGroup tblGroup)
+        public async Task<IActionResult> PuttblGroup(int id, tblGroup tblGroup)
         {
-            if (id != tblGroup.FldGroupId)
+            if (id != tblGroup.fldGroupId)
             {
                 return BadRequest();
             }
@@ -62,7 +62,7 @@ namespace FairShareAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TblGroupExists(id))
+                if (!tblGroupExists(id))
                 {
                     return NotFound();
                 }
@@ -75,36 +75,36 @@ namespace FairShareAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/TblGroups
+        // POST: api/tblGroups
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<TblGroup>> PostTblGroup(TblGroup tblGroup)
+        public async Task<ActionResult<tblGroup>> PosttblGroup(tblGroup tblGroup)
         {
-            _context.TblGroups.Add(tblGroup);
+            _context.tblGroups.Add(tblGroup);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTblGroup", new { id = tblGroup.FldGroupId }, tblGroup);
+            return CreatedAtAction("GettblGroup", new { id = tblGroup.fldGroupId }, tblGroup);
         }
 
-        // DELETE: api/TblGroups/5
+        // DELETE: api/tblGroups/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTblGroup(int id)
+        public async Task<IActionResult> DeletetblGroup(int id)
         {
-            var tblGroup = await _context.TblGroups.FindAsync(id);
+            var tblGroup = await _context.tblGroups.FindAsync(id);
             if (tblGroup == null)
             {
                 return NotFound();
             }
 
-            _context.TblGroups.Remove(tblGroup);
+            _context.tblGroups.Remove(tblGroup);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool TblGroupExists(int id)
+        private bool tblGroupExists(int id)
         {
-            return _context.TblGroups.Any(e => e.FldGroupId == id);
+            return _context.tblGroups.Any(e => e.fldGroupId == id);
         }
     }
 }

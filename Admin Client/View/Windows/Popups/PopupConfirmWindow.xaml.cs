@@ -23,7 +23,8 @@ namespace Admin_Client.View.Windows.Popups
 	{
 		Edit,
 		Create,
-		Delete
+		Delete,
+		Add
 	}
 
 	/// <summary>

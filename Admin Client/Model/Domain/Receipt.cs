@@ -1,5 +1,4 @@
 ﻿using Admin_Client.Model.DB;
-using Admin_Client.Model.DB.EF_Test;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +19,7 @@ namespace Admin_Client.Model.Domain
 
 		public string AmountPaid { get; set; }
 
-		public Receipt(tblReceipt receipt)
+		public Receipt(TblReceipt receipt)
 		{
 			// TODO
 			this.Id = 1;

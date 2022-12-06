@@ -14,27 +14,27 @@ namespace FairShareAPI.Controllers
     [Route("[controller]")]
     [ApiController]
     [EnableCors]
-    public class TblUserToGroupsController : ControllerBase
+    public class tblUserToGroupsController : ControllerBase
     {
         private readonly FairShareDbContext _context;
 
-        public TblUserToGroupsController(FairShareDbContext context)
+        public tblUserToGroupsController(FairShareDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/TblUserToGroups
+        // GET: api/tblUserToGroups
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TblUserToGroup>>> GetTblUserToGroups()
+        public async Task<ActionResult<IEnumerable<tblUserToGroup>>> GettblUserToGroups()
         {
-            return await _context.TblUserToGroups.ToListAsync();
+            return await _context.tblUserToGroups.ToListAsync();
         }
 
-        // GET: api/TblUserToGroups/5
+        // GET: api/tblUserToGroups/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<TblUserToGroup>> GetTblUserToGroup(int id)
+        public async Task<ActionResult<tblUserToGroup>> GettblUserToGroup(int id)
         {
-            var tblUserToGroup = await _context.TblUserToGroups.FindAsync(id);
+            var tblUserToGroup = await _context.tblUserToGroups.FindAsync(id);
 
             if (tblUserToGroup == null)
             {
@@ -44,12 +44,12 @@ namespace FairShareAPI.Controllers
             return tblUserToGroup;
         }
 
-        // PUT: api/TblUserToGroups/5
+        // PUT: api/tblUserToGroups/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTblUserToGroup(int id, TblUserToGroup tblUserToGroup)
+        public async Task<IActionResult> PuttblUserToGroup(int id, tblUserToGroup tblUserToGroup)
         {
-            if (id != tblUserToGroup.FldUserToGroupId)
+            if (id != tblUserToGroup.fldUserToGroupId)
             {
                 return BadRequest();
             }
@@ -62,7 +62,7 @@ namespace FairShareAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TblUserToGroupExists(id))
+                if (!tblUserToGroupExists(id))
                 {
                     return NotFound();
                 }
@@ -75,36 +75,36 @@ namespace FairShareAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/TblUserToGroups
+        // POST: api/tblUserToGroups
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<TblUserToGroup>> PostTblUserToGroup(TblUserToGroup tblUserToGroup)
+        public async Task<ActionResult<tblUserToGroup>> PosttblUserToGroup(tblUserToGroup tblUserToGroup)
         {
-            _context.TblUserToGroups.Add(tblUserToGroup);
+            _context.tblUserToGroups.Add(tblUserToGroup);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTblUserToGroup", new { id = tblUserToGroup.FldUserToGroupId }, tblUserToGroup);
+            return CreatedAtAction("GettblUserToGroup", new { id = tblUserToGroup.fldUserToGroupId }, tblUserToGroup);
         }
 
-        // DELETE: api/TblUserToGroups/5
+        // DELETE: api/tblUserToGroups/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTblUserToGroup(int id)
+        public async Task<IActionResult> DeletetblUserToGroup(int id)
         {
-            var tblUserToGroup = await _context.TblUserToGroups.FindAsync(id);
+            var tblUserToGroup = await _context.tblUserToGroups.FindAsync(id);
             if (tblUserToGroup == null)
             {
                 return NotFound();
             }
 
-            _context.TblUserToGroups.Remove(tblUserToGroup);
+            _context.tblUserToGroups.Remove(tblUserToGroup);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool TblUserToGroupExists(int id)
+        private bool tblUserToGroupExists(int id)
         {
-            return _context.TblUserToGroups.Any(e => e.FldUserToGroupId == id);
+            return _context.tblUserToGroups.Any(e => e.fldUserToGroupId == id);
         }
     }
 }

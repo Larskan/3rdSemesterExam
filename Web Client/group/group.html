@@ -8,7 +8,7 @@
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
     />
-    <link rel="stylesheet" href="group.css" />
+    <link rel="stylesheet" href="../universal.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <!-- Replace with group name -->
@@ -54,7 +54,7 @@
           <p><a href="#">Link</a></p>
           <p><a href="#">Link</a></p>
         </div>
-        <div class="col-sm-8 text-left">
+        <div class="col-sm-10 text-left">
           <div id="Center" class="container-fluid">
             <!--This is here for copy and paste -->
 
@@ -63,7 +63,7 @@
 
             <!--#region Heading  -->
             <div id="Container" class="container">
-              <h1>Placeholder <small>To be replaced with group name</small></h1>
+              <h1>The favorite kids</h1>
             </div>
             <!--#endregion -->
 
@@ -71,20 +71,26 @@
               <div class="row">
                 <div class="col-sm-8">
                   <h3>Trips</h3>
+                  <table id="TripTable" class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Created</th>
+                        <th>Sum</th>
+                      </tr>
+                    </thead>
+                    <tbody id="TripTableBody"></tbody>
+                  </table>
                   <!-- TODO: replace with script for loading trip list from DB -->
-                  <p>Placeholder for Trips</p>
-                  <p>Placeholder for Trips</p>
-                  <p>Placeholder for Trips</p>
                 </div>
                 <div class="col-sm-4">
-                  <div class="panel panel-default">
-                    <div class="panel-heading">Members</div>
-                    <div class="panel-body">
-                      <!-- TODO: replace with script for loading user list from DB -->
-                      <p>Placeholder for List</p>
-                      <p>Placeholder for List</p>
-                      <p>Placeholder for List</p>
-                    </div>
+                  <div id="Panel" class="panel panel-default">
+                    <div id="Heading" class="panel-heading">Members</div>
+                    <table class="table table-hover">
+                      <tbody id="UserTableBody"></tbody>
+                    </table>
+                    <!-- TODO: replace with script for loading user list from DB -->
+                    <!-- Will probably need to hold the user ID here somehow-->
                   </div>
                 </div>
               </div>
@@ -100,12 +106,8 @@
   </body>
 
   <script src="group.js"></script>
-
-  <script></script>
-
   <script>
-    $(document).ready(function () {
-      $('[data-toggle="tooltip"]').tooltip();
-    });
+    $(document).ready(PopulateTripTable());
+    $(document).ready(PopulateMemberTable());
   </script>
 </html>

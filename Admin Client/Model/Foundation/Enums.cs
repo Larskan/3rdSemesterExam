@@ -27,4 +27,21 @@ namespace Admin_Client
 		Int32,
 		Boolean
 	}
+
+	/// <summary>
+	/// The different types of sql objects
+	/// </summary>
+	public enum SqlObjectType
+	{
+		tblGroup,
+		tblGroupToMoney,
+		tblLogin,
+		tblReceipt,
+		tblTrip,
+		tblTripToUserExpense,
+		tblUser,
+		tblUserExpense,
+		tblUserToGroup
+	}
+
 }

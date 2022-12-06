@@ -14,27 +14,27 @@ namespace FairShareAPI.Controllers
     [Route("[controller]")]
     [ApiController]
     [EnableCors]
-    public class TblLoginsController : ControllerBase
+    public class tblLoginsController : ControllerBase
     {
         private readonly FairShareDbContext _context;
 
-        public TblLoginsController(FairShareDbContext context)
+        public tblLoginsController(FairShareDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/TblLogins
+        // GET: api/tblLogins
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TblLogin>>> GetTblLogins()
+        public async Task<ActionResult<IEnumerable<tblLogin>>> GettblLogins()
         {
-            return await _context.TblLogins.ToListAsync();
+            return await _context.tblLogins.ToListAsync();
         }
 
-        // GET: api/TblLogins/5
+        // GET: api/tblLogins/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<TblLogin>> GetTblLogin(int id)
+        public async Task<ActionResult<tblLogin>> GettblLogin(int id)
         {
-            var tblLogin = await _context.TblLogins.FindAsync(id);
+            var tblLogin = await _context.tblLogins.FindAsync(id);
 
             if (tblLogin == null)
             {
@@ -44,12 +44,12 @@ namespace FairShareAPI.Controllers
             return tblLogin;
         }
 
-        // PUT: api/TblLogins/5
+        // PUT: api/tblLogins/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTblLogin(int id, TblLogin tblLogin)
+        public async Task<IActionResult> PuttblLogin(int id, tblLogin tblLogin)
         {
-            if (id != tblLogin.FldLoginId)
+            if (id != tblLogin.fldLoginId)
             {
                 return BadRequest();
             }
@@ -62,7 +62,7 @@ namespace FairShareAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TblLoginExists(id))
+                if (!tblLoginExists(id))
                 {
                     return NotFound();
                 }
@@ -75,36 +75,36 @@ namespace FairShareAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/TblLogins
+        // POST: api/tblLogins
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<TblLogin>> PostTblLogin(TblLogin tblLogin)
+        public async Task<ActionResult<tblLogin>> PosttblLogin(tblLogin tblLogin)
         {
-            _context.TblLogins.Add(tblLogin);
+            _context.tblLogins.Add(tblLogin);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTblLogin", new { id = tblLogin.FldLoginId }, tblLogin);
+            return CreatedAtAction("GettblLogin", new { id = tblLogin.fldLoginId }, tblLogin);
         }
 
-        // DELETE: api/TblLogins/5
+        // DELETE: api/tblLogins/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTblLogin(int id)
+        public async Task<IActionResult> DeletetblLogin(int id)
         {
-            var tblLogin = await _context.TblLogins.FindAsync(id);
+            var tblLogin = await _context.tblLogins.FindAsync(id);
             if (tblLogin == null)
             {
                 return NotFound();
             }
 
-            _context.TblLogins.Remove(tblLogin);
+            _context.tblLogins.Remove(tblLogin);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool TblLoginExists(int id)
+        private bool tblLoginExists(int id)
         {
-            return _context.TblLogins.Any(e => e.FldLoginId == id);
+            return _context.tblLogins.Any(e => e.fldLoginId == id);
         }
     }
 }

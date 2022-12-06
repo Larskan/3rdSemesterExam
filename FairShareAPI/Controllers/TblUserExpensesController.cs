@@ -14,27 +14,27 @@ namespace FairShareAPI.Controllers
     [Route("[controller]")]
     [ApiController]
     [EnableCors]
-    public class TblUserExpensesController : ControllerBase
+    public class tblUserExpensesController : ControllerBase
     {
         private readonly FairShareDbContext _context;
 
-        public TblUserExpensesController(FairShareDbContext context)
+        public tblUserExpensesController(FairShareDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/TblUserExpenses
+        // GET: api/tblUserExpenses
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TblUserExpense>>> GetTblUserExpenses()
+        public async Task<ActionResult<IEnumerable<tblUserExpense>>> GettblUserExpenses()
         {
-            return await _context.TblUserExpenses.ToListAsync();
+            return await _context.tblUserExpenses.ToListAsync();
         }
 
-        // GET: api/TblUserExpenses/5
+        // GET: api/tblUserExpenses/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<TblUserExpense>> GetTblUserExpense(int id)
+        public async Task<ActionResult<tblUserExpense>> GettblUserExpense(int id)
         {
-            var tblUserExpense = await _context.TblUserExpenses.FindAsync(id);
+            var tblUserExpense = await _context.tblUserExpenses.FindAsync(id);
 
             if (tblUserExpense == null)
             {
@@ -44,12 +44,12 @@ namespace FairShareAPI.Controllers
             return tblUserExpense;
         }
 
-        // PUT: api/TblUserExpenses/5
+        // PUT: api/tblUserExpenses/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTblUserExpense(int id, TblUserExpense tblUserExpense)
+        public async Task<IActionResult> PuttblUserExpense(int id, tblUserExpense tblUserExpense)
         {
-            if (id != tblUserExpense.FldExpensesId)
+            if (id != tblUserExpense.fldExpensesId)
             {
                 return BadRequest();
             }
@@ -62,7 +62,7 @@ namespace FairShareAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TblUserExpenseExists(id))
+                if (!tblUserExpenseExists(id))
                 {
                     return NotFound();
                 }
@@ -75,36 +75,36 @@ namespace FairShareAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/TblUserExpenses
+        // POST: api/tblUserExpenses
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<TblUserExpense>> PostTblUserExpense(TblUserExpense tblUserExpense)
+        public async Task<ActionResult<tblUserExpense>> PosttblUserExpense(tblUserExpense tblUserExpense)
         {
-            _context.TblUserExpenses.Add(tblUserExpense);
+            _context.tblUserExpenses.Add(tblUserExpense);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTblUserExpense", new { id = tblUserExpense.FldExpensesId }, tblUserExpense);
+            return CreatedAtAction("GettblUserExpense", new { id = tblUserExpense.fldExpensesId }, tblUserExpense);
         }
 
-        // DELETE: api/TblUserExpenses/5
+        // DELETE: api/tblUserExpenses/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTblUserExpense(int id)
+        public async Task<IActionResult> DeletetblUserExpense(int id)
         {
-            var tblUserExpense = await _context.TblUserExpenses.FindAsync(id);
+            var tblUserExpense = await _context.tblUserExpenses.FindAsync(id);
             if (tblUserExpense == null)
             {
                 return NotFound();
             }
 
-            _context.TblUserExpenses.Remove(tblUserExpense);
+            _context.tblUserExpenses.Remove(tblUserExpense);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool TblUserExpenseExists(int id)
+        private bool tblUserExpenseExists(int id)
         {
-            return _context.TblUserExpenses.Any(e => e.FldExpensesId == id);
+            return _context.tblUserExpenses.Any(e => e.fldExpensesId == id);
         }
     }
 }
