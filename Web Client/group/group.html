@@ -15,7 +15,7 @@
     <title>Group</title>
   </head>
 
-  <body onload="PopulateTripTable()">
+  <body>
     <nav
       class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top"
       style="background-color: white"
@@ -87,17 +87,7 @@
                   <div id="Panel" class="panel panel-default">
                     <div id="Heading" class="panel-heading">Members</div>
                     <table class="table table-hover">
-                      <tbody>
-                        <tr>
-                          <td>John</td>
-                        </tr>
-                        <tr>
-                          <td>Mary</td>
-                        </tr>
-                        <tr>
-                          <td>July</td>
-                        </tr>
-                      </tbody>
+                      <tbody id="UserTableBody"></tbody>
                     </table>
                     <!-- TODO: replace with script for loading user list from DB -->
                     <!-- Will probably need to hold the user ID here somehow-->
@@ -116,4 +106,8 @@
   </body>
 
   <script src="group.js"></script>
+  <script>
+    $(document).ready(PopulateTripTable());
+    $(document).ready(PopulateMemberTable());
+  </script>
 </html>

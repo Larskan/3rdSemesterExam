@@ -32,11 +32,34 @@ function CreateTripTableElement(TripName, DateOfCreation, Sum )
     TableBody.appendChild(row); //finally appends child to display it
 }
 
+function CreateMemberTableElement(username){
+
+    const TableBody = document.getElementById('UserTableBody');
+    let row = document.createElement('tr');
+    let NameCell = document.createElement('td');
+    let NameHolder = document.createElement('a');
+
+    NameHolder.href = '#';
+
+    NameHolder.innerHTML = username;
+
+    NameCell.appendChild(NameHolder);
+    row.appendChild(NameCell);
+    TableBody.appendChild(row);
+}
+
 //replace this with actual code
 function PopulateTripTable()
 {
     CreateTripTableElement('Trip To Spain','16.06.2012','$30.000,00');
     CreateTripTableElement('Moms birthday party','12.02.2015','$240.000,00');
     CreateTripTableElement('Cat food','01.01.1980','$-2.147.483.647,00');
+
+}
+
+function PopulateMemberTable(){
+    CreateMemberTableElement('John');
+    CreateMemberTableElement('Mary');
+    CreateMemberTableElement('July');
 
 }
