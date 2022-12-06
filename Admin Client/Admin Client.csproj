@@ -275,15 +275,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Model\DB\DBItem\TblGroup.cs" />
-    <Compile Include="Model\DB\DBItem\TblGroupToMoney.cs" />
-    <Compile Include="Model\DB\DBItem\TblLogin.cs" />
-    <Compile Include="Model\DB\DBItem\TblReceipt.cs" />
-    <Compile Include="Model\DB\DBItem\TblTrip.cs" />
-    <Compile Include="Model\DB\DBItem\TblTripToUserExpense.cs" />
-    <Compile Include="Model\DB\DBItem\TblUser.cs" />
-    <Compile Include="Model\DB\DBItem\TblUserExpense.cs" />
-    <Compile Include="Model\DB\DBItem\TblUserToGroup.cs" />
     <Compile Include="Model\DB\EF Test\HttpDbContext.cs" />
     <Compile Include="Model\DB\EF Test\tblGroup.cs" />
     <Compile Include="Model\DB\EF Test\tblGroupToTrip.cs" />
