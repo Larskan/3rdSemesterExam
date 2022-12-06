@@ -73,42 +73,42 @@
                 id="Actions"
                 class="btn"
                 href="#"
-                data-toggle="tooltip"
-                title="Create Group"
               >
-                <span class="glyphicon glyphicon-plus"></span>
+                <span class="glyphicon glyphicon-plus"></span> Create group
               </button>
 
               <button
                 id="Actions"
                 class="btn"
-                href="#"
-                data-toggle="tooltip"
-                title="Join Group"
-              >
-                <span class="glyphicon glyphicon-search"></span>
+                data-toggle="collapse"
+                data-target="#search"              
+                >
+                <span class="glyphicon glyphicon-search"></span> Join group
               </button>
 
-              <button
-                id="Actions"
-                class="btn"
-                href="#"
-                data-toggle="tooltip"
-                title="PlaceHolder"
-              >
-                <span class="glyphicon glyphicon-adjust"></span>
-              </button>
-
-              <button
-                id="Actions"
-                class="btn"
-                href="#"
-                data-toggle="tooltip"
-                title="PlaceHolder"
-              >
-                <span class="glyphicon glyphicon-arrow-up"></span>
-              </button>
-            </div>
+              <div id="search" class="collapse">
+                <div style="border: transparent" class="panel panel-default">
+                  <div id="Heading" class="panel-heading">Search</div>
+                  <div class="panel-body">
+                    <input
+                      type="text"
+                      id=""
+                      placeholder="Search for Group name"
+                    />
+                    <input
+                      type="text"
+                      id=""
+                      placeholder="Search for Group owner"
+                    />
+                    <button id="Actions" class="button button-default">
+                      Search
+                    </button>
+                    <br />
+                    <br />
+                    Search Results here
+                  </div>
+                </div>
+              </div>
             <!--#endregion -->
 
             <!--#region Recent groups  -->
@@ -174,7 +174,7 @@
     }
   </style>
 
-  <script src="test.js"></script>
+  <script src="groupmenu.js"></script>
 
   <script>
     $(document).ready(LoadRecentGroups());

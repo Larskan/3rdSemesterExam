@@ -93,7 +93,6 @@ body
     color: lightgray;
 }
 
-<<<<<<< HEAD:Web Client/universal.css
 #Panel
 {
     border: transparent;
@@ -101,12 +100,6 @@ body
 
 
 #small
-=======
-
-
-
-#funnies
->>>>>>> b1f376bc8ecbec67f523fc2ab0bf2c06ec3c0551:Web Client/test.css
 {
     min-height: 150px;
     min-width: 150px;
