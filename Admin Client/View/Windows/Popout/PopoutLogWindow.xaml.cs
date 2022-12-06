@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -27,20 +26,15 @@ namespace Admin_Client.View.Windows.Popout
 		PopoutLogWindowModel windowModel;
 		public PopoutLogWindow(DateTime dateTime)
 		{
-			InitializeComponent();
-
-			windowModel = new PopoutLogWindowModel(dateTime, ListBox_Logs, CheckBox_AutoScroll, this);
+			windowModel = new PopoutLogWindowModel(dateTime);
 			this.DataContext = windowModel;
+
+			InitializeComponent();
 		}
 
 		private void Window_Closed(object sender, EventArgs e)
 		{
 			windowModel.Closed();
-		}
-
-		private void ToText_Click(object sender, RoutedEventArgs e)
-		{
-			windowModel.ToText();
 		}
 	}
 }

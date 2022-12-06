@@ -224,9 +224,6 @@
     <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
     </Reference>
-    <Reference Include="System.Net.Http.Formatting, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.9\lib\net45\System.Net.Http.Formatting.dll</HintPath>
-    </Reference>
     <Reference Include="System.Net.Http.WebRequest" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -260,9 +257,6 @@
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Http, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.9\lib\net45\System.Web.Http.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -281,8 +275,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Model\Controller\AbstractGlobalInformationBuilder.cs" />
-    <Compile Include="Model\Controller\GlobalInformationBuilder.cs" />
+    <Compile Include="Model\DB\DBItem\TblGroup.cs" />
+    <Compile Include="Model\DB\DBItem\TblGroupToMoney.cs" />
+    <Compile Include="Model\DB\DBItem\TblLogin.cs" />
+    <Compile Include="Model\DB\DBItem\TblReceipt.cs" />
+    <Compile Include="Model\DB\DBItem\TblTrip.cs" />
+    <Compile Include="Model\DB\DBItem\TblTripToUserExpense.cs" />
+    <Compile Include="Model\DB\DBItem\TblUser.cs" />
+    <Compile Include="Model\DB\DBItem\TblUserExpense.cs" />
+    <Compile Include="Model\DB\DBItem\TblUserToGroup.cs" />
     <Compile Include="Model\DB\EF Test\HttpDbContext.cs" />
     <Compile Include="Model\DB\EF Test\tblGroup.cs" />
     <Compile Include="Model\DB\EF Test\tblGroupToTrip.cs" />
@@ -295,7 +296,6 @@
     <Compile Include="Model\DB\EF Test\tblUserToGroup.cs" />
     <Compile Include="Model\DB\HttpClientServices.cs" />
     <Compile Include="Model\DB\Response.cs" />
-    <Compile Include="Model\Domain\GlobalInformation.cs" />
     <Compile Include="Model\Domain\Log.cs" />
     <Compile Include="Model\Domain\LogFile.cs" />
     <Compile Include="Model\Domain\Parameter.cs" />
@@ -306,7 +306,6 @@
     <Compile Include="Model\Foundation\Encryption.cs" />
     <Compile Include="Model\Foundation\Enums.cs" />
     <Compile Include="PropertyChanged\NotifyPropertyChangedHandler.cs" />
-    <Compile Include="Singleton\GlobalInformationBuilderSingleton.cs" />
     <Compile Include="Singleton\OverviewSingleton.cs" />
     <Compile Include="Singleton\UserviewSingleton.cs" />
     <Compile Include="Singleton\HttpClientServicesSingleton.cs" />
@@ -322,24 +321,18 @@
     <Compile Include="ViewModel\ContentControlModels\Special\BackMenuViewModel.cs" />
     <Compile Include="ViewModel\ContentControlModels\Special\MenuViewModel.cs" />
     <Compile Include="ViewModel\ContentControlModels\GroupListViewModel.cs" />
-    <Compile Include="ViewModel\ContentControlModels\TestingViewModel.cs" />
     <Compile Include="ViewModel\ContentControlModels\UserExpenseListView.cs" />
     <Compile Include="ViewModel\ContentControlModels\UserListViewModel.cs" />
     <Compile Include="ViewModel\ContentControlModels\UserViewModel.cs" />
     <Compile Include="ViewModel\WindowModels\MainWindowModel.cs" />
     <Compile Include="ViewModel\WindowModels\Popout\PopoutLogToolWindowModel.cs" />
     <Compile Include="ViewModel\WindowModels\Popout\PopoutLogWindowModel.cs" />
+    <Compile Include="ViewModel\WindowModels\Popup\PopupAddUserWindowModel.cs" />
     <Compile Include="ViewModel\WindowModels\Popup\PopupConfirmWindowModel.cs" />
     <Compile Include="ViewModel\WindowModels\Popup\PopupParameterChangeWindowModel.cs" />
     <Compile Include="ViewModel\WindowModels\Popup\PopupPasswordChangeWindowModel.cs" />
     <Compile Include="View\UserControls\Special\BackMenuView.xaml.cs">
       <DependentUpon>BackMenuView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\UserControls\TestingView.xaml.cs">
-      <DependentUpon>TestingView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Windows\Popout\PopoutLogTextWindow.xaml.cs">
-      <DependentUpon>PopoutLogTextWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Windows\Popout\PopoutLogToolWindow.xaml.cs">
       <DependentUpon>PopoutLogToolWindow.xaml</DependentUpon>
@@ -352,6 +345,9 @@
     </Compile>
     <Compile Include="View\Windows\Popups\PopupPasswordChangeWindow.xaml.cs">
       <DependentUpon>PopupPasswordChangeWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\Popups\PopupAddUserWindow.xaml.cs">
+      <DependentUpon>PopupAddUserWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="View\UserControls\AccountView.xaml">
       <SubType>Designer</SubType>
@@ -393,10 +389,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\UserControls\TestingView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\UserControls\UserExpenseListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -406,10 +398,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\UserControls\UserView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Windows\Popout\PopoutLogTextWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -484,8 +472,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Windows\Popups\PopupAddUserWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\Controller\temp1.cs" />
+    <Compile Include="Model\Business\temp2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -8,31 +8,14 @@
         Title="LogWindow" Height="600" Width="700" Closed="Window_Closed">
     <Grid>
 
-        
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0">
+        <Label Grid.Row="0" Content="{Binding LogFileName}" FontSize="30" FontWeight="Bold" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.25*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="0.25*"/>
-            </Grid.ColumnDefinitions>
-
-            <Label Grid.Column="1" Content="{Binding LogFileName}" FontSize="30" FontWeight="Bold" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-
-            <StackPanel Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center">
-                <Label Content="Auto Scroll"/>
-                <CheckBox Name="CheckBox_AutoScroll" HorizontalAlignment="Center"></CheckBox>
-                <Button Content="To Text" Margin="0,15,0,0" Click="ToText_Click"></Button>
-            </StackPanel>
-            
-        </Grid>
-        
-        <ListBox Name="ListBox_Logs" Grid.Row="1" ItemsSource="{Binding Logs}" Margin="10" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource logDataTemplate}" ItemContainerStyle="{StaticResource NoHoverOrTargetRoundedListItem}" Style="{StaticResource roundlistboxwithempty}" Resources="{StaticResource roundborder10}"/>
+        <ListBox Grid.Row="1" ItemsSource="{Binding Logs}" Margin="10" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource logDataTemplate}" ItemContainerStyle="{StaticResource NoHoverOrTargetRoundedListItem}" Style="{StaticResource roundlistboxwithempty}" Resources="{StaticResource roundborder10}"/>
 
     </Grid>
 </Window>

@@ -1,5 +1,8 @@
-﻿using Admin_Client.Model.Domain;
+﻿using Admin_Client.Model;
+using Admin_Client.Model.DB;
+using Admin_Client.Model.Domain;
 using Admin_Client.Singleton;
+using Admin_Client.View.Windows.Popups;
 using Admin_Client.ViewModel.ContentControlModels;
 using System;
 using System.Collections.Generic;
@@ -29,6 +32,8 @@ namespace Admin_Client.View.UserControls
             this.DataContext = viewModel;
 
             InitializeComponent();
+
+
         }
 
         private void Delete_Trip(object sender, RoutedEventArgs e)
@@ -43,7 +48,7 @@ namespace Admin_Client.View.UserControls
 
         private void Create_Trip(object sender, RoutedEventArgs e)
         {
-
+            viewModel.Create();
         }
 
         private void Remove_Member(object sender, RoutedEventArgs e)
@@ -53,7 +58,14 @@ namespace Admin_Client.View.UserControls
 
         private void Add_Member(object sender, RoutedEventArgs e)
         {
+            viewModel.Add();
 
+        }
+        private void OnPageLoaded(object sender, RoutedEventArgs e)
+        {
+
+            viewModel.Update("User");
+            viewModel.Update("Trip");
         }
     }
 }

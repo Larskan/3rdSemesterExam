@@ -1,5 +1,4 @@
 ﻿using Admin_Client.Model.DB;
-using Admin_Client.Model.DB.EF_Test;
 using Admin_Client.Model.Domain;
 using Admin_Client.Singleton;
 using Admin_Client.ViewModel.ContentControlModels;
@@ -26,7 +25,7 @@ namespace Admin_Client.View.UserControls
 	public partial class LogListView : UserControl
 	{
 		LogListViewModel viewModel;
-		public LogListView(tblUser user)
+		public LogListView(TblUser user)
 		{
             viewModel = new LogListViewModel(user);
             this.DataContext = viewModel;

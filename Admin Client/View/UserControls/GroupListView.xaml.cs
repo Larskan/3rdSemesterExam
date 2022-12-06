@@ -1,6 +1,5 @@
 ﻿using Admin_Client.Model;
 using Admin_Client.Model.DB;
-using Admin_Client.Model.DB.EF_Test;
 using Admin_Client.Model.Domain;
 using Admin_Client.Singleton;
 using Admin_Client.View.Windows.Popups;
@@ -54,11 +53,11 @@ namespace Admin_Client.View.UserControls
         {
             if (ListBox_Groups.SelectedItem != null)
             {
-                viewModel.Edit((tblGroup)ListBox_Groups.SelectedItem);
+                viewModel.Edit((TblGroup)ListBox_Groups.SelectedItem);
 
-				// NOPE
-                //Overview.SetGroupID(FAKEDATABASE.GetGroupID((tblGroup)ListBox_Groups.SelectedItem));
-                //MainWindowModelSingleton.Instance.SetMainContent(new GroupView(), true);
+				
+                //Overview.SetGroupID(FAKEDATABASE.GetGroupID((TblGroup)ListBox_Groups.SelectedItem));
+                
             }
         }
 
@@ -66,7 +65,7 @@ namespace Admin_Client.View.UserControls
 		{
 			if (ListBox_Groups.SelectedItem != null)
 			{
-				viewModel.Delete((tblGroup)ListBox_Groups.SelectedItem);
+				viewModel.Delete((TblGroup)ListBox_Groups.SelectedItem);
 			}
 		}
         private void OnPageLoaded(object sender, RoutedEventArgs e)
@@ -86,12 +85,8 @@ namespace Admin_Client.View.UserControls
 		{
 			if (String.IsNullOrEmpty(TextBox_Search.Text))
 				return true;
-			else if (((tblGroup)item).fldGroupName.IndexOf(TextBox_Search.Text, StringComparison.OrdinalIgnoreCase) >= 0)
-				return true;
-			else if (((tblGroup)item).fldGroupID.ToString().IndexOf(TextBox_Search.Text, StringComparison.OrdinalIgnoreCase) >= 0)
-				return true;
 			else
-				return (((tblGroup)item).fldGroupBoolean.ToString().IndexOf(TextBox_Search.Text, StringComparison.OrdinalIgnoreCase) >= 0);
+				return (item.ToString().IndexOf(TextBox_Search.Text, StringComparison.OrdinalIgnoreCase) >= 0);
 		}
 
 		#endregion

@@ -1,5 +1,4 @@
 ﻿using Admin_Client.Model.DB;
-using Admin_Client.Model.DB.EF_Test;
 using Admin_Client.Model.Domain;
 using Admin_Client.Singleton;
 using Admin_Client.ViewModel.ContentControlModels;
@@ -26,7 +25,7 @@ namespace Admin_Client.View.UserControls
 	public partial class UserExpenseListView : UserControl
 	{
 		UserExpenseListViewModel viewModel;
-		public UserExpenseListView(tblGroup group)
+		public UserExpenseListView(TblGroup group)
 		{
 			viewModel = new UserExpenseListViewModel(group);
 			this.DataContext = viewModel;

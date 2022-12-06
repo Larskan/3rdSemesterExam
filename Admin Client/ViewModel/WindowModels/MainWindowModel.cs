@@ -1,5 +1,4 @@
 ﻿using Admin_Client.Model.DB;
-using Admin_Client.Model.DB.EF_Test;
 using Admin_Client.Model.Domain;
 using Admin_Client.Model.FileIO;
 using Admin_Client.PropertyChanged;
@@ -175,25 +174,24 @@ namespace Admin_Client.ViewModel.WindowModels
 
 		public void StartPopupParameterChange(object o)
 		{
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Edit Click --> Target " + o.GetType().Name));
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log("PopupParameterChange --> Starting"));
-
 			MainWindowModelSingleton.Instance.GetMainWindow().IsEnabled = false;
+
 			new PopupParameterChangeWindow(mainWindow, o).ShowDialog();
-
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log("PopupParameterChange == Closed"));
 		}
 
-		public void StartPopupPasswordChange(tblUser user)
+		public void StartPopupPasswordChange(TblUser user)
 		{
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Edit Click --> Target " + user.fldUserID + " " + user.fldFirstName + " " + user.fldLastName));
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log("PopupPasswordChange --> Starting"));
-
 			MainWindowModelSingleton.Instance.GetMainWindow().IsEnabled = false;
-			new PopupPasswordChangeWindow(mainWindow, user).ShowDialog();
 
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log("PopupPasswordChange == Closed"));
+			new PopupPasswordChangeWindow(mainWindow, user).ShowDialog();
 		}
+
+		public void StartPopupAddUser(TblUser user)
+		{
+            MainWindowModelSingleton.Instance.GetMainWindow().IsEnabled = false;
+
+            new PopupAddUserWindow(mainWindow, user).ShowDialog();
+        }
 
 		#endregion
 
