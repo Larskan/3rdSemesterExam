@@ -1,30 +1,18 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Admin_Client.Model.DB.EF_Test;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
-using System.Runtime.CompilerServices;
-using System.Runtime.Remoting.Contexts;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Net.Http.Headers;
-using DocumentFormat.OpenXml.Office2016.Drawing.Command;
+using System.Text;
 using System.Threading;
-using System.Security.Policy;
-using System.Windows.Input;
-using Admin_Client.Model.DB.EF_Test;
-using System.Data.Entity;
+using System.Threading.Tasks;
 using JsonSerializer = System.Text.Json.JsonSerializer;
-using DocumentFormat.OpenXml.Office2010.Excel;
-using System.Web.Http.ModelBinding.Binders;
-using NPOI.SS.Formula.Functions;
 
 namespace Admin_Client.Model.DB
 {
@@ -50,13 +38,13 @@ namespace Admin_Client.Model.DB
             this.baseUrl = baseUrl;
         }
 
-        public HttpClientServices(string requestUrl) : this(requestUrl, "https://localhost:7002/") { }
+        public HttpClientServices(string requestUrl) : this(requestUrl, "https://localhost:7002/TblGroups") { }
         public HttpClientServices() { }
-       
+
 
         public void UseDefaultCredentials()
         {
-            useDefaultCredentials= true;
+            useDefaultCredentials = true;
         }
 
         private HttpClientHandler GetHandler()
@@ -74,9 +62,9 @@ namespace Admin_Client.Model.DB
         /// <returns></returns>
         public async Task<IEnumerable<T>> Get()
         {
-            using(HttpClient client = new HttpClient(GetHandler()))
+            using (HttpClient client = new HttpClient(GetHandler()))
             {
-                client.BaseAddress = new Uri(baseUrl);
+                client.BaseAddress = new Uri(baseUrl, UriKind.RelativeOrAbsolute);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 try
@@ -88,32 +76,35 @@ namespace Admin_Client.Model.DB
                     }
                     throw new UnSuccesfulRequest(result.StatusCode.ToString());
                 }
-                catch(Exception e) { throw e; }
+                catch (Exception e) { throw e; }
             }
         }
 
         /// <summary>
-        /// Basic GET based on ID with HttpClient
+        /// Basic GET based on ID with HttpClient: https://localhost:7022/TblGroups/{ID}
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<T> Get(Object id)
+        public async Task<T> Get(object id)
         {
-            using(HttpClient client = new HttpClient(GetHandler()))
+            using (HttpClient client = new HttpClient(GetHandler()))
             {
-                client.BaseAddress = new Uri(baseUrl);
+                client.BaseAddress = new Uri(baseUrl, UriKind.RelativeOrAbsolute);
+                Debug.WriteLine("Client.BaseAddreess: " + client.BaseAddress.ToString());
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 try
                 {
-                    var result = client.GetAsync(requestUrl+"/"+id).Result;
+                    var result = client.GetAsync(requestUrl + "/" + id).Result;
                     if (result.IsSuccessStatusCode)
                     {
+                        Debug.WriteLine("Result1: " + result.Content.ReadAsAsync<T>());
                         return await result.Content.ReadAsAsync<T>();
+
                     }
                     throw new UnSuccesfulRequest(result.StatusCode.ToString());
                 }
-                catch(Exception e) { throw e; }
+                catch (Exception e) { throw e; }
             }
         }
 
@@ -124,21 +115,21 @@ namespace Admin_Client.Model.DB
         /// <returns></returns>
         public async Task<T> Post(T Obj)
         {
-            using(HttpClient client = new HttpClient(GetHandler()))
+            using (HttpClient client = new HttpClient(GetHandler()))
             {
-                client.BaseAddress = new Uri(baseUrl);
+                client.BaseAddress = new Uri(baseUrl, UriKind.RelativeOrAbsolute);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 try
                 {
-                    var result = client.PostAsJsonAsync(requestUrl,Obj).Result;
+                    var result = client.PostAsJsonAsync(requestUrl, Obj).Result;
                     if (result.IsSuccessStatusCode)
                     {
                         return await result.Content.ReadAsAsync<T>();
                     }
                     throw new UnSuccesfulRequest(result.StatusCode.ToString());
                 }
-                catch(Exception e) { throw e; } 
+                catch (Exception e) { throw e; }
             }
         }
 
@@ -150,21 +141,21 @@ namespace Admin_Client.Model.DB
         /// <returns></returns>
         public async Task<T> Update(Object updateId, T Obj)
         {
-            using(HttpClient client = new HttpClient(GetHandler()))
+            using (HttpClient client = new HttpClient(GetHandler()))
             {
-                client.BaseAddress = new Uri(baseUrl);
+                client.BaseAddress = new Uri(baseUrl, UriKind.RelativeOrAbsolute);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 try
                 {
-                    var result = client.PutAsJsonAsync(requestUrl+"/"+updateId,Obj).Result;
+                    var result = client.PutAsJsonAsync(requestUrl + "/" + updateId, Obj).Result;
                     if (result.IsSuccessStatusCode)
                     {
                         return Obj;
                     }
                     throw new UnSuccesfulRequest(result.StatusCode.ToString());
                 }
-                catch(Exception e) { throw e; }
+                catch (Exception e) { throw e; }
             }
         }
 
@@ -175,14 +166,14 @@ namespace Admin_Client.Model.DB
         /// <returns></returns>
         public async Task<bool> Delete(Object updateId)
         {
-            using(HttpClient client = new HttpClient(GetHandler()))
+            using (HttpClient client = new HttpClient(GetHandler()))
             {
-                client.BaseAddress = new Uri(baseUrl);
+                client.BaseAddress = new Uri(baseUrl, UriKind.RelativeOrAbsolute);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 try
                 {
-                    var result = client.DeleteAsync(requestUrl+"/"+updateId).Result;
+                    var result = client.DeleteAsync(requestUrl + "/" + updateId).Result;
                     if (result.IsSuccessStatusCode)
                     {
                         return true;
@@ -190,7 +181,7 @@ namespace Admin_Client.Model.DB
                     throw new UnSuccesfulRequest(result.StatusCode.ToString());
 
                 }
-                catch(Exception e) { throw e; }
+                catch (Exception e) { throw e; }
             }
         }
         #endregion
@@ -228,7 +219,7 @@ namespace Admin_Client.Model.DB
         }
         #endregion
         #region Testing - Collection Output attempt
-        
+
         private static void OutputCollectionToConsole(IEnumerable<object> collectionToOutput)
         {
             foreach (object collectionItem in collectionToOutput)
@@ -507,13 +498,13 @@ namespace Admin_Client.Model.DB
             var task = await client.GetAsync("https://localhost:7002/TblGroups");
             var jsonString = await task.Content.ReadAsStringAsync();
             model = JsonConvert.DeserializeObject<List<tblGroup>>(jsonString);
-            Debug.WriteLine("BLABLABLA: "+model);
+            Debug.WriteLine("BLABLABLA: " + model);
             return (List<object>)model.AsEnumerable();
 
         }
         public async Task<Task<tblGroup>> TestGETTWO()
         {
-            using ( var client = new HttpClient() ) 
+            using (var client = new HttpClient())
             {
                 var apiUrl = "https://localhost:7002/TblGroups";
                 var response = client.SendAsync(new HttpRequestMessage(HttpMethod.Get, apiUrl)).Result;
@@ -547,11 +538,11 @@ namespace Admin_Client.Model.DB
         public async Task<object> GetGroupAsync(string path)
         {
             var address = _httpClient.BaseAddress = new Uri("https://localhost:7002/");
-            string res = address + path+"/";
+            string res = address + path + "/";
             Buffer.Clear();
 
             Buffer.Add(path);
-            
+
 
             tblGroup group = null;
             HttpResponseMessage response = await _httpClient.GetAsync(path);
@@ -572,17 +563,17 @@ namespace Admin_Client.Model.DB
             var address = _httpClient.BaseAddress = new Uri("https://localhost:7002/");
             string url = address + group + "/" + ID;
 
-           // Debug.WriteLine("url: " + url);
+            // Debug.WriteLine("url: " + url);
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             HttpResponseMessage response = client.GetAsync(url).Result;
             response.EnsureSuccessStatusCode();
-           // Debug.WriteLine("response: " + response);
+            // Debug.WriteLine("response: " + response);
 
             //Makes the response into HTTP through serialization
-           // var dub = JsonConvert.DeserializeObject<res>(await response.Content.ReadAsStringAsync());
+            // var dub = JsonConvert.DeserializeObject<res>(await response.Content.ReadAsStringAsync());
             var content = await response.Content.ReadAsStringAsync();
-           // Debug.WriteLine("Final2: " + content);
+            // Debug.WriteLine("Final2: " + content);
             return content;
         }
 
@@ -592,8 +583,8 @@ namespace Admin_Client.Model.DB
         //So when groupID is called, it displays that group + all users connected to that group,which it knows from inner join
         //and other way around
 
-   
-       
+
+
 
         #endregion
 

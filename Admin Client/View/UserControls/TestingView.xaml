@@ -20,7 +20,7 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <ListBox x:Name="ListResult" ItemsSource="{Binding Groups}" Grid.Row="0" Grid.Column="1"  SelectionChanged="ListRestult_SelectionChanged"></ListBox>
+        <ListBox x:Name="ListResult" ItemsSource="{Binding Groups}" Grid.Row="0" Grid.Column="1"></ListBox>
         <TextBlock x:Name="TextResult" Grid.Row="1" Grid.Column="1" ></TextBlock>
         <Button x:Name="Confirm" Grid.Row="0" Grid.Column="0" Content="Confirm" Click="Confirm_Click"></Button>
         

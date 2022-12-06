@@ -1,5 +1,7 @@
-﻿using Admin_Client.Model.DB.EF_Test;
+﻿using Admin_Client.Model.DB;
+using Admin_Client.Model.DB.EF_Test;
 using Admin_Client.Singleton;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -38,18 +40,30 @@ namespace Admin_Client.View.UserControls
             
         }
 
-        private void Confirm_Click(object sender, RoutedEventArgs e)
+        private async void Confirm_Click(object sender, RoutedEventArgs e)
         {
-            //HttpClientServicesSingleton.Instance.TestingGrab("TblGroups", 1);
-            //ResultList = HttpClientServicesSingleton.Instance.TestingGrabGroupAndUsers(1);
+           
 
             /*
-            Groups.Add(new tblGroup());
-            var dub = HttpClientServicesSingleton.Instance.TestingGrabUserAndGroups(1).Result;
-            foreach (var item in dub)
+            var testObject = new tblGroup()
             {
-                Groups.Add((tblGroup)item);
-            }
+                fldGroupName = "Hello",
+                fldGroupBoolean = true,
+                Friends = new List<TestSubObject>()
+                {
+                    new TestSubObject()
+                    {
+                        Id= 1,
+                        Name = "TestSubName",
+                    }
+                }
+            };
+            
+
+            var content = HttpContentBody.GetHttpContent(testObject);
+            var contentString = await content.ReadAsStringAsync();
+
+            Debug.WriteLine("TEST: "+contentString);
             */
 
             //_ = HttpClientServicesSingleton.Instance.GetHttpResponse("tblGroup", 1);
@@ -69,13 +83,10 @@ namespace Admin_Client.View.UserControls
             //var dub = HttpClientServicesSingleton.Instance.TestGETTWO();
             // TextResult.Text = dub.Result;
 
-            var sup = HttpClientServicesSingleton.Instance.Get();
+            var sup = HttpClientServicesSingleton.Instance.Get(1);
             Debug.WriteLine("Sup: " + sup);
         }
 
-        private void ListRestult_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
+       
     }
 }
