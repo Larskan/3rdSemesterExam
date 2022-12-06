@@ -9,27 +9,27 @@ namespace FairShareAPI.Controllers
     [Route("[controller]")]
     [ApiController]
     [EnableCors]
-    public class TblGroupToTripsController : ControllerBase
+    public class tblGroupToTripsController : ControllerBase
     {
         private readonly FairShareDbContext _context;
 
-        public TblGroupToTripsController(FairShareDbContext context)
+        public tblGroupToTripsController(FairShareDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/TblGroupToTrips
+        // GET: api/tblGroupToTrips
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TblGroupToTrip>>> GetTblGroupToTrips()
+        public async Task<ActionResult<IEnumerable<tblGroupToTrip>>> GettblGroupToTrips()
         {
-            return await _context.TblGroupToTrips.ToListAsync();
+            return await _context.tblGroupToTrips.ToListAsync();
         }
 
-        // GET: api/TblGroupToTrips/5
+        // GET: api/tblGroupToTrips/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<TblGroupToTrip>> GetTblGroupToTrip(int id)
+        public async Task<ActionResult<tblGroupToTrip>> GettblGroupToTrip(int id)
         {
-            var tblGroupToMoney = await _context.TblGroupToTrips.FindAsync(id);
+            var tblGroupToMoney = await _context.tblGroupToTrips.FindAsync(id);
 
             if (tblGroupToMoney == null)
             {
@@ -39,12 +39,12 @@ namespace FairShareAPI.Controllers
             return tblGroupToMoney;
         }
 
-        // PUT: api/TblGroupToTrips/5
+        // PUT: api/tblGroupToTrips/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTblGroupToTrip(int id, TblGroupToTrip tblGroupToMoney)
+        public async Task<IActionResult> PuttblGroupToTrip(int id, tblGroupToTrip tblGroupToMoney)
         {
-            if (id != tblGroupToMoney.FldGroupToTripId)
+            if (id != tblGroupToMoney.fldGroupToTripId)
             {
                 return BadRequest();
             }
@@ -57,7 +57,7 @@ namespace FairShareAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TblGroupToTripExists(id))
+                if (!tblGroupToTripExists(id))
                 {
                     return NotFound();
                 }
@@ -70,36 +70,36 @@ namespace FairShareAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/TblGroupToTrips
+        // POST: api/tblGroupToTrips
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<TblGroupToTrip>> PostTblGroupToTrip(TblGroupToTrip tblGroupToTrip)
+        public async Task<ActionResult<tblGroupToTrip>> PosttblGroupToTrip(tblGroupToTrip tblGroupToTrip)
         {
-            _context.TblGroupToTrips.Add(tblGroupToTrip);
+            _context.tblGroupToTrips.Add(tblGroupToTrip);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTblGroupToTrip", new { id = tblGroupToTrip.FldGroupToTripId }, tblGroupToTrip);
+            return CreatedAtAction("GettblGroupToTrip", new { id = tblGroupToTrip.fldGroupToTripId }, tblGroupToTrip);
         }
 
-        // DELETE: api/TblGroupToTrips/5
+        // DELETE: api/tblGroupToTrips/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTblGroupToTrip(int id)
+        public async Task<IActionResult> DeletetblGroupToTrip(int id)
         {
-            var tblGroupToTrip = await _context.TblGroupToTrips.FindAsync(id);
+            var tblGroupToTrip = await _context.tblGroupToTrips.FindAsync(id);
             if (tblGroupToTrip == null)
             {
                 return NotFound();
             }
 
-            _context.TblGroupToTrips.Remove(tblGroupToTrip);
+            _context.tblGroupToTrips.Remove(tblGroupToTrip);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool TblGroupToTripExists(int id)
+        private bool tblGroupToTripExists(int id)
         {
-            return _context.TblGroupToTrips.Any(e => e.FldGroupToTripId == id);
+            return _context.tblGroupToTrips.Any(e => e.fldGroupToTripId == id);
         }
     }
 }

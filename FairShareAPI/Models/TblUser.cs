@@ -1,31 +1,38 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
 namespace FairShareAPI.Models;
 
-public partial class TblUser
+[DataContract(IsReference = true)]
+[JsonObject(IsReference = false)]
+public partial class tblUser
 {
-    public int FldUserId { get; set; }
+	[DataMember]
+	public int fldUserId { get; set; }
 
-    public string? FldEmail { get; set; }
+	[DataMember]
+	public string? fldEmail { get; set; }
 
-    public string? FldFirstName { get; set; }
+	[DataMember]
+	public string? fldFirstName { get; set; }
 
-    public string? FldLastName { get; set; }
+	[DataMember]
+	public string? fldLastName { get; set; }
 
-    public int? FldPhonenumber { get; set; }
-	public bool? FldIsAdmin { get; set; }
+	[DataMember]
+	public int? fldPhonenumber { get; set; }
 
-	[JsonIgnore]
-	public virtual ICollection<TblLogin> TblLogins { get; } = new List<TblLogin>();
+	[DataMember]
+	public bool? fldIsAdmin { get; set; }
 
-	[JsonIgnore]
-	public virtual ICollection<TblReceipt> TblReceipts { get; } = new List<TblReceipt>();
+	public virtual ICollection<tblLogin> tblLogins { get; } = new List<tblLogin>();
 
-	[JsonIgnore]
-	public virtual ICollection<TblUserExpense> TblUserExpenses { get; } = new List<TblUserExpense>();
+	public virtual ICollection<tblReceipt> tblReceipts { get; } = new List<tblReceipt>();
 
-	[JsonIgnore]
-	public virtual ICollection<TblUserToGroup> TblUserToGroups { get; } = new List<TblUserToGroup>();
+	public virtual ICollection<tblUserExpense> tblUserExpenses { get; } = new List<tblUserExpense>();
+
+	public virtual ICollection<tblUserToGroup> tblUserToGroups { get; } = new List<tblUserToGroup>();
 }

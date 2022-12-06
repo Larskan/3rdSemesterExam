@@ -295,6 +295,7 @@
     <Compile Include="Model\DB\EF Test\tblUserToGroup.cs" />
     <Compile Include="Model\DB\HttpClientServices.cs" />
     <Compile Include="Model\DB\Response.cs" />
+    <Compile Include="Model\DB\HttpAPIClient.cs" />
     <Compile Include="Model\Domain\GlobalInformation.cs" />
     <Compile Include="Model\Domain\Log.cs" />
     <Compile Include="Model\Domain\LogFile.cs" />
@@ -515,6 +516,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

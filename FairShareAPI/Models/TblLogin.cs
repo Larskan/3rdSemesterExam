@@ -1,17 +1,23 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
 namespace FairShareAPI.Models;
 
-public partial class TblLogin
+[DataContract(IsReference = true)]
+[JsonObject(IsReference = false)]
+public partial class tblLogin
 {
-    public int FldLoginId { get; set; }
+	[DataMember]
+	public int fldLoginId { get; set; }
 
-    public int? FldUserId { get; set; }
+	[DataMember]
+	public int? fldUserId { get; set; }
 
-    public string? FldPassword { get; set; }
+	[DataMember]
+	public string? fldPassword { get; set; }
 
-	[JsonIgnore]
-	public virtual TblUser? FldUser { get; set; }
+	public virtual tblUser? fldUser { get; set; }
 }
