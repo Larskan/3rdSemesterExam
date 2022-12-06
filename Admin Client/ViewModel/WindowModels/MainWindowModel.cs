@@ -197,9 +197,14 @@ namespace Admin_Client.ViewModel.WindowModels
 
 		public void StartPopupAddUser()
 		{
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Add Click --> New User"));
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log("PopoutAddUser --> Starting"));
+
 			// TODO
 			MainWindowModelSingleton.Instance.GetMainWindow().IsEnabled = false;
 			new PopupParameterChangeWindow(mainWindow, new tblUser()).ShowDialog();
+
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log("PopoutAddUser == Closed"));
 		}
 
 		#endregion

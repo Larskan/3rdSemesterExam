@@ -37,8 +37,10 @@ namespace Admin_Client.ViewModel.ContentControlModels
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Login Click"));
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Username: " + username));
+			
 
 			// LOGIN AUTHENTICATION MISSING - TODO
+
 			if (true)
 			{
 				LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Login == Success"));

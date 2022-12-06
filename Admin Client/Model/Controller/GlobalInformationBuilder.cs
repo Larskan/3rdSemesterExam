@@ -3,6 +3,7 @@ using Admin_Client.Model.DB.EF_Test;
 using Admin_Client.Model.Domain;
 using Admin_Client.Singleton;
 using DocumentFormat.OpenXml.Spreadsheet;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -74,15 +75,21 @@ namespace Admin_Client.Model.Controller
 
 		#region Threading GroupList
 
-		private void UpdateGroupListThread(object o)
+		private async void UpdateGroupListThread(object o)
 		{
 			object[] array = o as object[];
 			CancellationToken token = (CancellationToken)array[0];
 
 			while (!token.IsCancellationRequested)
 			{
-				// CHANGE THE FAKEDATEBASE.GETGROUPS() - TODO
-				List<tblGroup> groups = FAKEDATABASE.GetGroups();
+				List<tblGroup> groups = new List<tblGroup>();
+				Task <List<object>> tg = new HttpAPIClient().GetAll(SqlObjectType.tblGroup);
+				await tg;
+				foreach (var item in tg.Result)
+				{
+					tblGroup group = ((JObject)item).ToObject<tblGroup>();
+					groups.Add(group);
+				}
 
 				bool found;
 				foreach (var groupItem in groups)
