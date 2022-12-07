@@ -61,7 +61,7 @@ namespace Admin_Client.ViewModel.WindowModels
 
 		public MainWindowModel()
 		{
-			
+			ThreadPool.QueueUserWorkItem(APIFastConnectThread, new object());
 		}
 
 		#endregion
@@ -317,6 +317,15 @@ namespace Admin_Client.ViewModel.WindowModels
 				this.Grid_AccountTab.Children.Clear();
 				LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "AccountTab == False"));
 			}
+		}
+
+		#endregion
+
+		#region APIFastConnect
+
+		public void APIFastConnectThread(object o)
+		{
+			List<tblUser> users = HttpClientHandler.GetUsers();
 		}
 
 		#endregion

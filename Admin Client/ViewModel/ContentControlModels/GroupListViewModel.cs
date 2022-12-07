@@ -5,6 +5,7 @@ using Admin_Client.Model.Domain;
 using Admin_Client.PropertyChanged;
 using Admin_Client.Singleton;
 using Admin_Client.View.Windows.Popups;
+using DocumentFormat.OpenXml.Spreadsheet;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -85,8 +86,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 			while (!token.IsCancellationRequested)
 			{
-				// CHANGE THE FAKEDATEBASE.GETGROUPS() - TODO
-				List<tblGroup> groups = FAKEDATABASE.GetGroups();
+				List<tblGroup> groups = HttpClientHandler.GetGroups();
 
 				bool found;
 				foreach (var groupItem in groups)

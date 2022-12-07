@@ -82,8 +82,8 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
             while (!token.IsCancellationRequested)
             {
-                // CHANGE THE FAKEDATEBASE.GETUSERS() - TODO
-                List<tblUser> users = FAKEDATABASE.GetUsers();  
+                // CHANGE SO IT GETS THE USER FOR SAID GROUP
+                List<tblUser> users = HttpClientHandler.GetUsers();  
 
                 bool found;
                     foreach (var userItem in users)

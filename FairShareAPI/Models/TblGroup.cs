@@ -17,7 +17,7 @@ public partial class tblGroup
 	public string? fldGroupName { get; set; }
 
 	[DataMember]
-	public bool? fldGroupBoolean { get; set; }
+	public bool? fldIsTemporary { get; set; }
 
     public virtual ICollection<tblGroupToTrip> tblGroupToMoneys { get; } = new List<tblGroupToTrip>();
 

@@ -28,9 +28,10 @@ namespace Admin_Client
 	{
 		public MainWindow()
 		{
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log("MainWindow --> Starting"));
+
 			this.DataContext = MainWindowModelSingleton.Instance;
 
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log("MainWindow --> Starting"));
 			InitializeComponent();
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "MainWindow == Shown"));
 
@@ -38,8 +39,6 @@ namespace Admin_Client
 
 			MainWindowModelSingleton.Instance.SetMainWindow(this);
 			MainWindowModelSingleton.Instance.CreateGridRelations(Grid_Menu, Grid_Account, CControl_Main);
-
-			GlobalInformationBuilderSingleton.Instance.BuildStartInfo();
 		}
 
 		/// <summary>

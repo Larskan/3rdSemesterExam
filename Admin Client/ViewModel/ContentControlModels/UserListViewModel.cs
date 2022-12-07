@@ -76,13 +76,14 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		private void UpdateUsersListThread(object o)
 		{
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log("ThreadID: " + Thread.CurrentThread.ManagedThreadId + " --> Starting"));
+
 			object[] array = o as object[];
 			CancellationToken token = (CancellationToken)array[0];
 
 			while (!token.IsCancellationRequested)
 			{
-				// CHANGE THE FAKEDATEBASE.GETUSERS() - TODO
-				List<tblUser> users = FAKEDATABASE.GetUsers();
+				List<tblUser> users = HttpClientHandler.GetUsers();
 
 				bool found;
 				foreach (var userItem in users)
@@ -101,8 +102,10 @@ namespace Admin_Client.ViewModel.ContentControlModels
 						App.Current.Dispatcher.BeginInvoke(new Action(() => { Users.Add(userItem); }));
 					}
 				}
+				LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "ThreadID: " + Thread.CurrentThread.ManagedThreadId + " ==> Done"));
 				break;
 			}
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "ThreadID: " + Thread.CurrentThread.ManagedThreadId + " ==> Closed"));
 		}
 
 		#endregion

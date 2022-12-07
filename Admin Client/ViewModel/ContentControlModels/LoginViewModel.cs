@@ -1,12 +1,15 @@
-﻿using Admin_Client.Model.DB.EF_Test;
+﻿using Admin_Client.Model.DB;
+using Admin_Client.Model.DB.EF_Test;
 using Admin_Client.Model.Domain;
 using Admin_Client.PropertyChanged;
 using Admin_Client.Singleton;
 using Admin_Client.View.UserControls;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Admin_Client.ViewModel.ContentControlModels
@@ -37,16 +40,34 @@ namespace Admin_Client.ViewModel.ContentControlModels
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Login Click"));
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Username: " + username));
-			
 
-			// LOGIN AUTHENTICATION MISSING - TODO
+			// EMAIL NOT-VALID
+			Regex regex = new Regex(@"^((\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*))");
+			if (username.Length == 0 && !regex.IsMatch(username))
+			{
+				return;
+			}
+			if (password.Length == 0)
+			{
+				return;
+			}
 
-			if (true)
+			// Auth
+			bool loginSuccess = false;
+			List<tblUser> users = HttpClientHandler.GetUsers();
+			foreach (tblUser user in users) 
+			{ 
+				if (user.fldIsAdmin.Value == true && user.fldEmail.Equals(username) && user.fldPassword.Equals(password))
+				{
+					HttpClientHandler.currentUser = user;
+					loginSuccess = true;
+					break;
+				}
+			}
+
+			if (loginSuccess)
 			{
 				LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Login == Success"));
-
-				// TODO
-				GlobalInformationBuilderSingleton.Instance.BuildCurrentUser(new tblUser());
 
 				MainWindowModelSingleton.Instance.SetMainContent(new OverviewView(), false, true);
 
@@ -61,6 +82,8 @@ namespace Admin_Client.ViewModel.ContentControlModels
 		#endregion
 
 		#region Private Methods
+
+
 
 		#endregion
 
