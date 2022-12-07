@@ -5,12 +5,14 @@ using DocumentFormat.OpenXml.Spreadsheet;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Security.Permissions;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Shell;
 
 namespace Admin_Client.Model.DB
 {
@@ -21,163 +23,302 @@ namespace Admin_Client.Model.DB
 
 		public static tblUser currentUser = null;
 
-		public static tblUser loadedUser = null;
-		public static tblGroup loadedGroup = null;
-		public static tblTrip loadedTrip = null;
-		public static tblUserExpense loadedUserExpense = null;
-		public static tblReceipt loadedReceipt = null;
-
-		public static List<tblUser> loadedUsers = new List<tblUser>();
-		public static List<tblGroup> loadedGroups = new List<tblGroup>();
-		public static List<tblTrip> loadedTrips = new List<tblTrip>();
-		public static List<tblUserExpense> loadedUserExpenses = new List<tblUserExpense>();
-		public static List<tblReceipt> loadedReceipts = new List<tblReceipt>();
-
 		#endregion
 
-		#region Login
-
-		public static bool Login(string username, string password)
-		{
-
-			foreach (var item in GetUsers())
-			{
-				
-			}
-
-			return false;
-		}
-
-		#endregion
-
-		#region Get
+		#region Standard Get Methods
 
 		#region tblUser
 
-		static bool getUserIsDone = false;
-		static object getUserObject = null;
+		static bool userIsDone = false;
+		static tblUser userObject = null;
 		public static tblUser GetUser(int ID)
 		{
-			if (loadedUser != null)
+			if (userObject != null || userIsDone)
 			{
-				loadedUser = null;
-			}
-			if (getUserObject != null || getUserIsDone)
-			{
-				getUserIsDone = false;
-				getUserObject = null;
+				userIsDone = false;
+				userObject = null;
 			}
 
 			ThreadStart(SqlObjectType.tblUser,APIMethod.Get, targetID: ID);
 
-			while (!getUserIsDone)
+			while (!userIsDone)
 			{
 				Thread.Sleep(500);
 			}
 
-			if (getUserObject != null && getUserIsDone)
-			{
-				loadedUser = ((JObject)getUserObject).ToObject<tblUser>();
-			}
-			return loadedUser;
+			return null;
 		}
 
-		static bool getUsersIsDone = false;
-		static List<object> getUsersList = new List<object>();
+		static bool usersIsDone = false;
+		static List<tblUser> usersList = new List<tblUser>();
 		public static List<tblUser> GetUsers()
 		{
-			if (loadedUsers.Count > 0)
+			if (usersList.Count > 0 || usersIsDone)
 			{
-				loadedUsers.Clear();
-			}
-			if (getUsersList.Count > 0 || getUsersIsDone)
-			{
-				getUsersIsDone= false;
-				getUsersList.Clear();
+				usersIsDone = false;
+				usersList.Clear();
 			}
 
 			ThreadStart(SqlObjectType.tblUser, APIMethod.GetAll);
 
-			while (!getUsersIsDone)
+			while (!usersIsDone)
 			{
 				Thread.Sleep(500);
 			}
 
-			List<tblUser> tempList = new List<tblUser>();
-			if (getUsersList != null && getUsersIsDone)
-			{
-				foreach (var item in getUsersList)
-				{
-					tblUser user = ((JObject)item).ToObject<tblUser>();
-					tempList.Add(user);
-				}
-			}
-			loadedUsers = tempList;
-
-			return loadedUsers;
+			return usersList;
 		}
 
 		#endregion
 
 		#region tblGroup
 
-		public static tblGroup GetGroup()
-		{
-			return null;
-		}
-
-		static bool getGroupsIsDone = false;
-		static List<object> getGroupsList = new List<object>();
+		static bool groupsIsDone = false;
+		static List<tblGroup> groupsList = new List<tblGroup>();
 		public static List<tblGroup> GetGroups()
 		{
-			if (loadedGroups.Count > 0)
+			if (groupsList.Count > 0 || groupsIsDone)
 			{
-				loadedGroups.Clear();
-			}
-			if (getGroupsList.Count > 0 || getGroupsIsDone)
-			{
-				getGroupsIsDone= false;
-				getGroupsList.Clear();
+				groupsIsDone = false;
+				groupsList.Clear();
 			}
 
 			ThreadStart(SqlObjectType.tblGroup, APIMethod.GetAll);
 
-			while (!getGroupsIsDone)
+			while (!groupsIsDone)
 			{
 				Thread.Sleep(500);
 			}
 
-			List<tblGroup> tempList = new List<tblGroup>();
-			if (getGroupsList != null && getGroupsIsDone)
-			{
-				foreach (var item in getGroupsList)
-				{
-					tblGroup group = ((JObject)item).ToObject<tblGroup>();
-					tempList.Add(group);
-				}
-			}
-			loadedGroups = tempList;
-
-			return loadedGroups;
+			return groupsList;
 		}
 
 		#endregion
 
+		#region tblReceipt
+
+		static bool receiptsIsDone = false;
+		static List<tblReceipt> receiptsList = new List<tblReceipt>();
+		public static List<tblReceipt> GetReceipts()
+		{
+			if (receiptsList.Count > 0 || receiptsIsDone)
+			{
+				receiptsIsDone = false;
+				receiptsList.Clear();
+			}
+
+			ThreadStart(SqlObjectType.tblReceipt, APIMethod.GetAll);
+
+			while (!receiptsIsDone)
+			{
+				Thread.Sleep(500);
+			}
+
+			return receiptsList;
+		}
 
 		#endregion
 
+		#region tblTrip
+
+		static bool tripsIsDone = false;
+		static List<tblTrip> tripsList = new List<tblTrip>();
+		public static List<tblTrip> GetTrips()
+		{
+			if (tripsList.Count > 0 || tripsIsDone)
+			{
+				tripsIsDone = false;
+				tripsList.Clear();
+			}
+
+			ThreadStart(SqlObjectType.tblTrip, APIMethod.GetAll);
+
+			while (!tripsIsDone)
+			{
+				Thread.Sleep(500);
+			}
+
+			return tripsList;
+		}
+
+		#endregion
+
+		#region tblUserExpense
+
+		static bool userExpensesIsDone = false;
+		static List<tblUserExpense> userExpensesList = new List<tblUserExpense>();
+		public static List<tblUserExpense> GetUserExpenses()
+		{
+			if (userExpensesList.Count > 0 || userExpensesIsDone)
+			{
+				userExpensesIsDone = false;
+				userExpensesList.Clear();
+			}
+
+			ThreadStart(SqlObjectType.tblUserExpense, APIMethod.GetAll);
+
+			while (!userExpensesIsDone)
+			{
+				Thread.Sleep(500);
+			}
+
+			return userExpensesList;
+		}
+
+		#endregion
+
+		#region tblUserToGroup
+
+		static bool userToGroupsIsDone = false;
+		static List<tblUserToGroup> userToGroupsList = new List<tblUserToGroup>();
+		public static List<tblUserToGroup> GetUserToGroups()
+		{
+			if (userToGroupsList.Count > 0 || userToGroupsIsDone)
+			{
+				userToGroupsIsDone = false;
+				userToGroupsList.Clear();
+			}
+
+			ThreadStart(SqlObjectType.tblUserToGroup, APIMethod.GetAll);
+
+			while (!userToGroupsIsDone)
+			{
+				Thread.Sleep(500);
+			}
+
+			return userToGroupsList;
+		}
+
+		#endregion
+
+		#endregion
+
+		#region Post, Put, Delete Methods
+
+		public static void Post(object o)
+		{
+			new HttpAPIClient().Post(o);
+		}
+		public static void Put(object o, int ID)
+		{
+			new HttpAPIClient().Put(o, ID);
+		}
+		public static void Delete(SqlObjectType type, int ID)
+		{
+			new HttpAPIClient().Delete(type, ID);
+		}
+
+		#endregion
+
+		#region Relations Get Methods
+
+		public static List<tblGroup> GetGroupsFromUser(tblUser user)
+		{
+			if (groupsIsDone || userToGroupsIsDone)
+			{
+				groupsIsDone = false;
+				userToGroupsIsDone = false;
+			}
+
+			ThreadStart(SqlObjectType.tblGroup, APIMethod.GetAll);
+			ThreadStart(SqlObjectType.tblUserToGroup, APIMethod.GetAll);
+
+			while (!groupsIsDone || !userToGroupsIsDone)
+			{
+				Thread.Sleep(500);
+			}
+
+			List<tblGroup> filterGroups = new List<tblGroup>();
+			foreach (var relation in userToGroupsList)
+			{
+				if (relation.fldUserID == user.fldUserID)
+				{
+					foreach (var group in groupsList)
+					{
+						if (relation.fldGroupID == group.fldGroupID)
+						{
+							filterGroups.Add(group);
+							break;
+						}
+					}
+				}
+			}
+
+			return filterGroups;
+		}
+
+		public static List<Receipt> GetReceiptsFromUser(tblUser user)
+		{
+			return null;
+		}
+
+		public static List<Receipt> GetUserExpenseFromUser(tblUser user)
+		{
+			return null;
+		}
+
+		public static List<tblUser> GetUsersFromGroup(tblGroup group)
+		{
+			if (userToGroupsIsDone || usersIsDone)
+			{
+				usersIsDone = false;
+				userToGroupsIsDone = false;
+			}
+
+			ThreadStart(SqlObjectType.tblUser, APIMethod.GetAll);
+			ThreadStart(SqlObjectType.tblUserToGroup, APIMethod.GetAll);
+
+			while (!usersIsDone || !userToGroupsIsDone)
+			{
+				Thread.Sleep(500);
+			}
+
+			List<tblUser> filterUsers = new List<tblUser>();
+			foreach (var relation in userToGroupsList)
+			{
+				if (relation.fldGroupID == group.fldGroupID)
+				{
+					foreach (var user in usersList)
+					{
+						if (relation.fldUserID == user.fldUserID)
+						{
+							filterUsers.Add(user);
+							break;
+						}
+					}
+				}
+			}
+
+			return filterUsers;
+		}
+
+		public static List<tblTrip> GetTripsFromGroup(tblGroup group)
+		{
+			return null;
+		}
+
+		public static List<tblUserExpense> GetUserExpensesFromTrip(tblTrip trip)
+		{
+			return null;
+		}
+
+		public static List<tblReceipt> GetReceiptFromTrip(tblTrip trip)
+		{
+			return null;
+		}
+
+
+		#endregion
 
 		#region Private
 
-		static private void ThreadStart(SqlObjectType type, APIMethod method, string targetInfo = "", int targetID = 0)
+		static private void ThreadStart(SqlObjectType type, APIMethod method, int targetID = 0)
 		{
 			switch (method)
 			{
 				case APIMethod.Get: ThreadPool.QueueUserWorkItem(GetThread, new object[] { type, targetID }); break;
 				case APIMethod.GetAll: ThreadPool.QueueUserWorkItem(GetAllThread, new object[] { type }); break;
-				case APIMethod.Post: break;
-				case APIMethod.Put: break;
-				case APIMethod.Delete: break;
+					default: throw new Exception(method + " is not usable in the current context");
 			}
 			
 		}
@@ -198,15 +339,14 @@ namespace Admin_Client.Model.DB
 			{
 				case SqlObjectType.tblUser:
 					{
-						getUserObject = o;
-						getUserIsDone = true;
+						if (userObject != null)
+						{
+							userObject = ((JObject)o).ToObject<tblUser>();
+						}
+						userIsDone = true;
 						break;
 					}
-				case SqlObjectType.tblGroup:
-					{
-						
-						break;
-					}
+				default: throw new Exception(type + " is not implemented");
 			}
 
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "ThreadID: " + Thread.CurrentThread.ManagedThreadId + " ==> Done"));
@@ -229,16 +369,97 @@ namespace Admin_Client.Model.DB
 			{
 				case SqlObjectType.tblUser: 
 					{
-						getUsersList = l;
-						getUsersIsDone = true;
+						List<tblUser> tempList = new List<tblUser>();
+						if (l != null)
+						{
+							foreach (var item in l)
+							{
+								tblUser user = ((JObject)item).ToObject<tblUser>();
+								tempList.Add(user);
+							}
+							usersList = tempList;
+						}
+						usersIsDone = true;
 						break;
 					}
 				case SqlObjectType.tblGroup: 
 					{
-						getGroupsList = l;
-						getGroupsIsDone = true; 
+						List<tblGroup> tempList = new List<tblGroup>();
+						if (l != null)
+						{
+							foreach (var item in l)
+							{
+								tblGroup group = ((JObject)item).ToObject<tblGroup>();
+								tempList.Add(group);
+							}
+							groupsList = tempList;
+						}
+						groupsIsDone = true; 
 						break;
 					}
+				case SqlObjectType.tblReceipt:
+					{
+						List<tblReceipt> tempList = new List<tblReceipt>();
+						if (l != null)
+						{
+							foreach (var item in l)
+							{
+								tblReceipt receipt = ((JObject)item).ToObject<tblReceipt>();
+								tempList.Add(receipt);
+							}
+							receiptsList = tempList;
+						}
+						receiptsIsDone = true;
+						break;
+					}
+				case SqlObjectType.tblTrip:
+					{
+						List<tblTrip> tempList = new List<tblTrip>();
+						if (l != null)
+						{
+							foreach (var item in l)
+							{
+								tblTrip trip = ((JObject)item).ToObject<tblTrip>();
+								tempList.Add(trip);
+							}
+							tripsList = tempList;
+						}
+						tripsIsDone = true;
+						break;
+					}
+				case SqlObjectType.tblUserExpense:
+					{
+						List<tblUserExpense> tempList = new List<tblUserExpense>();
+						if (l != null)
+						{
+							foreach (var item in l)
+							{
+								tblUserExpense userExpense = ((JObject)item).ToObject<tblUserExpense>();
+								tempList.Add(userExpense);
+							}
+							userExpensesList = tempList;
+						}
+						userExpensesIsDone = true;
+
+						break;
+					}
+				case SqlObjectType.tblUserToGroup:
+					{
+						List<tblUserToGroup> tempList = new List<tblUserToGroup>();
+						if (l != null)
+						{
+							foreach (var item in l)
+							{
+								tblUserToGroup userToGroup = ((JObject)item).ToObject<tblUserToGroup>();
+								tempList.Add(userToGroup);
+							}
+							userToGroupsList = tempList;
+						}
+						userToGroupsIsDone = true;
+
+						break;
+					}
+				default: throw new Exception(type + " is not implemented");
 			}
 
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "ThreadID: " + Thread.CurrentThread.ManagedThreadId + " ==> Done"));

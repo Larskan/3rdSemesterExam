@@ -72,14 +72,14 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		public AccountViewModel()
 		{
-			// Get Current USER - TODO (DO NOT!!!!!!! USE TBLUSER AS PARAMETER)
+			tblUser currentUser = HttpClientHandler.currentUser;
 
-			this.Firstname = "FirstName";
-			this.Lastname = "LastName";
+			this.Firstname = currentUser.fldFirstName;
+			this.Lastname = currentUser.fldLastName;
 			this.Initials = "" + Firstname.First() + Lastname.First();
 			this.Username = this.Firstname + " " + this.Lastname;
-			this.Email = "First@Last.com";
-			this.Phonenumber = 42424242;
+			this.Email = currentUser.fldEmail;
+			this.Phonenumber = currentUser.fldPhonenumber.Value;
 		}
 
 		#endregion
