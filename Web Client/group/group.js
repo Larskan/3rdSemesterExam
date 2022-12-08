@@ -1,3 +1,5 @@
+var URLRoot = 'https://localhost:7002/'
+
 function CreateTripTableElement(TripName, DateOfCreation, Sum )
 {
     const TableBody = document.getElementById('TripTableBody');
@@ -51,41 +53,49 @@ function CreateMemberTableElement(username){
 //replace this with actual code
 function PopulateTripTable()
 {
-    CreateTripTableElement('Trip To Spain','16.06.2012','$30.000,00');
-    CreateTripTableElement('Moms birthday party','12.02.2015','$240.000,00');
-    CreateTripTableElement('Cat food','01.01.1980','$-2.147.483.647,00');
-    TripSetter('tblTrips','1')
+
+    loadTrip('1');
+    loadTrip('2');
+    loadTrip('3');
 
 }
 
 function PopulateMemberTable(){
     loadMember('1'); // replace with a sort of for each loop that gets all of the users inside of a group 
 
-    for(i = 0; i<50;i++)
+    for(i = 0; i<9;i++)
     {
-        loadMember('1');
+        if(i%2==1)
+        {
+            loadMember('1');
+        } else loadMember('2');
+        
     }
 }
 
-/** loads a member into the name table based on id by handing it over to NameSetter with the params tblUser and fldFirstname*/
+/** loads a member into the name table based on id by handing it over to NameSetter with the params tblUser, fldFirstName, fldLastName*/
 async function loadMember(id)
 {
-    NameSetter('tblUsers',id,'fldFirstName')    
+    NameSetter('tblUsers',id,'fldFirstName','fldLastName')    
 }
 
-//i have an issue with this, in the form that i cannot conveniently return the data from the query
-//I would like to do so as it would allow for firstName+lastName display for clarity 
-async function NameSetter(table, id, field)
+/** loads a trip into the trip table based on id by handing it over to TripSetter with the params tblTrips, id */
+async function loadTrip(id)
 {
-    url = "https://localhost:7002/"+table+"/"+id
+    TripSetter('tblTrips',id)
+}
+
+async function NameSetter(table, id, firstname, lastname)
+{
+    url = URLRoot+table+"/"+id
     await fetch(url)
     .then((response) => response.json())
-    .then((data) => CreateMemberTableElement(data[field]))
+    .then((data) => CreateMemberTableElement(data[firstname]+' '+data[lastname]))
 }
 
 async function TripSetter(table, id)
 {
-    url = "https://localhost:7002/"+table+"/"+id
+    url = URLRoot+table+"/"+id
     await fetch(url)
     .then((response) => response.json())
     .then((data) => CreateTripTableElement('Testing the water','no date',data['fldSum']))
