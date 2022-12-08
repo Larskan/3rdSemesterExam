@@ -19,13 +19,6 @@ namespace Admin_Client.Model.DB
 	public class HttpAPIClient
 	{
 
-		#region Variables
-
-		// HttpClient
-		private static HttpClient client = new HttpClient();
-
-		#endregion
-
 		#region Getters
 
 		/// <summary>
@@ -53,10 +46,12 @@ namespace Admin_Client.Model.DB
 		/// <returns>A task with the selected object as result</returns>
 		public async Task<object> GetById(SqlObjectType type, int fldID)
 		{
+			HttpClient client = new HttpClient();
 			BaseSetup(client);
 
 			//GET Method
 			HttpResponseMessage response = await client.GetAsync(type +"s/" + fldID);
+			client.Dispose();
 
 			if (response.IsSuccessStatusCode)
 			{
@@ -100,21 +95,23 @@ namespace Admin_Client.Model.DB
 		/// <returns>A task with the selected objects in a list as result</returns>
 		public async Task<List<object>> GetAll(SqlObjectType type)
 		{
-				BaseSetup(client);
+			HttpClient client = new HttpClient();
+			BaseSetup(client);
 
-				//GETALL Method
-				HttpResponseMessage response = await client.GetAsync(type + "s");
+			//GETALL Method
+			HttpResponseMessage response = await client.GetAsync(type + "s");
+			client.Dispose();
 
-				if (response.IsSuccessStatusCode)
-				{
-					List<object> o = await response.Content.ReadAsAsync<List<object>>();
-					return o;
-				}
-				else
-				{
-					Debug.WriteLine("Internal server Error");
-					return null;
-				}
+			if (response.IsSuccessStatusCode)
+			{
+				List<object> o = await response.Content.ReadAsAsync<List<object>>();
+				return o;
+			}
+			else
+			{
+				Debug.WriteLine("Internal server Error");
+				return null;
+			}
 		}
 
 		#endregion
@@ -148,10 +145,12 @@ namespace Admin_Client.Model.DB
 		/// <param name="newObject">The object which will be added to the database</param>
 		public async void Post(object newObject)
 		{
+			HttpClient client = new HttpClient();
 			BaseSetup(client);
 
 			//POST Method
 			HttpResponseMessage response = await client.PostAsJsonAsync(newObject.GetType().Name + "s", newObject);
+			client.Dispose();
 
 			if (response.IsSuccessStatusCode)
 			{
@@ -191,10 +190,12 @@ namespace Admin_Client.Model.DB
 		/// <param name="fldID">The id of the targeted object</param>
 		public async void Put(object newObject, int fldID)
 		{
+			HttpClient client = new HttpClient();
 			BaseSetup(client);
 
 			//PUT Method
 			HttpResponseMessage response = await client.PutAsJsonAsync("tblUser" + "s/" + fldID, newObject);
+			client.Dispose();
 
 			if (response.IsSuccessStatusCode)
 			{
@@ -232,10 +233,12 @@ namespace Admin_Client.Model.DB
 		/// <param name="fldId"></param>
 		public async void Delete(SqlObjectType type, int fldId)
 		{
+			HttpClient client = new HttpClient();
 			BaseSetup(client);
 
 			//DELETE Method
 			HttpResponseMessage response = await client.DeleteAsync(type + "s/" + fldId);
+			client.Dispose();
 
 			if (response.IsSuccessStatusCode)
 			{

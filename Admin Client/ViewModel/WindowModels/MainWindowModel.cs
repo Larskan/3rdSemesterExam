@@ -61,7 +61,7 @@ namespace Admin_Client.ViewModel.WindowModels
 
 		public MainWindowModel()
 		{
-			
+			ThreadPool.QueueUserWorkItem(APIFastConnectThread, new object());
 		}
 
 		#endregion
@@ -197,9 +197,14 @@ namespace Admin_Client.ViewModel.WindowModels
 
 		public void StartPopupAddUser()
 		{
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Add Click --> New User"));
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log("PopoutAddUser --> Starting"));
+
 			// TODO
 			MainWindowModelSingleton.Instance.GetMainWindow().IsEnabled = false;
 			new PopupParameterChangeWindow(mainWindow, new tblUser()).ShowDialog();
+
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log("PopoutAddUser == Closed"));
 		}
 
 		#endregion
@@ -312,6 +317,15 @@ namespace Admin_Client.ViewModel.WindowModels
 				this.Grid_AccountTab.Children.Clear();
 				LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "AccountTab == False"));
 			}
+		}
+
+		#endregion
+
+		#region APIFastConnect
+
+		public void APIFastConnectThread(object o)
+		{
+			List<tblUser> users = HttpClientHandler.GetUsers();
 		}
 
 		#endregion

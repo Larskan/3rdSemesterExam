@@ -91,7 +91,7 @@ namespace Admin_Client.View.UserControls
 			else if (((tblGroup)item).fldGroupID.ToString().IndexOf(TextBox_Search.Text, StringComparison.OrdinalIgnoreCase) >= 0)
 				return true;
 			else
-				return (((tblGroup)item).fldGroupBoolean.ToString().IndexOf(TextBox_Search.Text, StringComparison.OrdinalIgnoreCase) >= 0);
+				return (((tblGroup)item).fldIsTemporary.ToString().IndexOf(TextBox_Search.Text, StringComparison.OrdinalIgnoreCase) >= 0);
 		}
 
 		#endregion

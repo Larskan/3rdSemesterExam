@@ -21,8 +21,6 @@ public partial class FairShareDbContext : DbContext
 
     public virtual DbSet<tblGroupToTrip> tblGroupToTrips { get; set; }
 
-    public virtual DbSet<tblLogin> tblLogins { get; set; }
-
     public virtual DbSet<tblReceipt> tblReceipts { get; set; }
 
     public virtual DbSet<tblTrip> tblTrips { get; set; }
@@ -52,7 +50,7 @@ public partial class FairShareDbContext : DbContext
                 .HasMaxLength(30)
                 .IsUnicode(false)
                 .HasColumnName("fldGroupName");
-            entity.Property(e => e.fldGroupBoolean).HasColumnName("fldGroupBoolean");
+            entity.Property(e => e.fldIsTemporary).HasColumnName("fldIsTemporary");
         });
 
         modelBuilder.Entity<tblGroupToTrip>(entity =>
@@ -72,24 +70,6 @@ public partial class FairShareDbContext : DbContext
             entity.HasOne(d => d.fldTrip).WithMany(p => p.tblGroupToMoneys)
                 .HasForeignKey(d => d.fldTripId)
                 .HasConstraintName("FK__tblGroupT__fldTr__31EC6D26");
-        });
-
-        modelBuilder.Entity<tblLogin>(entity =>
-        {
-            entity.HasKey(e => e.fldLoginId).HasName("PK__tblLogin__5FFDE57FA6EADA6D");
-
-            entity.ToTable("tblLogin");
-
-            entity.Property(e => e.fldLoginId).HasColumnName("fldLoginID");
-            entity.Property(e => e.fldPassword)
-                .HasMaxLength(50)
-                .IsUnicode(false)
-                .HasColumnName("fldPassword");
-            entity.Property(e => e.fldUserId).HasColumnName("fldUserID");
-
-            entity.HasOne(d => d.fldUser).WithMany(p => p.tblLogins)
-                .HasForeignKey(d => d.fldUserId)
-                .HasConstraintName("FK__tblLogin__fldUse__2A4B4B5E");
         });
 
         modelBuilder.Entity<tblReceipt>(entity =>

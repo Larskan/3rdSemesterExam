@@ -28,7 +28,8 @@ public partial class tblUser
 	[DataMember]
 	public bool? fldIsAdmin { get; set; }
 
-	public virtual ICollection<tblLogin> tblLogins { get; } = new List<tblLogin>();
+	[DataMember]
+	public string? fldPassword { get; set; }
 
 	public virtual ICollection<tblReceipt> tblReceipts { get; } = new List<tblReceipt>();
 

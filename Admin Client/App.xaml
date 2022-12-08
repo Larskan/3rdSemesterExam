@@ -273,7 +273,7 @@
                     </Grid.ColumnDefinitions>
                     <Label x:Name="id" Content="{Binding fldGroupID}" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
                     <Label x:Name="name" Content="{Binding fldGroupName}" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
-                    <Label x:Name="boolean" Content="{Binding fldGroupBoolean}" Grid.Column="2" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="boolean" Content="{Binding fldIsTemporary}" Grid.Column="2" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
                 </Grid>
             </Border>
         </DataTemplate>

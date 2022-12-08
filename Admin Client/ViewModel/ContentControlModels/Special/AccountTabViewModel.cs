@@ -1,4 +1,5 @@
-﻿using Admin_Client.Model.Domain;
+﻿using Admin_Client.Model.DB;
+using Admin_Client.Model.Domain;
 using Admin_Client.PropertyChanged;
 using Admin_Client.Singleton;
 using Admin_Client.View.UserControls;
@@ -34,7 +35,7 @@ namespace Admin_Client.ViewModel.ContentControlModels.Special
 
 		public void Logout()
 		{
-			//REMOVE USER OBJECT FROM SESSION
+			HttpClientHandler.currentUser = null;
 
 			MainWindowModelSingleton.Instance.SetMainContent(new LoginView(), false, false);
 

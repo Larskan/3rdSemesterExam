@@ -14,7 +14,6 @@ namespace Admin_Client.Model.DB.EF_Test
 
         public virtual DbSet<tblGroup> tblGroups { get; set; }
         public virtual DbSet<tblGroupToTrip> tblGroupToTrips { get; set; }
-        public virtual DbSet<tblLogin> tblLogins { get; set; }
         public virtual DbSet<tblReceipt> tblReceipts { get; set; }
         public virtual DbSet<tblTrip> ttblTrips { get; set; }
         public virtual DbSet<tblTripToUserExpense> tblTripToUserExpenses { get; set; }
@@ -37,10 +36,6 @@ namespace Admin_Client.Model.DB.EF_Test
                 .HasMany(e => e.tblUserToGroup)
                 .WithOptional(e => e.tblGroup)
                 .WillCascadeOnDelete();
-
-            modelBuilder.Entity<tblLogin>()
-                .Property(e => e.fldPassword)
-                .IsUnicode(false);
 
             modelBuilder.Entity<tblTrip>()
                 .HasMany(e => e.tblGroupToTrip)

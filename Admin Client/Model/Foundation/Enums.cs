@@ -13,6 +13,7 @@ namespace Admin_Client
 	{
 		FatalError = 999,
 		Warning = 500,
+		API = 400,
 		UserAction = 300,
 		Information = 200,
 		Success = 100,
@@ -35,13 +36,24 @@ namespace Admin_Client
 	{
 		tblGroup,
 		tblGroupToMoney,
-		tblLogin,
 		tblReceipt,
 		tblTrip,
 		tblTripToUserExpense,
 		tblUser,
 		tblUserExpense,
 		tblUserToGroup
+	}
+
+	/// <summary>
+	/// The different types of api calls
+	/// </summary>
+	public enum APIMethod
+	{
+		Get,
+		GetAll,
+		Post,
+		Put,
+		Delete,
 	}
 
 }
