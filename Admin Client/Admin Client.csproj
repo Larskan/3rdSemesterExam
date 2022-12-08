@@ -260,9 +260,6 @@
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Http, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.9\lib\net45\System.Web.Http.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -281,8 +278,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Model\Controller\AbstractGlobalInformationBuilder.cs" />
-    <Compile Include="Model\Controller\GlobalInformationBuilder.cs" />
     <Compile Include="Model\DB\EF Test\HttpDbContext.cs" />
     <Compile Include="Model\DB\EF Test\tblGroup.cs" />
     <Compile Include="Model\DB\EF Test\tblGroupToTrip.cs" />
@@ -293,7 +288,7 @@
     <Compile Include="Model\DB\EF Test\tblUser.cs" />
     <Compile Include="Model\DB\EF Test\tblUserExpense.cs" />
     <Compile Include="Model\DB\EF Test\tblUserToGroup.cs" />
-    <Compile Include="Model\DB\HttpAPIClient.cs" />
+    <Compile Include="Model\DB\Response.cs" />
     <Compile Include="Model\Domain\GlobalInformation.cs" />
     <Compile Include="Model\Domain\Log.cs" />
     <Compile Include="Model\Domain\LogFile.cs" />
@@ -305,9 +300,9 @@
     <Compile Include="Model\Foundation\Encryption.cs" />
     <Compile Include="Model\Foundation\Enums.cs" />
     <Compile Include="PropertyChanged\NotifyPropertyChangedHandler.cs" />
-    <Compile Include="Singleton\GlobalInformationBuilderSingleton.cs" />
     <Compile Include="Singleton\OverviewSingleton.cs" />
     <Compile Include="Singleton\UserviewSingleton.cs" />
+    <Compile Include="Singleton\HttpClientServicesSingleton.cs" />
     <Compile Include="Singleton\LogHandlerSingleton.cs" />
     <Compile Include="Singleton\MainWindowModelSingleton.cs" />
     <Compile Include="ViewModel\ContentControlModels\AccountViewModel.cs" />
@@ -326,14 +321,12 @@
     <Compile Include="ViewModel\WindowModels\MainWindowModel.cs" />
     <Compile Include="ViewModel\WindowModels\Popout\PopoutLogToolWindowModel.cs" />
     <Compile Include="ViewModel\WindowModels\Popout\PopoutLogWindowModel.cs" />
+    <Compile Include="ViewModel\WindowModels\Popup\PopupAddUserWindowModel.cs" />
     <Compile Include="ViewModel\WindowModels\Popup\PopupConfirmWindowModel.cs" />
     <Compile Include="ViewModel\WindowModels\Popup\PopupParameterChangeWindowModel.cs" />
     <Compile Include="ViewModel\WindowModels\Popup\PopupPasswordChangeWindowModel.cs" />
     <Compile Include="View\UserControls\Special\BackMenuView.xaml.cs">
       <DependentUpon>BackMenuView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Windows\Popout\PopoutLogTextWindow.xaml.cs">
-      <DependentUpon>PopoutLogTextWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Windows\Popout\PopoutLogToolWindow.xaml.cs">
       <DependentUpon>PopoutLogToolWindow.xaml</DependentUpon>
@@ -346,6 +339,9 @@
     </Compile>
     <Compile Include="View\Windows\Popups\PopupPasswordChangeWindow.xaml.cs">
       <DependentUpon>PopupPasswordChangeWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\Popups\PopupAddUserWindow.xaml.cs">
+      <DependentUpon>PopupAddUserWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="View\UserControls\AccountView.xaml">
       <SubType>Designer</SubType>
@@ -396,10 +392,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\UserControls\UserView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Windows\Popout\PopoutLogTextWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -474,8 +466,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Windows\Popups\PopupAddUserWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\Controller\temp1.cs" />
+    <Compile Include="Model\Business\temp2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -515,4 +513,9 @@
     <Error Condition="!Exists('..\packages\Microsoft.Extensions.FileProviders.Embedded.7.0.0\build\netstandard2.0\Microsoft.Extensions.FileProviders.Embedded.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Extensions.FileProviders.Embedded.7.0.0\build\netstandard2.0\Microsoft.Extensions.FileProviders.Embedded.targets'))" />
   </Target>
   <Import Project="..\packages\Microsoft.Extensions.FileProviders.Embedded.7.0.0\build\netstandard2.0\Microsoft.Extensions.FileProviders.Embedded.targets" Condition="Exists('..\packages\Microsoft.Extensions.FileProviders.Embedded.7.0.0\build\netstandard2.0\Microsoft.Extensions.FileProviders.Embedded.targets')" />
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
 </Project>
