@@ -1,5 +1,6 @@
 ﻿using Admin_Client.Model;
 using Admin_Client.Model.DB;
+using Admin_Client.Model.DB.EF_Test;
 using Admin_Client.Model.Domain;
 using Admin_Client.PropertyChanged;
 using Admin_Client.Singleton;
@@ -19,14 +20,14 @@ namespace Admin_Client.ViewModel.ContentControlModels
 	{
         //fix sorting groups by ID, need to change update method / add functionality to addremove member and trip buttons / also probably a better update method lol
 
-        private ObservableCollection<TblUser> users = new ObservableCollection<TblUser>();
-        public ObservableCollection<TblUser> Users
+        private ObservableCollection<tblUser> users = new ObservableCollection<tblUser>();
+        public ObservableCollection<tblUser> Users
         {
             get { return users; }
             set { users = value; }
         }
-        private ObservableCollection<TblTrip> trips = new ObservableCollection<TblTrip>();
-        public ObservableCollection<TblTrip> Trips
+        private ObservableCollection<tblTrip> trips = new ObservableCollection<tblTrip>();
+        public ObservableCollection<tblTrip> Trips
         {
             get { return trips; }
             set { trips = value; }
@@ -38,11 +39,11 @@ namespace Admin_Client.ViewModel.ContentControlModels
         }
         public void Add()
         {
-            MainWindowModelSingleton.Instance.StartPopupConfirm(new TblUser(), PopupMethod.Add);
+            MainWindowModelSingleton.Instance.StartPopupConfirm(new tblUser(), PopupMethod.Add);
         }
         public void Create()
         {
-            MainWindowModelSingleton.Instance.StartPopupConfirm(new TblTrip(), PopupMethod.Create);
+            MainWindowModelSingleton.Instance.StartPopupConfirm(new tblTrip(), PopupMethod.Create);
         }
 
         CancellationTokenSource tokenSource;
@@ -81,8 +82,8 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
             while (!token.IsCancellationRequested)
             {
-                // CHANGE THE FAKEDATEBASE.GETUSERS() - TODO
-                List<TblUser> users = FAKEDATABASE.GetUsers();  
+                // CHANGE SO IT GETS THE USER FOR SAID GROUP
+                List<tblUser> users = HttpClientHandler.GetUsers();  
 
                 bool found;
                     foreach (var userItem in users)
@@ -90,7 +91,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
                         found = false;
                         foreach (var UserItem in Users)
                         {
-                            if (userItem.FldUserId == UserItem.FldUserId)
+                            if (userItem.fldUserID == UserItem.fldUserID)
                             {
                                 found = true;
                                 break;
@@ -114,7 +115,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
             while (!token.IsCancellationRequested)
             {
                 // CHANGE THE FAKEDATEBASE.GETUSERS() - TODO
-                List<TblTrip> trips = FAKEDATABASE.GetTrips();
+                //List<tblTrip> trips = FAKEDATABASE.getTrips();
 
                 bool found;
                 foreach (var userItem in trips)
@@ -122,7 +123,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
                     found = false;
                     foreach (var UserItem in Trips)
                     {
-                        if (userItem.FldTripID == UserItem.FldTripID)
+                        if (userItem.fldTripID == UserItem.fldTripID)
                         {
                             found = true;
                             break;

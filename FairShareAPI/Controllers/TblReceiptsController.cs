@@ -14,27 +14,27 @@ namespace FairShareAPI.Controllers
     [Route("[controller]")]
     [ApiController]
     [EnableCors]
-    public class TblReceiptsController : ControllerBase
+    public class tblReceiptsController : ControllerBase
     {
         private readonly FairShareDbContext _context;
 
-        public TblReceiptsController(FairShareDbContext context)
+        public tblReceiptsController(FairShareDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/TblReceipts
+        // GET: api/tblReceipts
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TblReceipt>>> GetTblReceipts()
+        public async Task<ActionResult<IEnumerable<tblReceipt>>> GettblReceipts()
         {
-            return await _context.TblReceipts.ToListAsync();
+            return await _context.tblReceipts.ToListAsync();
         }
 
-        // GET: api/TblReceipts/5
+        // GET: api/tblReceipts/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<TblReceipt>> GetTblReceipt(int id)
+        public async Task<ActionResult<tblReceipt>> GettblReceipt(int id)
         {
-            var tblReceipt = await _context.TblReceipts.FindAsync(id);
+            var tblReceipt = await _context.tblReceipts.FindAsync(id);
 
             if (tblReceipt == null)
             {
@@ -44,12 +44,12 @@ namespace FairShareAPI.Controllers
             return tblReceipt;
         }
 
-        // PUT: api/TblReceipts/5
+        // PUT: api/tblReceipts/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTblReceipt(int id, TblReceipt tblReceipt)
+        public async Task<IActionResult> PuttblReceipt(int id, tblReceipt tblReceipt)
         {
-            if (id != tblReceipt.FldReceiptId)
+            if (id != tblReceipt.fldReceiptId)
             {
                 return BadRequest();
             }
@@ -62,7 +62,7 @@ namespace FairShareAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TblReceiptExists(id))
+                if (!tblReceiptExists(id))
                 {
                     return NotFound();
                 }
@@ -75,36 +75,36 @@ namespace FairShareAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/TblReceipts
+        // POST: api/tblReceipts
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<TblReceipt>> PostTblReceipt(TblReceipt tblReceipt)
+        public async Task<ActionResult<tblReceipt>> PosttblReceipt(tblReceipt tblReceipt)
         {
-            _context.TblReceipts.Add(tblReceipt);
+            _context.tblReceipts.Add(tblReceipt);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTblReceipt", new { id = tblReceipt.FldReceiptId }, tblReceipt);
+            return CreatedAtAction("GettblReceipt", new { id = tblReceipt.fldReceiptId }, tblReceipt);
         }
 
-        // DELETE: api/TblReceipts/5
+        // DELETE: api/tblReceipts/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTblReceipt(int id)
+        public async Task<IActionResult> DeletetblReceipt(int id)
         {
-            var tblReceipt = await _context.TblReceipts.FindAsync(id);
+            var tblReceipt = await _context.tblReceipts.FindAsync(id);
             if (tblReceipt == null)
             {
                 return NotFound();
             }
 
-            _context.TblReceipts.Remove(tblReceipt);
+            _context.tblReceipts.Remove(tblReceipt);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool TblReceiptExists(int id)
+        private bool tblReceiptExists(int id)
         {
-            return _context.TblReceipts.Any(e => e.FldReceiptId == id);
+            return _context.tblReceipts.Any(e => e.fldReceiptId == id);
         }
     }
 }

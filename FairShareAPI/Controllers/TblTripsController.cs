@@ -14,27 +14,27 @@ namespace FairShareAPI.Controllers
     [Route("[controller]")]
     [ApiController]
     [EnableCors]
-    public class TblTripsController : ControllerBase
+    public class tblTripsController : ControllerBase
     {
         private readonly FairShareDbContext _context;
 
-        public TblTripsController(FairShareDbContext context)
+        public tblTripsController(FairShareDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/TblTrips
+        // GET: api/tblTrips
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TblTrip>>> GetTblTrips()
+        public async Task<ActionResult<IEnumerable<tblTrip>>> GettblTrips()
         {
-            return await _context.TblTrips.ToListAsync();
+            return await _context.tblTrips.ToListAsync();
         }
 
-        // GET: api/TblTrips/5
+        // GET: api/tblTrips/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<TblTrip>> GetTblTrip(int id)
+        public async Task<ActionResult<tblTrip>> GettblTrip(int id)
         {
-            var tblTrip = await _context.TblTrips.FindAsync(id);
+            var tblTrip = await _context.tblTrips.FindAsync(id);
 
             if (tblTrip == null)
             {
@@ -44,12 +44,12 @@ namespace FairShareAPI.Controllers
             return tblTrip;
         }
 
-        // PUT: api/TblTrips/5
+        // PUT: api/tblTrips/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTblTrip(int id, TblTrip tblTrip)
+        public async Task<IActionResult> PuttblTrip(int id, tblTrip tblTrip)
         {
-            if (id != tblTrip.FldTripId)
+            if (id != tblTrip.fldTripId)
             {
                 return BadRequest();
             }
@@ -62,7 +62,7 @@ namespace FairShareAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TblTripExists(id))
+                if (!tblTripExists(id))
                 {
                     return NotFound();
                 }
@@ -75,36 +75,36 @@ namespace FairShareAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/TblTrips
+        // POST: api/tblTrips
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<TblTrip>> PostTblTrip(TblTrip tblTrip)
+        public async Task<ActionResult<tblTrip>> PosttblTrip(tblTrip tblTrip)
         {
-            _context.TblTrips.Add(tblTrip);
+            _context.tblTrips.Add(tblTrip);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTblTrip", new { id = tblTrip.FldTripId }, tblTrip);
+            return CreatedAtAction("GettblTrip", new { id = tblTrip.fldTripId }, tblTrip);
         }
 
-        // DELETE: api/TblTrips/5
+        // DELETE: api/tblTrips/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTblTrip(int id)
+        public async Task<IActionResult> DeletetblTrip(int id)
         {
-            var tblTrip = await _context.TblTrips.FindAsync(id);
+            var tblTrip = await _context.tblTrips.FindAsync(id);
             if (tblTrip == null)
             {
                 return NotFound();
             }
 
-            _context.TblTrips.Remove(tblTrip);
+            _context.tblTrips.Remove(tblTrip);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool TblTripExists(int id)
+        private bool tblTripExists(int id)
         {
-            return _context.TblTrips.Any(e => e.FldTripId == id);
+            return _context.tblTrips.Any(e => e.fldTripId == id);
         }
     }
 }

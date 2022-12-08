@@ -12,15 +12,14 @@ namespace Admin_Client.Model.DB.EF_Test
         {
         }
 
-        public virtual DbSet<tblGroup> TblGroups { get; set; }
-        public virtual DbSet<tblGroupToTrip> TblGroupToTrips { get; set; }
-        public virtual DbSet<tblLogin> TblLogins { get; set; }
-        public virtual DbSet<tblReceipt> TblReceipts { get; set; }
-        public virtual DbSet<tblTrip> TblTrips { get; set; }
-        public virtual DbSet<tblTripToUserExpense> TblTripToUserExpenses { get; set; }
-        public virtual DbSet<tblUser> TblUsers { get; set; }
-        public virtual DbSet<tblUserExpense> TblUserExpenses { get; set; }
-        public virtual DbSet<tblUserToGroup> TblUserToGroups { get; set; }
+        public virtual DbSet<tblGroup> tblGroups { get; set; }
+        public virtual DbSet<tblGroupToTrip> tblGroupToTrips { get; set; }
+        public virtual DbSet<tblReceipt> tblReceipts { get; set; }
+        public virtual DbSet<tblTrip> ttblTrips { get; set; }
+        public virtual DbSet<tblTripToUserExpense> tblTripToUserExpenses { get; set; }
+        public virtual DbSet<tblUser> tblUsers { get; set; }
+        public virtual DbSet<tblUserExpense> tblUserExpenses { get; set; }
+        public virtual DbSet<tblUserToGroup> tblUserToGroups { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -37,10 +36,6 @@ namespace Admin_Client.Model.DB.EF_Test
                 .HasMany(e => e.tblUserToGroup)
                 .WithOptional(e => e.tblGroup)
                 .WillCascadeOnDelete();
-
-            modelBuilder.Entity<tblLogin>()
-                .Property(e => e.fldPassword)
-                .IsUnicode(false);
 
             modelBuilder.Entity<tblTrip>()
                 .HasMany(e => e.tblGroupToTrip)

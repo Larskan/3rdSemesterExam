@@ -1,20 +1,25 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
 namespace FairShareAPI.Models;
 
-public partial class TblGroup
+[DataContract(IsReference = true)]
+[JsonObject(IsReference = false)]
+public partial class tblGroup
 {
-    public int FldGroupId { get; set; }
+	[DataMember]
+	public int fldGroupId { get; set; }
 
-    public string? FldGroupName { get; set; }
+	[DataMember]
+	public string? fldGroupName { get; set; }
 
-    public bool? FldGroupBoolean { get; set; }
+	[DataMember]
+	public bool? fldIsTemporary { get; set; }
 
-    [JsonIgnore]
-    public virtual ICollection<TblGroupToTrip> TblGroupToMoneys { get; } = new List<TblGroupToTrip>();
+    public virtual ICollection<tblGroupToTrip> tblGroupToMoneys { get; } = new List<tblGroupToTrip>();
 
-	[JsonIgnore]
-	public virtual ICollection<TblUserToGroup> TblUserToGroups { get; } = new List<TblUserToGroup>();
+	public virtual ICollection<tblUserToGroup> tblUserToGroups { get; } = new List<tblUserToGroup>();
 }

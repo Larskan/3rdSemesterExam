@@ -17,7 +17,9 @@ namespace Admin_Client.Singleton
 		private static LogHandlerSingleton instance = null;
 
 		/// <summary>
-		/// <para>Create Instance or retreive the active one</para>
+		/// <para>
+		/// Create Instance or retreive the active one
+		/// </para>
 		/// 
 		/// <para>
 		/// <para>

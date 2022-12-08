@@ -1,5 +1,6 @@
 ﻿using Admin_Client.Model;
 using Admin_Client.Model.DB;
+using Admin_Client.Model.DB.EF_Test;
 using Admin_Client.Model.Domain;
 using Admin_Client.PropertyChanged;
 using Admin_Client.Singleton;
@@ -20,8 +21,8 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		#region Properties
 
-		private ObservableCollection<TblUser> users = new ObservableCollection<TblUser>();
-		public ObservableCollection<TblUser> Users
+		private ObservableCollection<tblUser> users = new ObservableCollection<tblUser>();
+		public ObservableCollection<tblUser> Users
 		{
 			get { return users; }
 			set { users = value; }
@@ -56,15 +57,15 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		public void Create()
 		{
-			MainWindowModelSingleton.Instance.StartPopupConfirm(new TblUser(), PopupMethod.Create);
+			MainWindowModelSingleton.Instance.StartPopupConfirm(new tblUser(), PopupMethod.Create);
 		}
 
-		public void Edit(TblUser user)
+		public void Edit(tblUser user)
 		{
 			MainWindowModelSingleton.Instance.StartPopupConfirm(user, PopupMethod.Edit);
 		}
 
-		public void Delete(TblUser user)
+		public void Delete(tblUser user)
 		{
 			MainWindowModelSingleton.Instance.StartPopupConfirm(user, PopupMethod.Delete);
 		}
@@ -75,13 +76,14 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		private void UpdateUsersListThread(object o)
 		{
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log("ThreadID: " + Thread.CurrentThread.ManagedThreadId + " --> Starting"));
+
 			object[] array = o as object[];
 			CancellationToken token = (CancellationToken)array[0];
 
 			while (!token.IsCancellationRequested)
 			{
-				// CHANGE THE FAKEDATEBASE.GETUSERS() - TODO
-				List<TblUser> users = FAKEDATABASE.GetUsers();
+				List<tblUser> users = HttpClientHandler.GetUsers();
 
 				bool found;
 				foreach (var userItem in users)
@@ -89,7 +91,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
 					found = false;
 					foreach (var UserItem in Users)
 					{
-						if (userItem.FldUserId == UserItem.FldUserId)
+						if (userItem.fldUserID == UserItem.fldUserID)
 						{
 							found = true;
 							break;
@@ -100,8 +102,10 @@ namespace Admin_Client.ViewModel.ContentControlModels
 						App.Current.Dispatcher.BeginInvoke(new Action(() => { Users.Add(userItem); }));
 					}
 				}
+				LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "ThreadID: " + Thread.CurrentThread.ManagedThreadId + " ==> Done"));
 				break;
 			}
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "ThreadID: " + Thread.CurrentThread.ManagedThreadId + " ==> Closed"));
 		}
 
 		#endregion

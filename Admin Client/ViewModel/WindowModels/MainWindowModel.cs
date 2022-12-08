@@ -1,4 +1,5 @@
 ﻿using Admin_Client.Model.DB;
+using Admin_Client.Model.DB.EF_Test;
 using Admin_Client.Model.Domain;
 using Admin_Client.Model.FileIO;
 using Admin_Client.PropertyChanged;
@@ -60,7 +61,7 @@ namespace Admin_Client.ViewModel.WindowModels
 
 		public MainWindowModel()
 		{
-			
+			ThreadPool.QueueUserWorkItem(APIFastConnectThread, new object());
 		}
 
 		#endregion
@@ -174,24 +175,37 @@ namespace Admin_Client.ViewModel.WindowModels
 
 		public void StartPopupParameterChange(object o)
 		{
-			MainWindowModelSingleton.Instance.GetMainWindow().IsEnabled = false;
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Edit Click --> Target " + o.GetType().Name));
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log("PopupParameterChange --> Starting"));
 
+			MainWindowModelSingleton.Instance.GetMainWindow().IsEnabled = false;
 			new PopupParameterChangeWindow(mainWindow, o).ShowDialog();
+
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log("PopupParameterChange == Closed"));
 		}
 
-		public void StartPopupPasswordChange(TblUser user)
+		public void StartPopupPasswordChange(tblUser user)
 		{
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Edit Click --> Target " + user.fldUserID + " " + user.fldFirstName + " " + user.fldLastName));
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log("PopupPasswordChange --> Starting"));
+
 			MainWindowModelSingleton.Instance.GetMainWindow().IsEnabled = false;
-
 			new PopupPasswordChangeWindow(mainWindow, user).ShowDialog();
+
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log("PopupPasswordChange == Closed"));
 		}
 
-		public void StartPopupAddUser(TblUser user)
+		public void StartPopupAddUser()
 		{
-            MainWindowModelSingleton.Instance.GetMainWindow().IsEnabled = false;
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Add Click --> New User"));
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log("PopoutAddUser --> Starting"));
 
-            new PopupAddUserWindow(mainWindow, user).ShowDialog();
-        }
+			// TODO
+			MainWindowModelSingleton.Instance.GetMainWindow().IsEnabled = false;
+			new PopupParameterChangeWindow(mainWindow, new tblUser()).ShowDialog();
+
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log("PopoutAddUser == Closed"));
+		}
 
 		#endregion
 
@@ -303,6 +317,15 @@ namespace Admin_Client.ViewModel.WindowModels
 				this.Grid_AccountTab.Children.Clear();
 				LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "AccountTab == False"));
 			}
+		}
+
+		#endregion
+
+		#region APIFastConnect
+
+		public void APIFastConnectThread(object o)
+		{
+			List<tblUser> users = HttpClientHandler.GetUsers();
 		}
 
 		#endregion

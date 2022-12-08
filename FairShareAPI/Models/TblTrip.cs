@@ -1,21 +1,24 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
 namespace FairShareAPI.Models;
 
-public partial class TblTrip
+[DataContract(IsReference = true)]
+[JsonObject(IsReference = false)]
+public partial class tblTrip
 {
-    public int FldTripId { get; set; }
+	[DataMember]
+	public int fldTripId { get; set; }
 
-    public double? FldSum { get; set; }
+	[DataMember]
+	public double? fldSum { get; set; }
 
-	[JsonIgnore]
-	public virtual ICollection<TblGroupToTrip> TblGroupToMoneys { get; } = new List<TblGroupToTrip>();
+	public virtual ICollection<tblGroupToTrip> tblGroupToMoneys { get; } = new List<tblGroupToTrip>();
 
-	[JsonIgnore]
-	public virtual ICollection<TblReceipt> TblReceipts { get; } = new List<TblReceipt>();
+	public virtual ICollection<tblReceipt> tblReceipts { get; } = new List<tblReceipt>();
 
-	[JsonIgnore]
-	public virtual ICollection<TblTripToUserExpense> TblTripToUserExpenses { get; } = new List<TblTripToUserExpense>();
+	public virtual ICollection<tblTripToUserExpense> tblTripToUserExpenses { get; } = new List<tblTripToUserExpense>();
 }

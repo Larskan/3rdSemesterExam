@@ -1,5 +1,6 @@
 ﻿using Admin_Client.Model;
 using Admin_Client.Model.DB;
+using Admin_Client.Model.DB.EF_Test;
 using Admin_Client.Model.Domain;
 using Admin_Client.Singleton;
 using Admin_Client.View.Windows.Popups;
@@ -27,8 +28,8 @@ namespace Admin_Client.View.UserControls
 	/// </summary>
 	public partial class GroupListView : UserControl
 	{
-        OverviewSingleton Overview = OverviewSingleton.getInstance();
-        GroupListViewModel viewModel = new GroupListViewModel();
+		OverviewSingleton Overview = OverviewSingleton.getInstance();
+		GroupListViewModel viewModel = new GroupListViewModel();
 		public GroupListView()
 		{
 			this.DataContext = viewModel;
@@ -42,7 +43,7 @@ namespace Admin_Client.View.UserControls
 		private void Update_Click(object sender, RoutedEventArgs e)
 		{
 			viewModel.Update();
-        }
+		}
 
 		private void Create_Click(object sender, RoutedEventArgs e)
 		{
@@ -50,33 +51,33 @@ namespace Admin_Client.View.UserControls
 		}
 
 		private void Edit_Click(object sender, RoutedEventArgs e)
-        {
-            if (ListBox_Groups.SelectedItem != null)
-            {
-                viewModel.Edit((TblGroup)ListBox_Groups.SelectedItem);
-
-				
-                //Overview.SetGroupID(FAKEDATABASE.GetGroupID((TblGroup)ListBox_Groups.SelectedItem));
-                
-            }
-        }
-
-        private void Delete_Click(object sender, RoutedEventArgs e)
 		{
 			if (ListBox_Groups.SelectedItem != null)
 			{
-				viewModel.Delete((TblGroup)ListBox_Groups.SelectedItem);
+				viewModel.Edit((tblGroup)ListBox_Groups.SelectedItem);
+
+				// NOPE
+				//Overview.SetGroupID(FAKEDATABASE.GetGroupID((tblGroup)ListBox_Groups.SelectedItem));
+				//MainWindowModelSingleton.Instance.SetMainContent(new GroupView(), true);
 			}
 		}
-        private void OnPageLoaded(object sender, RoutedEventArgs e)
-        {
 
-            viewModel.Update();
-        }
+		private void Delete_Click(object sender, RoutedEventArgs e)
+		{
+			if (ListBox_Groups.SelectedItem != null)
+			{
+				viewModel.Delete((tblGroup)ListBox_Groups.SelectedItem);
+			}
+		}
+		private void OnPageLoaded(object sender, RoutedEventArgs e)
+		{
 
-        #region Filtering
+			viewModel.Update();
+		}
 
-        private void TextBox_Search_TextChanged(object sender, TextChangedEventArgs e)
+		#region Filtering
+
+		private void TextBox_Search_TextChanged(object sender, TextChangedEventArgs e)
 		{
 			CollectionViewSource.GetDefaultView(ListBox_Groups.ItemsSource).Refresh();
 		}
@@ -85,12 +86,16 @@ namespace Admin_Client.View.UserControls
 		{
 			if (String.IsNullOrEmpty(TextBox_Search.Text))
 				return true;
+			else if (((tblGroup)item).fldGroupName.IndexOf(TextBox_Search.Text, StringComparison.OrdinalIgnoreCase) >= 0)
+				return true;
+			else if (((tblGroup)item).fldGroupID.ToString().IndexOf(TextBox_Search.Text, StringComparison.OrdinalIgnoreCase) >= 0)
+				return true;
 			else
-				return (item.ToString().IndexOf(TextBox_Search.Text, StringComparison.OrdinalIgnoreCase) >= 0);
+				return (((tblGroup)item).fldIsTemporary.ToString().IndexOf(TextBox_Search.Text, StringComparison.OrdinalIgnoreCase) >= 0);
 		}
 
 		#endregion
 
-		
+
 	}
 }

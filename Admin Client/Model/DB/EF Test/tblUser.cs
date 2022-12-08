@@ -12,7 +12,6 @@ namespace Admin_Client.Model.DB.EF_Test
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public tblUser()
         {
-            tblLogin = new HashSet<tblLogin>();
             tblReceipt = new HashSet<tblReceipt>();
             tblUserExpense = new HashSet<tblUserExpense>();
             tblUserToGroup = new HashSet<tblUserToGroup>();
@@ -34,10 +33,10 @@ namespace Admin_Client.Model.DB.EF_Test
 
         public bool? fldIsAdmin { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblLogin> tblLogin { get; set; }
+		[StringLength(256)]
+		public string fldPassword { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblReceipt> tblReceipt { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
