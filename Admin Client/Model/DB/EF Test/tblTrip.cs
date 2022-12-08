@@ -21,6 +21,8 @@ namespace Admin_Client.Model.DB.EF_Test
         public int fldTripID { get; set; }
 
         public double? fldSum { get; set; }
+        public string fldTripName { get; set; }
+        public DateTime? fldTripDate { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblGroupToTrip> tblGroupToTrip { get; set; }
@@ -30,5 +32,7 @@ namespace Admin_Client.Model.DB.EF_Test
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblTripToUserExpense> tblTripToUserExpense { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblUserExpense> tblUserExpenses { get; set; }
     }
 }

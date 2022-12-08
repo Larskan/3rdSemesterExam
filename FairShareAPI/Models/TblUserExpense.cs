@@ -17,6 +17,9 @@ public partial class tblUserExpense
 	public int? fldUserId { get; set; }
 
 	[DataMember]
+	public int? fldTripId { get; set; }
+
+	[DataMember]
 	public double? fldExpense { get; set; }
 
 	[DataMember]
@@ -26,6 +29,8 @@ public partial class tblUserExpense
 	public DateTime? fldDate { get; set; }
 
 	public virtual tblUser? fldUser { get; set; }
+
+	public virtual tblTrip? fldTrip { get; set; }
 
 	public virtual ICollection<tblTripToUserExpense> tblTripToUserExpenses { get; } = new List<tblTripToUserExpense>();
 }

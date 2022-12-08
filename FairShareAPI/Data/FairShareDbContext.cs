@@ -101,6 +101,8 @@ public partial class FairShareDbContext : DbContext
 
             entity.Property(e => e.fldTripId).HasColumnName("fldTripID");
             entity.Property(e => e.fldSum).HasColumnName("fldSum");
+            entity.Property(e => e.fldTripName).HasColumnName("fldTripName");
+            entity.Property(e => e.fldTripDate).HasColumnName("fldTripDate");
         });
 
         modelBuilder.Entity<tblTripToUserExpense>(entity =>
@@ -161,18 +163,19 @@ public partial class FairShareDbContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("fldNote");
             entity.Property(e => e.fldUserId).HasColumnName("fldUserID");
+            entity.Property(e => e.fldTripId).HasColumnName("fldTripID");
 
             entity.HasOne(d => d.fldUser).WithMany(p => p.tblUserExpenses)
                 .HasForeignKey(d => d.fldUserId)
                 .HasConstraintName("FK__tblUserEx__fldUs__34C8D9D1");
+            entity.HasOne(d => d.fldTrip).WithMany(p => p.tblUserExpenses)
+                .HasForeignKey(d => d.fldTripId)
+                .HasConstraintName("FK__tblUserEx__fldTr__32E0915F");
         });
 
         modelBuilder.Entity<tblUserToGroup>(entity =>
         {
-            //entity.HasNoKey();
             entity.HasKey(e => e.fldUserToGroupId).HasName("PK__tblUserT__19DCF06B1673C2D9");
-            //entity.HasAlternateKey(e => e.fldUserId);
-            //entity.HasAlternateKey(e => e.fldGroupId);
 
             entity.ToTable("tblUserToGroup");
 

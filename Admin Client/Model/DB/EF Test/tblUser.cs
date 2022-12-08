@@ -29,7 +29,7 @@ namespace Admin_Client.Model.DB.EF_Test
         [StringLength(30)]
         public string fldLastName { get; set; }
 
-        public int? fldPhonenumber { get; set; }
+        public string fldPhonenumber { get; set; }
 
         public bool? fldIsAdmin { get; set; }
 
