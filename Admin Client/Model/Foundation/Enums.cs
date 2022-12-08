@@ -35,7 +35,7 @@ namespace Admin_Client
 	public enum SqlObjectType
 	{
 		tblGroup,
-		tblGroupToMoney,
+		tblGroupToTrip,
 		tblReceipt,
 		tblTrip,
 		tblTripToUserExpense,

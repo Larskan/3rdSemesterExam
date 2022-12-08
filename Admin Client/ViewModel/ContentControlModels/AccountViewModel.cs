@@ -57,9 +57,9 @@ namespace Admin_Client.ViewModel.ContentControlModels
 			set { email = value; NotifyPropertyChanged(); }
 		}
 
-		private int phonenumber;
+		private string phonenumber;
 
-		public int Phonenumber
+		public string Phonenumber
 		{
 			get { return phonenumber; }
 			set { phonenumber = value; NotifyPropertyChanged(); }
@@ -79,7 +79,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
 			this.Initials = "" + Firstname.First() + Lastname.First();
 			this.Username = this.Firstname + " " + this.Lastname;
 			this.Email = currentUser.fldEmail;
-			this.Phonenumber = currentUser.fldPhonenumber.Value;
+			this.Phonenumber = currentUser.fldPhonenumber;
 		}
 
 		#endregion
@@ -89,13 +89,13 @@ namespace Admin_Client.ViewModel.ContentControlModels
 		public void Edit()
 		{
 			// EDIT POPUP WITH CURRENT USER - TODO
-			MainWindowModelSingleton.Instance.StartPopupParameterChange(new tblUser() { fldUserID = 0, fldFirstName = Firstname, fldLastName = Lastname, fldEmail = Email, fldPhonenumber = Phonenumber });
+			MainWindowModelSingleton.Instance.StartPopupParameterChange(new tblUser() { fldUserID = 0, fldFirstName = Firstname, fldLastName = Lastname, fldEmail = Email, fldPhonenumber = "" + Phonenumber });
 		}
 
 		public void EditPassword()
 		{
 			// EDITPASSWORD POPUP WITH CURRENT USER - TODO
-			MainWindowModelSingleton.Instance.StartPopupPasswordChange(new tblUser() { fldUserID = 0, fldFirstName = Firstname, fldLastName = Lastname, fldEmail = Email, fldPhonenumber = Phonenumber });
+			MainWindowModelSingleton.Instance.StartPopupPasswordChange(new tblUser() { fldUserID = 0, fldFirstName = Firstname, fldLastName = Lastname, fldEmail = Email, fldPhonenumber = "" + Phonenumber });
 		}
 
 		public void LogTool()
