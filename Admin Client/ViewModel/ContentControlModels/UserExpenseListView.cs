@@ -34,12 +34,12 @@ namespace Admin_Client.ViewModel.ContentControlModels
 			set { groupname = value; NotifyPropertyChanged(); }
 		}
 
-		private ObservableCollection<tblTrip> receipts = new ObservableCollection<tblTrip>();
+		private ObservableCollection<tblUserExpense> userExpenses = new ObservableCollection<tblUserExpense>();
 
-		public ObservableCollection<tblTrip> Receipts
+		public ObservableCollection<tblUserExpense> UserExpenses
 		{
-			get { return receipts; }
-			set { receipts = value; }
+			get { return userExpenses; }
+			set { userExpenses = value; }
 		}
 
 
@@ -47,11 +47,11 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		#region Constructor
 
-		public UserExpenseListViewModel(tblGroup group)
+		public UserExpenseListViewModel(tblUser user)
 		{
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Information, "Get Trips for Group: " + group.fldGroupID + " " + group.fldGroupName));
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Information, "Get UserExpenses for User: " + user.fldUserID + " " + user.fldFirstName + " " + user.fldLastName));
 
-			ThreadPool.QueueUserWorkItem(UpdateReceiptListThread, new object[] { group });
+			ThreadPool.QueueUserWorkItem(UpdateReceiptListThread, new object[] { user });
 		}
 
 		#endregion
@@ -67,17 +67,15 @@ namespace Admin_Client.ViewModel.ContentControlModels
 			object[] array = o as object[];
 			tblUser user = (tblUser)array[0];
 
-			/*
-			// CHANGE THE FAKEDATEBASE.GETGROUPS() - TODO
-			List<tblReceipts> receipts = FAKEDATABASE.GetReceipts(user);
+			List<tblUserExpense> userExpenses = HttpClientHandler.GetUserExpensesFromUser(user);
 
 			bool found;
-			foreach (var receiptItem in receipts)
+			foreach (var userExpenseItem in userExpenses)
 			{
 				found = false;
-				foreach (var ReceiptItem in Receipts)
+				foreach (var UserExpenseItem in UserExpenses)
 				{
-					if (receiptItem.fldReceiptId == ReceiptItem.fldReceiptId)
+					if (userExpenseItem.fldExpenseID == userExpenseItem.fldExpenseID)
 					{
 						found = true;
 						break;
@@ -85,10 +83,10 @@ namespace Admin_Client.ViewModel.ContentControlModels
 				}
 				if (!found)
 				{
-					App.Current.Dispatcher.BeginInvoke(new Action(() => { Receipts.Add(receiptItem); }));
+					App.Current.Dispatcher.BeginInvoke(new Action(() => { UserExpenses.Add(userExpenseItem); }));
 				}
 			}
-			*/
+			
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "ThreadID: " + Thread.CurrentThread.ManagedThreadId + " ==> Done"));
 
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "ThreadID: " + Thread.CurrentThread.ManagedThreadId + " ==> Closed"));

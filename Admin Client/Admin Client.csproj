@@ -308,7 +308,6 @@
     <Compile Include="ViewModel\ContentControlModels\AccountViewModel.cs" />
     <Compile Include="ViewModel\ContentControlModels\GroupViewModel.cs" />
     <Compile Include="ViewModel\ContentControlModels\LoginViewModel.cs" />
-    <Compile Include="ViewModel\ContentControlModels\LogListViewModel.cs" />
     <Compile Include="ViewModel\ContentControlModels\OverviewViewModel.cs" />
     <Compile Include="ViewModel\ContentControlModels\ReceiptViewModel.cs" />
     <Compile Include="ViewModel\ContentControlModels\Special\AccountTabViewModel.cs" />
@@ -355,10 +354,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\UserControls\LoginView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\UserControls\LogListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -425,9 +420,6 @@
     </Compile>
     <Compile Include="View\UserControls\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\UserControls\LogListView.xaml.cs">
-      <DependentUpon>LogListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControls\OverviewView.xaml.cs">
       <DependentUpon>OverviewView.xaml</DependentUpon>

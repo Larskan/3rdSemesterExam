@@ -88,14 +88,12 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		public void Edit()
 		{
-			// EDIT POPUP WITH CURRENT USER - TODO
-			MainWindowModelSingleton.Instance.StartPopupParameterChange(new tblUser() { fldUserID = 0, fldFirstName = Firstname, fldLastName = Lastname, fldEmail = Email, fldPhonenumber = "" + Phonenumber });
+			MainWindowModelSingleton.Instance.StartPopupParameterChange(HttpClientHandler.currentUser);
 		}
 
 		public void EditPassword()
 		{
-			// EDITPASSWORD POPUP WITH CURRENT USER - TODO
-			MainWindowModelSingleton.Instance.StartPopupPasswordChange(new tblUser() { fldUserID = 0, fldFirstName = Firstname, fldLastName = Lastname, fldEmail = Email, fldPhonenumber = "" + Phonenumber });
+			MainWindowModelSingleton.Instance.StartPopupPasswordChange(HttpClientHandler.currentUser);
 		}
 
 		public void LogTool()

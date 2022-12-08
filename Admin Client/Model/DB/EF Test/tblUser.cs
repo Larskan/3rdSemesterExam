@@ -31,7 +31,7 @@ namespace Admin_Client.Model.DB.EF_Test
 
         public string fldPhonenumber { get; set; }
 
-        public bool? fldIsAdmin { get; set; }
+        public bool fldIsAdmin { get; set; }
 
 		[StringLength(256)]
 		public string fldPassword { get; set; }

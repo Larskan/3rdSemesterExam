@@ -68,7 +68,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
 			List<tblUser> users = HttpClientHandler.GetUsers();
 			foreach (tblUser user in users) 
 			{ 
-				if (user.fldIsAdmin.Value == true && user.fldEmail.Equals(username) && user.fldPassword.Equals(password))
+				if (user.fldIsAdmin && user.fldEmail.Equals(username) && user.fldPassword.Equals(password))
 				{
 					HttpClientHandler.currentUser = user;
 					loginSuccess = true;

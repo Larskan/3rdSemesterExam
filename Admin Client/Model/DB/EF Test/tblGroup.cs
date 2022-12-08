@@ -22,7 +22,7 @@ namespace Admin_Client.Model.DB.EF_Test
         [StringLength(30)]
         public string fldGroupName { get; set; }
 
-        public bool? fldIsTemporary { get; set; }
+        public bool fldIsTemporary { get; set; }
 
 		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblGroupToTrip> tblGroupToTrip { get; set; }

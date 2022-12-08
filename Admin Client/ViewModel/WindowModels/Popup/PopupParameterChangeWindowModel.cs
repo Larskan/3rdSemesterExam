@@ -22,6 +22,10 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 
 		private Window currentWindow;
 
+		private bool isNewObject = false;
+		private object currentObject = false;
+		private int currentObjectID = 0;
+
 		#endregion
 
 		#region Properties
@@ -57,15 +61,16 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 
 		public PopupParameterChangeWindowModel(Window currentWindow, object o)
 		{
-			bool isNewObject = false;
-
 			this.currentWindow = currentWindow;
+			this.currentObject = o;
+			this.currentObjectID = (Int32)o.GetType().GetProperties().First().GetValue(o);
 
 			foreach (var item in o.GetType().GetProperties())
 			{
 				string name = item.Name;
 				string type = item.PropertyType.ToString().Replace("System.","");
 				object value = null;
+
 				switch (type)
 				{
 					case "String": value = (String)item.GetValue(o); break; 
@@ -84,7 +89,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 						ObjectName += value.ToString();
 					}
 				}
-				if (!name.ToLower().Contains("id") && Enum.GetNames(typeof(ParameterType)).Contains(type))
+				if (!name.Contains("ID") && !name.ToLower().Contains("password") && Enum.GetNames(typeof(ParameterType)).Contains(type))
 				{
 					if (value != null)
 					{
@@ -174,23 +179,66 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 					}
 				}
 
-				// DO or NOT DO if valid
+				// Valid or noy
 				if (!isValid)
 				{
 					((Parameter)item).IsValid = false;
 				} else
 				{
 					((Parameter)item).IsValid = true;
-					// DO STUFF HERE - TODO
 				}
 			}
 
+			// Check if everything is valid
 			foreach (var item in listBox.Items)
 			{
 				if (!((Parameter)item).IsValid)
 				{
 					return;
 				}
+			}
+
+			// Make changes to object
+			foreach (var parameterProperty in listBox.Items)
+			{
+				foreach (var objectProperty in currentObject.GetType().GetProperties())
+				{
+					if (((Parameter)parameterProperty).ParameterName.Equals(objectProperty.Name))
+					{
+						switch (((Parameter)parameterProperty).ParameterType)
+						{
+							case ParameterType.String:
+								{
+									currentObject.GetType().GetProperty(objectProperty.Name).SetValue(currentObject, ((Parameter)parameterProperty).ParameterValue);
+									break;
+								}
+							case ParameterType.Int32:
+								{
+									currentObject.GetType().GetProperty(objectProperty.Name).SetValue(currentObject, Int32.Parse(((Parameter)parameterProperty).ParameterValue.ToString()));
+									break;
+								}
+							case ParameterType.Boolean:
+								{
+									currentObject.GetType().GetProperty(objectProperty.Name).SetValue(currentObject, Boolean.Parse(((Parameter)parameterProperty).ParameterValue.ToString()));
+									break;
+								}
+						}
+					}
+				}
+			}
+
+			foreach (var item in currentObject.GetType().GetProperties())
+			{
+				Debug.WriteLine(item.GetValue(currentObject));
+			}
+
+			// Send changed object to the database
+			if (isNewObject)
+			{
+				HttpClientHandler.Post(currentObject);
+			} else
+			{
+				HttpClientHandler.Put(currentObject, currentObjectID);
 			}
 
 			currentWindow.Close();

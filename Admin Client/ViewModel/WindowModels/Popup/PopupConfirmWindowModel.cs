@@ -173,7 +173,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 					{
 						tblUser user = (tblUser)target;
 
-						/*Do Stuff*/
+						HttpClientHandler.Delete(SqlObjectType.tblUser, user.fldUserID);
 
 						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + user.fldUserID + " - " + user.fldFirstName + " " + user.fldLastName));
 						break;
@@ -182,7 +182,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 					{
 						tblGroup group = (tblGroup)target;
 
-						/*Do Stuff*/
+						HttpClientHandler.Delete(SqlObjectType.tblGroup, group.fldGroupID);
 
 						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + group.fldGroupID + " - " + group.fldGroupName));
 						break;
@@ -191,7 +191,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 					{
 						tblReceipt receipt = (tblReceipt)target;
 
-						/*Do Stuff*/
+						HttpClientHandler.Delete(SqlObjectType.tblReceipt, receipt.fldReceiptID);
 
 						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + receipt.fldReceiptID + " - " + receipt.fldUserID + " " + receipt.tblUser.fldFirstName + " " + receipt.tblUser.fldLastName));
 						break;
@@ -200,7 +200,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 					{
 						tblTrip trip = (tblTrip)target;
 
-						/*Do Stuff*/
+						HttpClientHandler.Delete(SqlObjectType.tblTrip, trip.fldTripID);
 
 						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + trip.fldTripID + " - UserID: " + trip.tblTripToUserExpense.ToArray()[0].tblUserExpense.fldUserID));
 						break;

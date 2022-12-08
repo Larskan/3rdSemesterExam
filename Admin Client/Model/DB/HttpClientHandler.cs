@@ -322,7 +322,7 @@ namespace Admin_Client.Model.DB
 			return filterReceipts;
 		}
 
-		public static List<tblUserExpense> GetUserExpenseFromUser(tblUser user)
+		public static List<tblUserExpense> GetUserExpensesFromUser(tblUser user)
 		{
 			if (userExpensesIsDone)
 			{
@@ -454,7 +454,7 @@ namespace Admin_Client.Model.DB
 			return filterUserExpense;
 		}
 
-		public static List<tblReceipt> GetReceiptFromTrip(tblTrip trip)
+		public static List<tblReceipt> GetReceiptsFromTrip(tblTrip trip)
 		{
 			if (receiptsIsDone)
 			{
