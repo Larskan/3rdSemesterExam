@@ -52,7 +52,9 @@
                 <ColumnDefinition Width="100"/>
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="0" Grid.Row="0" Content="B" FontSize="15" Margin="5" Resources="{StaticResource roundcornericon100}"></Button>
+            <Button Grid.Column="0" Grid.Row="0" FontSize="15" Margin="5" Resources="{StaticResource roundcornericon100}">
+                <Image Source="\Img\arrow_back.png" Margin="10"></Image>
+            </Button>
 
             <Label Content="Back" FontSize="13" Grid.Column="1" Grid.Row="0" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="10" />
 

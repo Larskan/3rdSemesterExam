@@ -101,7 +101,9 @@
                 <ColumnDefinition Width="100"/>
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="0" Grid.Row="0" Content="G" FontSize="15" Margin="5" Resources="{StaticResource roundcornericon100}"></Button>
+            <Button Grid.Column="0" Grid.Row="0" FontSize="15" Margin="5" Resources="{StaticResource roundcornericon100}">
+                <Image Source="\Img\group.png" Margin="10"></Image>
+            </Button>
 
             <Label Content="Groups" FontSize="13" Grid.Column="1" Grid.Row="0" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="10" />
             
@@ -116,7 +118,9 @@
                 <ColumnDefinition Width="100"/>
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="0" Grid.Row="2" Content="U" FontSize="15" Margin="5" Resources="{StaticResource roundcornericon100}"></Button>
+            <Button Grid.Column="0" Grid.Row="2" FontSize="15" Margin="5" Resources="{StaticResource roundcornericon100}">
+                <Image Source="\Img\user.png" Margin="10"></Image>
+            </Button>
 
             <Label Content="Users" FontSize="13" Grid.Column="1" Grid.Row="2" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="10" />
             

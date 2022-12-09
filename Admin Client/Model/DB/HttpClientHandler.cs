@@ -46,7 +46,7 @@ namespace Admin_Client.Model.DB
 				Thread.Sleep(500);
 			}
 
-			return null;
+			return userObject;
 		}
 
 		static bool usersIsDone = false;
@@ -513,10 +513,7 @@ namespace Admin_Client.Model.DB
 			{
 				case SqlObjectType.tblUser:
 					{
-						if (userObject != null)
-						{
-							userObject = ((JObject)o).ToObject<tblUser>();
-						}
+						userObject = ((JObject)o).ToObject<tblUser>();
 						userIsDone = true;
 						break;
 					}

@@ -36,7 +36,7 @@
                             <Style.Resources>
                                 <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
                                     <VisualBrush.Visual>
-                                        <Label Content="Username" Foreground="LightGray" />
+                                        <Label Content="E-mail" Foreground="LightGray" />
                                     </VisualBrush.Visual>
                                 </VisualBrush>
                             </Style.Resources>
@@ -59,7 +59,7 @@
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="4*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="35"/>
                     </Grid.ColumnDefinitions>
 
                     <TextBox x:Name="TextBox_Password" Grid.Column="0" Margin="10,10,10,10" VerticalContentAlignment="Center" TextChanged="TextBox_Password_TextChanged" Resources="{StaticResource roundborder10}">
@@ -97,7 +97,9 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 
-                        <ToggleButton x:Name="TogglePasswordView" Grid.Row="1" Margin="5" Resources="{StaticResource roundborder5}" Checked="TogglePasswordView_Checked" Unchecked="TogglePasswordView_Unchecked" />
+                        <ToggleButton x:Name="TogglePasswordView" Grid.Row="1" Margin="5" Resources="{StaticResource roundborder5}" Checked="TogglePasswordView_Checked" Unchecked="TogglePasswordView_Unchecked">
+                            <Image Source="\Img\visibleyes.png"></Image>
+                        </ToggleButton>
 
                     </Grid>
 

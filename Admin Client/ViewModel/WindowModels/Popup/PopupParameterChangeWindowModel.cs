@@ -118,7 +118,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 
 		#region Public Methods
 
-		public void Change(ListBox listBox)
+		public void Confirm(ListBox listBox)
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Add Click"));
 

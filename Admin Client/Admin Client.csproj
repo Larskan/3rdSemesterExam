@@ -492,7 +492,37 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Img\visibleyes.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Img\visibleno.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Img\group.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Img\user.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Img\account.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Img\arrow_back.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Img\add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Img\edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Img\delete.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

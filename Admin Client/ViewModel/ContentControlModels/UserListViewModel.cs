@@ -83,6 +83,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log("ThreadID: " + Thread.CurrentThread.ManagedThreadId + " --> Starting"));
 			App.Current.Dispatcher.BeginInvoke(new Action(() => { Users.Clear(); }));
+			Thread.Sleep(500);
 
 			object[] array = o as object[];
 			CancellationToken token = (CancellationToken)array[0];

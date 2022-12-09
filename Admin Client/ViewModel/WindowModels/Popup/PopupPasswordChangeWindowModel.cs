@@ -6,6 +6,7 @@ using Admin_Client.Singleton;
 using DocumentFormat.OpenXml.Presentation;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,14 +50,20 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 
 		#region Public Methods
 
-		public void Change(string password)
+		public void Confirm(string password, string newPassword)
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Change Click"));
 
+			// Authentication
+			if (!password.Equals(HttpClientHandler.GetUser(user.fldUserID).fldPassword))
+			{
+				return;
+			}
+
 			// ENCRYPT AND SEND TO DATABASE
 
-			HttpClientHandler.currentUser.fldPassword = password;
-			HttpClientHandler.Put(HttpClientHandler.currentUser, HttpClientHandler.currentUser.fldUserID);
+			user.fldPassword = newPassword;
+			HttpClientHandler.Put(user, user.fldUserID);
 
 			currentWindow.Close();
 			MainWindowModelSingleton.Instance.GetMainWindow().IsEnabled = true;

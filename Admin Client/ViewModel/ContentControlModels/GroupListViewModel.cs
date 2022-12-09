@@ -73,7 +73,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
 		public void Delete(tblGroup group)
 		{
 			MainWindowModelSingleton.Instance.StartPopupConfirm(group, PopupMethod.Delete);
-			Thread.Sleep(500);
+			Thread.Sleep(1000);
 			Update();
 		}
 
@@ -85,6 +85,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log("ThreadID: " + Thread.CurrentThread.ManagedThreadId + " --> Starting"));
 			App.Current.Dispatcher.BeginInvoke(new Action(() => { Groups.Clear(); }));
+			Thread.Sleep(500);
 
 			object[] array = o as object[];
 			CancellationToken token = (CancellationToken)array[0];
