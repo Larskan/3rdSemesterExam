@@ -74,7 +74,7 @@
                     <div id="Heading" class="panel-heading">
                       Recent expenses
                     </div>
-                    <div class="panel-body">
+                    <div id="expenses" class="panel-body">
                       <p>Placeholder for Recent Expense</p>
                       <p>Placeholder for Recent Expense</p>
                       <p>Placeholder for Recent Expense</p>
@@ -100,4 +100,11 @@
       </div>
     </div>
   </body>
+
+  <script src="trip.js"></script>
+
+  <script>
+    $(document).ready(LoadCookie());
+    $(document).ready(logCookie());
+  </script>
 </html>

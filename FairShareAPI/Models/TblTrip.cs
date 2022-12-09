@@ -16,9 +16,16 @@ public partial class tblTrip
 	[DataMember]
 	public double? fldSum { get; set; }
 
+	[DataMember]
+	public string? fldTripName { get; set; }
+
+	[DataMember]
+	public DateTime? fldTripDate { get; set; }
+
 	public virtual ICollection<tblGroupToTrip> tblGroupToMoneys { get; } = new List<tblGroupToTrip>();
 
 	public virtual ICollection<tblReceipt> tblReceipts { get; } = new List<tblReceipt>();
 
 	public virtual ICollection<tblTripToUserExpense> tblTripToUserExpenses { get; } = new List<tblTripToUserExpense>();
+	public virtual ICollection<tblUserExpense> tblUserExpenses { get; } = new List<tblUserExpense>();
 }

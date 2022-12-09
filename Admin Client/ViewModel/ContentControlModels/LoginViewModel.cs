@@ -45,7 +45,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
 			bool loginSuccess = false;
 			if (username.Equals(".") && password.Equals("."))
 			{
-				HttpClientHandler.currentUser = new tblUser() { fldEmail = "No@Email.dk", fldFirstName = "Local", fldLastName = "Admin",  fldIsAdmin = true, fldPassword = ".", fldPhonenumber = 00000000 };
+				HttpClientHandler.currentUser = new tblUser() { fldEmail = "No@Email.dk", fldFirstName = "Local", fldLastName = "Admin",  fldIsAdmin = true, fldPassword = ".", fldPhonenumber = "00000000" };
 				loginSuccess = true;
 				LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Login == Success"));
 				MainWindowModelSingleton.Instance.SetMainContent(new OverviewView(), false, true);
@@ -68,7 +68,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
 			List<tblUser> users = HttpClientHandler.GetUsers();
 			foreach (tblUser user in users) 
 			{ 
-				if (user.fldIsAdmin.Value == true && user.fldEmail.Equals(username) && user.fldPassword.Equals(password))
+				if (user.fldIsAdmin && user.fldEmail.Equals(username) && user.fldPassword.Equals(password))
 				{
 					HttpClientHandler.currentUser = user;
 					loginSuccess = true;

@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Admin_Client.ViewModel.ContentControlModels
 {
@@ -57,7 +58,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		public void Create()
 		{
-			MainWindowModelSingleton.Instance.StartPopupConfirm(new tblUser(), PopupMethod.Create);
+			MainWindowModelSingleton.Instance.StartPopupConfirm(new tblUser() { fldPassword = "x" }, PopupMethod.Create);
 		}
 
 		public void Edit(tblUser user)

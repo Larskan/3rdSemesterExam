@@ -19,6 +19,7 @@ namespace Admin_Client.Model.DB.EF_Test
         public int fldExpenseID { get; set; }
 
         public int? fldUserID { get; set; }
+        public int? fldTripID { get; set; }
 
         public double? fldExpense { get; set; }
 
@@ -32,5 +33,6 @@ namespace Admin_Client.Model.DB.EF_Test
         public virtual ICollection<tblTripToUserExpense> tblTripToUserExpense { get; set; }
 
         public virtual tblUser tblUser { get; set; }
+        public virtual tblTrip tblTrip { get; set; }
     }
 }

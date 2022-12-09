@@ -23,7 +23,7 @@ public partial class tblUser
 	public string? fldLastName { get; set; }
 
 	[DataMember]
-	public int? fldPhonenumber { get; set; }
+	public string? fldPhonenumber { get; set; }
 
 	[DataMember]
 	public bool? fldIsAdmin { get; set; }

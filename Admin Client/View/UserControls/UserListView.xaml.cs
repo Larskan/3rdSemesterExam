@@ -90,7 +90,7 @@ namespace Admin_Client.View.UserControls
 				return true;
 			else if (((tblUser)item).fldEmail.IndexOf(TextBox_Search.Text, StringComparison.OrdinalIgnoreCase) >= 0)
 				return true;
-			else if (((tblUser)item).fldPhonenumber.ToString().IndexOf(TextBox_Search.Text, StringComparison.OrdinalIgnoreCase) >= 0)
+			else if (((tblUser)item).fldPhonenumber.IndexOf(TextBox_Search.Text, StringComparison.OrdinalIgnoreCase) >= 0)
 				return true;
 			else if (((tblUser)item).fldUserID.ToString().IndexOf(TextBox_Search.Text, StringComparison.OrdinalIgnoreCase) >= 0)
 				return true;

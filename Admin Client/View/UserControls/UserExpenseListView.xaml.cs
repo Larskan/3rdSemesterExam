@@ -26,9 +26,9 @@ namespace Admin_Client.View.UserControls
 	public partial class UserExpenseListView : UserControl
 	{
 		UserExpenseListViewModel viewModel;
-		public UserExpenseListView(tblGroup group)
+		public UserExpenseListView(tblUser user)
 		{
-			viewModel = new UserExpenseListViewModel(group);
+			viewModel = new UserExpenseListViewModel(user);
 			this.DataContext = viewModel;
 
 			InitializeComponent();

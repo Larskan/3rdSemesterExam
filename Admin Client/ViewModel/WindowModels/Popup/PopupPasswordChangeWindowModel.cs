@@ -53,9 +53,8 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Change Click"));
 
-			//DO STUFF TO LOGIN WITH USER ID
+			// DO STUFF TO LOGIN WITH USER ID
 			// ENCRYPT AND SEND TO DATABASE
-
 
 			currentWindow.Close();
 			MainWindowModelSingleton.Instance.GetMainWindow().IsEnabled = true;
