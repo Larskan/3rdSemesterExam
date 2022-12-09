@@ -49,12 +49,14 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 
 		#region Public Methods
 
-		public void Change()
+		public void Change(string password)
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Change Click"));
 
-			// DO STUFF TO LOGIN WITH USER ID
 			// ENCRYPT AND SEND TO DATABASE
+
+			HttpClientHandler.currentUser.fldPassword = password;
+			HttpClientHandler.Put(HttpClientHandler.currentUser, HttpClientHandler.currentUser.fldUserID);
 
 			currentWindow.Close();
 			MainWindowModelSingleton.Instance.GetMainWindow().IsEnabled = true;

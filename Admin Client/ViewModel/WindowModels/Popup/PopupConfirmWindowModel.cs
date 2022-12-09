@@ -3,6 +3,7 @@ using Admin_Client.Model.DB.EF_Test;
 using Admin_Client.Model.Domain;
 using Admin_Client.PropertyChanged;
 using Admin_Client.Singleton;
+using Admin_Client.View.UserControls;
 using Admin_Client.View.Windows.Popups;
 using System;
 using System.Collections.Generic;
@@ -121,7 +122,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 					{
 						tblUser user = (tblUser)target;
 
-						/*Do Stuff*/
+						MainWindowModelSingleton.Instance.SetMainContent(new UserView(user));
 
 						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + user.fldUserID + " - " + user.fldFirstName + " " + user.fldLastName));
 						break;
@@ -130,7 +131,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 					{
 						tblGroup group = (tblGroup)target;
 
-						/*Do Stuff*/
+						MainWindowModelSingleton.Instance.SetMainContent(new GroupView(group));
 
 						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + group.fldGroupID + " - " + group.fldGroupName));
 						break;

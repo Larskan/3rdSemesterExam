@@ -61,6 +61,8 @@ namespace Admin_Client.ViewModel.ContentControlModels
 		public void Create()
 		{
 			MainWindowModelSingleton.Instance.StartPopupConfirm(new tblGroup(), PopupMethod.Create);
+			Thread.Sleep(500);
+			Update();
 		}
 
 		public void Edit(tblGroup group)
@@ -71,6 +73,8 @@ namespace Admin_Client.ViewModel.ContentControlModels
 		public void Delete(tblGroup group)
 		{
 			MainWindowModelSingleton.Instance.StartPopupConfirm(group, PopupMethod.Delete);
+			Thread.Sleep(500);
+			Update();
 		}
 
 		#endregion
@@ -80,6 +84,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
 		private void UpdateGroupsListThread(object o)
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log("ThreadID: " + Thread.CurrentThread.ManagedThreadId + " --> Starting"));
+			App.Current.Dispatcher.BeginInvoke(new Action(() => { Groups.Clear(); }));
 
 			object[] array = o as object[];
 			CancellationToken token = (CancellationToken)array[0];

@@ -39,7 +39,7 @@ namespace Admin_Client.View.Windows.Popups
 		{
 			if (TextBox_Password.Text.Equals(TextBox_RetypePassword.Text))
 			{
-				windowModel.Change();
+				windowModel.Change(TextBox_Password.Text);
 			}
 			else
 			{

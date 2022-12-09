@@ -1,4 +1,5 @@
-﻿using Admin_Client.Model.Domain;
+﻿using Admin_Client.Model.DB.EF_Test;
+using Admin_Client.Model.Domain;
 using Admin_Client.Singleton;
 using Admin_Client.ViewModel.ContentControlModels;
 using System;
@@ -23,10 +24,11 @@ namespace Admin_Client.View.UserControls
     /// </summary>
     public partial class UserView : UserControl
     {
-        UserViewModel viewModel = new UserViewModel();
-        public UserView()
+        UserViewModel viewModel;
+        public UserView(tblUser user)
         {
-            this.DataContext = viewModel;
+			viewModel = new UserViewModel(user);
+			this.DataContext = viewModel;
 
             InitializeComponent();
         }

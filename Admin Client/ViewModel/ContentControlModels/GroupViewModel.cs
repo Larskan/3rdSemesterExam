@@ -33,7 +33,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
             set { trips = value; }
         }
 
-        public GroupViewModel()
+        public GroupViewModel(tblGroup group)
         {
 
         }
@@ -86,22 +86,20 @@ namespace Admin_Client.ViewModel.ContentControlModels
                 List<tblUser> users = HttpClientHandler.GetUsers();  
 
                 bool found;
-                    foreach (var userItem in users)
+                foreach (var userItem in users)
+                {
+                    found = false;
+                    foreach (var UserItem in Users)
                     {
-                        found = false;
-                        foreach (var UserItem in Users)
+                        if (userItem.fldUserID == UserItem.fldUserID)
                         {
-                            if (userItem.fldUserID == UserItem.fldUserID)
-                            {
-                                found = true;
-                                break;
-                            }
+                            found = true;
+                            break;
                         }
-                        if (!found)
-                        {
-                        
-                            App.Current.Dispatcher.BeginInvoke(new Action(() => { Users.Add(userItem); }));
-                       
+                    }
+                    if (!found)
+                    {
+                        App.Current.Dispatcher.BeginInvoke(new Action(() => { Users.Add(userItem); }));
                     }
                 }
                 break;
@@ -131,9 +129,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
                     }
                     if (!found)
                     {
-
-                        App.Current.Dispatcher.BeginInvoke(new Action(() => { Trips.Add(userItem); }));
-
+                      App.Current.Dispatcher.BeginInvoke(new Action(() => { Trips.Add(userItem); }));
                     }
                 }
                 break;
