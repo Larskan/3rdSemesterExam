@@ -19,7 +19,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
 	public class GroupViewModel : NotifyPropertyChangedHandler
 	{
         //fix sorting groups by ID, need to change update method / add functionality to addremove member and trip buttons / also probably a better update method lol
-
+        OverviewSingleton Overview = OverviewSingleton.getInstance();
         private ObservableCollection<tblUser> users = new ObservableCollection<tblUser>();
         public ObservableCollection<tblUser> Users
         {
@@ -83,7 +83,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
             while (!token.IsCancellationRequested)
             {
                 // CHANGE SO IT GETS THE USER FOR SAID GROUP
-                List<tblUser> users = HttpClientHandler.GetUsers();  
+                List<tblUser> users = HttpClientHandler.GetUsersFromGroup(new tblGroup() { fldGroupID = Overview.GetGroupID() });
 
                 bool found;
                     foreach (var userItem in users)

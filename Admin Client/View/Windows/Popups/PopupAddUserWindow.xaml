@@ -10,20 +10,19 @@
     <Grid>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="1.5*"/>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="10*"/>
             <RowDefinition Height="3*"/>
+            <RowDefinition Height="122*"/>
+            <RowDefinition Height="205*"/>
+            <RowDefinition Height="68*"/>
         </Grid.RowDefinitions>
 
 
-        <TextBox x:Name="Searchbar" Text="{Binding Searchbar, UpdateSourceTrigger=PropertyChanged}" Width="218" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,23,0,0" Grid.Row="2" Height="22" TextChanged="TextBox_TextChanged"/>
+        <TextBox x:Name="Searchbar" Text="{Binding Searchbar, UpdateSourceTrigger=PropertyChanged}" Width="218" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Grid.Row="1" Height="22" TextChanged="TextBox_TextChanged"/>
 
 
-        <ListBox x:Name="ListBox_Parameters" Grid.Row="3" ItemsSource="{Binding Users}" Margin="10" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource userViewTemplate}" ItemContainerStyle="{StaticResource NoTargetRoundedListItem}" Style="{StaticResource roundlistboxwithempty}" Resources="{StaticResource roundborder10}" SelectionChanged="ListBox_Parameters_SelectionChanged"/>
+        <ListBox x:Name="ListBox_Parameters" Grid.Row="2" ItemsSource="{Binding Users}" Margin="10,5,10,0" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource userViewTemplate}" ItemContainerStyle="{StaticResource NoTargetRoundedListItem}" Style="{StaticResource roundlistboxwithempty}" Resources="{StaticResource roundborder10}"/>
 
-        <Grid Grid.Row="4">
+        <Grid Grid.Row="3">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -44,7 +43,7 @@
             <Button Content="Cancel" Grid.Column="3" Grid.Row="1" Margin="5" Resources="{StaticResource roundcornerbutton10}" Click="Cancel_Click" />
 
         </Grid>
-        <Button Content="Update" Margin="272,19,36,0" Resources="{StaticResource roundcornerbutton10}" Click="Update_Click" Grid.Row="2" />
+        <Button Content="Update" Margin="272,19,36,0" Resources="{StaticResource roundcornerbutton10}" Click="Update_Click" Grid.Row="1" />
 
     </Grid>
 </Window>

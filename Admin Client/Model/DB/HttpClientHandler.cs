@@ -257,7 +257,7 @@ namespace Admin_Client.Model.DB
 			return null;
 		}
 
-		public static List<tblUser> GetUsersFromGroup(tblGroup group)
+		public static List<tblUser> GetUsersFromGroup(int groupID)
 		{
 			if (userToGroupsIsDone || usersIsDone)
 			{

@@ -65,6 +65,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		public void Edit(tblGroup group)
 		{
+
 			MainWindowModelSingleton.Instance.StartPopupConfirm(group, PopupMethod.Edit);
 		}
 

@@ -176,11 +176,13 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 
 				// DO or NOT DO if valid
 				if (!isValid)
-				{
+				{	
 					((Parameter)item).IsValid = false;
 				} else
 				{
 					((Parameter)item).IsValid = true;
+					
+                   
 					// DO STUFF HERE - TODO
 				}
 			}

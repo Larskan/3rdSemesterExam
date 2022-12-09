@@ -3,6 +3,7 @@ using Admin_Client.Model.DB.EF_Test;
 using Admin_Client.Model.Domain;
 using Admin_Client.PropertyChanged;
 using Admin_Client.Singleton;
+using Admin_Client.View.UserControls;
 using Admin_Client.View.Windows.Popups;
 using System;
 using System.Collections.Generic;
@@ -17,10 +18,10 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 {
 	public class PopupConfirmWindowModel : NotifyPropertyChangedHandler
 	{
+        OverviewSingleton Overview = OverviewSingleton.getInstance();
+        #region Variables
 
-		#region Variables
-
-		private object target;
+        private object target;
 		private Action action;
 
 		private Window currentWindow;
@@ -51,12 +52,15 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 
 		public PopupConfirmWindowModel(Window currentWindow, object target, PopupMethod popupMethod)
 		{
-			// Set the methods and other object related info
-			switch (popupMethod)
+            Console.WriteLine(target.GetType().Name);
+			Console.WriteLine(popupMethod.ToString());
+            // Set the methods and other object related info
+            switch (popupMethod)
 			{
 				case PopupMethod.Edit: this.action = Edit; break;
 				case PopupMethod.Create: this.action = Create; break;
 				case PopupMethod.Delete: this.action = Delete; break;
+				case PopupMethod.Add: this.action = Add; break;
 			}
 			this.target = target;
 			this.currentWindow = currentWindow;
@@ -121,18 +125,20 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 					{
 						tblUser user = (tblUser)target;
 
-						/*Do Stuff*/
-
-						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + user.fldUserID + " - " + user.fldFirstName + " " + user.fldLastName));
+                        /*Do Stuff*/
+                        MainWindowModelSingleton.Instance.SetMainContent(new UserView(), true);
+                        
+                        LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + user.fldUserID + " - " + user.fldFirstName + " " + user.fldLastName));
 						break;
 					}
 				case "tblGroup":
 					{
 						tblGroup group = (tblGroup)target;
 
-						/*Do Stuff*/
-
-						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + group.fldGroupID + " - " + group.fldGroupName));
+                        /*Do Stuff*/
+                        MainWindowModelSingleton.Instance.SetMainContent(new GroupView(), true);
+                        Overview.SetGroupID(group.fldGroupID);
+                        LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + group.fldGroupID + " - " + group.fldGroupName));
 						break;
 					}
 				default: throw new Exception("Has not been implemented: " + target.GetType().Name + "." + action.GetMethodInfo().Name + "()");
@@ -146,7 +152,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 				case "tblUser":
 					{
 						tblUser user = (tblUser)target;
-
+						Console.WriteLine(target.GetType().Name);
 						MainWindowModelSingleton.Instance.StartPopupParameterChange(user);
 
 						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "New: ID " + user.fldUserID + " - " + user.fldFirstName + " " + user.fldLastName));
@@ -155,8 +161,8 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 				case "tblGroup":
 					{
 						tblGroup group = (tblGroup)target;
-
-						MainWindowModelSingleton.Instance.StartPopupParameterChange(group);
+                        Console.WriteLine(target.GetType().Name);
+                        MainWindowModelSingleton.Instance.StartPopupParameterChange(group);
 
 						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "New: ID " + group.fldGroupID + " - " + group.fldGroupName));
 						break;
@@ -208,8 +214,23 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 				default: throw new Exception("Has not been implemented: " + target.GetType().Name + "." + action.GetMethodInfo().Name + "()");
 			}
 		}
+        private void Add()
+        {
+			Console.WriteLine("heya");
+            switch (target.GetType().Name)
+            {
+                case "tblUser":
+                    {
+                        Console.WriteLine(target.GetType().Name);
+                        tblUser user = (tblUser)target;
+                        MainWindowModelSingleton.Instance.StartPopupAddUser(user);
 
-		#endregion
+                        break;
+                    }
+                default: throw new Exception("Has not been implemented: " + target.GetType().Name + "." + action.GetMethodInfo().Name + "()");
+            }
+        }
+        #endregion
 
-	}
+    }
 }

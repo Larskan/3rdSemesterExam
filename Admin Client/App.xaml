@@ -262,6 +262,46 @@
             </Border>
         </DataTemplate>
 
+        <!--DataTemplate userView-->
+        <DataTemplate x:Key="userViewTemplate">
+            <Border Name="border" BorderThickness="0,0,0,0" BorderBrush="Gray" Resources="{StaticResource roundborder10}">
+                <StackPanel Orientation="Vertical">
+                    <WrapPanel>
+                        <TextBlock Text="First name: " Grid.Column="3"  VerticalAlignment="Center" FontWeight="Bold"/>
+                        <TextBlock x:Name="firstname" Text="{Binding fldFirstName}" Grid.Column="2" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></TextBlock>
+                    </WrapPanel>
+                    <WrapPanel>
+                        <TextBlock Text="Last name: " Grid.Column="3"  VerticalAlignment="Center" FontWeight="Bold"/>
+                        <TextBlock x:Name="lastname" Text="{Binding fldLastName}" Grid.Column="3" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></TextBlock>
+                    </WrapPanel>
+                    <WrapPanel>
+                        <TextBlock Text="ID: " Grid.Column="3"  VerticalAlignment="Center" FontWeight="Bold"/>
+                        <TextBlock x:Name="id" Text="{Binding fldUserID}" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" ></TextBlock>
+                    </WrapPanel>
+                    <WrapPanel>
+                        <TextBlock Text="Email: " Grid.Column="3"  VerticalAlignment="Center" FontWeight="Bold"/>
+                        <TextBlock x:Name="email" Text="{Binding fldEmail}" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" ></TextBlock>
+                    </WrapPanel>
+                    <WrapPanel>
+                        <TextBlock Text="Phone Number: " Grid.Column="3" VerticalAlignment="Center" FontWeight="Bold"/>
+                        <TextBlock x:Name="phonenum" Text="{Binding fldPhonenumber}" Grid.Column="4" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></TextBlock>
+                    </WrapPanel>
+                </StackPanel>
+            </Border>
+        </DataTemplate>
+
+        <!--DataTemplate tripList-->
+        <DataTemplate x:Key="tripListTemplate">
+            <Border Name="border" BorderThickness="0,0,0,0" BorderBrush="Gray" Resources="{StaticResource roundborder10}">
+                <StackPanel Orientation="Vertical">
+                    <WrapPanel>
+                        <TextBlock Text="Trip: " Grid.Column="3"  VerticalAlignment="Center" FontWeight="Bold"/>
+                        <TextBlock x:Name="tripID" Text="{Binding fldTripID}" Grid.Column="2" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></TextBlock>
+                    </WrapPanel>
+                </StackPanel>
+            </Border>
+        </DataTemplate>
+
         <!--DataTemplate Group-->
         <DataTemplate x:Key="groupDataTemplate">
             <Border Name="border" BorderThickness="0,0,0,0" BorderBrush="Gray" Resources="{StaticResource roundborder10}">

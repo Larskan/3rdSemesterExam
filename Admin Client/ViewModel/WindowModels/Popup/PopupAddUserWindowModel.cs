@@ -29,8 +29,8 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
             set { users = value; }
         }
         public string Searchbar { get; set; }
-        List<tblUser> templist = FAKEDATABASE.GetUsers();
-        List<tblUser> userList = FAKEDATABASE.GetUsers();
+        List<tblUser> templist = HttpClientHandler.GetUsers();
+        List<tblUser> userList = HttpClientHandler.GetUsers();
         #endregion
 
         #region Constructor
@@ -49,7 +49,10 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
         {
             //created a temp list to use for searching and not ruining the original list it is based on
             //also need to find a way to search by anything in the list, and not specify by say fldfirstname
-            templist = new List<tblUser>(userList.Where(x => x.fldFirstName.IndexOf(Searchbar, StringComparison.InvariantCultureIgnoreCase) >= 0));
+            templist = new List<tblUser>(userList.Where(
+                x => x.fldFirstName.IndexOf(Searchbar, StringComparison.InvariantCultureIgnoreCase) >= 0
+                ||      x.fldLastName.IndexOf(Searchbar, StringComparison.InvariantCultureIgnoreCase) >= 0
+                ||      x.fldEmail.IndexOf(Searchbar, StringComparison.InvariantCultureIgnoreCase) >= 0));
         }
 
         public void Cancel()
