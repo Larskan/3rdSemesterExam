@@ -35,7 +35,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
         public GroupViewModel(tblGroup group)
         {
-
+            
         }
         public void Add()
         {

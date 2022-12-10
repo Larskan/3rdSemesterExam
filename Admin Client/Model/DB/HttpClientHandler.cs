@@ -349,7 +349,7 @@ namespace Admin_Client.Model.DB
 			return filterUserExpense;
 		}
 
-		public static List<tblUser> GetUsersFromGroup(int groupID)
+		public static List<tblUser> GetUsersFromGroup(tblGroup group)
 		{
 			if (userToGroupIsDone || usersIsDone)
 			{
@@ -368,7 +368,7 @@ namespace Admin_Client.Model.DB
 			List<tblUser> filterUsers = new List<tblUser>();
 			foreach (var relation in userToGroupList)
 			{
-				if (relation.fldGroupID == groupID)
+				if (relation.fldGroupID == group.fldGroupID)
 				{
 					foreach (var user in usersList)
 					{

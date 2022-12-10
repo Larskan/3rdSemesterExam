@@ -16,6 +16,81 @@
 
         <!--#endregion-->
 
+        <!--#region Combobox-->
+
+        <!--Combobox Rounded-->
+        <Style x:Key="ComboboxButtonStyle" TargetType="{x:Type ToggleButton}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <Border   
+             Background="White"   
+             x:Name="border"   
+             CornerRadius="10,10,10,10"   
+             BorderThickness="0,1,1,1"  
+             BorderBrush="Gray">
+                            <ContentPresenter />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ComboboxStyle" TargetType="{x:Type ComboBox}">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ComboBox}">
+                        <Grid>
+                            <ToggleButton Margin="0"  
+               Height="{TemplateBinding Height}"  
+               Style="{StaticResource ComboboxButtonStyle}"  
+               Focusable="False"  
+               IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"  
+               ClickMode="Press">
+                                <Path  
+                  HorizontalAlignment="Center"  
+                  VerticalAlignment="Center"  
+                  Data="M 0 0 L 4 4 L 8 0 Z"  
+                  Fill="DodgerBlue" />
+                            </ToggleButton>
+                            <ContentPresenter Name="ContentSite"  
+               Content="{TemplateBinding SelectionBoxItem}"  
+               ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"  
+               ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"  
+               VerticalAlignment="Center"  
+               HorizontalAlignment="Left"  
+               Margin="5,0,0,0"/>
+                            <Popup Name="Popup"  
+               Placement="Bottom"  
+               IsOpen="{TemplateBinding IsDropDownOpen}"  
+               AllowsTransparency="True"   
+               Focusable="False"  
+               PopupAnimation="Slide">
+                                <Grid Name="DropDown"  
+                 SnapsToDevicePixels="True"          
+                 MinWidth="{TemplateBinding ActualWidth}"  
+                 MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                    <Border   
+                   x:Name="DropDownBorder"  
+                   BorderThickness="1"  
+                   CornerRadius="10"  
+                   Background="White"
+                   BorderBrush="Gray"/>
+                                    <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
+                                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
+                                    </ScrollViewer>
+                                </Grid>
+                            </Popup>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--#endregion-->
+
         <!--#region PasswordBox-->
 
         <!--PasswordBox Rounded Corners-->
@@ -394,12 +469,25 @@
                     </Grid.ColumnDefinitions>
                     <Label x:Name="name" Content="{Binding ParameterName}" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
                     <Label x:Name="type" Content="{Binding ParameterType}" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
-                    <TextBox x:Name="value" Text="{Binding ParameterValue}" Grid.Column="2" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" Resources="{StaticResource roundborder10}" ></TextBox>
+                    <TextBox x:Name="valuetextbox" Text="{Binding ParameterValue}" Grid.Column="2" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" Resources="{StaticResource roundborder10}" ></TextBox>
+                    <ComboBox x:Name="valuecombobox" Text="{Binding ParameterValue}" Grid.Column="2" Margin="2" Background="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" Visibility="Hidden" Style="{StaticResource ComboboxStyle}" >
+                        <ComboBoxItem Content="True" Resources="{StaticResource roundborder10}"/>
+                        <ComboBoxItem Content="False" Resources="{StaticResource roundborder10}"/>
+                    </ComboBox>
                 </Grid>
             </Border>
             <DataTemplate.Triggers>
                 <DataTrigger Binding="{Binding IsValid}" Value="false">
                     <Setter TargetName="border" Property="Background" Value="PaleVioletRed"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding ParameterType}" Value="Boolean">
+                    <Setter TargetName="valuecombobox" Property="Visibility" Value="Visible"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding ParameterValue}" Value="True">
+                    <Setter TargetName="valuecombobox" Property="SelectedIndex" Value="0"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding ParameterValue}" Value="False">
+                    <Setter TargetName="valuecombobox" Property="SelectedIndex" Value="1"/>
                 </DataTrigger>
             </DataTemplate.Triggers>
         </DataTemplate>

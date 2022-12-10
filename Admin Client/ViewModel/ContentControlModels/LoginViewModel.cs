@@ -41,17 +41,6 @@ namespace Admin_Client.ViewModel.ContentControlModels
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Login Click"));
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Username: " + username));
 
-			// FOR EASY USE -----------------
-			bool loginSuccess = false;
-			if (username.Equals(".") && password.Equals("."))
-			{
-				HttpClientHandler.currentUser = new tblUser() { fldEmail = "No@Email.dk", fldFirstName = "Local", fldLastName = "Admin",  fldIsAdmin = true, fldPassword = ".", fldPhonenumber = "00000000" };
-				loginSuccess = true;
-				LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Login == Success"));
-				MainWindowModelSingleton.Instance.SetMainContent(new OverviewView(), false, true);
-			}
-			//-------------------------------
-
 			// EMAIL NOT-VALID
 			Regex regex = new Regex(@"^((\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*))");
 			if (username.Length == 0 && !regex.IsMatch(username))
@@ -64,7 +53,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
 			}
 
 			// Auth
-			//bool loginSuccess = false;
+			bool loginSuccess = false;
 			List<tblUser> users = HttpClientHandler.GetUsers();
 			foreach (tblUser user in users) 
 			{ 
