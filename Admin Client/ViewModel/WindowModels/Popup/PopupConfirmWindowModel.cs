@@ -126,7 +126,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 						tblUser user = (tblUser)target;
 
                         /*Do Stuff*/
-                        MainWindowModelSingleton.Instance.SetMainContent(new UserView(), true);
+                        MainWindowModelSingleton.Instance.SetMainContent(new UserView(user));
                         
                         LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + user.fldUserID + " - " + user.fldFirstName + " " + user.fldLastName));
 						break;
@@ -136,7 +136,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 						tblGroup group = (tblGroup)target;
 
                         /*Do Stuff*/
-                        MainWindowModelSingleton.Instance.SetMainContent(new GroupView(), true);
+                        MainWindowModelSingleton.Instance.SetMainContent(new GroupView(group));
                         Overview.SetGroupID(group.fldGroupID);
                         LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + group.fldGroupID + " - " + group.fldGroupName));
 						break;

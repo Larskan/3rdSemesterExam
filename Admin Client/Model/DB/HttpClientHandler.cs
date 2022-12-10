@@ -368,7 +368,7 @@ namespace Admin_Client.Model.DB
 			List<tblUser> filterUsers = new List<tblUser>();
 			foreach (var relation in userToGroupList)
 			{
-				if (relation.fldGroupID == group.fldGroupID)
+				if (relation.fldGroupID == groupID)
 				{
 					foreach (var user in usersList)
 					{
