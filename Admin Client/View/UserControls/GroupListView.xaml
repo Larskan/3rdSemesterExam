@@ -56,7 +56,7 @@
                 <ColumnDefinition Width="100"/>
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="0" Content="Create" Margin="5" Resources="{StaticResource roundcornerbutton10}" Click="Create_Click" />
+            <Button Grid.Column="0" Content="Create" Margin="5" Resources="{StaticResource roundcornerbutton10}" Click="Create_Click"/>
 
             <Label Grid.Column="2" Content="Group Amount" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ></Label>
 

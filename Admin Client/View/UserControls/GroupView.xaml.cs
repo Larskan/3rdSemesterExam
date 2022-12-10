@@ -1,5 +1,6 @@
 ﻿using Admin_Client.Model;
 using Admin_Client.Model.DB;
+using Admin_Client.Model.DB.EF_Test;
 using Admin_Client.Model.Domain;
 using Admin_Client.Singleton;
 using Admin_Client.View.Windows.Popups;
@@ -26,10 +27,11 @@ namespace Admin_Client.View.UserControls
     /// </summary>
     public partial class GroupView : UserControl
     {
-        GroupViewModel viewModel = new GroupViewModel();
-        public GroupView()
+        GroupViewModel viewModel;
+        public GroupView(tblGroup group)
         {
-            this.DataContext = viewModel;
+            viewModel = new GroupViewModel(group);
+			this.DataContext = viewModel;
 
             InitializeComponent();
 

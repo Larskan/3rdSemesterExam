@@ -1,4 +1,5 @@
-﻿using Admin_Client.Model.Domain;
+﻿using Admin_Client.Model.DB.EF_Test;
+using Admin_Client.Model.Domain;
 using Admin_Client.PropertyChanged;
 using Admin_Client.Singleton;
 using System;
@@ -22,7 +23,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		#region Constructor
 
-		public UserViewModel()
+		public UserViewModel(tblUser user)
 		{
 
 		}

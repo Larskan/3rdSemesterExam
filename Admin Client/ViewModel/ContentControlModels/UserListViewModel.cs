@@ -59,6 +59,8 @@ namespace Admin_Client.ViewModel.ContentControlModels
 		public void Create()
 		{
 			MainWindowModelSingleton.Instance.StartPopupConfirm(new tblUser() { fldPassword = "x" }, PopupMethod.Create);
+			Thread.Sleep(500);
+			Update();
 		}
 
 		public void Edit(tblUser user)
@@ -69,6 +71,8 @@ namespace Admin_Client.ViewModel.ContentControlModels
 		public void Delete(tblUser user)
 		{
 			MainWindowModelSingleton.Instance.StartPopupConfirm(user, PopupMethod.Delete);
+			Thread.Sleep(500);
+			Update();
 		}
 
 		#endregion
@@ -78,6 +82,8 @@ namespace Admin_Client.ViewModel.ContentControlModels
 		private void UpdateUsersListThread(object o)
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log("ThreadID: " + Thread.CurrentThread.ManagedThreadId + " --> Starting"));
+			App.Current.Dispatcher.BeginInvoke(new Action(() => { Users.Clear(); }));
+			Thread.Sleep(500);
 
 			object[] array = o as object[];
 			CancellationToken token = (CancellationToken)array[0];

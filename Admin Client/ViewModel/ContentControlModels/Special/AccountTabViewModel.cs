@@ -5,6 +5,7 @@ using Admin_Client.Singleton;
 using Admin_Client.View.UserControls;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,13 +21,22 @@ namespace Admin_Client.ViewModel.ContentControlModels.Special
 
 		#region Properties
 
+		private string currentUserName;
+
+		public string CurrentUserName
+		{
+			get { return currentUserName; }
+			set { currentUserName = value; NotifyPropertyChanged(); }
+		}
+
+
 		#endregion
 
 		#region Constructor
 
 		public AccountTabViewModel() 
 		{
-
+			CurrentUserName = HttpClientHandler.currentUser.fldFirstName + " " + HttpClientHandler.currentUser.fldLastName;
 		}
 
 		#endregion
@@ -45,10 +55,6 @@ namespace Admin_Client.ViewModel.ContentControlModels.Special
 		{
 			MainWindowModelSingleton.Instance.SetMainContent(new AccountView(), MainWindowModelSingleton.Instance.GetMainContent(), false);
 		}
-
-		#endregion
-
-		#region Private Methods
 
 		#endregion
 
