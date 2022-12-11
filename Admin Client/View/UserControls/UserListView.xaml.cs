@@ -26,7 +26,6 @@ namespace Admin_Client.View.UserControls
 	/// </summary>
 	public partial class UserListView : UserControl
 	{
-		UserviewSingleton Userview = UserviewSingleton.getInstance();
 		UserListViewModel viewModel = new UserListViewModel();
 		public UserListView()
 		{
@@ -34,8 +33,8 @@ namespace Admin_Client.View.UserControls
 
 			InitializeComponent();
 
-			CollectionView groupView = (CollectionView)CollectionViewSource.GetDefaultView(ListBox_Users.ItemsSource);
-			groupView.Filter = FilterList;
+			CollectionView userView = (CollectionView)CollectionViewSource.GetDefaultView(ListBox_Users.ItemsSource);
+			userView.Filter = FilterList;
 		}
 
 		private void Update_Click(object sender, RoutedEventArgs e)
