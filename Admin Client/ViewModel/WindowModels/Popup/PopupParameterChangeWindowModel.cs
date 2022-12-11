@@ -76,6 +76,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 					case "String": value = (String)item.GetValue(o); break; 
 					case "Int32": value = (Int32)item.GetValue(o); break;
 					case "Boolean": value = (Boolean)item.GetValue(o); break;
+					case "DateTime": value = (DateTime)item.GetValue(o); break;
 				}
 				if (name.ToLower().Contains("name"))
 				{
@@ -159,6 +160,16 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 							catch { }
 							break;
 						}
+					case ParameterType.DateTime:
+						{
+							try
+							{
+								DateTime.Parse(((Parameter)item).ParameterValue.ToString());
+								isValid = true;
+							}
+							catch { }
+							break;
+						}
 				}
 
 				// EMAIL NOT-VALID
@@ -220,6 +231,11 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 							case ParameterType.Boolean:
 								{
 									currentObject.GetType().GetProperty(objectProperty.Name).SetValue(currentObject, Boolean.Parse(((Parameter)parameterProperty).ParameterValue.ToString()));
+									break;
+								}
+							case ParameterType.DateTime:
+								{
+									currentObject.GetType().GetProperty(objectProperty.Name).SetValue(currentObject, DateTime.Parse(((Parameter)parameterProperty).ParameterValue.ToString()));
 									break;
 								}
 						}

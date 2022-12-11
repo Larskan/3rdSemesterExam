@@ -67,7 +67,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
         public void Update()
         {
             Users.Clear();
-            LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Update Click"));
+            LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Update Users Click"));
             if (tokenSource != null && tokenSource.Token.CanBeCanceled)
             {
                 tokenSource.Cancel();

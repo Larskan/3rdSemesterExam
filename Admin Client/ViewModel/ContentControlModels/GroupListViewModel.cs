@@ -48,7 +48,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
 		CancellationTokenSource tokenSource;
 		public void Update()
 		{
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Update Click"));
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Update Groups Click"));
 			if (tokenSource != null && tokenSource.Token.CanBeCanceled)
 			{
 				tokenSource.Cancel();

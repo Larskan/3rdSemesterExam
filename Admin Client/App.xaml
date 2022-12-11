@@ -361,6 +361,7 @@
                         <TextBlock Text="Phone Number: " Grid.Column="3" VerticalAlignment="Center" FontWeight="Bold"/>
                         <TextBlock x:Name="phonenum" Text="{Binding fldPhonenumber}" Grid.Column="4" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></TextBlock>
                     </WrapPanel>
+                    <Border Grid.Row="1" Background="Gray" Margin="5,0,5,0" Height="1"/>
                 </StackPanel>
             </Border>
         </DataTemplate>
