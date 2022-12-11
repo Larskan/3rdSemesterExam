@@ -7,28 +7,139 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="74*"/>
-            <RowDefinition Height="30*"/>
-            <RowDefinition Height="7*"/>
-            <RowDefinition Height="103*"/>
-            <RowDefinition Height="11*"/>
-        </Grid.RowDefinitions>
+
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="539*"/>
-            <ColumnDefinition Width="261*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="7*"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <ListBox Margin="78,3,229,8"  Style="{StaticResource roundlistboxwithempty}" Grid.Row="3">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-        </ListBox>
-        <TextBox x:Name="MobileNumber" Grid.Column="0" Margin="78,32,4,3" Resources="{StaticResource roundborder10}" Grid.Row="1"  />
-        <TextBox x:Name="Email" Grid.Column="0" Margin="78,2,4,33" Resources="{StaticResource roundborder10}" Grid.Row="1"  />
-        <Button Content="Change Mobile Number" Margin="71,83,60,83" Resources="{StaticResource roundcornerbutton10}" Click="ChangeMobileNumberClick" Grid.Column="1" Grid.Row="3" />
-        <Button Content="Change Name" Margin="71,3,60,163" Resources="{StaticResource roundcornerbutton10}" Click="ChangeNameClick" Grid.Column="1" Grid.Row="3" />
-        <Button Content="Change Email" Margin="71,43,60,123" Resources="{StaticResource roundcornerbutton10}" Click="ChangeEmailClick" Grid.Row="3" Grid.Column="1" />
-        <Button Content="Check Receipt(s)" Margin="322,3,4,153" Resources="{StaticResource roundcornerbutton10}" Click="CheckReceiptClick" Grid.Row="3" />
-        <Button Content="See Logs" Margin="322,53,4,103" Resources="{StaticResource roundcornerbutton10}" Click="SeeLogClick" Grid.Row="3" />
-        <TextBlock HorizontalAlignment="Left" Margin="78,113,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="461" Height="16"/>
+        <Grid Grid.Column="1" Grid.Row="1">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Border Grid.Column="1" Grid.Row="1" Margin="5" Background="White" Resources="{StaticResource roundborder10}">
+                <Label Content="{Binding GroupName}" FontSize="25" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" ></Label>
+            </Border>
+
+            <Border Grid.Column="1" Grid.Row="2" Background="White" Margin="5" Resources="{StaticResource roundborder10}">
+                <Grid >
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="0.5"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Content="E-mail:" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right"  Margin="0,0,10,0"/>
+                    <Label Content="{Binding Email}" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+
+                    <Border Grid.Column="0" Grid.Row="1" Background="Gray" Margin="5,0,5,0"/>
+                    <Border Grid.Column="1" Grid.Row="1" Background="Gray" Margin="5,0,5,0"/>
+
+                    <Label Content="Phonenumber:" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,0"/>
+                    <Label Content="{Binding Phonenumber}" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+
+                </Grid>
+            </Border>
+
+        </Grid>
+
+        <Grid Grid.Column="2" Grid.Row="1">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="8*"/>
+            </Grid.RowDefinitions>
+
+            <Button Grid.Column="1" Grid.Row="1" Content="{Binding Initials}" FontSize="35" Resources="{StaticResource roundcornericon100}"/>
+
+        </Grid>
+        
+        <Grid Grid.Column="1" Grid.Row="2">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="35"/>
+            </Grid.RowDefinitions>
+
+            <Border Grid.Column="0" Grid.Row="0" Margin="5,5,5,0" Background="White" Resources="{StaticResource roundborder10}">
+                <Label Content="Groups" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" ></Label>
+            </Border>
+
+            <ListBox x:Name="ListBox_Groups" Grid.Column="0" Grid.Row="1" ItemsSource="{Binding Groups}" Margin="5,0,5,5" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource groupDataTemplate}" ItemContainerStyle="{StaticResource RoundedListItem}" Style="{StaticResource roundlistboxwithempty}" Resources="{StaticResource roundborder10}"/>
+
+            <Border Grid.Column="1" Grid.Row="0" Margin="5,5,5,0" Background="White" Resources="{StaticResource roundborder10}">
+                <Label Content="Receipts" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" ></Label>
+            </Border>
+
+            <ListBox x:Name="ListBox_Receipts" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Receipts}" Margin="5,0,5,5" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource groupDataTemplate}" ItemContainerStyle="{StaticResource RoundedListItem}" Style="{StaticResource roundlistboxwithempty}" Resources="{StaticResource roundborder10}" >
+                <ListBox.ContextMenu>
+                    <ContextMenu Style="{StaticResource roundcontextmenu}" >
+                        <MenuItem Header="Delete" Click="DeleteReceipt_Click" Resources="{StaticResource roundborder10}" />
+                    </ContextMenu>
+                </ListBox.ContextMenu>
+            </ListBox>
+
+            <Grid Grid.Column="1" Grid.Row="3">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="100"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="4" Content="Delete" Margin="5" Resources="{StaticResource roundcornerbutton10}" Click="DeleteReceipt_Click" />
+
+            </Grid>
+
+        </Grid>
+
+        <Grid Grid.Column="2" Grid.Row="2">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="1" Grid.Row="1" Content="Edit Info" Margin="5" Resources="{StaticResource roundcornerbutton10}" Click="EditUser_Click"/>
+
+        </Grid>
+        
     </Grid>
 </UserControl>

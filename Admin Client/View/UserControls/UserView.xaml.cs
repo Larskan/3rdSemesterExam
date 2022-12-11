@@ -33,30 +33,14 @@ namespace Admin_Client.View.UserControls
             InitializeComponent();
         }
 
-        private void ChangeMobileNumberClick(object sender, RoutedEventArgs e)
-        {
+		private void EditUser_Click(object sender, RoutedEventArgs e)
+		{
+			viewModel.EditUser();
+		}
 
-        }
-
-        private void ChangeEmailClick(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void ChangeNameClick(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void SeeLogClick(object sender, RoutedEventArgs e)
-        {
-            //MainWindowModelSingleton.Instance.SetMainContent(new LogListView(), true);
-        }
-
-        private void CheckReceiptClick(object sender, RoutedEventArgs e)
-        {
-            //doesnt work, what do u want me to pass to the receiptview lol
-           // MainWindowModelSingleton.Instance.SetMainContent(new ReceiptView(), true);
-        }
-    }
+		private void DeleteReceipt_Click(object sender, RoutedEventArgs e)
+		{
+            viewModel.DeleteReceipt();
+		}
+	}
 }

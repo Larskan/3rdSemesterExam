@@ -1,7 +1,9 @@
-﻿using Admin_Client.Model.DB.EF_Test;
+﻿using Admin_Client.Model.DB;
+using Admin_Client.Model.DB.EF_Test;
 using Admin_Client.Model.Domain;
 using Admin_Client.PropertyChanged;
 using Admin_Client.Singleton;
+using Admin_Client.View.Windows.Popups;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +17,8 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		#region Variables
 
+		tblUser user;
+
 		#endregion
 
 		#region Properties
@@ -25,12 +29,22 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		public UserViewModel(tblUser user)
 		{
-
+			this.user = user;
 		}
 
 		#endregion
 
 		#region Public Methods
+
+		public void EditUser()
+		{
+			MainWindowModelSingleton.Instance.StartPopupConfirm(user, PopupMethod.Edit);
+		}
+
+		public void DeleteReceipt()
+		{
+
+		}
 
 		#endregion
 
