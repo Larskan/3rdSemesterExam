@@ -20,7 +20,7 @@ public partial class tblTrip
 	public string? fldTripName { get; set; }
 
 	[DataMember]
-	public DateTime? fldTripDate { get; set; }
+	public string? fldTripDate { get; set; }
 
 	public virtual ICollection<tblGroupToTrip> tblGroupToMoneys { get; } = new List<tblGroupToTrip>();
 
