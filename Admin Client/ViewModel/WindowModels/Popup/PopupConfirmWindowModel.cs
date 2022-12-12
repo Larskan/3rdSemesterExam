@@ -251,7 +251,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
                     {
                         tblUser user = (tblUser)target;
 
-                        MainWindowModelSingleton.Instance.StartPopupAddUser(user);
+                        
 
                         break;
                     }

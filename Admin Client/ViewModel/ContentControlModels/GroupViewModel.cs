@@ -63,7 +63,8 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		public void MemberAdd()
         {
-			MainWindowModelSingleton.Instance.StartPopupConfirm(new tblUser(), PopupMethod.Add);
+			MainWindowModelSingleton.Instance.StartPopupAddUser(user);
+
 			Thread.Sleep(500);
 			UpdateMembers();
 		}

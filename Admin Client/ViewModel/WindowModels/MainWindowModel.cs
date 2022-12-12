@@ -195,14 +195,13 @@ namespace Admin_Client.ViewModel.WindowModels
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log("PopupPasswordChange == Closed"));
 		}
 
-		public void StartPopupAddUser(tblUser user)
+		public void StartPopupAddUser(tblGroup group)
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Add Click --> New User"));
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log("PopoutAddUser --> Starting"));
 
-			// TODO
 			MainWindowModelSingleton.Instance.GetMainWindow().IsEnabled = false;
-			new PopupAddUserWindow(mainWindow, user).ShowDialog();
+			new PopupAddUserWindow(mainWindow, group).ShowDialog();
 
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log("PopoutAddUser == Closed"));
 		}

@@ -11,21 +11,16 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="1.5*"/>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="10*"/>
             <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
 
         <Viewbox Grid.Row="1">
-            <Label Content="{Binding ActionName}"  FontSize="20" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+            <Label Content="Add User"  FontSize="30" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
         </Viewbox>
 
-        <Viewbox Grid.Row="2">
-            <Label Content="{Binding ObjectName}"  FontSize="30" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-        </Viewbox>
-
-        <ListBox x:Name="ListBox_Parameters" Grid.Row="3" ItemsSource="{Binding Parameters}" Margin="10" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource parameterDataTemplate}" ItemContainerStyle="{StaticResource NoTargetRoundedListItem}" Style="{StaticResource roundlistboxwithempty}" Resources="{StaticResource roundborder10}"/>
+        <ListBox x:Name="ListBox_Users" Grid.Row="2" ItemsSource="{Binding Users}" Margin="5"  VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource userDataTemplate}" ItemContainerStyle="{StaticResource RoundedListItem}" Style="{StaticResource roundlistboxwithempty}" Resources="{StaticResource roundborder10}" ></ListBox>
 
         <Grid Grid.Row="4">
 
@@ -43,7 +38,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Button Content="Confirm" Grid.Column="1" Grid.Row="1" Margin="5" Resources="{StaticResource roundcornerbutton10}" Click="Confirm_Click" />
+            <Button Content="Add" Grid.Column="1" Grid.Row="1" Margin="5" Resources="{StaticResource roundcornerbutton10}" Click="Add_Click" />
 
             <Button Content="Cancel" Grid.Column="3" Grid.Row="1" Margin="5" Resources="{StaticResource roundcornerbutton10}" Click="Cancel_Click" />
 

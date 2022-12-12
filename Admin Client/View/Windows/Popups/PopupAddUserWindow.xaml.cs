@@ -1,4 +1,5 @@
-﻿using Admin_Client.ViewModel.ContentControlModels;
+﻿using Admin_Client.Model.DB.EF_Test;
+using Admin_Client.ViewModel.ContentControlModels;
 using Admin_Client.ViewModel.WindowModels.Popup;
 using System;
 using System.Collections.Generic;
@@ -23,9 +24,9 @@ namespace Admin_Client.View.Windows.Popups
     {
         PopupAddUserWindowModel windowModel;
         
-        public PopupAddUserWindow(Window owner, object o)
+        public PopupAddUserWindow(Window owner, tblGroup group)
         {
-            this.windowModel = new PopupAddUserWindowModel(this, o);
+            this.windowModel = new PopupAddUserWindowModel(this, group);
             this.DataContext = windowModel;
 
             this.Owner = owner;
@@ -46,9 +47,17 @@ namespace Admin_Client.View.Windows.Popups
             
         }
 
-        private void Add_Click(object sender, RoutedEventArgs e)
+		private void OnPageLoaded(object sender, RoutedEventArgs e)
+		{
+            windowModel.Update();
+		}
+
+		private void Add_Click(object sender, RoutedEventArgs e)
         {
-            windowModel.Add(ListBox_Parameters);
+            if (ListBox_Users.SelectedItem != null)
+            {
+                windowModel.Add((tblUser)ListBox_Users.SelectedItem);
+            }
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
@@ -56,22 +65,5 @@ namespace Admin_Client.View.Windows.Popups
             windowModel.Cancel();
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            windowModel.Search();
-            windowModel.Update();
-
-        }
-        private void OnPageLoaded(object sender, RoutedEventArgs e)
-        {
-
-            windowModel.Update();
-        }
-
-        private void Update_Click(object sender, RoutedEventArgs e)
-        {
-            
-            windowModel.Update();
-        }
     }
 }
