@@ -28,7 +28,7 @@ namespace Admin_Client.Model.Foundation
                 return sb.ToString();
             }
         }
-        public static int saltify(string password)
+        public static int Salt_Password(string password)
         {
             //Inorder to salt the password, we take each char in the given password, add it together in a sum
             
@@ -36,7 +36,6 @@ namespace Admin_Client.Model.Foundation
             foreach (char character in password)
             {
                 charAsDecimal = Convert.ToInt32(character);
-                Console.WriteLine(charAsDecimal);
             }
             //after computing the sum we take the passwords length and calculate that passwords sum, such as a password with length 3 becomes 3+2+1 = 6.
             int total = charAsDecimal + ((password.Length * password.Length / 2) + (password.Length / 2));

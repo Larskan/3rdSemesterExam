@@ -78,7 +78,7 @@
             <Button Grid.Column="1" Grid.Row="1" Content="{Binding Initials}" FontSize="35" Resources="{StaticResource roundcornericon100}"/>
 
         </Grid>
-        
+
         <Grid Grid.Column="1" Grid.Row="2">
 
             <Grid.ColumnDefinitions>
@@ -137,9 +137,9 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="1" Grid.Row="1" Content="Edit Info" Margin="5" Resources="{StaticResource roundcornerbutton10}" Click="EditUser_Click"/>
+            <Button Grid.Column="1" Grid.Row="1" Content="Edit Info" Margin="5,5,5,0" Resources="{StaticResource roundcornerbutton10}" Click="EditUser_Click" Height="25" VerticalAlignment="Top"/>
 
         </Grid>
-        
+
     </Grid>
 </UserControl>
