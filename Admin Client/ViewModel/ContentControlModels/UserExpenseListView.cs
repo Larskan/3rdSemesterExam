@@ -26,12 +26,12 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		#region Properties
 
-		private string groupname;
+		private string name;
 
-		public string Groupname
+		public string Name
 		{
-			get { return groupname; }
-			set { groupname = value; NotifyPropertyChanged(); }
+			get { return name; }
+			set { name = value; NotifyPropertyChanged(); }
 		}
 
 		private ObservableCollection<tblUserExpense> userExpenses = new ObservableCollection<tblUserExpense>();
@@ -51,6 +51,8 @@ namespace Admin_Client.ViewModel.ContentControlModels
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Information, "Get UserExpenses for User: " + user.fldUserID + " " + user.fldFirstName + " " + user.fldLastName));
 
+			this.Name= user.fldFirstName;
+
 			ThreadPool.QueueUserWorkItem(UpdateReceiptListThreadViaUser, new object[] { user });
 		}
 
@@ -58,12 +60,23 @@ namespace Admin_Client.ViewModel.ContentControlModels
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Information, "Get UserExpenses for Trip: " + trip.fldTripID + " " + trip.fldTripName));
 
+			this.Name = trip.fldTripName;
+
 			ThreadPool.QueueUserWorkItem(UpdateReceiptListThreadViaTrip, new object[] { trip });
 		}
 
 		#endregion
 
 		#region Public Methods
+
+		public void Delete(tblUserExpense userExpense)
+		{
+			MainWindowModelSingleton.Instance.StartPopupConfirm(userExpense, PopupMethod.Delete);
+		}
+
+		#endregion
+
+		#region Private Methods
 
 		private void UpdateReceiptListThreadViaUser(object o)
 		{
@@ -93,7 +106,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
 					App.Current.Dispatcher.BeginInvoke(new Action(() => { UserExpenses.Add(userExpenseItem); }));
 				}
 			}
-			
+
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "ThreadID: " + Thread.CurrentThread.ManagedThreadId + " ==> Done"));
 
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "ThreadID: " + Thread.CurrentThread.ManagedThreadId + " ==> Closed"));
@@ -131,11 +144,6 @@ namespace Admin_Client.ViewModel.ContentControlModels
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "ThreadID: " + Thread.CurrentThread.ManagedThreadId + " ==> Done"));
 
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "ThreadID: " + Thread.CurrentThread.ManagedThreadId + " ==> Closed"));
-		}
-
-		public void Delete(tblUserExpense userExpense)
-		{
-			MainWindowModelSingleton.Instance.StartPopupConfirm(userExpense, PopupMethod.Delete);
 		}
 
 		#endregion

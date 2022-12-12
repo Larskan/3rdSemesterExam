@@ -9,6 +9,7 @@ using Admin_Client.View.Windows.Popups;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -63,8 +64,15 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		public void MemberAdd()
         {
-			MainWindowModelSingleton.Instance.StartPopupAddUser(user);
+            List<tblUser> tempMembers = new List<tblUser>();
 
+            foreach (var item in Members)
+            {
+				tempMembers.Add(item);
+
+			}
+
+			MainWindowModelSingleton.Instance.StartPopupAddUser(group, tempMembers);
 			Thread.Sleep(500);
 			UpdateMembers();
 		}
@@ -73,6 +81,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
 		{
 			MainWindowModelSingleton.Instance.StartPopupConfirm(user, PopupMethod.Remove);
 			Thread.Sleep(500);
+			Members.Clear();
 			UpdateMembers();
 		}
 
@@ -87,6 +96,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
         {
 			MainWindowModelSingleton.Instance.StartPopupConfirm(trip, PopupMethod.Delete);
 			Thread.Sleep(500);
+            Trips.Clear();
 			UpdateTrips();
 		}
 
@@ -171,12 +181,12 @@ namespace Admin_Client.ViewModel.ContentControlModels
                 List<tblTrip> trips = HttpClientHandler.GetTripsFromGroup(new tblGroup() { fldGroupID = group.fldGroupID });
 
 				bool found;
-                foreach (var userItem in trips)
+                foreach (var tripItem in trips)
                 {
                     found = false;
-                    foreach (var UserItem in Trips)
+                    foreach (var TripItem in Trips)
                     {
-                        if (userItem.fldTripID == UserItem.fldTripID)
+                        if (tripItem.fldTripID == TripItem.fldTripID)
                         {
                             found = true;
                             break;
@@ -184,7 +194,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
                     }
                     if (!found)
                     {
-                      App.Current.Dispatcher.BeginInvoke(new Action(() => { Trips.Add(userItem); }));
+                      App.Current.Dispatcher.BeginInvoke(new Action(() => { Trips.Add(tripItem); }));
                     }
                 }
                 break;

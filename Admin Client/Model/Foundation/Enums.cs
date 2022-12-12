@@ -27,7 +27,6 @@ namespace Admin_Client
 		String,
 		Int32,
 		Boolean,
-		DateTime
 	}
 
 	/// <summary>

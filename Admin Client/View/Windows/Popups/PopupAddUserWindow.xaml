@@ -20,7 +20,18 @@
             <Label Content="Add User"  FontSize="30" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
         </Viewbox>
 
-        <ListBox x:Name="ListBox_Users" Grid.Row="2" ItemsSource="{Binding Users}" Margin="5"  VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource userDataTemplate}" ItemContainerStyle="{StaticResource RoundedListItem}" Style="{StaticResource roundlistboxwithempty}" Resources="{StaticResource roundborder10}" ></ListBox>
+        <Grid Grid.Row="2">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="5*"/>
+            </Grid.RowDefinitions>
+
+            <TextBox x:Name="TextBox_Search" VerticalContentAlignment="Center" Grid.Row="0" Margin="10,5,10,5" Resources="{StaticResource roundborder10}" TextChanged="TextBox_Search_TextChanged" />
+
+            <ListBox x:Name="ListBox_Users" Grid.Row="1" ItemsSource="{Binding Users}" Margin="10,5,10,5"  VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource userDataTemplate}" ItemContainerStyle="{StaticResource RoundedListItem}" Style="{StaticResource roundlistboxwithempty}" Resources="{StaticResource roundborder10}" ></ListBox>
+            
+        </Grid>
 
         <Grid Grid.Row="4">
 
@@ -34,7 +45,7 @@
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="50"/>
+                <RowDefinition Height="35"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 

@@ -44,7 +44,10 @@ namespace Admin_Client.View.UserControls
 
 		private void Delete_Click(object sender, RoutedEventArgs e)
 		{
-
+			if (ListBox_UserExpenses.SelectedItem != null)
+			{
+				viewModel.Delete((tblUserExpense)ListBox_UserExpenses.SelectedItem);
+			}
 		}
 
 	}

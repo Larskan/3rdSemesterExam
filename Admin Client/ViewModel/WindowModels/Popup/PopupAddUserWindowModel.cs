@@ -5,6 +5,7 @@ using Admin_Client.Model.Domain;
 using Admin_Client.PropertyChanged;
 using Admin_Client.Singleton;
 using Admin_Client.View.Windows.Popups;
+using DocumentFormat.OpenXml.Presentation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -23,6 +24,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 
 		private Window currentWindow;
         private tblGroup currentGroup;
+        private List<tblUser> currentMembers;
 
 		#endregion
 
@@ -39,9 +41,11 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 
         #region Constructor
 
-        public PopupAddUserWindowModel(Window currentWindow, tblGroup group)
+        public PopupAddUserWindowModel(Window currentWindow, tblGroup group, List<tblUser> members)
         {
             this.currentWindow = currentWindow;
+            this.currentGroup = group;
+            this.currentMembers = members;
         }
 
         #endregion
@@ -91,21 +95,35 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
             {
 				List<tblUser> users = HttpClientHandler.GetUsers();
 
-				bool found;
+				bool isfound;
+                bool isMember;
                 foreach (var userItem in users)
                 {
-                    found = false;
-                    foreach (var UserItem in Users)
+                    // Check if they already are a member
+					isMember = false;
+					isfound = false;
+					foreach (var member in currentMembers)
                     {
-                        if (userItem.fldUserID == UserItem.fldUserID)
-                        {
-                            found = true;
-                            break;
-                        }
-                    }
-                    if (!found)
+						if (member.fldUserID == userItem.fldUserID)
+						{
+							isMember= true;
+							break;
+						} else
+						{ // Check if they already exist in the list
+							foreach (var UserItem in Users)
+							{
+								if (userItem.fldUserID == UserItem.fldUserID)
+								{
+									isfound = true;
+									break;
+								}
+							}
+						}
+					}
+                    
+                    if (!isfound && !isMember)
                     {
-                            App.Current.Dispatcher.BeginInvoke(new Action(() => { Users.Add(userItem); }));
+                        App.Current.Dispatcher.BeginInvoke(new Action(() => { Users.Add(userItem); }));
                     }
                 }
                 break;

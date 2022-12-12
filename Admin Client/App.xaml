@@ -373,7 +373,6 @@
                     <WrapPanel>
                         <TextBlock Text="Trip: "  VerticalAlignment="Center" FontWeight="Bold"/>
                         <TextBlock x:Name="tripID" Text="{Binding fldTripID}" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></TextBlock>
-                        <TextBlock Text=" " Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></TextBlock>
                         <TextBlock x:Name="tripName" Text="{Binding fldTripName}" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></TextBlock>
                     </WrapPanel>
                 </StackPanel>
