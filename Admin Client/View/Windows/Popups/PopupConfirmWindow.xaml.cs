@@ -24,7 +24,8 @@ namespace Admin_Client.View.Windows.Popups
 		Edit,
 		Create,
 		Delete,
-		Add
+		Add,
+		Remove
 	}
 
 	/// <summary>
@@ -33,9 +34,9 @@ namespace Admin_Client.View.Windows.Popups
 	public partial class PopupConfirmWindow : Window
 	{
 		PopupConfirmWindowModel windowModel;
-		public PopupConfirmWindow(object target, PopupMethod popupMethod)
+		public PopupConfirmWindow(object target, PopupMethod popupMethod, object linkedObject = null)
 		{
-			windowModel = new PopupConfirmWindowModel(this, target, popupMethod);
+			windowModel = new PopupConfirmWindowModel(this, target, popupMethod, linkedObject);
 			this.DataContext= windowModel;
 
 			this.Owner = MainWindowModelSingleton.Instance.GetMainWindow();

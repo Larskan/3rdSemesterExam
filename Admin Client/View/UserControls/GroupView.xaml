@@ -8,26 +8,97 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
+
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="99*"/>
-            <ColumnDefinition Width="234*"/>
-            <ColumnDefinition Width="30*"/>
-            <ColumnDefinition Width="411*"/>
-            <ColumnDefinition Width="26*"/>
+            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="3.5*"/>
+            <ColumnDefinition Width="0.5*"/>
         </Grid.ColumnDefinitions>
+
         <Grid.RowDefinitions>
-
-            <RowDefinition Height="198*"/>
-            <RowDefinition Height="17*"/>
-            <RowDefinition Height="10*"/>
-
+            <RowDefinition Height="0.25*"/>
+            <RowDefinition Height="0.30*"/>
+            <RowDefinition Height="1.5*"/>
         </Grid.RowDefinitions>
-        <ListBox Margin="0,98,3,3" Style="{StaticResource roundlistboxwithempty}" ItemsSource="{Binding Users}"  Resources="{StaticResource roundborder10}" ItemTemplate="{StaticResource userViewTemplate}" Grid.Column="1"/>
-        <ListBox Margin="3,98,1,3" Style="{StaticResource roundlistboxwithempty}" ItemsSource="{Binding Trips}" Resources="{StaticResource roundborder10}" ItemTemplate="{StaticResource tripListTemplate}" Grid.Column="3"/>
-        <Button Grid.Column="3" Content="Delete Trip" Margin="276,0,1,0" Resources="{StaticResource roundcornerbutton10}" Click="Delete_Trip" Grid.Row="1" />
-        <Button Grid.Column="3" Content="Edit Trip" Margin="140,0,135,0" Resources="{StaticResource roundcornerbutton10}" Click="Edit_Trip" Grid.Row="1" />
-        <Button Grid.Column="3" Content="Create Trip" Margin="3,0,271,0" Resources="{StaticResource roundcornerbutton10}" Click="Create_Trip" Grid.Row="1" />
-        <Button Grid.Column="1" Content="Remove Member" Margin="97,0,0,0" Resources="{StaticResource roundcornerbutton10}" Click="Remove_Member" Grid.Row="1" />
-        <Button Grid.Column="1" Content="Add Member" Margin="0,0,137,0" Resources="{StaticResource roundcornerbutton10}" Click="Add_Member" Grid.Row="1" />
+
+        <Border Grid.Column="1" Grid.Row="1" Margin="5" Background="White" Resources="{StaticResource roundborder10}">
+            <Label Content="{Binding GroupName}" FontSize="25" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" ></Label>
+        </Border>
+        
+        <Grid Grid.Column="1" Grid.Row="3">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3.5*"/>
+                <ColumnDefinition Width="0.25*"/>
+                <ColumnDefinition Width="5*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="1.5*"/>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="0.5*"/>
+            </Grid.RowDefinitions>
+
+            <TextBox x:Name="TextBoxMembers_Search" VerticalContentAlignment="Center" Grid.Column="0" Grid.Row="0" Margin="5" Resources="{StaticResource roundborder10}" TextChanged="TextBoxMembers_Search_TextChanged" />
+
+            <ListBox x:Name="ListBox_Members" Grid.Column="0" Grid.Row="1" ItemsSource="{Binding Members}" Margin="5" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource userViewTemplate}" ItemContainerStyle="{StaticResource RoundedListItem}" Style="{StaticResource roundlistboxwithempty}" Resources="{StaticResource roundborder10}" >
+                <ListBox.ContextMenu>
+                    <ContextMenu Style="{StaticResource roundcontextmenu}" >
+                        <MenuItem Header="Add" Click="MemberAdd_Click" Resources="{StaticResource roundborder10}" />
+                        <MenuItem Header="Remove" Click="MemberRemove_Click" Resources="{StaticResource roundborder10}" />
+                    </ContextMenu>
+                </ListBox.ContextMenu>
+            </ListBox>
+
+            <Grid Grid.Column="0" Grid.Row="2">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="1" Content="Add" Margin="5" Resources="{StaticResource roundcornerbutton10}" Click="MemberAdd_Click"/>
+
+                <Button Grid.Column="2" Content="Remove" Margin="5" Resources="{StaticResource roundcornerbutton10}" Click="MemberRemove_Click" />
+
+            </Grid>
+
+
+            <TextBox x:Name="TextBoxTrip_Search" VerticalContentAlignment="Center" Grid.Column="2" Grid.Row="0" Margin="5" Resources="{StaticResource roundborder10}" TextChanged="TextBoxTrip_Search_TextChanged" />
+
+            <ListBox x:Name="ListBox_Trips" Grid.Column="2" Grid.Row="1" ItemsSource="{Binding Trips}" Margin="5" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource tripListTemplate}" ItemContainerStyle="{StaticResource RoundedListItem}" Style="{StaticResource roundlistboxwithempty}" Resources="{StaticResource roundborder10}" >
+                <ListBox.ContextMenu>
+                    <ContextMenu Style="{StaticResource roundcontextmenu}" >
+                        <MenuItem Header="Edit" Click="TripEdit_Click" Resources="{StaticResource roundborder10}" />
+                        <MenuItem Header="Create" Click="TripCreate_Click" Resources="{StaticResource roundborder10}" />
+                        <MenuItem Header="Delete" Click="TripDelete_Click" Resources="{StaticResource roundborder10}" />
+                    </ContextMenu>
+                </ListBox.ContextMenu>
+            </ListBox>
+
+            <Grid Grid.Column="2" Grid.Row="2">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="1" Content="Create" Margin="5" Resources="{StaticResource roundcornerbutton10}" Click="TripCreate_Click"/>
+
+                <Button Grid.Column="2" Content="Edit" Margin="5" Resources="{StaticResource roundcornerbutton10}" Click="TripEdit_Click" />
+
+                <Button Grid.Column="3" Content="Delete" Margin="5" Resources="{StaticResource roundcornerbutton10}" Click="TripDelete_Click" />
+
+            </Grid>
+
+
+        </Grid>
+        
     </Grid>
 </UserControl>

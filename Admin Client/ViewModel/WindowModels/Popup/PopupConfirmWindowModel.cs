@@ -3,6 +3,7 @@ using Admin_Client.Model.DB.EF_Test;
 using Admin_Client.Model.Domain;
 using Admin_Client.PropertyChanged;
 using Admin_Client.Singleton;
+using Admin_Client.View.UserControls;
 using Admin_Client.View.Windows.Popups;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -18,10 +20,11 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 	public class PopupConfirmWindowModel : NotifyPropertyChangedHandler
 	{
 
-		#region Variables
+        #region Variables
 
-		private object target;
+        private object target;
 		private Action action;
+		private object linkedObject;
 
 		private Window currentWindow;
 
@@ -49,17 +52,20 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 
 		#region Constructor
 
-		public PopupConfirmWindowModel(Window currentWindow, object target, PopupMethod popupMethod)
+		public PopupConfirmWindowModel(Window currentWindow, object target, PopupMethod popupMethod, object linkedObject)
 		{
-			// Set the methods and other object related info
-			switch (popupMethod)
+            // Set the methods and other object related info
+            switch (popupMethod)
 			{
 				case PopupMethod.Edit: this.action = Edit; break;
 				case PopupMethod.Create: this.action = Create; break;
 				case PopupMethod.Delete: this.action = Delete; break;
+				case PopupMethod.Add: this.action = Add; break;
+				case PopupMethod.Remove: this.action = Remove; break;
 			}
 			this.target = target;
 			this.currentWindow = currentWindow;
+			this.linkedObject = linkedObject;
 
 			ActionText = action.GetMethodInfo().Name;
 			if (action.GetMethodInfo().Name == "Create")
@@ -121,18 +127,18 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 					{
 						tblUser user = (tblUser)target;
 
-						/*Do Stuff*/
-
-						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + user.fldUserID + " - " + user.fldFirstName + " " + user.fldLastName));
+                        MainWindowModelSingleton.Instance.SetMainContent(new UserView(user));
+                        
+                        LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + user.fldUserID + " - " + user.fldFirstName + " " + user.fldLastName));
 						break;
 					}
 				case "tblGroup":
 					{
 						tblGroup group = (tblGroup)target;
 
-						/*Do Stuff*/
+                        MainWindowModelSingleton.Instance.SetMainContent(new GroupView(group));
 
-						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + group.fldGroupID + " - " + group.fldGroupName));
+                        LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + group.fldGroupID + " - " + group.fldGroupName));
 						break;
 					}
 				default: throw new Exception("Has not been implemented: " + target.GetType().Name + "." + action.GetMethodInfo().Name + "()");
@@ -156,9 +162,38 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 					{
 						tblGroup group = (tblGroup)target;
 
-						MainWindowModelSingleton.Instance.StartPopupParameterChange(group);
+                        MainWindowModelSingleton.Instance.StartPopupParameterChange(group);
 
 						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "New: ID " + group.fldGroupID + " - " + group.fldGroupName));
+						break;
+					}
+				case "tblTrip":
+					{
+						tblTrip trip = (tblTrip)target;
+
+						MainWindowModelSingleton.Instance.StartPopupParameterChange(trip);
+
+						while (true)
+						{
+							bool isFound = false;
+							foreach (var tempTrip in HttpClientHandler.GetTrips())
+							{
+								if (tempTrip.fldTripName.Equals(trip.fldTripName) && tempTrip.fldTripDate.Equals(trip.fldTripDate))
+								{
+									trip.fldTripID = tempTrip.fldTripID;
+									isFound= true;
+								}
+							}
+							if (isFound)
+							{
+								Thread.Sleep(250);
+								break;
+							}
+						}
+
+						HttpClientHandler.Post(new tblGroupToTrip() { fldGroupID = ((tblGroup)this.linkedObject).fldGroupID, fldTripID = trip.fldTripID });
+
+						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "New: ID " + trip.fldTripID + " - " + trip.fldTripDate));
 						break;
 					}
 				default: throw new Exception("Has not been implemented: " + target.GetType().Name + "." + action.GetMethodInfo().Name + "()");
@@ -173,7 +208,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 					{
 						tblUser user = (tblUser)target;
 
-						/*Do Stuff*/
+						HttpClientHandler.Delete(SqlObjectType.tblUser, user.fldUserID);
 
 						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + user.fldUserID + " - " + user.fldFirstName + " " + user.fldLastName));
 						break;
@@ -182,7 +217,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 					{
 						tblGroup group = (tblGroup)target;
 
-						/*Do Stuff*/
+						HttpClientHandler.Delete(SqlObjectType.tblGroup, group.fldGroupID);
 
 						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + group.fldGroupID + " - " + group.fldGroupName));
 						break;
@@ -191,7 +226,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 					{
 						tblReceipt receipt = (tblReceipt)target;
 
-						/*Do Stuff*/
+						HttpClientHandler.Delete(SqlObjectType.tblReceipt, receipt.fldReceiptID);
 
 						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + receipt.fldReceiptID + " - " + receipt.fldUserID + " " + receipt.tblUser.fldFirstName + " " + receipt.tblUser.fldLastName));
 						break;
@@ -200,15 +235,54 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 					{
 						tblTrip trip = (tblTrip)target;
 
-						/*Do Stuff*/
+						HttpClientHandler.Delete(SqlObjectType.tblTrip, trip.fldTripID);
 
-						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + trip.fldTripID + " - UserID: " + trip.tblTripToUserExpense.ToArray()[0].tblUserExpense.fldUserID));
+						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + trip.fldTripID));
 						break;
 					}
 				default: throw new Exception("Has not been implemented: " + target.GetType().Name + "." + action.GetMethodInfo().Name + "()");
 			}
 		}
+        private void Add()
+        {
+            switch (target.GetType().Name)
+            {
+                case "tblUser":
+                    {
+                        tblUser user = (tblUser)target;
 
+                        MainWindowModelSingleton.Instance.StartPopupAddUser(user);
+
+                        break;
+                    }
+                default: throw new Exception("Has not been implemented: " + target.GetType().Name + "." + action.GetMethodInfo().Name + "()");
+            }
+        }
+
+		private void Remove()
+		{
+			switch (target.GetType().Name)
+			{
+				case "tblUser":
+					{
+						tblUser user = (tblUser)target;
+
+						List<tblUserToGroup> list = HttpClientHandler.GetUserToGroups();
+
+						foreach (var relation in list)
+						{
+							if (relation.fldUserID == user.fldUserID)
+							{
+								HttpClientHandler.Delete(SqlObjectType.tblUserToGroup, relation.fldUserToGroupID);
+								break;
+							}
+						}
+
+						break;
+					}
+				default: throw new Exception("Has not been implemented: " + target.GetType().Name + "." + action.GetMethodInfo().Name + "()");
+			}
+		}
 		#endregion
 
 	}

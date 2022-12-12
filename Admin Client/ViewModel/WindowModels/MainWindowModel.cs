@@ -162,13 +162,13 @@ namespace Admin_Client.ViewModel.WindowModels
 			new PopoutLogToolWindow(mainWindow).Show();
 		}
 
-		public void StartPopupConfirm(object o, PopupMethod popupMethod)
+		public void StartPopupConfirm(object o, PopupMethod popupMethod, object linkedO = null)
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, popupMethod + " Click --> Target " + o.GetType().Name));
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log("PopupConfirm --> Starting"));
 
 			MainWindowModelSingleton.Instance.GetMainWindow().IsEnabled = false;
-			new PopupConfirmWindow(o, popupMethod).ShowDialog();
+			new PopupConfirmWindow(o, popupMethod, linkedO).ShowDialog();
 
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log("PopupConfirm == Closed"));
 		}
@@ -195,14 +195,14 @@ namespace Admin_Client.ViewModel.WindowModels
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log("PopupPasswordChange == Closed"));
 		}
 
-		public void StartPopupAddUser()
+		public void StartPopupAddUser(tblUser user)
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Add Click --> New User"));
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log("PopoutAddUser --> Starting"));
 
 			// TODO
 			MainWindowModelSingleton.Instance.GetMainWindow().IsEnabled = false;
-			new PopupParameterChangeWindow(mainWindow, new tblUser()).ShowDialog();
+			new PopupAddUserWindow(mainWindow, user).ShowDialog();
 
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log("PopoutAddUser == Closed"));
 		}

@@ -16,7 +16,7 @@ function CreateTripTableElement(TripName, DateOfCreation, Sum )
     /*
     this is where we need to figure out a way to link it with a procedurally generated html that loads the proper group in
     */
-    NameHolder.href = '#';
+    NameHolder.href = '../trip/trip.html';
 
     NameCell.appendChild(NameHolder);
 
@@ -57,6 +57,9 @@ function PopulateTripTable()
     loadTrip('1');
     loadTrip('2');
     loadTrip('3');
+    document.cookie = 'id: 1'
+    console.log(document.cookie)
+    CreateTripTableElement('Cookie Test', 'no date', '3 bucks')
 
 }
 

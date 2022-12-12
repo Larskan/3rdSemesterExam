@@ -1,11 +1,13 @@
 ﻿using Admin_Client.Model.DB;
 using Admin_Client.Model.DB.EF_Test;
 using Admin_Client.Model.Domain;
+using Admin_Client.Model.Foundation;
 using Admin_Client.PropertyChanged;
 using Admin_Client.Singleton;
 using DocumentFormat.OpenXml.Presentation;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,13 +51,23 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 
 		#region Public Methods
 
-		public void Change()
+		public void Confirm(string password, string newPassword)
 		{
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Change Click"));
+            LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Change Click"));
 
-			//DO STUFF TO LOGIN WITH USER ID
-			// ENCRYPT AND SEND TO DATABASE
+			/*
+            // Authentication
+            if (Encryption.Encrypt_Password(password, Encryption.Salt_Password(password)).Equals(HttpClientHandler.GetUser(user.fldUserID).fldPassword))
+            {
+              Console.WriteLine("break");
+               return;
+            }
+			*/
 
+            // ENCRYPT AND SEND TO DATABASE
+            string EncryptedPW = Encryption.Encrypt_Password(newPassword, Encryption.Salt_Password(newPassword));
+            user.fldPassword = EncryptedPW;
+			HttpClientHandler.Put(user, user.fldUserID);
 
 			currentWindow.Close();
 			MainWindowModelSingleton.Instance.GetMainWindow().IsEnabled = true;

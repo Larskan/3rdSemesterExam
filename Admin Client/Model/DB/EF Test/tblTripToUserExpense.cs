@@ -12,9 +12,9 @@ namespace Admin_Client.Model.DB.EF_Test
         [Key]
         public int fldTripToUserExpenseID { get; set; }
 
-        public int? fldTripID { get; set; }
+        public int fldTripID { get; set; }
 
-        public int? fldExpenseID { get; set; }
+        public int fldExpenseID { get; set; }
 
         public virtual tblTrip tblTrip { get; set; }
 

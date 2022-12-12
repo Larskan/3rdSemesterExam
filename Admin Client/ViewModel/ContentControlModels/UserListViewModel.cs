@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Admin_Client.ViewModel.ContentControlModels
 {
@@ -45,7 +46,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
 		CancellationTokenSource tokenSource;
 		public void Update()
 		{
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Update Click"));
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Update Users Click"));
 			if (tokenSource != null && tokenSource.Token.CanBeCanceled)
 			{
 				tokenSource.Cancel();
@@ -57,7 +58,9 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		public void Create()
 		{
-			MainWindowModelSingleton.Instance.StartPopupConfirm(new tblUser(), PopupMethod.Create);
+			MainWindowModelSingleton.Instance.StartPopupConfirm(new tblUser() { fldPassword = "x" }, PopupMethod.Create);
+			Thread.Sleep(500);
+			Update();
 		}
 
 		public void Edit(tblUser user)
@@ -68,6 +71,8 @@ namespace Admin_Client.ViewModel.ContentControlModels
 		public void Delete(tblUser user)
 		{
 			MainWindowModelSingleton.Instance.StartPopupConfirm(user, PopupMethod.Delete);
+			Thread.Sleep(500);
+			Update();
 		}
 
 		#endregion
@@ -77,6 +82,8 @@ namespace Admin_Client.ViewModel.ContentControlModels
 		private void UpdateUsersListThread(object o)
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log("ThreadID: " + Thread.CurrentThread.ManagedThreadId + " --> Starting"));
+			App.Current.Dispatcher.BeginInvoke(new Action(() => { Users.Clear(); }));
+			Thread.Sleep(500);
 
 			object[] array = o as object[];
 			CancellationToken token = (CancellationToken)array[0];

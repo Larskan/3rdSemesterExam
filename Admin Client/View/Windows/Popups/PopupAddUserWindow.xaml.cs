@@ -59,15 +59,9 @@ namespace Admin_Client.View.Windows.Popups
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             windowModel.Search();
-           
-            
-        }
+            windowModel.Update();
 
-        private void ListBox_Parameters_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-          
         }
- 
         private void OnPageLoaded(object sender, RoutedEventArgs e)
         {
 

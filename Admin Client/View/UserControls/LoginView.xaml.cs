@@ -71,6 +71,18 @@ namespace Admin_Client.View.UserControls
 			PasswordBox_Password.Visibility = Visibility.Visible;
 			TextBox_Password.Visibility = Visibility.Hidden;
 
+				TogglePasswordView.Content = new Image{ 
+				Source = new BitmapImage(
+					new Uri(
+						Environment.GetFolderPath(
+							Environment.SpecialFolder.UserProfile
+							)
+						+ @"\source\repos\SplitBillsIntoFairShareskillme\Admin Client\img\"
+                        + "visibleno.png"
+						)
+					)
+			};
+
 			PasswordBox_Password.Focus();
 		}
 
@@ -78,6 +90,19 @@ namespace Admin_Client.View.UserControls
 		{
 			PasswordBox_Password.Visibility = Visibility.Hidden;
 			TextBox_Password.Visibility = Visibility.Visible;
+
+			TogglePasswordView.Content = TogglePasswordView.Content = new Image
+			{
+				Source = new BitmapImage(
+					new Uri(
+						Environment.GetFolderPath(
+							Environment.SpecialFolder.UserProfile
+							)
+						+ @"\Source\Repos\SplitBillsIntoFairShareskillme\Admin Client\Img\"
+						+ "visibleyes.png"
+						)
+					)
+			};
 
 			TextBox_Password.Focus();
 		}

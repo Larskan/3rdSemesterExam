@@ -1,4 +1,5 @@
-﻿using Admin_Client.Model.Domain;
+﻿using Admin_Client.Model.DB.EF_Test;
+using Admin_Client.Model.Domain;
 using Admin_Client.Singleton;
 using Admin_Client.ViewModel.ContentControlModels;
 using System;
@@ -23,38 +24,23 @@ namespace Admin_Client.View.UserControls
     /// </summary>
     public partial class UserView : UserControl
     {
-        UserViewModel viewModel = new UserViewModel();
-        public UserView()
+        UserViewModel viewModel;
+        public UserView(tblUser user)
         {
-            this.DataContext = viewModel;
+			viewModel = new UserViewModel(user);
+			this.DataContext = viewModel;
 
             InitializeComponent();
         }
 
-        private void ChangeMobileNumberClick(object sender, RoutedEventArgs e)
-        {
+		private void EditUser_Click(object sender, RoutedEventArgs e)
+		{
+			viewModel.EditUser();
+		}
 
-        }
-
-        private void ChangeEmailClick(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void ChangeNameClick(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void SeeLogClick(object sender, RoutedEventArgs e)
-        {
-            //MainWindowModelSingleton.Instance.SetMainContent(new LogListView(), true);
-        }
-
-        private void CheckReceiptClick(object sender, RoutedEventArgs e)
-        {
-            //doesnt work, what do u want me to pass to the receiptview lol
-           // MainWindowModelSingleton.Instance.SetMainContent(new ReceiptView(), true);
-        }
-    }
+		private void DeleteReceipt_Click(object sender, RoutedEventArgs e)
+		{
+            viewModel.DeleteReceipt();
+		}
+	}
 }

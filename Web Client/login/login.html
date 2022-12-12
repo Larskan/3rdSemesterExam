@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="text/javascript" src="/login/darkmode.js"></script>
+    <link rel="stylesheet" href="login.css" />
+    <title>Login</title>
+  </head>
+  <body>
+    <label class="switch">
+      <input type="checkbox" onchange="myFunction()" />
+      <span class="slider round"></span>
+    </label>
+
+    <div class="container">
+      <form action="">
+        <div id="Login">
+          <label for="Email">Email</label><br />
+          <input
+            type="text"
+            placeholder="Enter your email"
+            name="Email"
+            id="email"
+            required
+          /><br />
+          <label for="Password">Password</label><br />
+          <input
+            type="password"
+            placeholder="Enter your password"
+            name="Password"
+            id="password"
+            required
+          />
+          <button
+            id="LoginBtn"
+            onclick="changeDeg(); verifyLogin();"
+            type="button"
+          >
+            Login
+          </button>
+          <label>
+            <input type="checkbox" checked="checked" name="remember" /> Remember
+            me
+          </label>
+          <br />
+          <a href="/create/createUser.html">Don't have an account?</a>
+        </div>
+      </form>
+    </div>
+
+    <script>
+      setInterval(changeDeg, 100);
+      var counter = 0;
+      function changeDeg() {
+        var elem = document.getElementById("LoginBtn");
+        counter = counter % 360;
+        counter++;
+        deg = counter + `deg`;
+        elem.style.background = `linear-gradient(${deg}, #4a7e79, #4a7e5f, #4a697e)`;
+      }
+    </script>
+
+    <script>
+      const urlUser = "https://localhost:7002/TblUsers";
+
+      async function verifyLogin() {
+        const response = await fetch(urlUser).catch((err) =>
+          alert("CORS is being a little bitch")
+        );
+        var username = document.getElementById("email").value;
+        var pass = document.getElementById("password").value;
+        if (response == null) {
+          alert("response is null :(");
+          return;
+        }
+
+        await response.json().then((data) => {
+          for (let index = 0; index < data.length; index++) {
+            if (username == data[index]["fldEmail"]) {
+              if (pass == data[index]["fldPassword"]) {
+                alert("nice job logging in chief");
+                window.location = "/homepage/homePage.html";
+                return;
+              }
+            }
+          }
+          alert("User does not exist");
+        });
+      }
+    </script>
+  </body>
+</html>

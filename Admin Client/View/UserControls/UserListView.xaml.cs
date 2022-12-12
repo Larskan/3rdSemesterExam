@@ -26,7 +26,6 @@ namespace Admin_Client.View.UserControls
 	/// </summary>
 	public partial class UserListView : UserControl
 	{
-		UserviewSingleton Userview = UserviewSingleton.getInstance();
 		UserListViewModel viewModel = new UserListViewModel();
 		public UserListView()
 		{
@@ -34,8 +33,8 @@ namespace Admin_Client.View.UserControls
 
 			InitializeComponent();
 
-			CollectionView groupView = (CollectionView)CollectionViewSource.GetDefaultView(ListBox_Users.ItemsSource);
-			groupView.Filter = FilterList;
+			CollectionView userView = (CollectionView)CollectionViewSource.GetDefaultView(ListBox_Users.ItemsSource);
+			userView.Filter = FilterList;
 		}
 
 		private void Update_Click(object sender, RoutedEventArgs e)
@@ -53,10 +52,6 @@ namespace Admin_Client.View.UserControls
 			if (ListBox_Users.SelectedItem != null)
 			{
 				viewModel.Edit((tblUser)ListBox_Users.SelectedItem);
-
-				// NOPE
-				//Userview.SetUserID(FAKEDATABASE.GetUserID((tblUser)ListBox_Users.SelectedItem));
-				//MainWindowModelSingleton.Instance.SetMainContent(new UserView(), true);
 			}
 		}
 
@@ -90,7 +85,7 @@ namespace Admin_Client.View.UserControls
 				return true;
 			else if (((tblUser)item).fldEmail.IndexOf(TextBox_Search.Text, StringComparison.OrdinalIgnoreCase) >= 0)
 				return true;
-			else if (((tblUser)item).fldPhonenumber.ToString().IndexOf(TextBox_Search.Text, StringComparison.OrdinalIgnoreCase) >= 0)
+			else if (((tblUser)item).fldPhonenumber.IndexOf(TextBox_Search.Text, StringComparison.OrdinalIgnoreCase) >= 0)
 				return true;
 			else if (((tblUser)item).fldUserID.ToString().IndexOf(TextBox_Search.Text, StringComparison.OrdinalIgnoreCase) >= 0)
 				return true;

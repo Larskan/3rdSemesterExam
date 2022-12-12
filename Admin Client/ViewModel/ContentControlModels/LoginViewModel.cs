@@ -1,6 +1,7 @@
 ﻿using Admin_Client.Model.DB;
 using Admin_Client.Model.DB.EF_Test;
 using Admin_Client.Model.Domain;
+using Admin_Client.Model.Foundation;
 using Admin_Client.PropertyChanged;
 using Admin_Client.Singleton;
 using Admin_Client.View.UserControls;
@@ -41,17 +42,6 @@ namespace Admin_Client.ViewModel.ContentControlModels
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Login Click"));
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Username: " + username));
 
-			// FOR EASY USE -----------------
-			bool loginSuccess = false;
-			if (username.Equals(".") && password.Equals("."))
-			{
-				HttpClientHandler.currentUser = new tblUser() { fldEmail = "No@Email.dk", fldFirstName = "Local", fldLastName = "Admin",  fldIsAdmin = true, fldPassword = ".", fldPhonenumber = 00000000 };
-				loginSuccess = true;
-				LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Login == Success"));
-				MainWindowModelSingleton.Instance.SetMainContent(new OverviewView(), false, true);
-			}
-			//-------------------------------
-
 			// EMAIL NOT-VALID
 			Regex regex = new Regex(@"^((\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*))");
 			if (username.Length == 0 && !regex.IsMatch(username))
@@ -63,13 +53,17 @@ namespace Admin_Client.ViewModel.ContentControlModels
 				return;
 			}
 
+			string EncryptedPW = Encryption.Encrypt_Password(password, Encryption.Salt_Password(password));
+
 			// Auth
-			//bool loginSuccess = false;
+			bool loginSuccess = false;
 			List<tblUser> users = HttpClientHandler.GetUsers();
 			foreach (tblUser user in users) 
-			{ 
-				if (user.fldIsAdmin.Value == true && user.fldEmail.Equals(username) && user.fldPassword.Equals(password))
+			{
+				
+				if (user.fldIsAdmin && user.fldEmail.Equals(username) && user.fldPassword.Equals(EncryptedPW))
 				{
+					
 					HttpClientHandler.currentUser = user;
 					loginSuccess = true;
 					break;

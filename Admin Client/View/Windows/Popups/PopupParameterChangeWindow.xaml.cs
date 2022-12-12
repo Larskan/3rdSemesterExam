@@ -45,9 +45,9 @@ namespace Admin_Client.View.Windows.Popups
 			}
 		}
 
-		private void Change_Click(object sender, RoutedEventArgs e)
+		private void Confirm_Click(object sender, RoutedEventArgs e)
 		{
-			windowModel.Change(ListBox_Parameters);
+			windowModel.Confirm(ListBox_Parameters);
 		}
 
 		private void Cancel_Click(object sender, RoutedEventArgs e)

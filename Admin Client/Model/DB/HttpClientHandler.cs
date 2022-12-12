@@ -46,7 +46,7 @@ namespace Admin_Client.Model.DB
 				Thread.Sleep(500);
 			}
 
-			return null;
+			return userObject;
 		}
 
 		static bool usersIsDone = false;
@@ -169,24 +169,72 @@ namespace Admin_Client.Model.DB
 
 		#region tblUserToGroup
 
-		static bool userToGroupsIsDone = false;
-		static List<tblUserToGroup> userToGroupsList = new List<tblUserToGroup>();
+		static bool userToGroupIsDone = false;
+		static List<tblUserToGroup> userToGroupList = new List<tblUserToGroup>();
 		public static List<tblUserToGroup> GetUserToGroups()
 		{
-			if (userToGroupsList.Count > 0 || userToGroupsIsDone)
+			if (userToGroupList.Count > 0 || userToGroupIsDone)
 			{
-				userToGroupsIsDone = false;
-				userToGroupsList.Clear();
+				userToGroupIsDone = false;
+				userToGroupList.Clear();
 			}
 
 			ThreadStart(SqlObjectType.tblUserToGroup, APIMethod.GetAll);
 
-			while (!userToGroupsIsDone)
+			while (!userToGroupIsDone)
 			{
 				Thread.Sleep(500);
 			}
 
-			return userToGroupsList;
+			return userToGroupList;
+		}
+
+		#endregion
+
+		#region tblGroupToTrip
+
+		static bool groupToTripIsDone = false;
+		static List<tblGroupToTrip> groupToTripList = new List<tblGroupToTrip>();
+		public static List<tblGroupToTrip> GetGroupToTrip()
+		{
+			if (groupToTripList.Count > 0 || groupToTripIsDone)
+			{
+				groupToTripIsDone = false;
+				groupToTripList.Clear();
+			}
+
+			ThreadStart(SqlObjectType.tblGroupToTrip, APIMethod.GetAll);
+
+			while (!groupToTripIsDone)
+			{
+				Thread.Sleep(500);
+			}
+
+			return groupToTripList;
+		}
+
+		#endregion
+
+		#region tblTripToUserExpense
+
+		static bool tripToUserExpenseIsDone = false;
+		static List<tblTripToUserExpense> tripToUserExpenseList = new List<tblTripToUserExpense>();
+		public static List<tblTripToUserExpense> GetTripToUserExpense()
+		{
+			if (tripToUserExpenseList.Count > 0 || tripToUserExpenseIsDone)
+			{
+				tripToUserExpenseIsDone = false;
+				tripToUserExpenseList.Clear();
+			}
+
+			ThreadStart(SqlObjectType.tblTripToUserExpense, APIMethod.GetAll);
+
+			while (!tripToUserExpenseIsDone)
+			{
+				Thread.Sleep(500);
+			}
+
+			return tripToUserExpenseList;
 		}
 
 		#endregion
@@ -214,22 +262,22 @@ namespace Admin_Client.Model.DB
 
 		public static List<tblGroup> GetGroupsFromUser(tblUser user)
 		{
-			if (groupsIsDone || userToGroupsIsDone)
+			if (groupsIsDone || userToGroupIsDone)
 			{
 				groupsIsDone = false;
-				userToGroupsIsDone = false;
+				userToGroupIsDone = false;
 			}
 
 			ThreadStart(SqlObjectType.tblGroup, APIMethod.GetAll);
 			ThreadStart(SqlObjectType.tblUserToGroup, APIMethod.GetAll);
 
-			while (!groupsIsDone || !userToGroupsIsDone)
+			while (!groupsIsDone || !userToGroupIsDone)
 			{
 				Thread.Sleep(500);
 			}
 
 			List<tblGroup> filterGroups = new List<tblGroup>();
-			foreach (var relation in userToGroupsList)
+			foreach (var relation in userToGroupList)
 			{
 				if (relation.fldUserID == user.fldUserID)
 				{
@@ -247,34 +295,78 @@ namespace Admin_Client.Model.DB
 			return filterGroups;
 		}
 
-		public static List<Receipt> GetReceiptsFromUser(tblUser user)
+		public static List<tblReceipt> GetReceiptsFromUser(tblUser user)
 		{
-			return null;
+			if (receiptsIsDone)
+			{
+				receiptsIsDone = false;
+			}
+
+			ThreadStart(SqlObjectType.tblReceipt, APIMethod.GetAll);
+
+			while (!receiptsIsDone)
+			{
+				Thread.Sleep(500);
+			}
+
+			List<tblReceipt> filterReceipts = new List<tblReceipt>();
+			foreach (var receipt in receiptsList)
+			{
+				if (receipt.fldUserID == user.fldUserID)
+				{
+					filterReceipts.Add(receipt);
+					break;
+				}
+			}
+
+			return filterReceipts;
 		}
 
-		public static List<Receipt> GetUserExpenseFromUser(tblUser user)
+		public static List<tblUserExpense> GetUserExpensesFromUser(tblUser user)
 		{
-			return null;
+			if (userExpensesIsDone)
+			{
+				userExpensesIsDone = false;
+			}
+
+			ThreadStart(SqlObjectType.tblUserExpense, APIMethod.GetAll);
+
+			while (!userExpensesIsDone)
+			{
+				Thread.Sleep(500);
+			}
+
+			List<tblUserExpense> filterUserExpense = new List<tblUserExpense>();
+			foreach (var userExpense in userExpensesList)
+			{
+				if (userExpense.fldUserID == user.fldUserID)
+				{
+					filterUserExpense.Add(userExpense);
+					break;
+				}
+			}
+
+			return filterUserExpense;
 		}
 
 		public static List<tblUser> GetUsersFromGroup(tblGroup group)
 		{
-			if (userToGroupsIsDone || usersIsDone)
+			if (userToGroupIsDone || usersIsDone)
 			{
 				usersIsDone = false;
-				userToGroupsIsDone = false;
+				userToGroupIsDone = false;
 			}
 
 			ThreadStart(SqlObjectType.tblUser, APIMethod.GetAll);
 			ThreadStart(SqlObjectType.tblUserToGroup, APIMethod.GetAll);
 
-			while (!usersIsDone || !userToGroupsIsDone)
+			while (!usersIsDone || !userToGroupIsDone)
 			{
 				Thread.Sleep(500);
 			}
 
 			List<tblUser> filterUsers = new List<tblUser>();
-			foreach (var relation in userToGroupsList)
+			foreach (var relation in userToGroupList)
 			{
 				if (relation.fldGroupID == group.fldGroupID)
 				{
@@ -294,17 +386,99 @@ namespace Admin_Client.Model.DB
 
 		public static List<tblTrip> GetTripsFromGroup(tblGroup group)
 		{
-			return null;
+			if (tripsIsDone || groupToTripIsDone)
+			{
+				tripsIsDone = false;
+				groupToTripIsDone = false;
+			}
+
+			ThreadStart(SqlObjectType.tblTrip, APIMethod.GetAll);
+			ThreadStart(SqlObjectType.tblGroupToTrip, APIMethod.GetAll);
+
+			while (!tripsIsDone || !groupToTripIsDone)
+			{
+				Thread.Sleep(500);
+			}
+
+			List<tblTrip> filterTrips = new List<tblTrip>();
+			foreach (var relation in groupToTripList)
+			{
+				if (relation.fldGroupID == group.fldGroupID)
+				{
+					foreach (var trip in tripsList)
+					{
+						if (relation.fldTripID == trip.fldTripID)
+						{
+							filterTrips.Add(trip);
+							break;
+						}
+					}
+				}
+			}
+
+			return filterTrips;
 		}
 
 		public static List<tblUserExpense> GetUserExpensesFromTrip(tblTrip trip)
 		{
-			return null;
+			if (userExpensesIsDone || tripToUserExpenseIsDone)
+			{
+				userExpensesIsDone = false;
+				tripToUserExpenseIsDone = false;
+			}
+
+			ThreadStart(SqlObjectType.tblUserExpense, APIMethod.GetAll);
+			ThreadStart(SqlObjectType.tblTripToUserExpense, APIMethod.GetAll);
+
+			while (!userExpensesIsDone || !tripToUserExpenseIsDone)
+			{
+				Thread.Sleep(500);
+			}
+
+			List<tblUserExpense> filterUserExpense = new List<tblUserExpense>();
+			foreach (var relation in tripToUserExpenseList)
+			{
+				if (relation.fldTripID == trip.fldTripID)
+				{
+					foreach (var userExpense in userExpensesList)
+					{
+						if (relation.fldExpenseID == userExpense.fldExpenseID)
+						{
+							filterUserExpense.Add(userExpense);
+							break;
+						}
+					}
+				}
+			}
+
+			return filterUserExpense;
 		}
 
-		public static List<tblReceipt> GetReceiptFromTrip(tblTrip trip)
+		public static List<tblReceipt> GetReceiptsFromTrip(tblTrip trip)
 		{
-			return null;
+			if (receiptsIsDone)
+			{
+				receiptsIsDone = false;
+			}
+
+			ThreadStart(SqlObjectType.tblReceipt, APIMethod.GetAll);
+
+			while (!receiptsIsDone)
+			{
+				Thread.Sleep(500);
+			}
+
+			List<tblReceipt> filterReceipts = new List<tblReceipt>();
+			foreach (var receipt in receiptsList)
+			{
+				if (receipt.fldTripID == trip.fldTripID)
+				{
+					filterReceipts.Add(receipt);
+					break;
+				}
+			}
+
+			return filterReceipts;
 		}
 
 
@@ -339,10 +513,7 @@ namespace Admin_Client.Model.DB
 			{
 				case SqlObjectType.tblUser:
 					{
-						if (userObject != null)
-						{
-							userObject = ((JObject)o).ToObject<tblUser>();
-						}
+						userObject = ((JObject)o).ToObject<tblUser>();
 						userIsDone = true;
 						break;
 					}
@@ -453,9 +624,41 @@ namespace Admin_Client.Model.DB
 								tblUserToGroup userToGroup = ((JObject)item).ToObject<tblUserToGroup>();
 								tempList.Add(userToGroup);
 							}
-							userToGroupsList = tempList;
+							userToGroupList = tempList;
 						}
-						userToGroupsIsDone = true;
+						userToGroupIsDone = true;
+
+						break;
+					}
+				case SqlObjectType.tblGroupToTrip:
+					{
+						List<tblGroupToTrip> tempList = new List<tblGroupToTrip>();
+						if (l != null)
+						{
+							foreach (var item in l)
+							{
+								tblGroupToTrip groupToTrip = ((JObject)item).ToObject<tblGroupToTrip>();
+								tempList.Add(groupToTrip);
+							}
+							groupToTripList = tempList;
+						}
+						groupToTripIsDone = true;
+
+						break;
+					}
+				case SqlObjectType.tblTripToUserExpense:
+					{
+						List<tblTripToUserExpense> tempList = new List<tblTripToUserExpense>();
+						if (l != null)
+						{
+							foreach (var item in l)
+							{
+								tblTripToUserExpense tripToUserExpense = ((JObject)item).ToObject<tblTripToUserExpense>();
+								tempList.Add(tripToUserExpense);
+							}
+							tripToUserExpenseList = tempList;
+						}
+						tripToUserExpenseIsDone = true;
 
 						break;
 					}

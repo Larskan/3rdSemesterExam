@@ -30,7 +30,7 @@
                 <ColumnDefinition Width="100"/>
             </Grid.ColumnDefinitions>
 
-            <TextBox x:Name="TextBox_Search" Grid.Column="0" Margin="5" Resources="{StaticResource roundborder10}" TextChanged="TextBox_Search_TextChanged" />
+            <TextBox x:Name="TextBox_Search" VerticalContentAlignment="Center" Grid.Column="0" Margin="5" Resources="{StaticResource roundborder10}" TextChanged="TextBox_Search_TextChanged" />
 
             <Button Grid.Column="1" Content="Update" Margin="5" Resources="{StaticResource roundcornerbutton10}" Click="Update_Click" />
 
@@ -39,9 +39,9 @@
         <ListBox x:Name="ListBox_Users" Grid.Column="1" Grid.Row="2" ItemsSource="{Binding Users}" Margin="5"  VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource userDataTemplate}" ItemContainerStyle="{StaticResource RoundedListItem}" Style="{StaticResource roundlistboxwithempty}" Resources="{StaticResource roundborder10}" >
             <ListBox.ContextMenu>
                 <ContextMenu Style="{StaticResource roundcontextmenu}" >
-                    <MenuItem Header="Edit Group" Click="Edit_Click" Resources="{StaticResource roundborder10}" />
-                    <MenuItem Header="Create Group" Click="Create_Click" Resources="{StaticResource roundborder10}" />
-                    <MenuItem Header="Delete Group" Click="Delete_Click" Resources="{StaticResource roundborder10}" />
+                    <MenuItem Header="Edit" Click="Edit_Click" Resources="{StaticResource roundborder10}" />
+                    <MenuItem Header="Create" Click="Create_Click" Resources="{StaticResource roundborder10}" />
+                    <MenuItem Header="Delete" Click="Delete_Click" Resources="{StaticResource roundborder10}" />
                 </ContextMenu>
             </ListBox.ContextMenu>
         </ListBox>

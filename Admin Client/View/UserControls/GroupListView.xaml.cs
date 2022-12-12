@@ -55,10 +55,6 @@ namespace Admin_Client.View.UserControls
 			if (ListBox_Groups.SelectedItem != null)
 			{
 				viewModel.Edit((tblGroup)ListBox_Groups.SelectedItem);
-
-				// NOPE
-				//Overview.SetGroupID(FAKEDATABASE.GetGroupID((tblGroup)ListBox_Groups.SelectedItem));
-				//MainWindowModelSingleton.Instance.SetMainContent(new GroupView(), true);
 			}
 		}
 
