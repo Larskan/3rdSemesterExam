@@ -194,7 +194,7 @@ namespace Admin_Client.Model.FileIO
 		#region CleanUp
 
 		/// <summary>
-		/// Makes sure that only a curtain amount of files are stored
+		/// Makes sure that only a certain amount of files are stored
 		/// </summary>
 		/// <returns>True if cleanUp was a success, false if not</returns>
 		public bool CleanUpFolder()

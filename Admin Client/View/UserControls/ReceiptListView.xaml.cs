@@ -32,12 +32,12 @@ namespace Admin_Client.View.UserControls
 			this.DataContext = viewModel;
 
 			InitializeComponent();
-		}
-
-		private void Delete_Click(object sender, RoutedEventArgs e)
+        }
+     
+        private void Delete_Click(object sender, RoutedEventArgs e)
 		{
-
-		}
+            
+        }
 
 	}
 }
