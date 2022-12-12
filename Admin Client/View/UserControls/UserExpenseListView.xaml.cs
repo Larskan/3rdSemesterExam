@@ -34,6 +34,14 @@ namespace Admin_Client.View.UserControls
 			InitializeComponent();
 		}
 
+		public UserExpenseListView(tblTrip trip)
+		{
+			viewModel = new UserExpenseListViewModel(trip);
+			this.DataContext = viewModel;
+
+			InitializeComponent();
+		}
+
 		private void Delete_Click(object sender, RoutedEventArgs e)
 		{
 

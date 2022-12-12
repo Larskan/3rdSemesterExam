@@ -4,6 +4,7 @@ using Admin_Client.Model.DB.EF_Test;
 using Admin_Client.Model.Domain;
 using Admin_Client.PropertyChanged;
 using Admin_Client.Singleton;
+using Admin_Client.View.UserControls;
 using Admin_Client.View.Windows.Popups;
 using System;
 using System.Collections.Generic;
@@ -84,12 +85,13 @@ namespace Admin_Client.ViewModel.ContentControlModels
         public void TripDelete(tblTrip trip)
         {
 			MainWindowModelSingleton.Instance.StartPopupConfirm(trip, PopupMethod.Delete);
+			Thread.Sleep(500);
+			UpdateTrips();
 		}
 
 		public void TripEdit(tblTrip trip)
 		{
-			// Missing Trip view
-			//MainWindowModelSingleton.Instance.SetMainContent();
+			MainWindowModelSingleton.Instance.SetMainContent(new UserExpenseListView(trip));
 		}
 
 		#region Update

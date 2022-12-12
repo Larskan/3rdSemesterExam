@@ -51,14 +51,21 @@ namespace Admin_Client.ViewModel.ContentControlModels
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Information, "Get UserExpenses for User: " + user.fldUserID + " " + user.fldFirstName + " " + user.fldLastName));
 
-			ThreadPool.QueueUserWorkItem(UpdateReceiptListThread, new object[] { user });
+			ThreadPool.QueueUserWorkItem(UpdateReceiptListThreadViaUser, new object[] { user });
+		}
+
+		public UserExpenseListViewModel(tblTrip trip)
+		{
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Information, "Get UserExpenses for Trip: " + trip.fldTripID + " " + trip.fldTripName));
+
+			ThreadPool.QueueUserWorkItem(UpdateReceiptListThreadViaTrip, new object[] { trip });
 		}
 
 		#endregion
 
 		#region Public Methods
 
-		private void UpdateReceiptListThread(object o)
+		private void UpdateReceiptListThreadViaUser(object o)
 		{
 			Thread.Sleep(startupDelay);
 
@@ -92,9 +99,43 @@ namespace Admin_Client.ViewModel.ContentControlModels
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "ThreadID: " + Thread.CurrentThread.ManagedThreadId + " ==> Closed"));
 		}
 
-		public void Delete(tblTrip trip)
+		private void UpdateReceiptListThreadViaTrip(object o)
 		{
-			MainWindowModelSingleton.Instance.StartPopupConfirm(trip, PopupMethod.Delete);
+			Thread.Sleep(startupDelay);
+
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log("ThreadID: " + Thread.CurrentThread.ManagedThreadId + " --> Starting"));
+
+			object[] array = o as object[];
+			tblTrip trip = (tblTrip)array[0];
+
+			List<tblUserExpense> userExpenses = HttpClientHandler.GetUserExpensesFromTrip(trip);
+
+			bool found;
+			foreach (var userExpenseItem in userExpenses)
+			{
+				found = false;
+				foreach (var UserExpenseItem in UserExpenses)
+				{
+					if (userExpenseItem.fldExpenseID == userExpenseItem.fldExpenseID)
+					{
+						found = true;
+						break;
+					}
+				}
+				if (!found)
+				{
+					App.Current.Dispatcher.BeginInvoke(new Action(() => { UserExpenses.Add(userExpenseItem); }));
+				}
+			}
+
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "ThreadID: " + Thread.CurrentThread.ManagedThreadId + " ==> Done"));
+
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "ThreadID: " + Thread.CurrentThread.ManagedThreadId + " ==> Closed"));
+		}
+
+		public void Delete(tblUserExpense userExpense)
+		{
+			MainWindowModelSingleton.Instance.StartPopupConfirm(userExpense, PopupMethod.Delete);
 		}
 
 		#endregion
