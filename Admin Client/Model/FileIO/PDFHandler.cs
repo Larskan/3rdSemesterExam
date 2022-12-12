@@ -19,12 +19,11 @@ using iText.Layout;
 using iText.Layout.Element;
 using iText.Layout.Properties;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using PdfSharp.Drawing;
-using PdfSharp.Pdf;
+//using PdfSharp.Drawing;
+//using PdfSharp.Pdf;
 using HttpClientHandler = Admin_Client.Model.DB.HttpClientHandler;
-using JsonSerializer = Newtonsoft.Json.JsonSerializer;
-using PdfDocument = PdfSharp.Pdf.PdfDocument;
+using TextAlignment = iText.Layout.Properties.TextAlignment;
+//using PdfDocument = PdfSharp.Pdf.PdfDocument;
 
 namespace Admin_Client.Model.FileIO
 {
@@ -36,10 +35,7 @@ namespace Admin_Client.Model.FileIO
         //Paragraph = Creates a paragraph, initialized with text
         //"C:\Users\Lars\Desktop\Exam"
 
-        public PDFHandler()
-        {
-            PdfSharp();
-        }
+
 
 
         #region iText 7
@@ -121,15 +117,9 @@ namespace Admin_Client.Model.FileIO
             //Adding the table where Receipt info will be shown
             //We tell it that the table contains 3 columns(Person, Activity, Expense)
             Table table = new Table(3, false);
-            Cell cellUsers = new Cell(1, 1)
-                .SetTextAlignment(TextAlignment.CENTER)
-                .Add(new Paragraph("Person"));
-            Cell cellTrips = new Cell(1, 1)
-                .SetTextAlignment(TextAlignment.CENTER)
-                .Add(new Paragraph("Activity"));
-            Cell cellExpenses = new Cell(1, 1)
-                .SetTextAlignment(TextAlignment.CENTER)
-                .Add(new Paragraph("Expense"));
+            Cell cellUsers = new Cell(1, 1).SetTextAlignment(TextAlignment.CENTER).Add(new Paragraph("Person"));
+            Cell cellTrips = new Cell(1, 1).SetTextAlignment(TextAlignment.CENTER).Add(new Paragraph("Activity"));
+            Cell cellExpenses = new Cell(1, 1).SetTextAlignment(TextAlignment.CENTER).Add(new Paragraph("Expense"));
 
             table.AddCell(cellUsers);
             table.AddCell(cellTrips);
@@ -175,7 +165,7 @@ namespace Admin_Client.Model.FileIO
             table.AddCell(cellTrips);
             table.AddCell(cellExpenses);
 
-            tblReceipt[] receipts = GetReceipt();
+            tblReceipt receipts = GetReceipt();
 
             foreach (var item in receipts)
             {
@@ -188,62 +178,72 @@ namespace Admin_Client.Model.FileIO
                 Cell cExpenses = new Cell(1, 1)
                     .SetTextAlignment(TextAlignment.CENTER)
                     .Add(new Paragraph(String.Format("{0:C2}", item.tblTrip.fldSum.ToString())));
+
+                table.AddCell (cName);
+                table.AddCell(cActivity);
+                table.AddCell(cExpenses);
             }
+            return table;
        }
         private tblReceipt GetReceipt()
         {
             //HttpClient client = new HttpClient();
             //var stream = await client.GetStreamAsync(HttpClientHandler.GetReceipts());
             //var stream = client.GetStreamAsync("https://localhost:7002/tblReceipts");
-            var receipts = HttpClientHandler.GetReceipts();
-
-            return receipts;
+            var handler = HttpClientHandler.GetReceipts();
+            return null;
         }
-        */
-
+        
+        
         #endregion
+         */
 
-        #region PdfSharp
-        private void PdfSharp()
-        {
-            tblReceipt receipt= new tblReceipt();   
-            try
-            {
-                DataSet ds = new DataSet();
-                string name = receipt.tblUser.fldFirstName.ToString();  
-                string activity = receipt.tblTrip.fldTripName.ToString();
-                string expenses = receipt.tblTrip.fldSum.ToString();
-                int yPoint = 0;
+        /*
+       #region PdfSharp
+       public void PdfSharp()
+       {
+           tblReceipt receipt= new tblReceipt();   
+           try
+           {
+               DataSet ds = new DataSet();
+               var name = receipt.tblUser.fldFirstName; //NullReferebceException
+               var activity = receipt.tblTrip.fldTripName;
+               var expenses = receipt.tblTrip.fldSum.ToString();
+               int yPoint = 0;
 
-                var bup = HttpClientHandler.GetReceipts();
-                bup.Capacity.ToString();
+               //var bip = HttpClientHandler.GetUserExpensesFromTrip(this);
+               var bup = HttpClientHandler.GetReceipts();
+               bup.Capacity.ToString();
 
-                PdfDocument pdf = new PdfDocument();
-                pdf.Info.Title = "Fair Share Receipt";
-                PdfSharp.Pdf.PdfPage pdfpage = pdf.AddPage();
-                XGraphics graph = XGraphics.FromPdfPage(pdfpage);
-                XFont font = new XFont("Verdana", 20, XFontStyle.Regular);
-                yPoint = yPoint + 100;
-                for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
-                {
-                    name = ds.Tables[0].Rows[i].ItemArray[0].ToString();
-                    activity = ds.Tables[0].Rows[i].ItemArray[1].ToString();
-                    expenses = ds.Tables[0].Rows[i].ItemArray[2].ToString();
+               PdfDocument pdf = new PdfDocument();
+               pdf.Info.Title = "Fair Share Receipt";
+               PdfSharp.Pdf.PdfPage pdfpage = pdf.AddPage();
+               XGraphics graph = XGraphics.FromPdfPage(pdfpage);
+               XFont font = new XFont("Verdana", 20, XFontStyle.Regular);
+               yPoint = yPoint + 100;
+               for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
+               {
+                   name = ds.Tables[0].Rows[i].ItemArray[0].ToString();
+                   activity = ds.Tables[0].Rows[i].ItemArray[1].ToString();
+                   expenses = ds.Tables[0].Rows[i].ItemArray[2].ToString();
 
-                    graph.DrawString(name, font, XBrushes.Black, new XRect(40, yPoint, pdfpage.Width.Point, pdfpage.Height.Point), XStringFormat.TopLeft);
-                    graph.DrawString(activity, font, XBrushes.Black, new XRect(280, yPoint, pdfpage.Width.Point, pdfpage.Height.Point), XStringFormat.TopLeft);
-                    graph.DrawString(expenses, font, XBrushes.Black, new XRect(420, yPoint, pdfpage.Width.Point, pdfpage.Height.Point), XStringFormat.TopLeft);
+                   graph.DrawString(name, font, XBrushes.Black, new XRect(40, yPoint, pdfpage.Width.Point, pdfpage.Height.Point), XStringFormat.TopLeft);
+                   graph.DrawString(activity, font, XBrushes.Black, new XRect(280, yPoint, pdfpage.Width.Point, pdfpage.Height.Point), XStringFormat.TopLeft);
+                   graph.DrawString(expenses, font, XBrushes.Black, new XRect(420, yPoint, pdfpage.Width.Point, pdfpage.Height.Point), XStringFormat.TopLeft);
 
-                    yPoint = yPoint + 40;
-                }
+                   yPoint = yPoint + 40;
+               }
 
-                string pdfFilename = "FairShareReceipt.pdf";
-                pdf.Save(pdfFilename);
-                Process.Start(pdfFilename);
-            }
-            catch(Exception ex) { MessageBox.Show(ex.ToString()); }
-        }
+               string pdfFilename = "FairShareReceipt.pdf";
+               pdf.Save(pdfFilename);
 
+
+           }
+           catch(Exception ex) { MessageBox.Show(ex.ToString()); }
+       }
+
+
+        */
         #endregion
 
     }

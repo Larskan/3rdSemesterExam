@@ -23,14 +23,14 @@ namespace FairShareAPI.Controllers
             _context = context;
         }
 
-        // GET: api/tblUserToGroups
+        // GET: api/tblUserToGroup
         [HttpGet]
         public async Task<ActionResult<IEnumerable<tblUserToGroup>>> GettblUserToGroups()
         {
             return await _context.tblUserToGroups.ToListAsync();
         }
 
-        // GET: api/tblUserToGroups/5
+        // GET: api/tblUserToGroup/5
         [HttpGet("{id}")]
         public async Task<ActionResult<tblUserToGroup>> GettblUserToGroup(int id)
         {
@@ -44,7 +44,7 @@ namespace FairShareAPI.Controllers
             return tblUserToGroup;
         }
 
-        // PUT: api/tblUserToGroups/5
+        // PUT: api/tblUserToGroup/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PuttblUserToGroup(int id, tblUserToGroup tblUserToGroup)
@@ -75,7 +75,7 @@ namespace FairShareAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/tblUserToGroups
+        // POST: api/tblUserToGroup
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<tblUserToGroup>> PosttblUserToGroup(tblUserToGroup tblUserToGroup)
@@ -86,7 +86,7 @@ namespace FairShareAPI.Controllers
             return CreatedAtAction("GettblUserToGroup", new { id = tblUserToGroup.fldUserToGroupId }, tblUserToGroup);
         }
 
-        // DELETE: api/tblUserToGroups/5
+        // DELETE: api/tblUserToGroup/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletetblUserToGroup(int id)
         {

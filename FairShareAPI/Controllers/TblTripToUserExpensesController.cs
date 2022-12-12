@@ -23,14 +23,14 @@ namespace FairShareAPI.Controllers
             _context = context;
         }
 
-        // GET: api/tblTripToUserExpenses
+        // GET: api/tblTripToUserExpense
         [HttpGet]
         public async Task<ActionResult<IEnumerable<tblTripToUserExpense>>> GettblTripToUserExpenses()
         {
             return await _context.tblTripToUserExpenses.ToListAsync();
         }
 
-        // GET: api/tblTripToUserExpenses/5
+        // GET: api/tblTripToUserExpense/5
         [HttpGet("{id}")]
         public async Task<ActionResult<tblTripToUserExpense>> GettblTripToUserExpense(int id)
         {
@@ -44,12 +44,12 @@ namespace FairShareAPI.Controllers
             return tblTripToUserExpense;
         }
 
-        // PUT: api/tblTripToUserExpenses/5
+        // PUT: api/tblTripToUserExpense/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PuttblTripToUserExpense(int id, tblTripToUserExpense tblTripToUserExpense)
         {
-            if (id != tblTripToUserExpense.fldUserToExpense)
+            if (id != tblTripToUserExpense.fldTripToUserExpenseId)
             {
                 return BadRequest();
             }
@@ -75,7 +75,7 @@ namespace FairShareAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/tblTripToUserExpenses
+        // POST: api/tblTripToUserExpense
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<tblTripToUserExpense>> PosttblTripToUserExpense(tblTripToUserExpense tblTripToUserExpense)
@@ -83,10 +83,10 @@ namespace FairShareAPI.Controllers
             _context.tblTripToUserExpenses.Add(tblTripToUserExpense);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GettblTripToUserExpense", new { id = tblTripToUserExpense.fldUserToExpense }, tblTripToUserExpense);
+            return CreatedAtAction("GettblTripToUserExpense", new { id = tblTripToUserExpense.fldTripToUserExpenseId }, tblTripToUserExpense);
         }
 
-        // DELETE: api/tblTripToUserExpenses/5
+        // DELETE: api/tblTripToUserExpense/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletetblTripToUserExpense(int id)
         {
@@ -104,7 +104,7 @@ namespace FairShareAPI.Controllers
 
         private bool tblTripToUserExpenseExists(int id)
         {
-            return _context.tblTripToUserExpenses.Any(e => e.fldUserToExpense == id);
+            return _context.tblTripToUserExpenses.Any(e => e.fldTripToUserExpenseId == id);
         }
     }
 }

@@ -49,7 +49,7 @@ namespace FairShareAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PuttblUserExpense(int id, tblUserExpense tblUserExpense)
         {
-            if (id != tblUserExpense.fldExpensesId)
+            if (id != tblUserExpense.fldExpenseId)
             {
                 return BadRequest();
             }
@@ -83,7 +83,7 @@ namespace FairShareAPI.Controllers
             _context.tblUserExpenses.Add(tblUserExpense);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GettblUserExpense", new { id = tblUserExpense.fldExpensesId }, tblUserExpense);
+            return CreatedAtAction("GettblUserExpense", new { id = tblUserExpense.fldExpenseId }, tblUserExpense);
         }
 
         // DELETE: api/tblUserExpenses/5
@@ -104,7 +104,7 @@ namespace FairShareAPI.Controllers
 
         private bool tblUserExpenseExists(int id)
         {
-            return _context.tblUserExpenses.Any(e => e.fldExpensesId == id);
+            return _context.tblUserExpenses.Any(e => e.fldExpenseId == id);
         }
     }
 }
