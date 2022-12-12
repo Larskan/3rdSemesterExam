@@ -97,9 +97,9 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 
 		#region Public Methods
 
-		public void Confirm()
+		public void Accept()
 		{
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Confirm Click"));
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Accept Click"));
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(target.GetType().Name + "." + action.GetMethodInfo().Name + "() --> Invoke"));
 			action.Invoke();
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, target.GetType().Name + "." + action.GetMethodInfo().Name + "() == Success"));

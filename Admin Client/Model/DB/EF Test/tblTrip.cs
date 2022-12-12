@@ -22,7 +22,7 @@ namespace Admin_Client.Model.DB.EF_Test
 
         public double fldSum { get; set; }
         public string fldTripName { get; set; }
-        public DateTime fldTripDate { get; set; }
+        public string fldTripDate { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblGroupToTrip> tblGroupToTrip { get; set; }

@@ -44,9 +44,9 @@ namespace Admin_Client.View.Windows.Popups
 			InitializeComponent();
 		}
 
-		private void Confirm_Click(object sender, RoutedEventArgs e)
+		private void Accept_Click(object sender, RoutedEventArgs e)
 		{
-			windowModel.Confirm();
+			windowModel.Accept();
 		}
 
 		private void Cancel_Click(object sender, RoutedEventArgs e)
