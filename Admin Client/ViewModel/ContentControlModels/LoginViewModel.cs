@@ -1,6 +1,7 @@
 ﻿using Admin_Client.Model.DB;
 using Admin_Client.Model.DB.EF_Test;
 using Admin_Client.Model.Domain;
+using Admin_Client.Model.Foundation;
 using Admin_Client.PropertyChanged;
 using Admin_Client.Singleton;
 using Admin_Client.View.UserControls;
@@ -52,13 +53,17 @@ namespace Admin_Client.ViewModel.ContentControlModels
 				return;
 			}
 
+			string EncryptedPW = Encryption.Encrypt_Password(password, Encryption.Salt_Password(password));
+
 			// Auth
 			bool loginSuccess = false;
 			List<tblUser> users = HttpClientHandler.GetUsers();
 			foreach (tblUser user in users) 
-			{ 
-				if (user.fldIsAdmin && user.fldEmail.Equals(username) && user.fldPassword.Equals(password))
+			{
+				
+				if (user.fldIsAdmin && user.fldEmail.Equals(username) && user.fldPassword.Equals(EncryptedPW))
 				{
+					
 					HttpClientHandler.currentUser = user;
 					loginSuccess = true;
 					break;

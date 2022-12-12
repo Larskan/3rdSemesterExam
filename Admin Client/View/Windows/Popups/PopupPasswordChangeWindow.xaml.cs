@@ -2,6 +2,7 @@
 using Admin_Client.Model.DB.EF_Test;
 using Admin_Client.Model.Domain;
 using Admin_Client.Singleton;
+using Admin_Client.Model.Foundation;
 using Admin_Client.ViewModel.WindowModels.Popup;
 using System;
 using System.Collections.Generic;
@@ -38,10 +39,22 @@ namespace Admin_Client.View.Windows.Popups
 		private void Confirm_Click(object sender, RoutedEventArgs e)
 		{
 			// ENCRYPT PASSWORD AND CHECK
-
+			//pull pw from database, encrypt written new password and compare it	
+			
 			if (TextBox_NewPassword.Text.Equals(TextBox_RetypeNewPassword.Text))
 			{
-				windowModel.Confirm(TextBox_Password.Text, TextBox_NewPassword.Text);
+                bool loginSuccess = false;
+                List<tblUser> users = HttpClientHandler.GetUsers();
+                foreach (tblUser user in users)
+                {
+                    if (user.fldIsAdmin && user.fldPassword.Equals(Encryption.Encrypt_Password(TextBox_Password.Text, Encryption.Salt_Password(TextBox_Password.Text))))
+                    {
+                        windowModel.Confirm(TextBox_Password.Text, TextBox_NewPassword.Text);
+                        loginSuccess = true;
+                        break;
+                    }
+                }
+                
 			}
 			else
 			{

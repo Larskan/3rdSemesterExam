@@ -12,14 +12,15 @@ body
     border: 2px solid whitesmoke;
 }
 
-
 #ContainerRecentGroups
 {
+    margin-left: -15px;
     margin-bottom: 20px;
 }
 
 #ContainerAllGroups
 {
+    margin-left: -15px;
     margin-bottom: 20px;
 }
 

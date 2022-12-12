@@ -71,14 +71,14 @@ namespace Admin_Client.View.UserControls
 			PasswordBox_Password.Visibility = Visibility.Visible;
 			TextBox_Password.Visibility = Visibility.Hidden;
 
-			TogglePasswordView.Content = new Image{ 
+				TogglePasswordView.Content = new Image{ 
 				Source = new BitmapImage(
 					new Uri(
 						Environment.GetFolderPath(
 							Environment.SpecialFolder.UserProfile
 							)
-						+ @"\Source\Repos\SplitBillsIntoFairShares\Admin Client\Img\"
-						+ "visibleno.png"
+						+ @"\source\repos\SplitBillsIntoFairShareskillme\Admin Client\img\"
+                        + "visibleno.png"
 						)
 					)
 			};
@@ -98,7 +98,7 @@ namespace Admin_Client.View.UserControls
 						Environment.GetFolderPath(
 							Environment.SpecialFolder.UserProfile
 							)
-						+ @"\Source\Repos\SplitBillsIntoFairShares\Admin Client\Img\"
+						+ @"\Source\Repos\SplitBillsIntoFairShareskillme\Admin Client\Img\"
 						+ "visibleyes.png"
 						)
 					)
