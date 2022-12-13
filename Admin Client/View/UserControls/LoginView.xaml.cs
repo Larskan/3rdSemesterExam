@@ -44,11 +44,8 @@ namespace Admin_Client.View.UserControls
 		private void Login_Click(object sender, RoutedEventArgs e)
 		{
 			ReceiptPDF rec = new ReceiptPDF();
-			UserPersonPDF up = new UserPersonPDF();
 			tblTrip trip = new tblTrip();
 			var ins = new tblTrip() { fldTripID = 1 };
-            List<tblUserExpense> userExpenses = HttpClientHandler.GetUserExpensesFromTrip(trip);
-            var insert = trip;
 			rec.GrabData(ins);
 
             /*
@@ -62,9 +59,6 @@ namespace Admin_Client.View.UserControls
 				viewModel.Login(TextBox_Username.Text, TextBox_Password.Text);
 			}
 			*/
-
-
-
         }
 
 		private void TextBox_Password_TextChanged(object sender, TextChangedEventArgs e)

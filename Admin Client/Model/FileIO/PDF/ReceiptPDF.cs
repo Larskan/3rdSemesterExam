@@ -81,48 +81,8 @@ namespace Admin_Client.Model.FileIO.PDF
             DateTime datetime = DateTime.Now;
             string dataDir = @"C:\Users\Lars\Desktop\Exam\Receipt_" + datetime.ToLongDateString() + ".pdf";
 
-            #region Data
-            double total = 0;
-            List<tblReceipt> receipts;
-            List<tblUserExpense> userExpenses = HttpClientHandler.GetUserExpensesFromTrip(trip);
-            List<UserPersonPDF> userPeople = new List<UserPersonPDF>();
-
-            bool exists = false;
-            foreach(var userExpense in userExpenses)
-            {
-                tblUser user = HttpClientHandler.GetUser((int)userExpense.fldUserID);
-                receipts = HttpClientHandler.GetReceiptsFromUser(user);
-                foreach(var receipt in receipts)
-                {
-                    total += receipt.fldAmountPaid;
-
-                    //check if user already has a record
-                    foreach(var userPerson in userPeople)
-                    {
-                        if (userPerson.ID == receipt.fldUserID)
-                        {
-                            userPerson.Expenses += receipt.fldAmountPaid;
-                        }     
-                    }
-                    if (!exists)
-                    {
-                        userPeople.Add(new UserPersonPDF()
-                        {
-                            ID = user.fldUserID,
-                            FirstName = user.fldFirstName,
-                            LastName = user.fldLastName,
-                            TripName = trip.fldTripName,
-                            Expenses = (double)userExpense.fldExpense
-                        });                          
-                    }
-                } 
-                //total for all
-                foreach(var userPerson in userPeople)
-                {
-                    userPerson.Total = total;
-                }
-            }
-            #endregion
+            // Get data to use
+            List<UserPersonPDF> userPeople = GetData(trip);
 
             var receiptPDF = new ReceiptPDF
             {
@@ -147,6 +107,52 @@ namespace Admin_Client.Model.FileIO.PDF
             receiptPDF.Save(fileStream);
             fileStream.Close();
         }
+
+        public List<UserPersonPDF> GetData(tblTrip trip)
+        {
+			double total = 0;
+			List<tblReceipt> receipts;
+			List<tblUserExpense> userExpenses = HttpClientHandler.GetUserExpensesFromTrip(trip);
+			List<UserPersonPDF> userPeople = new List<UserPersonPDF>();
+
+			bool exists = false;
+			foreach (var userExpense in userExpenses)
+			{
+				tblUser user = HttpClientHandler.GetUser((int)userExpense.fldUserID);
+				receipts = HttpClientHandler.GetReceiptsFromUser(user);
+				foreach (var receipt in receipts)
+				{
+					total += receipt.fldAmountPaid;
+
+					//check if user already has a record
+					foreach (var userPerson in userPeople)
+					{
+						if (userPerson.ID == receipt.fldUserID)
+						{
+							userPerson.Expenses += receipt.fldAmountPaid;
+						}
+					}
+					if (!exists)
+					{
+						userPeople.Add(new UserPersonPDF()
+						{
+							ID = user.fldUserID,
+							FirstName = user.fldFirstName,
+							LastName = user.fldLastName,
+							TripName = trip.fldTripName,
+							Expenses = (double)userExpense.fldExpense
+						});
+					}
+				}
+				//total for all
+				foreach (var userPerson in userPeople)
+				{
+					userPerson.Total = total;
+				}
+			}
+
+			return userPeople;
+		}
 
         #region Sections
         private void HeaderSection()

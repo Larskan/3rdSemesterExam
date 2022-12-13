@@ -21,15 +21,6 @@ namespace Admin_Client.Model.Domain {
         {
         }
 
-        public UserPersonPDF(int id, string fName, string lName, string tName, double ex)
-        {
-            ID = id;
-            FirstName = fName;
-            LastName = lName;
-            TripName = tName;
-            Expenses = ex;
-        
-        }
     }
 
 }
