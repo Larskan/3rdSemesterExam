@@ -11,6 +11,7 @@ using Admin_Client.Model.DB.EF_Test;
 using Admin_Client.Model.DB;
 using Admin_Client.Model.Domain;
 using Org.BouncyCastle.Utilities.IO.Pem;
+using System.Diagnostics;
 
 namespace Admin_Client.Model.FileIO.PDF
 {
@@ -111,6 +112,8 @@ namespace Admin_Client.Model.FileIO.PDF
 
         public List<UserPersonPDF> GetData(tblTrip trip)
         {
+			Debug.WriteLine("Start");
+
 			double total = 0;
 
 			List<tblUserExpense> userExpenses = HttpClientHandler.GetUserExpensesFromTrip(trip);
@@ -120,6 +123,8 @@ namespace Admin_Client.Model.FileIO.PDF
 			bool exists;
 			foreach (var userExpense in userExpenses)
 			{
+                Debug.WriteLine("UserExpense: " + userExpense.fldNote);
+
 				exists = false;
 
 				tblUser user = HttpClientHandler.GetUser(userExpense.fldUserID);
@@ -129,14 +134,17 @@ namespace Admin_Client.Model.FileIO.PDF
 				// Check if user already has a record
 				foreach (var userPerson in userPeople)
 				{
+					Debug.WriteLine("UserPerson: " + userPerson.FirstName);
 					if (userPerson.ID == userExpense.fldUserID)
 					{
+						Debug.WriteLine("Exists");
 						userPerson.Expenses += userExpense.fldExpense;
 						exists = true;
                     }
                 }
 				if (!exists)
 				{
+					Debug.WriteLine("Don't Exists");
 					userPeople.Add(new UserPersonPDF()
 					{
 						ID = user.fldUserID,
