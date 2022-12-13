@@ -91,6 +91,7 @@
         e.preventDefault();
 
         fetchEmails().then((data) => {
+          console.table(data[0]["fldEmail"]);
           for (let index = 0; index < data.length; index++) {
             if (userEmail == data[index]["fldEmail"]) {
               alert("email exists");
@@ -98,6 +99,7 @@
             }
           }
         });
+
         postEmail();
         alert("Your account has been created successfully");
       });

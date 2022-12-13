@@ -50,7 +50,7 @@ namespace Admin_Client.View.UserControls
 
 		private void MemberAdd_Click(object sender, RoutedEventArgs e)
 		{
-			// TODO
+			viewModel.MemberAdd();
 		}
 
 		private void MemberRemove_Click(object sender, RoutedEventArgs e)
@@ -96,7 +96,7 @@ namespace Admin_Client.View.UserControls
 				return true;
 			else if (((tblTrip)item).fldTripID.ToString().IndexOf(TextBoxTrip_Search.Text, StringComparison.OrdinalIgnoreCase) >= 0)
 				return true;
-			else if (((tblTrip)item).fldTripDate.ToString().IndexOf(TextBoxTrip_Search.Text, StringComparison.OrdinalIgnoreCase) >= 0)
+			else if (((tblTrip)item).fldTripDate.IndexOf(TextBoxTrip_Search.Text, StringComparison.OrdinalIgnoreCase) >= 0)
 				return true;
 			else
 				return (((tblTrip)item).fldSum.ToString().IndexOf(TextBoxTrip_Search.Text, StringComparison.OrdinalIgnoreCase) >= 0);

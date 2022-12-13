@@ -29,7 +29,7 @@ public partial class FairShareDbContext : DbContext
 
     public virtual DbSet<tblUser> tblUsers { get; set; }
 
-    public virtual DbSet<tblUserExpense> tblUserExpenses { get; set; }
+    public virtual DbSet<tblUserExpense> tblUserExpenses { get; set; } 
 
     public virtual DbSet<tblUserToGroup> tblUserToGroups { get; set; }
 
@@ -63,11 +63,11 @@ public partial class FairShareDbContext : DbContext
             entity.Property(e => e.fldGroupId).HasColumnName("fldGroupID");
             entity.Property(e => e.fldTripId).HasColumnName("fldTripID");
 
-            entity.HasOne(d => d.fldGroup).WithMany(p => p.tblGroupToMoneys)
+            entity.HasOne(d => d.fldGroup).WithMany(p => p.tblGroupToTrip)
                 .HasForeignKey(d => d.fldGroupId)
                 .HasConstraintName("FK__tblGroupT__fldGr__30F848ED");
 
-            entity.HasOne(d => d.fldTrip).WithMany(p => p.tblGroupToMoneys)
+            entity.HasOne(d => d.fldTrip).WithMany(p => p.tblGroupToTrip)
                 .HasForeignKey(d => d.fldTripId)
                 .HasConstraintName("FK__tblGroupT__fldTr__31EC6D26");
         });
@@ -107,19 +107,19 @@ public partial class FairShareDbContext : DbContext
 
         modelBuilder.Entity<tblTripToUserExpense>(entity =>
         {
-            entity.HasKey(e => e.fldUserToExpense).HasName("PK__tblTripT__E9A07F6E6CCF54D8");
+            entity.HasKey(e => e.fldTripToUserExpenseId).HasName("PK__tblTripT__E9A07F6E6CCF54D8");
 
-            entity.ToTable("tblTripToUserExpenses");
+            entity.ToTable("tblTripToUserExpense");
 
-            entity.Property(e => e.fldUserToExpense).HasColumnName("fldUserToExpense");
-            entity.Property(e => e.fldExpensesId).HasColumnName("fldExpensesID");
+            entity.Property(e => e.fldTripToUserExpenseId).HasColumnName("fldTripToUserExpenseID ");
+            entity.Property(e => e.fldExpenseId).HasColumnName("fldExpenseID");
             entity.Property(e => e.fldTripId).HasColumnName("fldTripID");
 
-            entity.HasOne(d => d.fldExpenses).WithMany(p => p.tblTripToUserExpenses)
-                .HasForeignKey(d => d.fldExpensesId)
+            entity.HasOne(d => d.fldExpense).WithMany(p => p.tblTripToUserExpense)
+                .HasForeignKey(d => d.fldExpenseId)
                 .HasConstraintName("FK__tblTripTo__fldEx__38996AB5");
 
-            entity.HasOne(d => d.fldTrip).WithMany(p => p.tblTripToUserExpenses)
+            entity.HasOne(d => d.fldTrip).WithMany(p => p.tblTripToUserExpense)
                 .HasForeignKey(d => d.fldTripId)
                 .HasConstraintName("FK__tblTripTo__fldTr__37A5467C");
         });
@@ -149,11 +149,11 @@ public partial class FairShareDbContext : DbContext
 
         modelBuilder.Entity<tblUserExpense>(entity =>
         {
-            entity.HasKey(e => e.fldExpensesId).HasName("PK__tblUserE__8B84BEB85F4F3DA2");
+            entity.HasKey(e => e.fldExpenseId).HasName("PK__tblUserE__8B84BEB85F4F3DA2");
 
-            entity.ToTable("tblUserExpenses");
+            entity.ToTable("tblUserExpense");
 
-            entity.Property(e => e.fldExpensesId).HasColumnName("fldExpensesID");
+            entity.Property(e => e.fldExpenseId).HasColumnName("fldExpenseID");
             entity.Property(e => e.fldDate)
                 .HasColumnType("date")
                 .HasColumnName("fldDate");
@@ -165,10 +165,10 @@ public partial class FairShareDbContext : DbContext
             entity.Property(e => e.fldUserId).HasColumnName("fldUserID");
             entity.Property(e => e.fldTripId).HasColumnName("fldTripID");
 
-            entity.HasOne(d => d.fldUser).WithMany(p => p.tblUserExpenses)
+            entity.HasOne(d => d.fldUser).WithMany(p => p.tblUserExpense)
                 .HasForeignKey(d => d.fldUserId)
                 .HasConstraintName("FK__tblUserEx__fldUs__34C8D9D1");
-            entity.HasOne(d => d.fldTrip).WithMany(p => p.tblUserExpenses)
+            entity.HasOne(d => d.fldTrip).WithMany(p => p.tblUserExpense)
                 .HasForeignKey(d => d.fldTripId)
                 .HasConstraintName("FK__tblUserEx__fldTr__32E0915F");
         });
@@ -183,11 +183,11 @@ public partial class FairShareDbContext : DbContext
             entity.Property(e => e.fldGroupId).HasColumnName("fldGroupID");
             entity.Property(e => e.fldUserId).HasColumnName("fldUserID");
 
-            entity.HasOne(d => d.fldGroup).WithMany(p => p.tblUserToGroups)
+            entity.HasOne(d => d.fldGroup).WithMany(p => p.tblUserToGroup)
                 .HasForeignKey(d => d.fldGroupId)
                 .HasConstraintName("FK__tblUserTo__fldGr__2E1BDC42");
 
-            entity.HasOne(d => d.fldUser).WithMany(p => p.tblUserToGroups)
+            entity.HasOne(d => d.fldUser).WithMany(p => p.tblUserToGroup)
                 .HasForeignKey(d => d.fldUserId)
                 .HasConstraintName("FK__tblUserTo__fldUs__2D27B809");
         });

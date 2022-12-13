@@ -20,12 +20,12 @@ public partial class tblTrip
 	public string? fldTripName { get; set; }
 
 	[DataMember]
-	public DateTime? fldTripDate { get; set; }
+	public string? fldTripDate { get; set; }
 
-	public virtual ICollection<tblGroupToTrip> tblGroupToMoneys { get; } = new List<tblGroupToTrip>();
+	public virtual ICollection<tblGroupToTrip> tblGroupToTrip { get; } = new List<tblGroupToTrip>();
 
 	public virtual ICollection<tblReceipt> tblReceipts { get; } = new List<tblReceipt>();
 
-	public virtual ICollection<tblTripToUserExpense> tblTripToUserExpenses { get; } = new List<tblTripToUserExpense>();
-	public virtual ICollection<tblUserExpense> tblUserExpenses { get; } = new List<tblUserExpense>();
+	public virtual ICollection<tblTripToUserExpense> tblTripToUserExpense { get; } = new List<tblTripToUserExpense>();
+	public virtual ICollection<tblUserExpense> tblUserExpense { get; } = new List<tblUserExpense>();
 }

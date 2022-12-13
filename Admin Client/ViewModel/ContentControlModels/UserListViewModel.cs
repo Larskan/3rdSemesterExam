@@ -29,7 +29,6 @@ namespace Admin_Client.ViewModel.ContentControlModels
 			set { users = value; }
 		}
 
-
 		#endregion
 
 		#region Constructor
@@ -59,7 +58,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
 		public void Create()
 		{
 			MainWindowModelSingleton.Instance.StartPopupConfirm(new tblUser() { fldPassword = "x" }, PopupMethod.Create);
-			Thread.Sleep(500);
+			Thread.Sleep(250);
 			Update();
 		}
 
@@ -72,6 +71,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
 		{
 			MainWindowModelSingleton.Instance.StartPopupConfirm(user, PopupMethod.Delete);
 			Thread.Sleep(500);
+			Users.Clear();
 			Update();
 		}
 
@@ -82,8 +82,6 @@ namespace Admin_Client.ViewModel.ContentControlModels
 		private void UpdateUsersListThread(object o)
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log("ThreadID: " + Thread.CurrentThread.ManagedThreadId + " --> Starting"));
-			App.Current.Dispatcher.BeginInvoke(new Action(() => { Users.Clear(); }));
-			Thread.Sleep(500);
 
 			object[] array = o as object[];
 			CancellationToken token = (CancellationToken)array[0];

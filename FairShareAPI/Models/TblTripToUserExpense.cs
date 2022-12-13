@@ -11,15 +11,15 @@ namespace FairShareAPI.Models;
 public partial class tblTripToUserExpense
 {
 	[DataMember]
-	public int fldUserToExpense { get; set; }
+	public int fldTripToUserExpenseId { get; set; }
 
 	[DataMember]
 	public int? fldTripId { get; set; }
 
 	[DataMember]
-	public int? fldExpensesId { get; set; }
+	public int? fldExpenseId { get; set; }
 
-	public virtual tblUserExpense? fldExpenses { get; set; }
+	public virtual tblUserExpense? fldExpense { get; set; }
 
 	public virtual tblTrip? fldTrip { get; set; }
 }

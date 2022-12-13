@@ -28,20 +28,13 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Logo</a>
+          <a class="navbar-brand" href="#">Menu</a>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Projects</a></li>
-            <li><a href="#">Contact</a></li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li>
-              <a href="#"
-                ><span class="glyphicon glyphicon-log-in"></span> Login</a
-              >
+            <li class="active"><a href="/homepage/homePage.html">Home</a></li>
+            <li class="">
+              <a href="#">User Profile</a>
             </li>
           </ul>
         </div>
@@ -50,11 +43,7 @@
 
     <div class="container-fluid text-center">
       <div class="row content">
-        <div class="col-sm-2 sidenav">
-          <p><a href="#">Link</a></p>
-          <p><a href="#">Link</a></p>
-          <p><a href="#">Link</a></p>
-        </div>
+        <div class="col-sm-2 sidenav"></div>
         <div class="col-sm-8 text-left">
           <div id="Center" class="container-fluid">
             <!--This is here for copy and paste -->
@@ -70,20 +59,21 @@
 
             <!--#region Group Actions  -->
             <div id="Container" class="container-fluid">
-              <button
-                id="Actions"
-                class="btn"
-                href="#"
-              >
-                <span class="glyphicon glyphicon-plus"></span> Create group
+              <button id="Actions" class="btn">
+                <span class="glyphicon glyphicon-plus"></span>
+                <a
+                  style="text-decoration: none; color: initial"
+                  href="/groupcreate/groupcreate.html"
+                  >Create group</a
+                >
               </button>
 
               <button
                 id="Actions"
                 class="btn"
                 data-toggle="collapse"
-                data-target="#search"              
-                >
+                data-target="#search"
+              >
                 <span class="glyphicon glyphicon-search"></span> Join group
               </button>
 
@@ -110,54 +100,60 @@
                   </div>
                 </div>
               </div>
-            <!--#endregion -->
+              <!--#endregion -->
 
-            <!--#region Recent groups  -->
+              <!--#region Recent groups  -->
 
-            <div
-              id="ContainerRecentGroups"
-              class="container-fluid"
-              onload="LoadRecentGroups()"
-            >
-              <div id="Heading" class="panel-heading">
-                <h4>
-                  Recent groups
-                  <small id="small">Your most recently accessed groups</small>
-                </h4>
+              <div
+                id="ContainerRecentGroups"
+                class="container-fluid"
+                onload="LoadRecentGroups()"
+              >
+                <div id="Heading" class="panel-heading">
+                  <h4>
+                    Recent groups
+                    <small id="small">Your most recently accessed groups</small>
+                  </h4>
+                </div>
               </div>
+              <!--#endregion -->
+
+              <!--#region All Groups  -->
+
+              <div id="ContainerAllGroups" class="container-fluid">
+                <div id="Heading" class="panel-heading">
+                  <h4>Groups <small id="small">All of your groups</small></h4>
+                </div>
+                <div id="Footer" class="panel-footer">
+                  <input
+                    type="text"
+                    id="GroupSearch"
+                    placeholder="Search your groups . . ."
+                  />
+                </div>
+              </div>
+
+              <!--#endregion -->
             </div>
-            <!--#endregion -->
-
-            <!--#region All Groups  -->
-
-            <div id="ContainerAllGroups" class="container-fluid">
-              <div id="Heading" class="panel-heading">
-                <h4>Groups <small id="small">All of your groups</small></h4>
-              </div>
-              <div id="Footer" class="panel-footer">
-                <input
-                  type="text"
-                  id="GroupSearch"
-                  placeholder="Search your groups . . ."
-                />
-              </div>
-            </div>
-
-            <!--#endregion -->
           </div>
-        </div>
-        <div class="col-sm-2 sidenav">
+
+          <div class="col-sm-2 sidenav">
+            <!--
           <div class="well">
             <img
               src="https://i.chzbgr.com/full/9192620800/h3099711E/water-meme-organism-yall-better-be-drinking-water"
               alt="drink water-meme-organism-yall-better-be-drinking-water"
             />
+            -->
           </div>
+          <!--
           <div class="well"></div>
+          -->
         </div>
       </div>
     </div>
 
+    <!--
     <footer class="container-fluid text-center">
       <p>Footer Text</p>
       <img
@@ -165,15 +161,15 @@
         alt="not funny i cried"
       />
     </footer>
+    -->
   </body>
-
-  
 
   <script src="groupmenu.js"></script>
 
   <script>
     $(document).ready(LoadRecentGroups());
     $(document).ready(LoadAllGroups());
+    //$(document).ready(TestingLoad());
   </script>
 
   <script>

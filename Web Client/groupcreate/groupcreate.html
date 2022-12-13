@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/groupcreate/groupcreate.css" />
+    <script type="text/javascript" src="/groupcreate/groupcreate.js"></script>
+    <title>Create a group</title>
+  </head>
+  <body>
+    <div class="container">
+        <form id="myForm">
+            <div id="Login">
+                <label for="groupName">Group name</label><br />
+                <input
+                  type="text"
+                  placeholder="Enter a name for your group"
+                  name="group"
+                  id="group"
+                  required
+                />
+                <label for="isTemp">Is your group temporary?</label>
+                <div class="switch-field">
+                    <input type="radio" id="radio-one" name="switch-one" value="yes" checked/>
+                    <label for="radio-one">Yes</label>
+                    <input type="radio" id="radio-two" name="switch-one" value="no" />
+                    <label for="radio-two">No</label>
+                </div>
+                <button id="CreateGrp" type="button" >Create Group</button>
+              </div>
+
+<script>
+setInterval(changeDeg, 100);
+var counter = 0;
+function changeDeg() {
+var elem = document.getElementById("CreateGrp");
+counter = counter % 360;
+counter++;
+deg = counter + `deg`;
+elem.style.background = `linear-gradient(${deg}, #4a7e79, #4a7e5f, #4a697e)`;
+}
+</script>
+
+<script>
+    
+    const createbutton = document.getElementById("CreateGrp")
+    
+    
+
+    createbutton.addEventListener("click", function(e) {
+        const groupName = document.getElementById("group").value;
+        e.preventDefault();
+        var istempButton = document.querySelector('input[name = "switch-one"]:checked');
+        var isTemp = false;
+        if (istempButton != null) {
+            isTemp = true;            
+        } else {
+        isTemp = false
+        }
+        
+        postGroupName(groupName, isTemp)
+        
+    })
+
+    
+
+async function postGroupName(groupName, isTemp) {
+    var urlGroup = "https://localhost:7002/tblGroups"
+  // Use the fetch API to post the group name
+  await fetch(urlGroup, {
+    method: "POST",
+    body: JSON.stringify({
+      fldGroupName: groupName,
+      fldIsTemporary: isTemp,
+    }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }).then((data) => data.json())
+  .then((data) => console.table(data)).catch((err) => alert(err));
+  
+}
+
+</script>
+    
+  </body>
+</html>

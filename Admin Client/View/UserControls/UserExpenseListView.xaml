@@ -23,13 +23,13 @@
         </Grid.RowDefinitions>
 
         <Border Grid.Column="1" Grid.Row="1" Margin="5" Background="White" Resources="{StaticResource roundborder10}">
-            <Label Content="{Binding Username}" FontSize="25" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" ></Label>
+            <Label Content="{Binding Name}" FontSize="25" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" ></Label>
         </Border>
 
-        <ListBox x:Name="ListBox_Receipts" Grid.Column="1" Grid.Row="2" ItemsSource="{Binding Trips}" Margin="5" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource userExpenseDataTemplate}" ItemContainerStyle="{StaticResource RoundedListItem}" Style="{StaticResource roundlistboxwithempty}" Resources="{StaticResource roundborder10}"  >
+        <ListBox x:Name="ListBox_UserExpenses" Grid.Column="1" Grid.Row="2" ItemsSource="{Binding UserExpenses}" Margin="5" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource userExpenseDataTemplate}" ItemContainerStyle="{StaticResource RoundedListItem}" Style="{StaticResource roundlistboxwithempty}" Resources="{StaticResource roundborder10}"  >
             <ListBox.ContextMenu>
                 <ContextMenu Style="{StaticResource roundcontextmenu}" >
-                    <MenuItem Header="Delete Group" Click="Delete_Click" Resources="{StaticResource roundborder10}" />
+                    <MenuItem Header="Delete" Click="Delete_Click" Resources="{StaticResource roundborder10}" />
                 </ContextMenu>
             </ListBox.ContextMenu>
         </ListBox>
@@ -44,7 +44,7 @@
                 <ColumnDefinition Width="100"/>
             </Grid.ColumnDefinitions>
 
-            <Label Grid.Column="2" Content="Trip Amount" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ></Label>
+            <Label Grid.Column="2" Content="UserExpense Amount" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ></Label>
 
             <Button Grid.Column="4" Content="Delete" Margin="5" Resources="{StaticResource roundcornerbutton10}" Click="Delete_Click" />
 
