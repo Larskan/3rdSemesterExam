@@ -287,8 +287,8 @@ namespace Admin_Client.Model.FileIO.PDF
             string dataDir = @"C:\Users\Lars\Desktop\Exam\Receipt_" + datetime.ToLongDateString() + ".pdf";
             var users = new List<string>
             {
-                new()
-            }
+                //new()
+            };
             var persons = new List<Person>
             {
                 new Person(1,"Bob","Bobsen",500,1600),

@@ -25,7 +25,7 @@ namespace Admin_Client.Model.FileIO.PDF
             ID = id;
             FirstName = userSelect.fldFirstName;
             LastName = userSelect.fldLastName;
-            Expenses = 
+            
             
 
         }
