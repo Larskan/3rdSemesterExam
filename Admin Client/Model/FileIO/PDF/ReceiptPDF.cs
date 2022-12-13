@@ -10,6 +10,7 @@ using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 using Admin_Client.Model.DB.EF_Test;
 using Admin_Client.Model.DB;
 using Admin_Client.Model.Domain;
+using Org.BouncyCastle.Utilities.IO.Pem;
 
 namespace Admin_Client.Model.FileIO.PDF
 {
@@ -111,44 +112,46 @@ namespace Admin_Client.Model.FileIO.PDF
         public List<UserPersonPDF> GetData(tblTrip trip)
         {
 			double total = 0;
-			List<tblReceipt> receipts;
+
 			List<tblUserExpense> userExpenses = HttpClientHandler.GetUserExpensesFromTrip(trip);
+
 			List<UserPersonPDF> userPeople = new List<UserPersonPDF>();
 
-			bool exists = false;
+			bool exists;
 			foreach (var userExpense in userExpenses)
 			{
-				tblUser user = HttpClientHandler.GetUser((int)userExpense.fldUserID);
-				receipts = HttpClientHandler.GetReceiptsFromUser(user);
-				foreach (var receipt in receipts)
-				{
-					total += receipt.fldAmountPaid;
+				exists = false;
 
-					//check if user already has a record
-					foreach (var userPerson in userPeople)
-					{
-						if (userPerson.ID == receipt.fldUserID)
-						{
-							userPerson.Expenses += receipt.fldAmountPaid;
-						}
-					}
-					if (!exists)
-					{
-						userPeople.Add(new UserPersonPDF()
-						{
-							ID = user.fldUserID,
-							FirstName = user.fldFirstName,
-							LastName = user.fldLastName,
-							TripName = trip.fldTripName,
-							Expenses = (double)userExpense.fldExpense
-						});
-					}
-				}
-				//total for all
+				tblUser user = HttpClientHandler.GetUser(userExpense.fldUserID);
+
+				total += userExpense.fldExpense;
+
+				// Check if user already has a record
 				foreach (var userPerson in userPeople)
 				{
-					userPerson.Total = total;
+					if (userPerson.ID == userExpense.fldUserID)
+					{
+						userPerson.Expenses += userExpense.fldExpense;
+						exists = true;
+                    }
+                }
+				if (!exists)
+				{
+					userPeople.Add(new UserPersonPDF()
+					{
+						ID = user.fldUserID,
+						FirstName = user.fldFirstName,
+						LastName = user.fldLastName,
+						TripName = trip.fldTripName,
+						Expenses = userExpense.fldExpense
+					});
 				}
+			}
+
+			// Set total for all
+			foreach (var userPerson in userPeople)
+			{
+				userPerson.Total = total;
 			}
 
 			return userPeople;
