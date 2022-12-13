@@ -4,47 +4,133 @@ var UserID = '1'
 
 async function setup()
 {  
-  LoadSum()
-  LoadName()
-  LoadGraphs()
-}
-
-async function LoadSum()
-{
-  SumSetter(UserID)
-}
-
-async function LoadName()
-{
   NameSetter(UserID)
+  LoadGraphs()
+  GetExpenses()
 }
 
-async function LoadGraphs(){}
-
-async function SumSetter(id)
+function LoadGraphs()
 {
-  let url = URLRoot+'tblTrips/'+id
-  await fetch(url)
-  .then((response)=>response.json)
-  .then((data) => NodeHandler('SumHeader',data['fldSum']))
+  
+  var xValues = ["Italy", "France", "Spain", "USA"];
+  var yValues = [55, 49, 44, 24];
+  var barColors = [
+    "#b91d47",
+    "#00aba9",
+    "#2b5797",
+    "#e8c3b9",
+  ];
+
+  new Chart("BarChart", {
+    type: "bar",
+    data: {
+      labels: xValues,
+      datasets: [{
+        backgroundColor: barColors,
+        data: yValues
+      }]
+    },
+    options: {
+      title: {
+        display: true,
+        text: "World Wide Wine Production 2018"
+      }
+    }
+  });
+  
+  new Chart("PieChart", {
+    type: "pie",
+    data: {
+      labels: xValues,
+      datasets: [{
+        backgroundColor: barColors,
+        data: yValues
+      }]
+    },
+    options: {
+      title: {
+        display: true,
+        text: "World Wide Wine Production 2018"
+      }
+    }
+  });
+  
 }
 
 async function NameSetter(id)
 {
   let url = URLRoot+'tblTrips/'+id
   await fetch(url)
-  .then((response)=>response.json)
-  .then((data)=>console.log(data))
-  //.then((data)=>NodeHandler('NameHeader',data['fldTripName']))
+  .then((response)=>response.json())
+  .then((data)=>NodeHandler('NameHeader',data['fldTripName']))
+}
+
+async function GetExpenses()
+{
+  let obj;
+
+  let url = URLRoot+'tblTripToUserExpenses'
+  
+  //fetch
+  await fetch(url)
+  .then((response)=>response.json())
+  .then((data) => obj=data)
+  
+  //loop to get expenses and trip links
+  let target = 4; // change with the target ID from Cookie
+
+  let i = 0; //counters
+  let j = 0;
+
+  var result = [];
+
+  do{
+    if(obj[i].fldTripId==target)
+    {
+      result[j]= obj[i]
+      j++
+    }
+    i++
+  } while(obj[i]!=null)
+
+  HandleExpenses(result)
+  //i feel like this one could be put outside of this function 
+  
+  
+}
+
+async function HandleExpenses(ExpenseArray)
+{
+  let counter = 0;
+  url = URLRoot+'tblUserExpenses/'
+  //loop to get expenses from link
+  for(i = 0; i<ExpenseArray.length;i++)
+  {
+    await fetch(url+ExpenseArray[i].fldExpenseId)
+    .then((response)=>response.json())
+    .then((data)=>
+    { 
+    counter+=data['fldExpense'];
+    CreateExpenseElement(data['fldExpense'])
+    })
+  }
+
+  SetSum(counter)
+
+}
+
+async function SetSum(sum)
+{
+  document.getElementById('SumHeader').innerHTML = sum + ' Currency'
 }
 
 
-/*
-have ID -> Find Group based on ID -> Find Trip based on ID -> Get Expenses based on ID -> use Expenses to calc sum and stuff
-*/
-async function GetExpenses()
+async function CreateExpenseElement(number)
 {
-  let url = URLRoot+'tblTrips'
+  let node = document.getElementById('expenses')
+  let expense = document.createElement('p')
+  expense.innerHTML = number + ' Currency; Date; User;'
+  node.appendChild(expense)
 }
 
 
@@ -52,5 +138,12 @@ async function GetExpenses()
 async function NodeHandler(NodeName,TargetText)
 {
   document.getElementById(NodeName).innerHTML = TargetText
+}
+
+async function MakeGraph()
+{
+  //this is where it would await a fetch for data
+
+
 }
 
