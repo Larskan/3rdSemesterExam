@@ -111,7 +111,7 @@ async function HandleExpenses(ExpenseArray)
     .then((data)=>
     { 
     counter+=data['fldExpense'];
-    CreateExpenseElement(data['fldExpense'])
+    CreateExpenseElement(data['fldExpense'],data['fldUserID'],data['fldDate'],data['fldNote'])
     })
   }
 
@@ -125,11 +125,11 @@ async function SetSum(sum)
 }
 
 
-async function CreateExpenseElement(number)
+async function CreateExpenseElement(number,UserID,Date,Note)
 {
   let node = document.getElementById('expenses')
   let expense = document.createElement('p')
-  expense.innerHTML = number + ' Currency; Date; User;'
+  expense.innerHTML = number + ' Currency;' + UserID+' '+Date+' '+Note
   node.appendChild(expense)
 }
 
