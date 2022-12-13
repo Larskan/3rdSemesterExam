@@ -19,7 +19,7 @@ public partial class tblGroup
 	[DataMember]
 	public bool? fldIsTemporary { get; set; }
 
-    public virtual ICollection<tblGroupToTrip> tblGroupToMoneys { get; } = new List<tblGroupToTrip>();
+    public virtual ICollection<tblGroupToTrip> tblGroupToTrip { get; } = new List<tblGroupToTrip>();
 
-	public virtual ICollection<tblUserToGroup> tblUserToGroups { get; } = new List<tblUserToGroup>();
+	public virtual ICollection<tblUserToGroup> tblUserToGroup { get; } = new List<tblUserToGroup>();
 }

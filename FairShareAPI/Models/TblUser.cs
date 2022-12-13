@@ -33,7 +33,7 @@ public partial class tblUser
 
 	public virtual ICollection<tblReceipt> tblReceipts { get; } = new List<tblReceipt>();
 
-	public virtual ICollection<tblUserExpense> tblUserExpenses { get; } = new List<tblUserExpense>();
+	public virtual ICollection<tblUserExpense> tblUserExpense { get; } = new List<tblUserExpense>();
 
-	public virtual ICollection<tblUserToGroup> tblUserToGroups { get; } = new List<tblUserToGroup>();
+	public virtual ICollection<tblUserToGroup> tblUserToGroup { get; } = new List<tblUserToGroup>();
 }
