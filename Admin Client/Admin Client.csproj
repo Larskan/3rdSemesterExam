@@ -364,6 +364,7 @@
     <Compile Include="Model\FileIO\PDF\LogoImage.cs" />
     <Compile Include="Model\FileIO\PDF\Person.cs" />
     <Compile Include="Model\FileIO\PDF\ReceiptPDF.cs" />
+    <Compile Include="Model\FileIO\PDF\UserPerson.cs" />
     <Compile Include="Model\FileIO\TemplatePDF\TemplateLogoImage.cs" />
     <Compile Include="Model\FileIO\TemplatePDF\TemplateReceiptPDF.cs" />
     <Compile Include="Model\FileIO\TemplatePDF\TemplateTotalRow.cs" />

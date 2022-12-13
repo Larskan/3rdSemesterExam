@@ -42,12 +42,17 @@ namespace Admin_Client.View.UserControls
 
 		private void Login_Click(object sender, RoutedEventArgs e)
 		{
-			//ReceiptPDF rec = new ReceiptPDF();
-			//rec.SecondPlaceHolder();
-			//rec.PlaceholderData();
-			//TemplateReceiptPDF temp = new TemplateReceiptPDF();
-			//temp.PlaceholderData();
-			
+			ReceiptPDF rec = new ReceiptPDF();
+			rec.SecondPlaceHolder();
+            var userSelect = HttpClientHandler.GetUser(2);
+            var receiptSelect = HttpClientHandler.GetReceiptsFromUser(userSelect);
+			Debug.WriteLine("RECEIPTS: "+receiptSelect);
+
+            //rec.PlaceholderData();
+            //TemplateReceiptPDF temp = new TemplateReceiptPDF();
+            //temp.PlaceholderData();
+
+            /*
 			
 			if (PasswordBox_Password.Password.Length > 0)
 			{
@@ -57,10 +62,11 @@ namespace Admin_Client.View.UserControls
 			{
 				viewModel.Login(TextBox_Username.Text, TextBox_Password.Text);
 			}
-			
-			
-			
-		}
+			*/
+
+
+
+        }
 
 		private void TextBox_Password_TextChanged(object sender, TextChangedEventArgs e)
 		{
