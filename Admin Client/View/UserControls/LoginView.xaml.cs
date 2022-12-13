@@ -24,6 +24,7 @@ using Admin_Client.Model.DB;
 using Admin_Client.Model.FileIO;
 using Admin_Client.Model.FileIO.PDF;
 using Admin_Client.Model.FileIO.TemplatePDF;
+using Admin_Client.Model.DB.EF_Test;
 
 namespace Admin_Client.View.UserControls
 {
@@ -43,14 +44,12 @@ namespace Admin_Client.View.UserControls
 		private void Login_Click(object sender, RoutedEventArgs e)
 		{
 			ReceiptPDF rec = new ReceiptPDF();
-			rec.SecondPlaceHolder();
-            var userSelect = HttpClientHandler.GetUser(2);
-            var receiptSelect = HttpClientHandler.GetReceiptsFromUser(userSelect);
-			Debug.WriteLine("RECEIPTS: "+receiptSelect);
-
-            //rec.PlaceholderData();
-            //TemplateReceiptPDF temp = new TemplateReceiptPDF();
-            //temp.PlaceholderData();
+			UserPersonPDF up = new UserPersonPDF();
+			tblTrip trip = new tblTrip();
+			var ins = new tblTrip() { fldTripID = 1 };
+            List<tblUserExpense> userExpenses = HttpClientHandler.GetUserExpensesFromTrip(trip);
+            var insert = trip;
+			rec.GrabData(ins);
 
             /*
 			
