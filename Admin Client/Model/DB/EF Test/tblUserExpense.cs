@@ -18,16 +18,16 @@ namespace Admin_Client.Model.DB.EF_Test
         [Key]
         public int fldExpenseID { get; set; }
 
-        public int? fldUserID { get; set; }
-        public int? fldTripID { get; set; }
+        public int fldUserID { get; set; }
+        public int fldTripID { get; set; }
 
-        public double? fldExpense { get; set; }
+        public double fldExpense { get; set; }
 
         [StringLength(100)]
         public string fldNote { get; set; }
 
         [Column(TypeName = "date")]
-        public DateTime? fldDate { get; set; }
+        public DateTime fldDate { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblTripToUserExpense> tblTripToUserExpense { get; set; }
