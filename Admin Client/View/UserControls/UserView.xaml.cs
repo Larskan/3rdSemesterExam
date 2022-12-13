@@ -41,7 +41,13 @@ namespace Admin_Client.View.UserControls
 
 		private void DeleteReceipt_Click(object sender, RoutedEventArgs e)
 		{
-            viewModel.DeleteReceipt();
+            viewModel.DeleteReceipt((tblReceipt)ListBox_Receipts.SelectedItem);
 		}
-	}
+        private void OnPageLoaded(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine("y reload?");
+            viewModel.UpdateGroups();
+            viewModel.UpdateReceipts();
+        }
+    }
 }
