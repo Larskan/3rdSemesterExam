@@ -160,16 +160,6 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 							catch { }
 							break;
 						}
-					case ParameterType.DateTime:
-						{
-							try
-							{
-								DateTime.Parse(((Parameter)item).ParameterValue.ToString());
-								isValid = true;
-							}
-							catch { }
-							break;
-						}
 				}
 
 				// EMAIL NOT-VALID
@@ -233,19 +223,9 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 									currentObject.GetType().GetProperty(objectProperty.Name).SetValue(currentObject, Boolean.Parse(((Parameter)parameterProperty).ParameterValue.ToString()));
 									break;
 								}
-							case ParameterType.DateTime:
-								{
-									currentObject.GetType().GetProperty(objectProperty.Name).SetValue(currentObject, DateTime.Parse(((Parameter)parameterProperty).ParameterValue.ToString()));
-									break;
-								}
 						}
 					}
 				}
-			}
-
-			foreach (var item in currentObject.GetType().GetProperties())
-			{
-				Debug.WriteLine(item.GetValue(currentObject));
 			}
 
 			// Send changed object to the database

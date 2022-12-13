@@ -5,6 +5,7 @@ using Admin_Client.Model.Domain;
 using Admin_Client.PropertyChanged;
 using Admin_Client.Singleton;
 using Admin_Client.View.Windows.Popups;
+using DocumentFormat.OpenXml.Presentation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -19,41 +20,45 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 {
     public class PopupAddUserWindowModel : NotifyPropertyChangedHandler
     {
-        private Window currentWindow;
+		#region Variables
 
-        #region Properties
-        private ObservableCollection<tblUser> users = new ObservableCollection<tblUser>();
+		private Window currentWindow;
+        private tblGroup currentGroup;
+        private List<tblUser> currentMembers;
+
+		#endregion
+
+		#region Properties
+
+		private ObservableCollection<tblUser> users = new ObservableCollection<tblUser>();
         public ObservableCollection<tblUser> Users
         {
             get { return users; }
             set { users = value; }
         }
-        public string Searchbar { get; set; }
-        List<tblUser> templist = HttpClientHandler.GetUsers();
-        List<tblUser> userList = HttpClientHandler.GetUsers();
+
         #endregion
 
         #region Constructor
-        public PopupAddUserWindowModel(Window currentWindow, object o)
+
+        public PopupAddUserWindowModel(Window currentWindow, tblGroup group, List<tblUser> members)
         {
             this.currentWindow = currentWindow;
+            this.currentGroup = group;
+            this.currentMembers = members;
         }
+
         #endregion
 
         #region Public Methods
-        public void Add(ListBox listBox)
+ 
+        public void Add(tblUser user)
         {
-
-        }
-        public void Search()
-        {
-            //created a temp list to use for searching and not ruining the original list it is based on
-            //also need to find a way to search by anything in the list, and not specify by say fldfirstname
-            templist = new List<tblUser>(userList.Where(
-                x => x.fldFirstName.IndexOf(Searchbar, StringComparison.InvariantCultureIgnoreCase) >= 0
-                ||      x.fldLastName.IndexOf(Searchbar, StringComparison.InvariantCultureIgnoreCase) >= 0
-                ||      x.fldEmail.IndexOf(Searchbar, StringComparison.InvariantCultureIgnoreCase) >= 0));
-        }
+			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Cancel Click"));
+            HttpClientHandler.Post(new tblUserToGroup() { fldUserID = user.fldUserID, fldGroupID = currentGroup.fldGroupID});
+			currentWindow.Close();
+			MainWindowModelSingleton.Instance.GetMainWindow().IsEnabled = true;
+		}
 
         public void Cancel()
         {
@@ -76,9 +81,11 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 
             ThreadPool.QueueUserWorkItem(UpdateUsersListThread, new object[] { tokenSource.Token });
         }
+
         #endregion
 
         #region Private Methods
+
         private void UpdateUsersListThread(object o)
         {
             object[] array = o as object[];
@@ -86,29 +93,43 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 
             while (!token.IsCancellationRequested)
             {
-                // CHANGE THE FAKEDATEBASE.GETUSERS() - TODO
-                
+				List<tblUser> users = HttpClientHandler.GetUsers();
 
-                bool found;
-                foreach (var userItem in templist)
+				bool isfound;
+                bool isMember;
+                foreach (var userItem in users)
                 {
-                    found = false;
-                    foreach (var UserItem in Users)
+                    // Check if they already are a member
+					isMember = false;
+					isfound = false;
+					foreach (var member in currentMembers)
                     {
-                        if (userItem.fldUserID == UserItem.fldUserID)
-                        {
-                            found = true;
-                            break;
-                        }
-                    }
-                    if (!found)
+						if (member.fldUserID == userItem.fldUserID)
+						{
+							isMember= true;
+							break;
+						} else
+						{ // Check if they already exist in the list
+							foreach (var UserItem in Users)
+							{
+								if (userItem.fldUserID == UserItem.fldUserID)
+								{
+									isfound = true;
+									break;
+								}
+							}
+						}
+					}
+                    
+                    if (!isfound && !isMember)
                     {
-                            App.Current.Dispatcher.BeginInvoke(new Action(() => { Users.Add(userItem); }));
+                        App.Current.Dispatcher.BeginInvoke(new Action(() => { Users.Add(userItem); }));
                     }
                 }
                 break;
             }
         }
+
         #endregion
     }
 

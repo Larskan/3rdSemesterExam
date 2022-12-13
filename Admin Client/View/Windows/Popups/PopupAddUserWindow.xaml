@@ -6,23 +6,34 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Admin_Client.View.Windows.Popups"
         mc:Ignorable="d"
-              Title="PopupAddUserWindow" Height="400" Width="400" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" AllowsTransparency="True" WindowStyle="None" BorderBrush="Black" BorderThickness="1" Resources="{StaticResource roundborder10}">
+        Title="PopupAddUser" Height="400" Width="400" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" AllowsTransparency="True" WindowStyle="None" BorderBrush="Black" BorderThickness="1" Resources="{StaticResource roundborder10}">
     <Grid>
 
         <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="10*"/>
             <RowDefinition Height="3*"/>
-            <RowDefinition Height="122*"/>
-            <RowDefinition Height="205*"/>
-            <RowDefinition Height="68*"/>
         </Grid.RowDefinitions>
 
+        <Viewbox Grid.Row="1">
+            <Label Content="Add User"  FontSize="30" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+        </Viewbox>
 
-        <TextBox x:Name="Searchbar" Text="{Binding Searchbar, UpdateSourceTrigger=PropertyChanged}" Width="218" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Grid.Row="1" Height="22" TextChanged="TextBox_TextChanged"/>
+        <Grid Grid.Row="2">
 
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="5*"/>
+            </Grid.RowDefinitions>
 
-        <ListBox x:Name="ListBox_Parameters" Grid.Row="2" ItemsSource="{Binding Users}" Margin="10,5,10,0" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource userViewTemplate}" ItemContainerStyle="{StaticResource NoTargetRoundedListItem}" Style="{StaticResource roundlistboxwithempty}" Resources="{StaticResource roundborder10}"/>
+            <TextBox x:Name="TextBox_Search" VerticalContentAlignment="Center" Grid.Row="0" Margin="10,5,10,5" Resources="{StaticResource roundborder10}" TextChanged="TextBox_Search_TextChanged" />
 
-        <Grid Grid.Row="3">
+            <ListBox x:Name="ListBox_Users" Grid.Row="1" ItemsSource="{Binding Users}" Margin="10,5,10,5"  VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource userDataTemplate}" ItemContainerStyle="{StaticResource RoundedListItem}" Style="{StaticResource roundlistboxwithempty}" Resources="{StaticResource roundborder10}" ></ListBox>
+            
+        </Grid>
+
+        <Grid Grid.Row="4">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -34,7 +45,7 @@
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="50"/>
+                <RowDefinition Height="35"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
@@ -43,7 +54,6 @@
             <Button Content="Cancel" Grid.Column="3" Grid.Row="1" Margin="5" Resources="{StaticResource roundcornerbutton10}" Click="Cancel_Click" />
 
         </Grid>
-        <Button Content="Update" Margin="272,19,36,0" Resources="{StaticResource roundcornerbutton10}" Click="Update_Click" Grid.Row="1" />
 
     </Grid>
 </Window>

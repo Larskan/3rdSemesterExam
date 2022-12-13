@@ -55,14 +55,11 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 		{
             LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Change Click"));
 
-			/*
-            // Authentication
-            if (Encryption.Encrypt_Password(password, Encryption.Salt_Password(password)).Equals(HttpClientHandler.GetUser(user.fldUserID).fldPassword))
+			// Authentication, if they don't match then return
+			if (!Encryption.Encrypt_Password(password, Encryption.Salt_Password(password)).Equals(HttpClientHandler.GetUser(user.fldUserID).fldPassword))
             {
-              Console.WriteLine("break");
                return;
             }
-			*/
 
             // ENCRYPT AND SEND TO DATABASE
             string EncryptedPW = Encryption.Encrypt_Password(newPassword, Encryption.Salt_Password(newPassword));

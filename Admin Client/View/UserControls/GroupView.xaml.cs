@@ -50,7 +50,7 @@ namespace Admin_Client.View.UserControls
 
 		private void MemberAdd_Click(object sender, RoutedEventArgs e)
 		{
-			// TODO
+			viewModel.MemberAdd();
 		}
 
 		private void MemberRemove_Click(object sender, RoutedEventArgs e)
