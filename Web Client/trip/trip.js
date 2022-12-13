@@ -1,13 +1,56 @@
-function LoadCookie() {
-    const node = document.getElementById("expenses");
+var URLRoot = 'https://localhost:7002/';
+var UserID = '1'
 
-    let temp = document.createElement("p");
-    temp.innerHTML = document.cookie;
-    node.appendChild(temp);
+
+async function setup()
+{  
+  LoadSum()
+  LoadName()
+  LoadGraphs()
 }
-  
-function logCookie()
+
+async function LoadSum()
 {
-  //document.cookie = '123';
-  console.log(document.cookie)
+  SumSetter(UserID)
 }
+
+async function LoadName()
+{
+  NameSetter(UserID)
+}
+
+async function LoadGraphs(){}
+
+async function SumSetter(id)
+{
+  let url = URLRoot+'tblTrips/'+id
+  await fetch(url)
+  .then((response)=>response.json)
+  .then((data) => NodeHandler('SumHeader',data['fldSum']))
+}
+
+async function NameSetter(id)
+{
+  let url = URLRoot+'tblTrips/'+id
+  await fetch(url)
+  .then((response)=>response.json)
+  .then((data)=>console.log(data))
+  //.then((data)=>NodeHandler('NameHeader',data['fldTripName']))
+}
+
+
+/*
+have ID -> Find Group based on ID -> Find Trip based on ID -> Get Expenses based on ID -> use Expenses to calc sum and stuff
+*/
+async function GetExpenses()
+{
+  let url = URLRoot+'tblTrips'
+}
+
+
+
+async function NodeHandler(NodeName,TargetText)
+{
+  document.getElementById(NodeName).innerHTML = TargetText
+}
+
