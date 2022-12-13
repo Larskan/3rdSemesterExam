@@ -23,6 +23,7 @@ using System.Windows.Shapes;
 using Admin_Client.Model.DB;
 using Admin_Client.Model.FileIO;
 using Admin_Client.Model.FileIO.PDF;
+using Admin_Client.Model.FileIO.TemplatePDF;
 
 namespace Admin_Client.View.UserControls
 {
@@ -41,8 +42,11 @@ namespace Admin_Client.View.UserControls
 
 		private void Login_Click(object sender, RoutedEventArgs e)
 		{
-            //ReceiptPDF rec = new ReceiptPDF();
+			//ReceiptPDF rec = new ReceiptPDF();
+			//rec.SecondPlaceHolder();
 			//rec.PlaceholderData();
+			//TemplateReceiptPDF temp = new TemplateReceiptPDF();
+			//temp.PlaceholderData();
 			
 			
 			if (PasswordBox_Password.Password.Length > 0)
@@ -53,6 +57,7 @@ namespace Admin_Client.View.UserControls
 			{
 				viewModel.Login(TextBox_Username.Text, TextBox_Password.Text);
 			}
+			
 			
 			
 		}

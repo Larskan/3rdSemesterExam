@@ -19,7 +19,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 {
 	public class PopupConfirmWindowModel : NotifyPropertyChangedHandler
 	{
-
+        UserviewSingleton Usersingleton = UserviewSingleton.getInstance();
         #region Variables
 
         private object target;
@@ -127,6 +127,8 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 					{
 						tblUser user = (tblUser)target;
 
+						Usersingleton.SetUserID(user.fldUserID);
+
                         MainWindowModelSingleton.Instance.SetMainContent(new UserView(user));
                         
                         LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + user.fldUserID + " - " + user.fldFirstName + " " + user.fldLastName));
@@ -228,7 +230,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 
 						HttpClientHandler.Delete(SqlObjectType.tblReceipt, receipt.fldReceiptID);
 
-						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + receipt.fldReceiptID + " - " + receipt.fldUserID + " " + receipt.tblUser.fldFirstName + " " + receipt.tblUser.fldLastName));
+						//LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + receipt.fldReceiptID + " - " + receipt.fldUserID + " " + receipt.tblUser.fldFirstName + " " + receipt.tblUser.fldLastName));
 						break;
 					}
 				case "tblTrip":

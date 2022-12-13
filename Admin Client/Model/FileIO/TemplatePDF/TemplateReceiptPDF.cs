@@ -6,11 +6,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 
-namespace Admin_Client.Model.FileIO.PDF
+namespace Admin_Client.Model.FileIO.TemplatePDF
 {
-    public class ReceiptPDF : IDisposable
+    public class TemplateReceiptPDF : IDisposable
     {
         #region private members
         private static readonly Aspose.Pdf.License License = new Aspose.Pdf.License();
@@ -37,16 +36,16 @@ namespace Admin_Client.Model.FileIO.PDF
 
         #region Receipt details
         public string Number;
-        public LogoImage Logo;
+        public TemplateLogoImage Logo;
         public List<string> ReceiptFrom;
         public List<string> ReceiptTo;
-        public List<Person> People;
-        public List<TotalRow> Totals;
+        public List<TemplateUser> People;
+        public List<TemplateTotalRow> Totals;
         public List<string> Details;
         public string Footer;
         #endregion
 
-        public ReceiptPDF()
+        public TemplateReceiptPDF()
         {
             _pdfDocument = new Document();
             _pdfDocument.PageInfo.Margin.Left = 36;
@@ -56,15 +55,14 @@ namespace Admin_Client.Model.FileIO.PDF
             _backColor = Aspose.Pdf.Color.Transparent;
             _logoPlaceHolder = new Rectangle(20, 700, 120, 800);
             _timeNewRomanFont = FontRepository.FindFont("Times New Roman");
-            _builder = new TextBuilder(_pdfPage);     
+            _builder = new TextBuilder(_pdfPage);
         }
 
         public void Save(Stream stream)
         {
             HeaderSection(); //Logo and Title and Date
             AddressSection(); //TO and FROM
-            //GridSection(); //The table and Data
-            ReplaceGridSection();
+            GridSection(); //The table and Data
             TermsSection(); //Whatever message we want
             FooterSection(); //Link to website, for now I just put a google.com
             _pdfDocument.Save(stream);
@@ -82,7 +80,7 @@ namespace Admin_Client.Model.FileIO.PDF
             _pdfPage.Paragraphs.Add(lines[0]);
 
             lines[1] = new TextFragment($"DATE: {DateTime.Today:dd/MM/yyyy}");
-            lines[2] = new TextFragment($"COMPLAIN DATE: {DateTime.Today.AddDays(7):dd/MM/yyyy}");
+            lines[2] = new TextFragment($"COMPLAIN DATE: {DateTime.Today.AddDays(14):dd/MM/yyyy}");
             for (var i = 1; i < lines.Length; i++)
             {
                 //text properties
@@ -101,18 +99,16 @@ namespace Admin_Client.Model.FileIO.PDF
             var imageStream = new FileStream(Logo.FileName, FileMode.Open);
             //add image to images collection of page resources
             _pdfPage.Resources.Images.Add(imageStream);
-
-            #region needs to be fixed to make logo work
             //Use GSave operation: saves current graphics state
             //_pdfPage.Contents.Add(new Operator.GSave());
             //create rectangle and matrix objects
-            //var matrix = new Matrix(new[] { _logoPlaceHolder.URX - _logoPlaceHolder.LLX, 0, 0, _logoPlaceHolder.URY - _logoPlaceHolder.LLY, _logoPlaceHolder.LLX, _logoPlaceHolder.LLY });
+            var matrix = new Matrix(new[] { _logoPlaceHolder.URX - _logoPlaceHolder.LLX, 0, 0, _logoPlaceHolder.URY - _logoPlaceHolder.LLY, _logoPlaceHolder.LLX, _logoPlaceHolder.LLY });
             //use concatenatematrix operator: defines how image should be placed
             // _pdfPage.Contents.Add(new Operator.ConcatenateMatrix(matrix));
-            // var ximage = _pdfPage.Resources.Images[_pdfPage.Resources.Images.Count];
+            var ximage = _pdfPage.Resources.Images[_pdfPage.Resources.Images.Count];
             // _pdfPage.Contents.Add(new Operator.Do(ximage.Name));
             // _pdfPage.Contents.Add(new Operator.GRestore());
-            #endregion
+
         }
         private void AddressSection()
         {
@@ -152,66 +148,10 @@ namespace Admin_Client.Model.FileIO.PDF
             }
             _pdfPage.Paragraphs.Add(box);
         }
-
-        private void ReplaceGridSection()
-        {
-            var table = new Table
-            {
-                //The height of the 5 sections
-                ColumnWidths = "26 257 78 78 78",
-                Border = new BorderInfo(BorderSide.Box, 1f, _textColor),
-                DefaultCellBorder = new BorderInfo(BorderSide.Box, 0.5f, _textColor),
-                DefaultCellPadding = new MarginInfo(4.5, 4.5, 4.5, 4.5),
-                Margin = { Bottom = 10 },
-                DefaultCellTextState = { Font = _timeNewRomanFont }
-            };
-
-            var headerRow = table.Rows.Add();
-            var cell = headerRow.Cells.Add("#");
-            cell.Alignment = HorizontalAlignment.Center;
-            headerRow.Cells.Add("First Name");
-            headerRow.Cells.Add("Last Name");
-            headerRow.Cells.Add("Expenses");
-            headerRow.Cells.Add("Total");
-
-            foreach(Cell headerRowCell in headerRow.Cells)
-            {
-                headerRowCell.BackgroundColor= _textColor;
-                headerRowCell.DefaultCellTextState.ForegroundColor = _backColor;
-            }
-            foreach(var user in People)
-            {
-                var row = table.Rows.Add();
-                cell = row.Cells.Add(user.ID.ToString());
-                cell.Alignment = HorizontalAlignment.Center;
-                row.Cells.Add(user.FirstName);
-                cell = row.Cells.Add(user.LastName);
-                cell.Alignment = HorizontalAlignment.Right;
-                cell = row.Cells.Add(user.Expenses.ToString());
-                cell.Alignment = HorizontalAlignment.Right;
-                cell = row.Cells.Add(user.Sum.ToString());
-                cell.Alignment = HorizontalAlignment.Right;
-            }
-
-            /*
-            foreach(var totalRow in Totals)
-            {
-                var row = table.Rows.Add();
-                var nameCell = row.Cells.Add(totalRow.Text);
-                nameCell.Alignment= HorizontalAlignment.Right;
-                var textCell = row.Cells.Add(totalRow.Value.ToString());
-                textCell.Alignment = HorizontalAlignment.Right;
-
-            }
-            */
-            _pdfPage.Paragraphs.Add(table);
-
-        }
         private void GridSection()
         {
             var table = new Aspose.Pdf.Table
             {
-                //The height of the 5 sections
                 ColumnWidths = "26 257 78 78 78",
                 Border = new BorderInfo(BorderSide.Box, 1f, _textColor),
                 DefaultCellBorder = new BorderInfo(BorderSide.Box, 0.5f, _textColor),
@@ -225,9 +165,9 @@ namespace Admin_Client.Model.FileIO.PDF
             var cell = headerRow.Cells.Add("First Name");
             cell.Alignment = HorizontalAlignment.Center;
             headerRow.Cells.Add("Last Name");
-            headerRow.Cells.Add("Expenses");
+            headerRow.Cells.Add("Cost");
+            headerRow.Cells.Add("Quantity");
             headerRow.Cells.Add("Sum");
-            headerRow.Cells.Add("Rest");
 
             foreach (Cell headerRowCell in headerRow.Cells)
             {
@@ -240,14 +180,13 @@ namespace Admin_Client.Model.FileIO.PDF
                 cell = row.Cells.Add(peopleObject.FirstName);
                 cell.Alignment = HorizontalAlignment.Center;
                 row.Cells.Add(peopleObject.LastName);
-                cell = row.Cells.Add(peopleObject.Expenses.ToString("C2"));
+                cell = row.Cells.Add(peopleObject.Cost.ToString("C2"));
                 cell.Alignment = HorizontalAlignment.Right;
-                cell = row.Cells.Add(peopleObject.Sum.ToString());
+                cell = row.Cells.Add(peopleObject.Amount.ToString());
                 cell.Alignment = HorizontalAlignment.Right;
-                cell = row.Cells.Add(peopleObject.Rest.ToString("C2"));
+                cell = row.Cells.Add(peopleObject.Total.ToString("C2"));
                 cell.Alignment = HorizontalAlignment.Right;
             }
-            
             foreach (var totalRow in Totals)
             {
                 var row = table.Rows.Add();
@@ -256,7 +195,6 @@ namespace Admin_Client.Model.FileIO.PDF
                 var textCell = row.Cells.Add(totalRow.Value.ToString("C2"));
                 textCell.Alignment = HorizontalAlignment.Right;
             }
-            
             _pdfPage.Paragraphs.Add(table);
 
         }
@@ -279,69 +217,32 @@ namespace Admin_Client.Model.FileIO.PDF
             var builder = new TextBuilder(_pdfPage);
             builder.AppendText(fragment);
         }
-
-        public void SecondPlaceHolder()
-        {
-            DateTime datetime = DateTime.Now;
-            string dataDir = @"C:\Users\Lars\Desktop\Exam\Receipt_" + datetime.ToLongDateString() + ".pdf";
-            var persons = new List<Person>
-            {
-                new Person(1,"Bob","Bobsen",500,1600),
-                new Person(2,"Steve", "Jeff", 300,1600),
-                new Person(3,"Tim", "Timsen", 800,1600)
-            };
-            var receipt = new ReceiptPDF
-            {
-                ForegroundColor = "#0000CC",
-                BackgroundColor = "#FFFFFF",
-                Number = "1",
-                Logo = new LogoImage(@"C:\Users\Lars\Desktop\Exam\FairShareLogo.png", 160, 120),
-                ReceiptFrom = new List<string> { "Eastern Sønderborg", "Alsgade 44", "Denmark" },
-                ReceiptTo = new List<string> { "Western Sønderborg", "Alsgade 0", "Germany" },
-                People = persons,
-                Details = new List<string>
-                {
-                    "Terms & Conditions",
-                    "Thanks for using Fair Share",
-                    string.Empty,
-                    "If you have any questions regarding this receipt, you dun goofed","","Thx for using us."
-                },
-                Footer = "https://www.google.com/"
-
-            };
-            var fileStream = new FileStream(dataDir, FileMode.OpenOrCreate);
-            receipt.Save(fileStream);
-            fileStream.Close();
-
-        }
         public void PlaceholderData()
         {
             DateTime datetime = DateTime.Now;
             string dataDir = @"C:\Users\Lars\Desktop\Exam\Receipt_" + datetime.ToLongDateString() + ".pdf";
-            var persons = new List<Person>
+            var persons = new List<TemplateUser>
             {
-                new Person(1,"Bob","Bobsen",500,1600),
-                new Person(2,"Steve", "Jeff", 300,1600),
-                new Person(3,"Tim", "Timsen", 800,1600)
-            };
-            var subTotal = persons.Sum(i => i.Rest);
-            var receipt = new ReceiptPDF
+                new TemplateUser("Bob","Bobsen",500,10),
+                new TemplateUser("Steve", "Jeff", 300,20),
+                new TemplateUser("Tim", "Timsen", 800,30)
+            };  
+            var subTotal = persons.Sum(i => i.Total);
+            var receipt = new TemplateReceiptPDF
             {
                 ForegroundColor = "#0000CC",
                 BackgroundColor = "#FFFFFF",
-                Number = "1",
-                Logo = new LogoImage(@"C:\Users\Lars\Desktop\Exam\FairShareLogo.png", 160, 120),
-                ReceiptFrom = new List<string> { "Fair Share HQ","Eastern Sønderborg", "Alsgade 44", "Denmark" },
+                Number = "ABC-123",
+                Logo = new TemplateLogoImage(@"C:\Users\Lars\Desktop\Exam\FairShareLogo.png", 160, 120),
+                ReceiptFrom = new List<string> { "Eastern Sønderborg", "Alsgade 44", "Denmark" },
                 ReceiptTo = new List<string> { "Western Sønderborg", "Alsgade 0", "Germany" },
                 People = persons,
-                
-                Totals = new List<TotalRow>
+                Totals = new List<TemplateTotalRow>
                 {
-                    new TotalRow("Sub Rest", subTotal),
-                    new TotalRow("VAR @ 20%", subTotal * 0.2M),
-                    new TotalRow("Rest", subTotal * 1.2M)
+                    new TemplateTotalRow("Sub Total", subTotal),
+                    new TemplateTotalRow("VAR @ 20%", subTotal * 0.2M),
+                    new TemplateTotalRow("Total", subTotal * 1.2M)
                 },
-                
                 Details = new List<string>
                 {
                     "Terms & Conditions",

@@ -21,7 +21,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
 	{
 
 		#region Properties
-
+		
 		private ObservableCollection<tblUser> users = new ObservableCollection<tblUser>();
 		public ObservableCollection<tblUser> Users
 		{
