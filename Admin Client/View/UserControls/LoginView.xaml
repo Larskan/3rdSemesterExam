@@ -62,7 +62,7 @@
                         <ColumnDefinition Width="35"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBox x:Name="TextBox_Password" Grid.Column="0" Margin="10,10,10,10" VerticalContentAlignment="Center" TextChanged="TextBox_Password_TextChanged" Resources="{StaticResource roundborder10}">
+                    <TextBox x:Name="TextBox_Password" Grid.Column="0" Margin="10,10,10,10" VerticalContentAlignment="Center" TextChanged="TextBox_Password_TextChanged" Resources="{StaticResource roundborder10}" Visibility="Hidden">
                         <TextBox.Style>
                             <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
                                 <Style.Resources>
@@ -87,7 +87,10 @@
                         </TextBox.Style>
                     </TextBox>
 
-                    <PasswordBox x:Name="PasswordBox_Password" Style="{StaticResource roundcornerpassword}" Margin="10,10,10,10" Visibility="Hidden" VerticalContentAlignment="Center" PasswordChanged="PasswordBox_Password_PasswordChanged"/>
+                    <Grid>
+                        <PasswordBox x:Name="PasswordBox_Password" Style="{StaticResource roundcornerpassword}" Margin="10,10,10,10" Visibility="Visible" VerticalContentAlignment="Center" PasswordChanged="PasswordBox_Password_PasswordChanged"/>
+                        <Label x:Name="Label_PasswordPrompt" Content="Password" VerticalAlignment="Center" Margin="10,0,0,0" Foreground="LightGray" IsHitTestVisible="False"></Label>
+                    </Grid>
 
                     <Grid Grid.Column="1">
 

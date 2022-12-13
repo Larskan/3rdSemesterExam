@@ -88,12 +88,23 @@ namespace Admin_Client.View.Windows.Popups
 				TextBox_Password.Text = PasswordBox_Password.Password;
 				TextBox_Password.Select(TextBox_Password.Text.Length, 0);
 			}
+			if (PasswordBox_Password.Password.Length > 0)
+			{
+				if (Label_PasswordPrompt.Visibility != Visibility.Hidden)
+				{
+					Label_PasswordPrompt.Visibility = Visibility.Hidden;
+				}
+			} else
+			{
+				Label_PasswordPrompt.Visibility = Visibility.Visible;
+			}
 		}
 
 		private void TogglePasswordView_Checked(object sender, RoutedEventArgs e)
 		{
-			PasswordBox_Password.Visibility = Visibility.Visible;
-			TextBox_Password.Visibility = Visibility.Hidden;
+			PasswordBox_Password.Visibility = Visibility.Hidden;
+			Label_PasswordPrompt.Visibility = Visibility.Hidden;
+			TextBox_Password.Visibility = Visibility.Visible;
 
 			TogglePasswordView.Content = new Image
 			{
@@ -113,8 +124,12 @@ namespace Admin_Client.View.Windows.Popups
 
 		private void TogglePasswordView_Unchecked(object sender, RoutedEventArgs e)
 		{
-			PasswordBox_Password.Visibility = Visibility.Hidden;
-			TextBox_Password.Visibility = Visibility.Visible;
+			PasswordBox_Password.Visibility = Visibility.Visible;
+			if (PasswordBox_Password.Password.Length == 0)
+			{
+				Label_PasswordPrompt.Visibility = Visibility.Visible;
+			}
+			TextBox_Password.Visibility = Visibility.Hidden;
 
 			TogglePasswordView.Content = TogglePasswordView.Content = new Image
 			{
@@ -148,12 +163,23 @@ namespace Admin_Client.View.Windows.Popups
 				TextBox_NewPassword.Text = PasswordBox_NewPassword.Password;
 				TextBox_NewPassword.Select(TextBox_NewPassword.Text.Length, 0);
 			}
+			if (PasswordBox_NewPassword.Password.Length > 0)
+			{
+				if (Label_NewPasswordPrompt.Visibility != Visibility.Hidden)
+				{
+					Label_NewPasswordPrompt.Visibility = Visibility.Hidden;
+				}
+			} else
+			{
+				Label_NewPasswordPrompt.Visibility = Visibility.Visible;
+			}
 		}
 
 		private void ToggleNewPasswordView_Checked(object sender, RoutedEventArgs e)
 		{
-			PasswordBox_NewPassword.Visibility = Visibility.Visible;
-			TextBox_NewPassword.Visibility = Visibility.Hidden;
+			PasswordBox_NewPassword.Visibility = Visibility.Hidden;
+			Label_NewPasswordPrompt.Visibility = Visibility.Hidden;
+			TextBox_NewPassword.Visibility = Visibility.Visible;
 
 			ToggleNewPasswordView.Content = new Image
 			{
@@ -173,8 +199,12 @@ namespace Admin_Client.View.Windows.Popups
 
 		private void ToggleNewPasswordView_Unchecked(object sender, RoutedEventArgs e)
 		{
-			PasswordBox_NewPassword.Visibility = Visibility.Hidden;
-			TextBox_NewPassword.Visibility = Visibility.Visible;
+			PasswordBox_NewPassword.Visibility = Visibility.Visible;
+			if (PasswordBox_NewPassword.Password.Length == 0)
+			{
+				Label_NewPasswordPrompt.Visibility = Visibility.Visible;
+			}
+			TextBox_NewPassword.Visibility = Visibility.Hidden;
 
 			ToggleNewPasswordView.Content = new Image
 			{
@@ -208,12 +238,23 @@ namespace Admin_Client.View.Windows.Popups
 				TextBox_RetypeNewPassword.Text = PasswordBox_RetypeNewPassword.Password;
 				TextBox_RetypeNewPassword.Select(TextBox_RetypeNewPassword.Text.Length, 0);
 			}
+			if (PasswordBox_RetypeNewPassword.Password.Length > 0)
+			{
+				if (Label_RetypeNewPasswordPrompt.Visibility != Visibility.Hidden)
+				{
+					Label_RetypeNewPasswordPrompt.Visibility = Visibility.Hidden;
+				}
+			} else
+			{
+				Label_RetypeNewPasswordPrompt.Visibility = Visibility.Visible;
+			}
 		}
 
 		private void ToggleRetypeNewPasswordView_Checked(object sender, RoutedEventArgs e)
 		{
-			PasswordBox_RetypeNewPassword.Visibility = Visibility.Visible;
-			TextBox_RetypeNewPassword.Visibility = Visibility.Hidden;
+			PasswordBox_RetypeNewPassword.Visibility = Visibility.Hidden;
+			Label_RetypeNewPasswordPrompt.Visibility = Visibility.Hidden;
+			TextBox_RetypeNewPassword.Visibility = Visibility.Visible;
 
 			ToggleRetypeNewPasswordView.Content = new Image
 			{
@@ -233,8 +274,12 @@ namespace Admin_Client.View.Windows.Popups
 
 		private void ToggleRetypeNewPasswordView_Unchecked(object sender, RoutedEventArgs e)
 		{
-			PasswordBox_RetypeNewPassword.Visibility = Visibility.Hidden;
-			TextBox_RetypeNewPassword.Visibility = Visibility.Visible;
+			PasswordBox_RetypeNewPassword.Visibility = Visibility.Visible;
+			if (PasswordBox_RetypeNewPassword.Password.Length == 0)
+			{
+				Label_RetypeNewPasswordPrompt.Visibility = Visibility.Visible;
+			}
+			TextBox_RetypeNewPassword.Visibility = Visibility.Hidden;
 
 			ToggleRetypeNewPasswordView.Content = new Image
 			{
