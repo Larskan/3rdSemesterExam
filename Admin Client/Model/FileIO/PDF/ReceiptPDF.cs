@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 using Admin_Client.Model.DB.EF_Test;
+using Admin_Client.Model.DB;
+using Admin_Client.Model.Domain;
 
 namespace Admin_Client.Model.FileIO.PDF
 {
@@ -41,7 +43,7 @@ namespace Admin_Client.Model.FileIO.PDF
         public LogoImage Logo;
         public List<string> ReceiptFrom;
         public List<string> ReceiptTo;
-        public List<Person> People;
+        public List<UserPersonPDF> People;
         public List<TotalRow> Totals;
         public List<string> Details;
         public string Footer;
@@ -71,6 +73,82 @@ namespace Admin_Client.Model.FileIO.PDF
             _pdfDocument.Save(stream);
         }
 
+        
+
+        //The current magic
+        public void GrabData(tblTrip trip)
+        {
+            DateTime datetime = DateTime.Now;
+            string dataDir = @"C:\Users\Lars\Desktop\Exam\Receipt_" + datetime.ToLongDateString() + ".pdf";
+
+            #region Data
+            double total = 0;
+            List<tblReceipt> receipts;
+            List<tblUserExpense> userExpenses = HttpClientHandler.GetUserExpensesFromTrip(trip);
+            List<UserPersonPDF> userPeople = new List<UserPersonPDF>();
+
+            bool exists = false;
+            foreach(var userExpense in userExpenses)
+            {
+                tblUser user = HttpClientHandler.GetUser((int)userExpense.fldUserID);
+                receipts = HttpClientHandler.GetReceiptsFromUser(user);
+                foreach(var receipt in receipts)
+                {
+                    total += receipt.fldAmountPaid;
+
+                    //check if user already has a record
+                    foreach(var userPerson in userPeople)
+                    {
+                        if (userPerson.ID == receipt.fldUserID)
+                        {
+                            userPerson.Expenses += receipt.fldAmountPaid;
+                        }     
+                    }
+                    if (!exists)
+                    {
+                        userPeople.Add(new UserPersonPDF()
+                        {
+                            ID = user.fldUserID,
+                            FirstName = user.fldFirstName,
+                            LastName = user.fldLastName,
+                            TripName = trip.fldTripName,
+                            Expenses = (double)userExpense.fldExpense
+                        });                          
+                    }
+                } 
+                //total for all
+                foreach(var userPerson in userPeople)
+                {
+                    userPerson.Total = total;
+                }
+            }
+            #endregion
+
+            var receiptPDF = new ReceiptPDF
+            {
+                ForegroundColor = "#0000CC",
+                BackgroundColor = "#FFFFFF",
+                Number = "1",
+                Logo = new LogoImage(@"C:\Users\Lars\Desktop\Exam\FairShareLogo.png", 160, 120),
+                ReceiptFrom = new List<string> { "Fair Share HQ", "Eastern Sønderborg", "Alsgade 44", "Denmark" },
+                ReceiptTo = new List<string> { "Western Sønderborg", "Alsgade 0", "Germany" },
+                People = userPeople,
+                Details = new List<string>
+                {
+                    "Terms & Conditions",
+                    "Thanks for using Fair Share",
+                    string.Empty,
+                    "If you have any questions regarding this receipt, you dun goofed","","Thx for using us."
+                },
+                Footer = "https://www.google.com/"
+
+            };
+            var fileStream = new FileStream(dataDir, FileMode.OpenOrCreate);
+            receiptPDF.Save(fileStream);
+            fileStream.Close();
+        }
+
+        #region Sections
         private void HeaderSection()
         {
             var lines = new TextFragment[3];
@@ -154,12 +232,13 @@ namespace Admin_Client.Model.FileIO.PDF
             _pdfPage.Paragraphs.Add(box);
         }
 
+        //Currently used GridSection
         private void ReplaceGridSection()
         {
             var table = new Table
             {
                 //The height of the 5 sections
-                ColumnWidths = "26 257 78 78 78",
+                ColumnWidths = "26 257 78 70 78",
                 Border = new BorderInfo(BorderSide.Box, 1f, _textColor),
                 DefaultCellBorder = new BorderInfo(BorderSide.Box, 0.5f, _textColor),
                 DefaultCellPadding = new MarginInfo(4.5, 4.5, 4.5, 4.5),
@@ -172,15 +251,16 @@ namespace Admin_Client.Model.FileIO.PDF
             cell.Alignment = HorizontalAlignment.Center;
             headerRow.Cells.Add("First Name");
             headerRow.Cells.Add("Last Name");
+            headerRow.Cells.Add("Trip Name");
             headerRow.Cells.Add("Expenses");
             headerRow.Cells.Add("Total");
 
-            foreach(Cell headerRowCell in headerRow.Cells)
+            foreach (Cell headerRowCell in headerRow.Cells)
             {
-                headerRowCell.BackgroundColor= _textColor;
+                headerRowCell.BackgroundColor = _textColor;
                 headerRowCell.DefaultCellTextState.ForegroundColor = _backColor;
             }
-            foreach(var user in People)
+            foreach (var user in People)
             {
                 var row = table.Rows.Add();
                 cell = row.Cells.Add(user.ID.ToString());
@@ -188,11 +268,14 @@ namespace Admin_Client.Model.FileIO.PDF
                 row.Cells.Add(user.FirstName);
                 cell = row.Cells.Add(user.LastName);
                 cell.Alignment = HorizontalAlignment.Right;
+                cell = row.Cells.Add(user.TripName);
+                cell.Alignment = HorizontalAlignment.Right;
                 cell = row.Cells.Add(user.Expenses.ToString());
                 cell.Alignment = HorizontalAlignment.Right;
-                cell = row.Cells.Add(user.Sum.ToString());
+                cell = row.Cells.Add(user.Total.ToString());
                 cell.Alignment = HorizontalAlignment.Right;
             }
+
 
             /*
             foreach(var totalRow in Totals)
@@ -205,9 +288,33 @@ namespace Admin_Client.Model.FileIO.PDF
 
             }
             */
+
             _pdfPage.Paragraphs.Add(table);
 
         }
+        private void TermsSection()
+        {
+            foreach (var detail in Details)
+            {
+                var fragment = new TextFragment(detail);
+                fragment.TextState.Font = _timeNewRomanFont;
+                fragment.TextState.FontSize = 12;
+                _pdfPage.Paragraphs.Add(fragment);
+            }
+        }
+        private void FooterSection()
+        {
+            var fragment = new TextFragment(Footer);
+            var len = fragment.TextState.MeasureString(fragment.Text);
+            fragment.Position = new Aspose.Pdf.Text.Position(_pdfPage.PageInfo.Width / 2 - len / 2, 20);
+            fragment.Hyperlink = new WebHyperlink(Footer);
+            var builder = new TextBuilder(_pdfPage);
+            builder.AppendText(fragment);
+        }
+        #endregion
+
+        #region Unused Methods for reference
+        //Unused
         private void GridSection()
         {
             var table = new Aspose.Pdf.Table
@@ -243,12 +350,12 @@ namespace Admin_Client.Model.FileIO.PDF
                 row.Cells.Add(peopleObject.LastName);
                 cell = row.Cells.Add(peopleObject.Expenses.ToString("C2"));
                 cell.Alignment = HorizontalAlignment.Right;
-                cell = row.Cells.Add(peopleObject.Sum.ToString());
-                cell.Alignment = HorizontalAlignment.Right;
-                cell = row.Cells.Add(peopleObject.Rest.ToString("C2"));
-                cell.Alignment = HorizontalAlignment.Right;
+                //  cell = row.Cells.Add(peopleObject.Sum.ToString());
+                // cell.Alignment = HorizontalAlignment.Right;
+                // cell = row.Cells.Add(peopleObject.Rest.ToString("C2"));
+                // cell.Alignment = HorizontalAlignment.Right;
             }
-            
+
             foreach (var totalRow in Totals)
             {
                 var row = table.Rows.Add();
@@ -257,38 +364,17 @@ namespace Admin_Client.Model.FileIO.PDF
                 var textCell = row.Cells.Add(totalRow.Value.ToString("C2"));
                 textCell.Alignment = HorizontalAlignment.Right;
             }
-            
+
             _pdfPage.Paragraphs.Add(table);
 
         }
-        private void TermsSection()
-        {
-            foreach (var detail in Details)
-            {
-                var fragment = new TextFragment(detail);
-                fragment.TextState.Font = _timeNewRomanFont;
-                fragment.TextState.FontSize = 12;
-                _pdfPage.Paragraphs.Add(fragment);
-            }
-        }
-        private void FooterSection()
-        {
-            var fragment = new TextFragment(Footer);
-            var len = fragment.TextState.MeasureString(fragment.Text);
-            fragment.Position = new Aspose.Pdf.Text.Position(_pdfPage.PageInfo.Width / 2 - len / 2, 20);
-            fragment.Hyperlink = new WebHyperlink(Footer);
-            var builder = new TextBuilder(_pdfPage);
-            builder.AppendText(fragment);
-        }
 
+        //Unused
         public void SecondPlaceHolder()
         {
             DateTime datetime = DateTime.Now;
             string dataDir = @"C:\Users\Lars\Desktop\Exam\Receipt_" + datetime.ToLongDateString() + ".pdf";
-            var users = new List<string>
-            {
-                //new()
-            };
+
             var persons = new List<Person>
             {
                 new Person(1,"Bob","Bobsen",500,1600),
@@ -303,7 +389,7 @@ namespace Admin_Client.Model.FileIO.PDF
                 Logo = new LogoImage(@"C:\Users\Lars\Desktop\Exam\FairShareLogo.png", 160, 120),
                 ReceiptFrom = new List<string> { "Fair Share HQ", "Eastern Sønderborg", "Alsgade 44", "Denmark" },
                 ReceiptTo = new List<string> { "Western Sønderborg", "Alsgade 0", "Germany" },
-                People = persons,
+                // People = persons,
                 Details = new List<string>
                 {
                     "Terms & Conditions",
@@ -319,6 +405,7 @@ namespace Admin_Client.Model.FileIO.PDF
             fileStream.Close();
 
         }
+        //Unused
         public void PlaceholderData()
         {
             DateTime datetime = DateTime.Now;
@@ -336,17 +423,17 @@ namespace Admin_Client.Model.FileIO.PDF
                 BackgroundColor = "#FFFFFF",
                 Number = "1",
                 Logo = new LogoImage(@"C:\Users\Lars\Desktop\Exam\FairShareLogo.png", 160, 120),
-                ReceiptFrom = new List<string> { "Fair Share HQ","Eastern Sønderborg", "Alsgade 44", "Denmark" },
+                ReceiptFrom = new List<string> { "Fair Share HQ", "Eastern Sønderborg", "Alsgade 44", "Denmark" },
                 ReceiptTo = new List<string> { "Western Sønderborg", "Alsgade 0", "Germany" },
-                People = persons,
-                
+                //People = persons,
+
                 Totals = new List<TotalRow>
                 {
                     new TotalRow("Sub Rest", subTotal),
                     new TotalRow("VAR @ 20%", subTotal * 0.2M),
                     new TotalRow("Rest", subTotal * 1.2M)
                 },
-                
+
                 Details = new List<string>
                 {
                     "Terms & Conditions",
@@ -361,6 +448,7 @@ namespace Admin_Client.Model.FileIO.PDF
             receipt.Save(fileStream);
             fileStream.Close();
         }
+        #endregion
 
         #region IDisposable Support
         private bool disposedValue = false; //Detect reduncant cells
