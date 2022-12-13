@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
+using Admin_Client.Model.DB.EF_Test;
 
 namespace Admin_Client.Model.FileIO.PDF
 {
@@ -64,7 +65,7 @@ namespace Admin_Client.Model.FileIO.PDF
             HeaderSection(); //Logo and Title and Date
             AddressSection(); //TO and FROM
             //GridSection(); //The table and Data
-            ReplaceGridSection();
+            ReplaceGridSection(); //The table and Data
             TermsSection(); //Whatever message we want
             FooterSection(); //Link to website, for now I just put a google.com
             _pdfDocument.Save(stream);
@@ -284,6 +285,10 @@ namespace Admin_Client.Model.FileIO.PDF
         {
             DateTime datetime = DateTime.Now;
             string dataDir = @"C:\Users\Lars\Desktop\Exam\Receipt_" + datetime.ToLongDateString() + ".pdf";
+            var users = new List<string>
+            {
+                new()
+            }
             var persons = new List<Person>
             {
                 new Person(1,"Bob","Bobsen",500,1600),
@@ -296,7 +301,7 @@ namespace Admin_Client.Model.FileIO.PDF
                 BackgroundColor = "#FFFFFF",
                 Number = "1",
                 Logo = new LogoImage(@"C:\Users\Lars\Desktop\Exam\FairShareLogo.png", 160, 120),
-                ReceiptFrom = new List<string> { "Eastern Sønderborg", "Alsgade 44", "Denmark" },
+                ReceiptFrom = new List<string> { "Fair Share HQ", "Eastern Sønderborg", "Alsgade 44", "Denmark" },
                 ReceiptTo = new List<string> { "Western Sønderborg", "Alsgade 0", "Germany" },
                 People = persons,
                 Details = new List<string>
