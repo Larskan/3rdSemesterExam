@@ -28,7 +28,6 @@ namespace Admin_Client.View.UserControls
 	/// </summary>
 	public partial class GroupListView : UserControl
 	{
-		OverviewSingleton Overview = OverviewSingleton.getInstance();
 		GroupListViewModel viewModel = new GroupListViewModel();
 		public GroupListView()
 		{
