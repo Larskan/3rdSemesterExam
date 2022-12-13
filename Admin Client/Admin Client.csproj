@@ -348,7 +348,10 @@
     <Compile Include="Model\Domain\UserExpense.cs" />
     <Compile Include="Model\FileIO\GeneratePDF.cs" />
     <Compile Include="Model\FileIO\LogHandler.cs" />
-    <Compile Include="Model\FileIO\PDFHandler.cs" />
+    <Compile Include="Model\FileIO\PDF\TotalRow.cs" />
+    <Compile Include="Model\FileIO\PDF\LogoImage.cs" />
+    <Compile Include="Model\FileIO\PDF\Person.cs" />
+    <Compile Include="Model\FileIO\PDF\ReceiptPDF.cs" />
     <Compile Include="Model\Foundation\Encryption.cs" />
     <Compile Include="Model\Foundation\Enums.cs" />
     <Compile Include="PropertyChanged\NotifyPropertyChangedHandler.cs" />

@@ -190,7 +190,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 					}
 				}
 
-				// Valid or noy
+				// Valid or not
 				if (!isValid)
 				{	
 					((Parameter)item).IsValid = false;
