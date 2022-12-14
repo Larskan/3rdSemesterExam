@@ -52,7 +52,8 @@ namespace Admin_Client.View.UserControls
 
 			foreach (var item in rec.GetData(ins))
 			{
-				Debug.WriteLine(item.FirstName + ": " + item.Expenses);
+                rec.GrabData(ins);
+                Debug.WriteLine(item.FirstName + ": " + item.Expenses);
 			}
 
 			/*

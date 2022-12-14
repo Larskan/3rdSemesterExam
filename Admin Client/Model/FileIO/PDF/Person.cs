@@ -18,12 +18,7 @@ namespace Admin_Client.Model.FileIO.PDF
         public int Rest;// => (Expenses/Sum)*100;
 
         public Person(int id, string fname, string lname, int num, int sum)
-        {
-            var userSelect = HttpClientHandler.GetUser(id);
-            var receiptSelect = HttpClientHandler.GetReceiptsFromUser(userSelect);
-            //receiptSelect
-            
-            
+        {       
             ID = id;
             FirstName = fname;
             LastName = lname;

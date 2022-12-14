@@ -13,7 +13,7 @@ namespace Admin_Client.Model.Domain {
         public int ID;
         public string FirstName; //fldFirstName in tblUser
         public string LastName; //fldLastName in tblUser
-        public string TripName;
+        public string TripName; //fldTripName in tblTrip
         public double Expenses; //fldAmountPaid in tblUserExpense
         public double Total; //fldSum in fldTrip
 
