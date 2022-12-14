@@ -1,6 +1,6 @@
 var URLRoot = 'https://localhost:7002/';
 var UserID = '1'
-
+var ids = [];
 
 async function setup()
 {  
@@ -46,7 +46,6 @@ async function GetExpenses()
   } while(obj[i]!=null)
 
   HandleExpenses(result)
-  //i feel like this one could be put outside of this function 
   
   
 }
@@ -64,12 +63,14 @@ async function HandleExpenses(ExpenseArray)
     .then((data)=>
     { 
     counter+=data['fldExpense']; //adds to counter to sum the expenses
-      CreateExpenseElement(data['fldExpense'], data['fldUserID'], data['fldDate'], data['fldNote']) //creates an element with the given data elements
-      //TODO; edit CreateExpenseElement to make it create fields instead of plaintext, load the name instead of the id
-    })
-  }
+    CreateExpenseTableElement(data['fldExpense'], data['fldDate'], data['fldNote'], data['fldUserId']) //creates an element with the given data elements
+    ids[i] = data['fldUserId'] 
 
+  })
+    
+  }
   SetSum(counter) //sets sum of expenses
+  SetNames();
 
 }
 
@@ -122,19 +123,53 @@ function LoadGraphs()
 
 async function SetSum(sum)
 {
-  document.getElementById('SumHeader').innerHTML = sum + ' Currency'
+  document.getElementById('SumHeader').innerHTML = sum
 }
 
-//TODO; edit CreateExpenseElement to make it create fields instead of plaintext, load the name instead of the id
-async function CreateExpenseElement(number,UserID,Date,Note)
+async function SetNames()
 {
-  let node = document.getElementById('expenses')
-  let expense = document.createElement('p')
-  expense.innerHTML = number + ' Currency;' + UserID+' '+Date+' '+Note
-  node.appendChild(expense)
+  ids.forEach(async element => {
+    url = URLRoot+'tblUsers/'+element
+    let innerHTML;
+
+  await fetch(url)
+  .then((response) => response.json())
+  .then((data) => innerHTML = data['fldFirstName']+' '+data['fldLastName'])
+
+  let targetNode = 'UserID='+element
+  await NodeHandler(targetNode,innerHTML)
+    
+  });
+  
 }
 
+async function CreateExpenseTableElement(Amount, Date, Note, UserID )
+{
+    const TableBody = document.getElementById('ExpenseTableBody');
 
+    let row = document.createElement('tr'); //creates new table row
+
+    //creates three new table entries with names corresponding to the arguments
+    let AmountCell = document.createElement('td');
+    let UserCell = document.createElement('td');
+    let DateCell = document.createElement('td');
+    let NoteCell = document.createElement('td');
+
+    //sets the text of these to the arguments
+    AmountCell.innerHTML = Amount;
+    UserCell.innerHTML = UserID;
+    DateCell.innerHTML = Date;
+    NoteCell.innerHTML = Note;
+
+    UserCell.id = 'UserID='+UserID;
+
+    row.appendChild(AmountCell);
+    row.appendChild(UserCell);
+    row.appendChild(DateCell);
+    row.appendChild(NoteCell);
+
+    TableBody.appendChild(row); //finally appends child to display it
+}
 
 async function NodeHandler(NodeName,TargetText)
 {

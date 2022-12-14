@@ -72,13 +72,18 @@
                 <div class="col-sm-6">
                   <h2>Sum:</h2>
                   <h3 id="SumHeader">Loading . . .</h3>
-                  <div id="Panel" class="panel panel-default">
-                    <div id="Heading" class="panel-heading">
-                      Recent expenses
-                    </div>
-                    <tbody id="expenses"></tbody>
-                    <div id="expenses" class="panel-body"></div>
-                  </div>
+                  <table id="TripTable" class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>Amount</th>
+                        <th>User</th>
+                        <th>Date</th>
+                        <th>Note</th>
+                      </tr>
+                    </thead>
+                    <tbody id="ExpenseTableBody"></tbody>
+                  </table>
+
                   <!-- TODO: replace with script for loading trip list from DB -->
                 </div>
                 <div class="col-sm-4">
