@@ -45,6 +45,7 @@ namespace Admin_Client.Model.FileIO
         public string Footer;
         #endregion
 
+        #region Constructor
         public ReceiptPDF()
         {
             _pdfDocument = new Document();
@@ -56,6 +57,7 @@ namespace Admin_Client.Model.FileIO
             _timeNewRomanFont = FontRepository.FindFont("Times New Roman");
             _builder = new TextBuilder(_pdfPage);     
         }
+        #endregion
 
         /// <summary>
         /// Loads all the sections for the PDF Page
@@ -66,8 +68,8 @@ namespace Admin_Client.Model.FileIO
             HeaderSection(); //Title and Date
             AddressSection(); //TO and FROM
             GridSection(); //The table and Data
-            TermsSection(); //Whatever message we want
-            FooterSection(); //Link to website, for now I just put a google.com
+            TermsSection(); //Notes
+            FooterSection(); //Link to website
             _pdfDocument.Save(stream);
         }
     
@@ -173,11 +175,6 @@ namespace Admin_Client.Model.FileIO
             _pdfPage.Paragraphs.Add(lines[0]);
 
             lines[1] = new TextFragment($"Date: {DateTime.Today:dd/MM/yyyy}");
-            lines[1].TextState.Font = _timeNewRomanFont;
-            lines[1].TextState.FontSize = 12;
-            lines[1].HorizontalAlignment = HorizontalAlignment.Right;
-            //_pdfPage.Paragraphs.Add(lines[1]);
-            
             lines[2] = new TextFragment($"Contact: 74 44 85 85");
             for (var i = 1; i < lines.Length; i++)
             {
