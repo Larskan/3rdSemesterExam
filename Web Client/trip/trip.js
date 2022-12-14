@@ -1,6 +1,8 @@
 var URLRoot = 'https://localhost:7002/';
 var UserID = '1'
+var tripID = 4
 var ids = [];
+var UserShare
 
 async function setup()
 {  
@@ -29,7 +31,7 @@ async function GetExpenses()
   .then((data) => obj=data)
   
   //loop to get expenses and trip links
-  let target = 4; // change with the target ID from Cookie
+  let target = tripID; // change with the target ID from Cookie
 
   let i = 0; //counters
   let j = 0;
@@ -74,16 +76,36 @@ async function HandleExpenses(ExpenseArray)
 
 }
 
-function LoadGraphs() 
+async function LoadGraphs() 
 {
-  
+
+  /*
+  presumed action order: 
+
+  fetch TripsToUserExpenses with the Id of the current trip
+  Fetch the expense and user Id with the info from TripsToUserExpenses 
+  turn the userId into a first name last name string
+  summarize the expenses on a per user basis
+  set xValues to names of users and yValues to their total expenses towards this project
+  */
+
+
+
   var xValues = ["Italy", "France", "Spain", "USA"];
   var yValues = [55, 49, 44, 24];
   var barColors = [
-    "#b91d47",
-    "#00aba9",
-    "#2b5797",
-    "#e8c3b9",
+    "#B91D47",   
+    "#CC5620",
+    "#168A5E",
+    "#5BB41C",
+    "#960C31",
+    "#A53D0E",
+    "#097049",
+    "#44920C",
+    "#CD4166",
+    "#E27848",
+    "#309971",
+    "#78C73F"
   ];
 
   new Chart("BarChart", {
