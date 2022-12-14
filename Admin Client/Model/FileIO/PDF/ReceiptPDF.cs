@@ -80,7 +80,7 @@ namespace Admin_Client.Model.FileIO.PDF
         public void GrabData(tblTrip trip)
         {
             DateTime datetime = DateTime.Now;
-            string dataDir = @"C:\Users\Lars\Desktop\Exam\Receipt_" + datetime.ToLongDateString() + ".pdf";
+            string dataDir = @"C:\Users\patri\Desktop\" + datetime.ToLongDateString() + ".pdf";
 
             // Get data to use
             List<UserPersonPDF> userPeople = GetData(trip);
@@ -90,7 +90,7 @@ namespace Admin_Client.Model.FileIO.PDF
                 ForegroundColor = "#4a7e79",
                 BackgroundColor = "#FFFFFF",
                 Number = "1",
-                Logo = new LogoImage(@"C:\Users\Lars\Desktop\Exam\FairShareLogo.png", 160, 120),
+                //Logo = new LogoImage(@"C:\Users\Lars\Desktop\Exam\FairShareLogo.png", 160, 120),
                 ReceiptFrom = new List<string> { "Fair Share HQ", "Eastern Sønderborg", "Alsgade 44", "Denmark" },
                 ReceiptTo = new List<string> { "Western Sønderborg", "Alsgade 0", "Germany" },
                 People = userPeople,
@@ -149,7 +149,7 @@ namespace Admin_Client.Model.FileIO.PDF
 						ID = user.fldUserID,
 						FirstName = user.fldFirstName,
 						LastName = user.fldLastName,
-						TripName = trip.fldTripName,
+						Note = userExpense.fldNote,
 						Expenses = userExpense.fldExpense
 					});
 				}
@@ -195,13 +195,13 @@ namespace Admin_Client.Model.FileIO.PDF
             }
             */
             //Logo, set coords
-            _logoPlaceHolder.URX = _logoPlaceHolder.LLX + Logo.Width;
-            _logoPlaceHolder.URY = _logoPlaceHolder.LLY + Logo.Height;
+            //_logoPlaceHolder.URX = _logoPlaceHolder.LLX + Logo.Width;
+            //_logoPlaceHolder.URY = _logoPlaceHolder.LLY + Logo.Height;
 
             //load image into stream
-            var imageStream = new FileStream(Logo.FileName, FileMode.Open);
+            //var imageStream = new FileStream(Logo.FileName, FileMode.Open);
             //add image to images collection of page resources
-            _pdfPage.Resources.Images.Add(imageStream);
+            //_pdfPage.Resources.Images.Add(imageStream);
 
             #region needs to be fixed to make logo work
             //Use GSave operation: saves current graphics state
@@ -293,8 +293,8 @@ namespace Admin_Client.Model.FileIO.PDF
                 cell.Alignment = HorizontalAlignment.Right;
                 cell = row.Cells.Add(user.LastName);
                 cell.Alignment = HorizontalAlignment.Right;
-                cell = row.Cells.Add(user.TripName); //NullReferenceException
-                cell.Alignment = HorizontalAlignment.Right;
+				cell = row.Cells.Add(user.Note);
+				cell.Alignment = HorizontalAlignment.Right;
                 cell = row.Cells.Add(user.Expenses.ToString());
                 cell.Alignment = HorizontalAlignment.Right;
                 cell = row.Cells.Add(user.Total.ToString());
