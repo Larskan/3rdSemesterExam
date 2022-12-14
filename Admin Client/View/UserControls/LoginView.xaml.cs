@@ -20,10 +20,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Admin_Client.Model.DB;
 using Admin_Client.Model.FileIO;
-using Admin_Client.Model.FileIO.PDF;
-using Admin_Client.Model.FileIO.TemplatePDF;
 using Admin_Client.Model.DB.EF_Test;
 
 namespace Admin_Client.View.UserControls
@@ -43,10 +40,7 @@ namespace Admin_Client.View.UserControls
 
 		private void Login_Click(object sender, RoutedEventArgs e)
 		{
-
-			
 			ReceiptPDF rec = new ReceiptPDF();
-			tblTrip trip = new tblTrip();
 			var ins = new tblTrip() { fldTripID = 4 };
 			rec.GrabData(ins);
 
