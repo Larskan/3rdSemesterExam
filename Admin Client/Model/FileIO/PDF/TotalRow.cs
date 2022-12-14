@@ -10,9 +10,9 @@ namespace Admin_Client.Model.FileIO.PDF
     public class TotalRow
     {
         public string Text;
-        public decimal Value;
+        public string Value;
 
-        public TotalRow(string text, decimal value)
+        public TotalRow(string text, string value)
         {
             Text = text;
             Value = value;

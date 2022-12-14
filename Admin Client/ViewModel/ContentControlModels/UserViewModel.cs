@@ -8,6 +8,7 @@ using DocumentFormat.OpenXml.Spreadsheet;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -22,74 +23,75 @@ namespace Admin_Client.ViewModel.ContentControlModels
         tblUser user;
         private string initials;
 
-        private ObservableCollection<tblGroup> groups = new ObservableCollection<tblGroup>();
-        public ObservableCollection<tblGroup> Groups
-        {
-            get { return groups; }
-            set { groups = value; }
-        }
+		#endregion
 
-        private ObservableCollection<tblReceipt> receipts = new ObservableCollection<tblReceipt>();
-        public ObservableCollection<tblReceipt> Receipts
-        {
-            get { return receipts; }
-            set { receipts = value; }
-        }
-        public string Initials
-        {
-            get { return initials; }
-            set { initials = value; NotifyPropertyChanged(); }
-        }
+		#region Properties
 
-        private string firstname;
+		private ObservableCollection<tblGroup> groups = new ObservableCollection<tblGroup>();
+		public ObservableCollection<tblGroup> Groups
+		{
+			get { return groups; }
+			set { groups = value; }
+		}
 
-        public string Firstname
-        {
-            get { return firstname; }
-            set { firstname = value; NotifyPropertyChanged(); }
-        }
+		private ObservableCollection<tblReceipt> receipts = new ObservableCollection<tblReceipt>();
+		public ObservableCollection<tblReceipt> Receipts
+		{
+			get { return receipts; }
+			set { receipts = value; }
+		}
 
-        private string lastname;
+		public string Initials
+		{
+			get { return initials; }
+			set { initials = value; NotifyPropertyChanged(); }
+		}
 
-        public string Lastname
-        {
-            get { return lastname; }
-            set { lastname = value; NotifyPropertyChanged(); }
-        }
+		private string firstname;
 
-        private string username;
+		public string Firstname
+		{
+			get { return firstname; }
+			set { firstname = value; NotifyPropertyChanged(); }
+		}
 
-        public string Username
-        {
-            get { return username; }
-            set { username = value; NotifyPropertyChanged(); }
-        }
+		private string lastname;
 
-        private string email;
+		public string Lastname
+		{
+			get { return lastname; }
+			set { lastname = value; NotifyPropertyChanged(); }
+		}
 
-        public string Email
-        {
-            get { return email; }
-            set { email = value; NotifyPropertyChanged(); }
-        }
+		private string username;
 
-        private string phonenumber;
+		public string Username
+		{
+			get { return username; }
+			set { username = value; NotifyPropertyChanged(); }
+		}
 
-        public string Phonenumber
-        {
-            get { return phonenumber; }
-            set { phonenumber = value; NotifyPropertyChanged(); }
-        }
+		private string email;
 
-        #endregion
+		public string Email
+		{
+			get { return email; }
+			set { email = value; NotifyPropertyChanged(); }
+		}
 
-        #region Properties
+		private string phonenumber;
 
-        #endregion
+		public string Phonenumber
+		{
+			get { return phonenumber; }
+			set { phonenumber = value; NotifyPropertyChanged(); }
+		}
 
-        #region Constructor
+		#endregion
 
-        public UserViewModel(tblUser user)
+		#region Constructor
+
+		public UserViewModel(tblUser user)
         {
             this.user = user;
             this.Firstname = user.fldFirstName;
@@ -118,27 +120,29 @@ namespace Admin_Client.ViewModel.ContentControlModels
             UpdateReceipts();
         }
 
-        CancellationTokenSource tokenSource;
+        CancellationTokenSource tokenSourceGroups;
         public void UpdateGroups()
         {
-            LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Update Users Click"));
-            if (tokenSource != null && tokenSource.Token.CanBeCanceled)
+            LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Update Groups Click"));
+            if (tokenSourceGroups != null && tokenSourceGroups.Token.CanBeCanceled)
             {
-                tokenSource.Cancel();
+				tokenSourceGroups.Cancel();
             }
-            tokenSource = new CancellationTokenSource();
-            ThreadPool.QueueUserWorkItem(UpdateGroupsListThread, new object[] { tokenSource.Token });
+			tokenSourceGroups = new CancellationTokenSource();
+            ThreadPool.QueueUserWorkItem(UpdateGroupsListThread, new object[] { tokenSourceGroups.Token });
             
         }
-        public void UpdateReceipts()
+
+		CancellationTokenSource tokenSourceReceipts;
+		public void UpdateReceipts()
         {
-            LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Update Users Click"));
-            if (tokenSource != null && tokenSource.Token.CanBeCanceled)
+            LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Update Receipt Click"));
+            if (tokenSourceReceipts != null && tokenSourceReceipts.Token.CanBeCanceled)
             {
-                tokenSource.Cancel();
+				tokenSourceReceipts.Cancel();
             }
-            tokenSource = new CancellationTokenSource();
-            ThreadPool.QueueUserWorkItem(UpdateReceiptsListThread, new object[] { tokenSource.Token });
+			tokenSourceReceipts = new CancellationTokenSource();
+            ThreadPool.QueueUserWorkItem(UpdateReceiptsListThread, new object[] { tokenSourceReceipts.Token });
         }
 
         #endregion
@@ -172,7 +176,9 @@ namespace Admin_Client.ViewModel.ContentControlModels
                         App.Current.Dispatcher.BeginInvoke(new Action(() => { Groups.Add(groupItem); }));
                     }
                 }
-            }
+
+				return;
+			}
         }
         private void UpdateReceiptsListThread(object o)
         {
@@ -188,7 +194,6 @@ namespace Admin_Client.ViewModel.ContentControlModels
                 bool found;
                 foreach (var receiptItem in receipts)
                 {
-                      Console.WriteLine("ahe");
                     found = false;
                     foreach (var ReceiptItem in Receipts)
                     {
@@ -204,6 +209,8 @@ namespace Admin_Client.ViewModel.ContentControlModels
                         App.Current.Dispatcher.BeginInvoke(new Action(() => { Receipts.Add(receiptItem); }));
                     }
                 }
+
+                return;
             }
         }
         #endregion

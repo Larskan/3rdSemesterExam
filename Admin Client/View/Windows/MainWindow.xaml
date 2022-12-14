@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Admin_Client"
         mc:Ignorable="d"
-        Title="FairShare - Admin" Height="450" Width="800">
+        Title="FairShare - Admin" Height="450" Width="800" MinWidth="450" MinHeight="450">
     
     <Window.Resources>
         <Storyboard x:Key="OpenAccountTab">

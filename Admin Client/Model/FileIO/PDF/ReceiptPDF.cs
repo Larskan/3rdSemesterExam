@@ -68,7 +68,6 @@ namespace Admin_Client.Model.FileIO.PDF
         {
             HeaderSection(); //Logo and Title and Date
             AddressSection(); //TO and FROM
-            //GridSection(); //The table and Data
             ReplaceGridSection(); //The table and Data
             TermsSection(); //Whatever message we want
             FooterSection(); //Link to website, for now I just put a google.com
@@ -81,17 +80,17 @@ namespace Admin_Client.Model.FileIO.PDF
         public void GrabData(tblTrip trip)
         {
             DateTime datetime = DateTime.Now;
-            string dataDir = @"C:\Users\Lars\Desktop\Exam\Receipt_" + datetime.ToLongDateString() + ".pdf";
+            string dataDir = @"C:\Users\patri\Desktop\" + datetime.ToLongDateString() + ".pdf";
 
             // Get data to use
             List<UserPersonPDF> userPeople = GetData(trip);
 
             var receiptPDF = new ReceiptPDF
             {
-                ForegroundColor = "#0000CC",
+                ForegroundColor = "#4a7e79",
                 BackgroundColor = "#FFFFFF",
                 Number = "1",
-                Logo = new LogoImage(@"C:\Users\Lars\Desktop\Exam\FairShareLogo.png", 160, 120),
+                //Logo = new LogoImage(@"C:\Users\Lars\Desktop\Exam\FairShareLogo.png", 160, 120),
                 ReceiptFrom = new List<string> { "Fair Share HQ", "Eastern Sønderborg", "Alsgade 44", "Denmark" },
                 ReceiptTo = new List<string> { "Western Sønderborg", "Alsgade 0", "Germany" },
                 People = userPeople,
@@ -102,7 +101,7 @@ namespace Admin_Client.Model.FileIO.PDF
                     string.Empty,
                     "If you have any questions regarding this receipt, you dun goofed","","Thx for using us."
                 },
-                Footer = "https://www.google.com/"
+                Footer = "https://www.FairShare.com/"
 
             };
             var fileStream = new FileStream(dataDir, FileMode.OpenOrCreate);
@@ -150,7 +149,7 @@ namespace Admin_Client.Model.FileIO.PDF
 						ID = user.fldUserID,
 						FirstName = user.fldFirstName,
 						LastName = user.fldLastName,
-						TripName = trip.fldTripName,
+						Note = userExpense.fldNote,
 						Expenses = userExpense.fldExpense
 					});
 				}
@@ -173,12 +172,17 @@ namespace Admin_Client.Model.FileIO.PDF
             lines[0] = new TextFragment($"RECEIPT #{Number}");
             lines[0].TextState.FontSize = 20;
             lines[0].TextState.ForegroundColor = _textColor;
-            lines[0].HorizontalAlignment = HorizontalAlignment.Center;
+            lines[0].HorizontalAlignment = HorizontalAlignment.Left;
 
             _pdfPage.Paragraphs.Add(lines[0]);
 
-            lines[1] = new TextFragment($"DATE: {DateTime.Today:dd/MM/yyyy}");
-            lines[2] = new TextFragment($"COMPLAIN DATE: {DateTime.Today.AddDays(7):dd/MM/yyyy}");
+            lines[1] = new TextFragment($"Date: {DateTime.Today:dd/MM/yyyy}");
+            lines[1].TextState.Font = _timeNewRomanFont;
+            lines[1].TextState.FontSize = 12;
+            lines[1].HorizontalAlignment = HorizontalAlignment.Right;
+            _pdfPage.Paragraphs.Add(lines[1]);
+            /*
+            lines[2] = new TextFragment($"Latest Complain Date: {DateTime.Today.AddDays(7):dd/MM/yyyy}");
             for (var i = 1; i < lines.Length; i++)
             {
                 //text properties
@@ -189,14 +193,15 @@ namespace Admin_Client.Model.FileIO.PDF
                 //fragment to paragraph
                 _pdfPage.Paragraphs.Add(lines[i]);
             }
+            */
             //Logo, set coords
-            _logoPlaceHolder.URX = _logoPlaceHolder.LLX + Logo.Width;
-            _logoPlaceHolder.URY = _logoPlaceHolder.LLY + Logo.Height;
+            //_logoPlaceHolder.URX = _logoPlaceHolder.LLX + Logo.Width;
+            //_logoPlaceHolder.URY = _logoPlaceHolder.LLY + Logo.Height;
 
             //load image into stream
-            var imageStream = new FileStream(Logo.FileName, FileMode.Open);
+            //var imageStream = new FileStream(Logo.FileName, FileMode.Open);
             //add image to images collection of page resources
-            _pdfPage.Resources.Images.Add(imageStream);
+            //_pdfPage.Resources.Images.Add(imageStream);
 
             #region needs to be fixed to make logo work
             //Use GSave operation: saves current graphics state
@@ -229,12 +234,14 @@ namespace Admin_Client.Model.FileIO.PDF
                 fragment = new TextFragment(str);
                 fragment.TextState.Font = _timeNewRomanFont;
                 fragment.TextState.FontSize = 12;
+                fragment.TextState.ForegroundColor = Color.Yellow;
                 box.Paragraphs.Add(fragment);
             }
 
             fragment = new TextFragment("RECEIPT TO:") { IsFirstParagraphInColumn = true };
             fragment.TextState.Font = _timeNewRomanFont;
             fragment.TextState.FontSize = 12;
+            fragment.TextState.ForegroundColor = Color.Yellow;
             fragment.TextState.HorizontalAlignment = HorizontalAlignment.Right;
             box.Paragraphs.Add(fragment);
 
@@ -254,8 +261,8 @@ namespace Admin_Client.Model.FileIO.PDF
         {
             var table = new Table
             {
-                //The height of the 5 sections
-                ColumnWidths = "26 257 78 70 78",
+                //How large the columns are
+                ColumnWidths = "26 78 78 78 78 78",
                 Border = new BorderInfo(BorderSide.Box, 1f, _textColor),
                 DefaultCellBorder = new BorderInfo(BorderSide.Box, 0.5f, _textColor),
                 DefaultCellPadding = new MarginInfo(4.5, 4.5, 4.5, 4.5),
@@ -277,23 +284,22 @@ namespace Admin_Client.Model.FileIO.PDF
                 headerRowCell.BackgroundColor = _textColor;
                 headerRowCell.DefaultCellTextState.ForegroundColor = _backColor;
             }
-            foreach (var user in People)
+            foreach (var user in People) //count: 4(doesnt count TripName)
             {
                 var row = table.Rows.Add();
                 cell = row.Cells.Add(user.ID.ToString());
                 cell.Alignment = HorizontalAlignment.Center;
-                row.Cells.Add(user.FirstName);
+                cell = row.Cells.Add(user.FirstName);
+                cell.Alignment = HorizontalAlignment.Right;
                 cell = row.Cells.Add(user.LastName);
                 cell.Alignment = HorizontalAlignment.Right;
-                cell = row.Cells.Add(user.TripName);
-                cell.Alignment = HorizontalAlignment.Right;
+				cell = row.Cells.Add(user.Note);
+				cell.Alignment = HorizontalAlignment.Right;
                 cell = row.Cells.Add(user.Expenses.ToString());
                 cell.Alignment = HorizontalAlignment.Right;
                 cell = row.Cells.Add(user.Total.ToString());
                 cell.Alignment = HorizontalAlignment.Right;
             }
-
-
             /*
             foreach(var totalRow in Totals)
             {
@@ -305,7 +311,7 @@ namespace Admin_Client.Model.FileIO.PDF
 
             }
             */
-
+            
             _pdfPage.Paragraphs.Add(table);
 
         }
@@ -323,7 +329,7 @@ namespace Admin_Client.Model.FileIO.PDF
         {
             var fragment = new TextFragment(Footer);
             var len = fragment.TextState.MeasureString(fragment.Text);
-            fragment.Position = new Aspose.Pdf.Text.Position(_pdfPage.PageInfo.Width / 2 - len / 2, 20);
+            fragment.Position = new Aspose.Pdf.Text.Position(_pdfPage.PageInfo.Width / 2 - len / 2, 10);
             fragment.Hyperlink = new WebHyperlink(Footer);
             var builder = new TextBuilder(_pdfPage);
             builder.AppendText(fragment);
@@ -378,7 +384,7 @@ namespace Admin_Client.Model.FileIO.PDF
                 var row = table.Rows.Add();
                 var nameCell = row.Cells.Add(totalRow.Text);
                 nameCell.ColSpan = 4;
-                var textCell = row.Cells.Add(totalRow.Value.ToString("C2"));
+                var textCell = row.Cells.Add(totalRow.Value);
                 textCell.Alignment = HorizontalAlignment.Right;
             }
 
@@ -446,9 +452,9 @@ namespace Admin_Client.Model.FileIO.PDF
 
                 Totals = new List<TotalRow>
                 {
-                    new TotalRow("Sub Rest", subTotal),
-                    new TotalRow("VAR @ 20%", subTotal * 0.2M),
-                    new TotalRow("Rest", subTotal * 1.2M)
+                    //new TotalRow("Sub Rest", subTotal),
+                   // new TotalRow("VAR @ 20%", subTotal * 0.2M),
+                   // new TotalRow("Rest", subTotal * 1.2M)
                 },
 
                 Details = new List<string>
@@ -468,7 +474,7 @@ namespace Admin_Client.Model.FileIO.PDF
         #endregion
 
         #region IDisposable Support
-        private bool disposedValue = false; //Detect reduncant cells
+        private bool disposedValue = false; //Detect redundant cells
         protected virtual void Dispose(bool disposing)
         {
             if (!disposedValue)

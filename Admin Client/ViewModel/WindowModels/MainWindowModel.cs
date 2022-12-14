@@ -330,6 +330,7 @@ namespace Admin_Client.ViewModel.WindowModels
 
 		public void APIFastConnectThread(object o)
 		{
+			Thread.Sleep(500);
 			List<tblUser> users = HttpClientHandler.GetUsers();
 		}
 
