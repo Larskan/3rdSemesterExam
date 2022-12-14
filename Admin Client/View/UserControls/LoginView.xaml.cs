@@ -24,6 +24,7 @@ using Admin_Client.Model.DB;
 using Admin_Client.Model.FileIO;
 using Admin_Client.Model.FileIO.PDF;
 using Admin_Client.Model.FileIO.TemplatePDF;
+using Admin_Client.Model.DB.EF_Test;
 
 namespace Admin_Client.View.UserControls
 {
@@ -42,17 +43,19 @@ namespace Admin_Client.View.UserControls
 
 		private void Login_Click(object sender, RoutedEventArgs e)
 		{
+			
+
 			ReceiptPDF rec = new ReceiptPDF();
-			rec.SecondPlaceHolder();
-            var userSelect = HttpClientHandler.GetUser(2);
-            var receiptSelect = HttpClientHandler.GetReceiptsFromUser(userSelect);
-			Debug.WriteLine("RECEIPTS: "+receiptSelect);
+			tblTrip trip = new tblTrip();
+			var ins = new tblTrip() { fldTripID = 4 };
+			//rec.GrabData(ins);
 
-            //rec.PlaceholderData();
-            //TemplateReceiptPDF temp = new TemplateReceiptPDF();
-            //temp.PlaceholderData();
+			foreach (var item in rec.GetData(ins))
+			{
+				Debug.WriteLine(item.FirstName + ": " + item.Expenses);
+			}
 
-            /*
+			/*
 			
 			if (PasswordBox_Password.Password.Length > 0)
 			{
@@ -63,10 +66,7 @@ namespace Admin_Client.View.UserControls
 				viewModel.Login(TextBox_Username.Text, TextBox_Password.Text);
 			}
 			*/
-
-
-
-        }
+		}
 
 		private void TextBox_Password_TextChanged(object sender, TextChangedEventArgs e)
 		{

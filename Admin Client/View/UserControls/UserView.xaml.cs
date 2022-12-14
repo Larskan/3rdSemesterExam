@@ -1,8 +1,10 @@
-﻿using Admin_Client.Model.DB.EF_Test;
+﻿using Admin_Client.Model.DB;
+using Admin_Client.Model.DB.EF_Test;
 using Admin_Client.Model.Domain;
 using Admin_Client.Model.FileIO;
 using Admin_Client.Singleton;
 using Admin_Client.ViewModel.ContentControlModels;
+using Org.BouncyCastle.Utilities.IO.Pem;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,5 +51,6 @@ namespace Admin_Client.View.UserControls
             viewModel.UpdateGroups();
             viewModel.UpdateReceipts();
         }
-    }
+
+	}
 }
