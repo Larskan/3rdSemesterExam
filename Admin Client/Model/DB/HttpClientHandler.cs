@@ -121,6 +121,26 @@ namespace Admin_Client.Model.DB
 
 		#region tblTrip
 
+		static bool tripIsDone = false;
+		static tblTrip tripObject = null;
+		public static tblTrip GetTrip(int ID)
+		{
+			if (tripObject != null || tripIsDone)
+			{
+				tripIsDone = false;
+				tripObject = null;
+			}
+
+			ThreadStart(SqlObjectType.tblTrip, APIMethod.Get, targetID: ID);
+
+			while (!tripIsDone)
+			{
+				Thread.Sleep(500);
+			}
+
+			return tripObject;
+		}
+
 		static bool tripsIsDone = false;
 		static List<tblTrip> tripsList = new List<tblTrip>();
 		public static List<tblTrip> GetTrips()
@@ -515,6 +535,12 @@ namespace Admin_Client.Model.DB
 					{
 						userObject = ((JObject)o).ToObject<tblUser>();
 						userIsDone = true;
+						break;
+					}
+				case SqlObjectType.tblTrip:
+					{
+						tripObject = ((JObject)o).ToObject<tblTrip>();
+						tripIsDone = true;
 						break;
 					}
 				default: throw new Exception(type + " is not implemented");

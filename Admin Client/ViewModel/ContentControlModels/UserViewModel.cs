@@ -17,7 +17,6 @@ namespace Admin_Client.ViewModel.ContentControlModels
 {
     public class UserViewModel : NotifyPropertyChangedHandler
     {
-        UserviewSingleton Usersingleton = UserviewSingleton.getInstance();
         #region Variables
 
         tblUser user;

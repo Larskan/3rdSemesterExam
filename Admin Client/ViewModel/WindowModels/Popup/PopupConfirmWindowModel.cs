@@ -19,7 +19,6 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 {
 	public class PopupConfirmWindowModel : NotifyPropertyChangedHandler
 	{
-        UserviewSingleton Usersingleton = UserviewSingleton.getInstance();
         #region Variables
 
         private object target;
@@ -126,8 +125,6 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 				case "tblUser":
 					{
 						tblUser user = (tblUser)target;
-
-						Usersingleton.SetUserID(user.fldUserID);
 
                         MainWindowModelSingleton.Instance.SetMainContent(new UserView(user));
                         
