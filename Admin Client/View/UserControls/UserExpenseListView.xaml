@@ -46,6 +46,8 @@
 
             <Label Grid.Column="2" Content="UserExpense Amount" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ></Label>
 
+            <Button Grid.Column="3" Content="Print PDF" Margin="5" Resources="{StaticResource roundcornerbutton10}" Click="PDF_Click" />
+            
             <Button Grid.Column="4" Content="Delete" Margin="5" Resources="{StaticResource roundcornerbutton10}" Click="Delete_Click" />
 
         </Grid>

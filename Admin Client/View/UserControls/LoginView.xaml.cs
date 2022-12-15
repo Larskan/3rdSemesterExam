@@ -39,19 +39,7 @@ namespace Admin_Client.View.UserControls
 		}
 
 		private void Login_Click(object sender, RoutedEventArgs e)
-		{
-			/*
-			ReceiptPDF rec = new ReceiptPDF();
-			var ins = new tblTrip() { fldTripID = 4 };
-			rec.GrabData(ins);
-
-			foreach (var item in rec.GetData(ins))
-			{
-                rec.GrabData(ins);
-                Debug.WriteLine(item.FirstName + ": " + item.Expenses);
-			}
-			*/
-			
+		{	
 			if (PasswordBox_Password.Password.Length > 0)
 			{
 				viewModel.Login(TextBox_Username.Text, PasswordBox_Password.Password);
@@ -60,8 +48,6 @@ namespace Admin_Client.View.UserControls
 			{
 				viewModel.Login(TextBox_Username.Text, TextBox_Password.Text);
 			}
-			
-			
 		}
 
 		private void TextBox_Password_TextChanged(object sender, TextChangedEventArgs e)
