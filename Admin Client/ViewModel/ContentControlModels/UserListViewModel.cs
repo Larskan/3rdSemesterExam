@@ -114,6 +114,11 @@ namespace Admin_Client.ViewModel.ContentControlModels
 				bool found;
 				foreach (var userItem in users)
 				{
+					if (token.IsCancellationRequested)
+					{
+						break;
+					}
+
 					found = false;
 					foreach (var UserItem in Users)
 					{

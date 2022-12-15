@@ -182,7 +182,12 @@ namespace Admin_Client.ViewModel.ContentControlModels
                 bool found;
                 foreach (var groupItem in groups)
                 {
-                    found = false;
+					if (token.IsCancellationRequested)
+					{
+						break;
+					}
+
+					found = false;
                     foreach (var GroupItem in Groups)
                     {
                         if (groupItem.fldGroupID == GroupItem.fldGroupID)
@@ -219,7 +224,12 @@ namespace Admin_Client.ViewModel.ContentControlModels
                 bool found;
                 foreach (var receiptItem in receipts)
                 {
-                    found = false;
+					if (token.IsCancellationRequested)
+					{
+						break;
+					}
+
+					found = false;
                     foreach (var ReceiptItem in Receipts)
                     {
                         

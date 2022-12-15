@@ -187,7 +187,12 @@ namespace Admin_Client.ViewModel.ContentControlModels
                 bool found;
                 foreach (var userItem in users)
                 {
-                    found = false;
+					if (token.IsCancellationRequested)
+					{
+						break;
+					}
+
+					found = false;
                     foreach (var UserItem in Members)
                     {
                         if (userItem.fldUserID == UserItem.fldUserID)
@@ -221,7 +226,12 @@ namespace Admin_Client.ViewModel.ContentControlModels
 				bool found;
                 foreach (var tripItem in trips)
                 {
-                    found = false;
+					if (token.IsCancellationRequested)
+					{
+						break;
+					}
+
+					found = false;
                     foreach (var TripItem in Trips)
                     {
                         if (tripItem.fldTripID == TripItem.fldTripID)

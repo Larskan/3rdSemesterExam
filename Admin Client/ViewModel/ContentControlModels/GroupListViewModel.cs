@@ -117,6 +117,11 @@ namespace Admin_Client.ViewModel.ContentControlModels
 				bool found;
 				foreach (var groupItem in groups)
 				{
+					if (token.IsCancellationRequested)
+					{
+						break;
+					}
+
 					found = false;
 					foreach (var GroupItem in Groups)
 					{

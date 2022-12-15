@@ -611,7 +611,6 @@ namespace Admin_Client.Model.DB
 				case APIMethod.GetAll: ThreadPool.QueueUserWorkItem(GetAllThread, new object[] { type }); break;
 					default: throw new Exception(method + " is not usable in the current context");
 			}
-			
 		}
 
 		/// <summary>
