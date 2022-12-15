@@ -22,6 +22,8 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		private int startupDelay = 500;
 
+		private tblTrip currentTrip;
+
 		#endregion
 
 		#region Properties
@@ -61,6 +63,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Information, "Get UserExpenses for Trip: " + trip.fldTripID + " " + trip.fldTripName));
 
 			this.Name = trip.fldTripName;
+			this.currentTrip = trip;
 
 			ThreadPool.QueueUserWorkItem(UpdateReceiptListThreadViaTrip, new object[] { trip });
 		}
@@ -72,6 +75,13 @@ namespace Admin_Client.ViewModel.ContentControlModels
 		public void Delete(tblUserExpense userExpense)
 		{
 			MainWindowModelSingleton.Instance.StartPopupConfirm(userExpense, PopupMethod.Delete);
+		}
+
+		public void PDF()
+		{
+			// Du kan bruge dette trip til at få fat i dataen
+			// this.currentTrip;
+
 		}
 
 		#endregion

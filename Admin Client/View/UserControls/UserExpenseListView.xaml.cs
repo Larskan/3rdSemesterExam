@@ -52,7 +52,7 @@ namespace Admin_Client.View.UserControls
 
 		private void PDF_Click(object sender, RoutedEventArgs e)
 		{
-
+			viewModel.PDF();
         }
     }
 }
