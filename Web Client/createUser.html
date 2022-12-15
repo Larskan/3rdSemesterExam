@@ -4,9 +4,9 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="createUser.css" />
+    <link rel="stylesheet" href="css/createUser.css" />
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="createUser.js"></script>
+    <script src="js/createUser.js"></script>
     <title>Create your account</title>
   </head>
   <body>
@@ -114,7 +114,9 @@
 
       async function postEmail() {
         var userEmail = document.getElementById("email").value;
-        var pass = await EncryptPassword(document.getElementById("password").value);
+        var pass = await EncryptPassword(
+          document.getElementById("password").value
+        );
         var firstName = document.getElementById("namefieldFirst").value;
         var lastName = document.getElementById("namefieldLast").value;
         var phone = document.getElementById("phone").value;
@@ -137,13 +139,17 @@
           .catch((err) => console.log(err));
       }
 
-      async function EncryptPassword(string){
-        let salt = ((string.length * string.length) / 2 + (string.length / 2)) + string.charCodeAt(string.length-1);
+      async function EncryptPassword(string) {
+        let salt =
+          (string.length * string.length) / 2 +
+          string.length / 2 +
+          string.charCodeAt(string.length - 1);
         const utf8 = new TextEncoder().encode(string + salt);
-        const hashBuffer = await crypto.subtle.digest('SHA-256', utf8);
+        const hashBuffer = await crypto.subtle.digest("SHA-256", utf8);
         const hashArray = Array.from(new Uint8Array(hashBuffer));
         const hashHex = hashArray
-        .map((bytes)=>bytes.toString(16).padStart(2,'0')).join('');
+          .map((bytes) => bytes.toString(16).padStart(2, "0"))
+          .join("");
         return hashHex;
       }
     </script>

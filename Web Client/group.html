@@ -1,20 +1,20 @@
 <!DOCTYPE html>
+
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
     />
-    <link rel="stylesheet" href="../universal.css" />
+    <link rel="stylesheet" href="css/universal.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-    <!-- Replace with trip name -->
-    <title>Trip</title>
+    <!-- Replace with group name -->
+    <title>Group</title>
   </head>
+
   <body>
     <nav
       class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top"
@@ -54,7 +54,7 @@
           <p><a href="#">Link</a></p>
           <p><a href="#">Link</a></p>
         </div>
-        <div class="col-sm-8 text-left">
+        <div class="col-sm-10 text-left">
           <div id="Center" class="container-fluid">
             <!--This is here for copy and paste -->
 
@@ -63,33 +63,35 @@
 
             <!--#region Heading  -->
             <div id="Container" class="container">
-              <h1 id="NameHeader">Loading . . .</h1>
+              <h1 id="GroupName">n</h1>
             </div>
             <!--#endregion -->
 
             <div class="container text-left">
               <div class="row">
-                <div class="col-sm-6">
-                  <h2>Sum:</h2>
-                  <h3 id="SumHeader">Loading . . .</h3>
+                <div class="col-sm-8">
+                  <h3>Trips</h3>
                   <table id="TripTable" class="table table-hover">
                     <thead>
                       <tr>
-                        <th>Amount</th>
-                        <th>User</th>
-                        <th>Date</th>
-                        <th>Note</th>
+                        <th>Name</th>
+                        <th>Created</th>
+                        <th>Sum</th>
                       </tr>
                     </thead>
-                    <tbody id="ExpenseTableBody"></tbody>
+                    <tbody id="TripTableBody"></tbody>
                   </table>
-
                   <!-- TODO: replace with script for loading trip list from DB -->
                 </div>
                 <div class="col-sm-4">
-                  <canvas id="BarChart"></canvas>
-                  <br />
-                  <canvas id="PieChart"></canvas>
+                  <div id="Panel" class="panel panel-default">
+                    <div id="Heading" class="panel-heading">Members</div>
+                    <table class="table table-hover">
+                      <tbody id="UserTableBody"></tbody>
+                    </table>
+                    <!-- TODO: replace with script for loading user list from DB -->
+                    <!-- Will probably need to hold the user ID here somehow-->
+                  </div>
                 </div>
               </div>
             </div>
@@ -97,11 +99,18 @@
         </div>
       </div>
     </div>
+
+    <footer class="container-fluid text-center">
+      <p>Footer Text</p>
+    </footer>
   </body>
 
-  <script src="trip.js"></script>
+  <script src="js/group.js"></script>
+
+  <script></script>
 
   <script>
-    $(document).ready(setup());
+    $(document).ready(PopulateTripTable());
+    $(document).ready(PopulateMemberTable());
   </script>
 </html>

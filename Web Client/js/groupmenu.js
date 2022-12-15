@@ -51,7 +51,7 @@ function CreateGroupElement(name,node)
         btn.id = "GroupIcon";
         btn.className = "btn btn=default";
     
-        btn.innerHTML = name;
+         btn.innerHTML = name;
     
         node.appendChild(btn);
 }
