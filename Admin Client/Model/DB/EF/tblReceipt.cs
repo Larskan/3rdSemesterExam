@@ -1,4 +1,4 @@
-namespace Admin_Client.Model.DB.EF_Test
+namespace Admin_Client.Model.DB.EF
 {
     using System;
     using System.Collections.Generic;

@@ -1,4 +1,4 @@
-namespace Admin_Client.Model.DB.EF_Test
+namespace Admin_Client.Model.DB.EF
 {
     using System;
     using System.Collections.Generic;
@@ -6,18 +6,18 @@ namespace Admin_Client.Model.DB.EF_Test
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("tblGroupToTrip")]
-    public partial class tblGroupToTrip
+    [Table("tblTripToUserExpense")]
+    public partial class tblTripToUserExpense
     {
         [Key]
-        public int fldGroupToTripID { get; set; }
-
-        public int fldGroupID { get; set; }
+        public int fldTripToUserExpenseID { get; set; }
 
         public int fldTripID { get; set; }
 
-        public virtual tblGroup tblGroup { get; set; }
+        public int fldExpenseID { get; set; }
 
         public virtual tblTrip tblTrip { get; set; }
+
+        public virtual tblUserExpense tblUserExpense { get; set; }
     }
 }

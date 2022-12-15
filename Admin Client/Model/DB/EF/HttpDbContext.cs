@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Linq;
 
-namespace Admin_Client.Model.DB.EF_Test
+namespace Admin_Client.Model.DB.EF
 {
     public partial class HttpDbContext : DbContext
     {

@@ -342,15 +342,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Model\DB\EF Test\HttpDbContext.cs" />
-    <Compile Include="Model\DB\EF Test\tblGroup.cs" />
-    <Compile Include="Model\DB\EF Test\tblGroupToTrip.cs" />
-    <Compile Include="Model\DB\EF Test\tblReceipt.cs" />
-    <Compile Include="Model\DB\EF Test\tblTrip.cs" />
-    <Compile Include="Model\DB\EF Test\tblTripToUserExpense.cs" />
-    <Compile Include="Model\DB\EF Test\tblUser.cs" />
-    <Compile Include="Model\DB\EF Test\tblUserExpense.cs" />
-    <Compile Include="Model\DB\EF Test\tblUserToGroup.cs" />
+    <Compile Include="Model\DB\EF\HttpDbContext.cs" />
+    <Compile Include="Model\DB\EF\tblGroup.cs" />
+    <Compile Include="Model\DB\EF\tblGroupToTrip.cs" />
+    <Compile Include="Model\DB\EF\tblReceipt.cs" />
+    <Compile Include="Model\DB\EF\tblTrip.cs" />
+    <Compile Include="Model\DB\EF\tblTripToUserExpense.cs" />
+    <Compile Include="Model\DB\EF\tblUser.cs" />
+    <Compile Include="Model\DB\EF\tblUserExpense.cs" />
+    <Compile Include="Model\DB\EF\tblUserToGroup.cs" />
     <Compile Include="Model\DB\HttpAPIClient.cs" />
     <Compile Include="Model\DB\HttpClientHandler.cs" />
     <Compile Include="Model\Domain\Log.cs" />

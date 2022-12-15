@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Admin_Client.Model.DB.EF_Test;
+using Admin_Client.Model.DB.EF;
 using Admin_Client.Model.DB;
 using Admin_Client.Model.Domain;
 using System.Diagnostics;
@@ -23,6 +23,15 @@ namespace Admin_Client.Model.FileIO
         private readonly Document _pdfDocument;
         #endregion
 
+        #region Public Members
+        public string ReceiptTitle;
+        public List<string> ReceiptFrom;
+        public List<string> ReceiptTo;
+        public List<PersonPDF> People;
+        public List<string> Details;
+        public string Footer;
+        #endregion
+
         #region Get and Set
         public string ForegroundColor
         {
@@ -34,18 +43,12 @@ namespace Admin_Client.Model.FileIO
             get { return _backColor.ToString(); }
             set { _backColor = Color.Parse(value); }
         }
-        #endregion
-
-        #region Public Members
-        public string ReceiptTitle;
-        public List<string> ReceiptFrom;
-        public List<string> ReceiptTo;
-        public List<PersonPDF> People;
-        public List<string> Details;
-        public string Footer;
-        #endregion
+        #endregion      
 
         #region Constructor
+        /// <summary>
+        /// <para>Constructor of PDF</para>
+        /// </summary>
         public ReceiptPDF()
         {
             _pdfDocument = new Document();
@@ -59,8 +62,10 @@ namespace Admin_Client.Model.FileIO
         }
         #endregion
 
+        #region Creation of PDF
         /// <summary>
-        /// Loads all the sections for the PDF Page
+        /// <para></para>
+        /// <para>Loads all the sections for the PDF Page and adds them to Stream</para>
         /// </summary>
         /// <param name="stream">Current active stream</param>
         public void Save(Stream stream)
@@ -72,9 +77,9 @@ namespace Admin_Client.Model.FileIO
             FooterSection(); //Link to website
             _pdfDocument.Save(stream);
         }
-    
+
         /// <summary>
-        /// Creates the default PDF Page
+        /// <para>Creates the default PDF Page</para>
         /// </summary>
         /// <param name="trip">Chosen trip</param>
         public void GrabData(tblTrip trip)
@@ -108,6 +113,11 @@ namespace Admin_Client.Model.FileIO
             fileStream.Close();
         }
 
+        /// <summary>
+        /// <para>Gets the necessary Data for receipt based on TripID</para>
+        /// </summary>
+        /// <param name="trip"></param>
+        /// <returns></returns>
         public List<PersonPDF> GetData(tblTrip trip)
         {
 			Debug.WriteLine("Start");
@@ -162,6 +172,7 @@ namespace Admin_Client.Model.FileIO
 
 			return people;
 		}
+        #endregion
 
         #region Sections
         private void HeaderSection()
@@ -178,7 +189,7 @@ namespace Admin_Client.Model.FileIO
             lines[2] = new TextFragment($"Contact: 74 44 85 85");
             for (var i = 1; i < lines.Length; i++)
             {
-                //text properties
+                //text properties for the Header Lines
                 lines[i].TextState.Font = _timeNewRomanFont;
                 lines[i].TextState.FontSize = 12;
                 lines[i].HorizontalAlignment = HorizontalAlignment.Right;
@@ -233,8 +244,7 @@ namespace Admin_Client.Model.FileIO
         {
             var table = new Table
             {
-                //How large the columns are
-                ColumnWidths = "26 78 78 78 78 78",
+                ColumnWidths = "26 78 78 78 78 78", //How large the columns in table are
                 Border = new BorderInfo(BorderSide.Box, 1f, _textColor),
                 DefaultCellBorder = new BorderInfo(BorderSide.Box, 0.5f, _textColor),
                 DefaultCellPadding = new MarginInfo(4.5, 4.5, 4.5, 4.5),
@@ -300,10 +310,14 @@ namespace Admin_Client.Model.FileIO
             builder.AppendText(fragment);
         }
         #endregion
-
        
         #region IDisposable Support
-        private bool disposedValue = false; //Detect redundant cells
+        private bool disposedValue = false;
+        /// <summary>
+        /// <para>Detects redundant cells and disposes of them</para>
+        /// </summary>
+        /// <param name="disposing"></param>
+
         protected virtual void Dispose(bool disposing)
         {
             if (!disposedValue)
