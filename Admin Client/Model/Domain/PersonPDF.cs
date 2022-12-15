@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 using Admin_Client.Model.DB;
 using Admin_Client.Model.DB.EF;
 
-namespace Admin_Client.Model.Domain { 
+namespace Admin_Client.Model.Domain {
 
+    /// <summary>
+    /// <para>The details chosen in the Receipt</para>
+    /// </summary>
     public class PersonPDF
     {
         public int ID;

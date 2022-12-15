@@ -1,4 +1,4 @@
-﻿using Admin_Client.Model.DB.EF_Test;
+﻿using Admin_Client.Model.DB.EF;
 using Admin_Client.ViewModel.ContentControlModels;
 using Admin_Client.ViewModel.WindowModels.Popup;
 using System;

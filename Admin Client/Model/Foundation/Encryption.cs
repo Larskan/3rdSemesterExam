@@ -9,6 +9,12 @@ namespace Admin_Client.Model.Foundation
 {
     public class Encryption
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="password"></param>
+        /// <param name="salt"></param>
+        /// <returns></returns>
         public static string Encrypt_Password(string password, int salt)
         {
             using (SHA256 sha256Hash = SHA256.Create())
@@ -28,6 +34,11 @@ namespace Admin_Client.Model.Foundation
                 return sb.ToString();
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public static int Salt_Password(string password)
         {
             //Inorder to salt the password, we take each char in the given password, add it together in a sum
