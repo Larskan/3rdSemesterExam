@@ -2,6 +2,7 @@
 using Admin_Client.Model.DB;
 using Admin_Client.Model.DB.EF;
 using Admin_Client.Model.Domain;
+using Admin_Client.Model.FileIO;
 using Admin_Client.PropertyChanged;
 using Admin_Client.Singleton;
 using Admin_Client.View.Windows.Popups;
@@ -84,9 +85,7 @@ namespace Admin_Client.ViewModel.ContentControlModels
 		/// </summary>
 		public void PDF()
 		{
-			// Du kan bruge dette trip til at få fat i dataen
-			// this.currentTrip;
-
+			new ReceiptPDF().SaveReceiptFromTripAsPDF(currentTrip);
 		}
 
 		#endregion

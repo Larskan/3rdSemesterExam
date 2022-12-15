@@ -15,8 +15,48 @@ namespace Admin_Client.Model.FileIO
 {
     public class ReceiptPDF : IDisposable
     {
-        #region Private Members
-        private Color _textColor, _backColor;
+		#region FilePath
+
+		private static string ROOTPATH = AppDomain.CurrentDomain.BaseDirectory;
+		private static string DATAPATH = ROOTPATH + @"Data";
+		private static string PATH = DATAPATH + @"\PDF";
+
+		#region Folder
+
+		/// <summary>
+		/// Makes sure the Data folder exists otherwise it gets created
+		/// </summary>
+		/// <returns>True if created/exists, false if not</returns>
+		public bool CreatePDFDir()
+		{
+			bool found = false;
+			try
+			{
+				foreach (var item in Directory.GetFiles(DATAPATH))
+				{
+					if (item.Equals(PATH))
+					{
+						found = true;
+					}
+				}
+				if (!found)
+				{
+					Directory.CreateDirectory(PATH);
+				}
+			}
+			catch
+			{
+				return false;
+			}
+			return true;
+		}
+
+		#endregion
+
+		#endregion
+
+		#region Private Members
+		private Color _textColor, _backColor;
         private readonly Font _timeNewRomanFont;
         private readonly TextBuilder _builder;
         private readonly Page _pdfPage;
@@ -51,6 +91,8 @@ namespace Admin_Client.Model.FileIO
         /// </summary>
         public ReceiptPDF()
         {
+            CreatePDFDir();
+
             _pdfDocument = new Document();
             _pdfDocument.PageInfo.Margin.Left = 36;
             _pdfDocument.PageInfo.Margin.Right = 36;
@@ -82,10 +124,10 @@ namespace Admin_Client.Model.FileIO
         /// <para>Creates the default PDF Page</para>
         /// </summary>
         /// <param name="trip">Chosen trip</param>
-        public void GrabData(tblTrip trip)
+        public void SaveReceiptFromTripAsPDF(tblTrip trip)
         {
             DateTime datetime = DateTime.Now;
-            string dataDir = @"C:\Users\Lars\Desktop\" + datetime.ToLongDateString() + ".pdf";
+            string dataDir = PATH + @"\" + datetime.ToLongDateString() + ".pdf";
 
             // Get data to use
             List<PersonPDF> people = GetData(trip);
@@ -94,12 +136,12 @@ namespace Admin_Client.Model.FileIO
             {
                 ForegroundColor = "#4a7e79",
                 BackgroundColor = "#FFFFFF",
-                ReceiptTitle = "Dinner with Coworkers",
+                ReceiptTitle = trip.fldTripName,
                 ReceiptFrom = new List<string> { "Fair Share HQ", "Eastern Sønderborg", "Alsgade 44", "Denmark" },
-                ReceiptTo = new List<string> { "Western Berlin", "Alsgade 0", "Germany" },
                 People = people,
                 Details = new List<string>
                 {
+                    "",
                     "Final Message",
                     "Thanks for using Fair Share!",
                     string.Empty,
@@ -120,7 +162,6 @@ namespace Admin_Client.Model.FileIO
         /// <returns></returns>
         public List<PersonPDF> GetData(tblTrip trip)
         {
-			Debug.WriteLine("Start");
 
 			double total = 0;
 
@@ -131,7 +172,6 @@ namespace Admin_Client.Model.FileIO
 			bool exists;
 			foreach (var userExpense in userExpenses)
 			{
-                Debug.WriteLine("UserExpense: " + userExpense.fldNote);
 
 				exists = false;
 
@@ -142,17 +182,14 @@ namespace Admin_Client.Model.FileIO
 				// Check if user already has a record
 				foreach (var userPerson in people)
 				{
-					Debug.WriteLine("UserPerson: " + userPerson.FirstName);
 					if (userPerson.ID == userExpense.fldUserID)
 					{
-						Debug.WriteLine("Exists");
 						userPerson.Expenses += userExpense.fldExpense;
 						exists = true;
                     }
                 }
 				if (!exists)
 				{
-					Debug.WriteLine("Don't Exists");
 					people.Add(new PersonPDF()
 					{
 						ID = user.fldUserID,
@@ -178,7 +215,7 @@ namespace Admin_Client.Model.FileIO
         private void HeaderSection()
         {
             var lines = new TextFragment[3];
-            lines[0] = new TextFragment($"RECEIPT FOR {ReceiptTitle}");
+            lines[0] = new TextFragment(ReceiptTitle);
             lines[0].TextState.FontSize = 20;
             lines[0].TextState.ForegroundColor = _textColor;
             lines[0].HorizontalAlignment = HorizontalAlignment.Left;
@@ -212,32 +249,39 @@ namespace Admin_Client.Model.FileIO
             };
             TextFragment fragment;
 
-            ReceiptFrom.Insert(0, "FROM:");
-            foreach (var str in ReceiptFrom)
+            if (ReceiptFrom != null)
             {
-                fragment = new TextFragment(str);
-                fragment.TextState.Font = _timeNewRomanFont;
-                fragment.TextState.FontSize = 12;
-                fragment.TextState.FontStyle = FontStyles.Bold;
-                box.Paragraphs.Add(fragment);
-            }
-
-            fragment = new TextFragment("RECEIPT TO:") { IsFirstParagraphInColumn = true };
-            fragment.TextState.Font = _timeNewRomanFont;
-            fragment.TextState.FontSize = 12;
-            fragment.TextState.FontStyle = FontStyles.Bold;
-            fragment.TextState.HorizontalAlignment = HorizontalAlignment.Right;
-            box.Paragraphs.Add(fragment);
-
-            foreach (var str in ReceiptTo)
+				ReceiptFrom.Insert(0, "FROM:");
+				foreach (var str in ReceiptFrom)
+				{
+					fragment = new TextFragment(str);
+					fragment.TextState.Font = _timeNewRomanFont;
+					fragment.TextState.FontSize = 12;
+					fragment.TextState.FontStyle = FontStyles.Bold;
+					box.Paragraphs.Add(fragment);
+				}
+			}
+            
+            if (ReceiptTo != null)
             {
-                fragment = new TextFragment(str);
-                fragment.TextState.Font = _timeNewRomanFont;
-                fragment.TextState.FontSize = 12;
-                fragment.TextState.FontStyle = FontStyles.Bold;
-                fragment.TextState.HorizontalAlignment = HorizontalAlignment.Right;
-                box.Paragraphs.Add(fragment);
-            }
+				fragment = new TextFragment("RECEIPT TO:") { IsFirstParagraphInColumn = true };
+				fragment.TextState.Font = _timeNewRomanFont;
+				fragment.TextState.FontSize = 12;
+				fragment.TextState.FontStyle = FontStyles.Bold;
+				fragment.TextState.HorizontalAlignment = HorizontalAlignment.Right;
+				box.Paragraphs.Add(fragment);
+
+				foreach (var str in ReceiptTo)
+				{
+					fragment = new TextFragment(str);
+					fragment.TextState.Font = _timeNewRomanFont;
+					fragment.TextState.FontSize = 12;
+					fragment.TextState.FontStyle = FontStyles.Bold;
+					fragment.TextState.HorizontalAlignment = HorizontalAlignment.Right;
+					box.Paragraphs.Add(fragment);
+				}
+			}
+            
             _pdfPage.Paragraphs.Add(box);
         }
         private void GridSection()
