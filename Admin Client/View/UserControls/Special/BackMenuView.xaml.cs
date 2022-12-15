@@ -23,19 +23,19 @@ namespace Admin_Client.View.UserControls.Special
 	/// </summary>
 	public partial class BackMenuView : UserControl
 	{
-		BackMenuViewModel viewModel = new BackMenuViewModel();
-		UserControl userControl;
+		BackMenuViewModel viewModel;
+		
 		public BackMenuView(UserControl lastUControl)
 		{
+			this.viewModel = new BackMenuViewModel(lastUControl);
 			this.DataContext = viewModel;
-			this.userControl = lastUControl;
 
 			InitializeComponent();
 		}
 
 		private void Back_Click(object sender, RoutedEventArgs e)
 		{
-			viewModel.Back(userControl);
+			viewModel.Back();
 		}
 	}
 }

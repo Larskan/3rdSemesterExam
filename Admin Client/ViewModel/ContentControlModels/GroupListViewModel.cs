@@ -31,7 +31,6 @@ namespace Admin_Client.ViewModel.ContentControlModels
 			set { groups = value; }
 		}
 
-
 		#endregion
 
 		#region Constructor
@@ -46,6 +45,10 @@ namespace Admin_Client.ViewModel.ContentControlModels
 		#region Public Methods
 
 		CancellationTokenSource tokenSource;
+
+		/// <summary>
+		/// Start a update of the group list
+		/// </summary>
 		public void Update()
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Update Groups Click"));
@@ -58,6 +61,9 @@ namespace Admin_Client.ViewModel.ContentControlModels
 			ThreadPool.QueueUserWorkItem(UpdateGroupsListThread, new object[] { tokenSource.Token });
 		}
 
+		/// <summary>
+		/// Create a new group and update the group list
+		/// </summary>
 		public void Create()
 		{
 			MainWindowModelSingleton.Instance.StartPopupConfirm(new tblGroup(), PopupMethod.Create);
@@ -65,12 +71,22 @@ namespace Admin_Client.ViewModel.ContentControlModels
 			Update();
 		}
 
+		/// <summary>
+		/// Edit the targetet group and update the group list
+		/// </summary>
+		/// <param name="group"></param>
 		public void Edit(tblGroup group)
 		{
-
 			MainWindowModelSingleton.Instance.StartPopupConfirm(group, PopupMethod.Edit);
+			Thread.Sleep(250);
+			Groups.Clear();
+			Update();
 		}
 
+		/// <summary>
+		/// Delete the targetet group and update the group list
+		/// </summary>
+		/// <param name="group"></param>
 		public void Delete(tblGroup group)
 		{
 			MainWindowModelSingleton.Instance.StartPopupConfirm(group, PopupMethod.Delete);
@@ -83,6 +99,10 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		#region Private Methods
 
+		/// <summary>
+		/// Update the group list
+		/// </summary>
+		/// <param name="o">The parameters [CancellationToken]</param>
 		private void UpdateGroupsListThread(object o)
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log("ThreadID: " + Thread.CurrentThread.ManagedThreadId + " --> Starting"));

@@ -49,15 +49,10 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		#region Constructor
 
-		public UserExpenseListViewModel(tblUser user)
-		{
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Information, "Get UserExpenses for User: " + user.fldUserID + " " + user.fldFirstName + " " + user.fldLastName));
-
-			this.Name= user.fldFirstName;
-
-			ThreadPool.QueueUserWorkItem(UpdateReceiptListThreadViaUser, new object[] { user });
-		}
-
+		/// <summary>
+		/// Creates a UserExpenseListViewModel with a targetet trip and updates the receipt list
+		/// </summary>
+		/// <param name="trip">The target</param>
 		public UserExpenseListViewModel(tblTrip trip)
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Information, "Get UserExpenses for Trip: " + trip.fldTripID + " " + trip.fldTripName));
@@ -65,18 +60,28 @@ namespace Admin_Client.ViewModel.ContentControlModels
 			this.Name = trip.fldTripName;
 			this.currentTrip = trip;
 
-			ThreadPool.QueueUserWorkItem(UpdateReceiptListThreadViaTrip, new object[] { trip });
+			ThreadPool.QueueUserWorkItem(UpdateReceiptListThreadViaTrip, new object[] { currentTrip });
 		}
 
 		#endregion
 
 		#region Public Methods
 
+		/// <summary>
+		/// Delete the targetet userExpense
+		/// </summary>
+		/// <param name="userExpense">The target</param>
 		public void Delete(tblUserExpense userExpense)
 		{
 			MainWindowModelSingleton.Instance.StartPopupConfirm(userExpense, PopupMethod.Delete);
+			UserExpenses.Clear();
+			Thread.Sleep(500);
+			ThreadPool.QueueUserWorkItem(UpdateReceiptListThreadViaTrip, new object[] { currentTrip });
 		}
 
+		/// <summary>
+		/// Create a PDF receipt for the current Trip
+		/// </summary>
 		public void PDF()
 		{
 			// Du kan bruge dette trip til at få fat i dataen
@@ -88,40 +93,10 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		#region Private Methods
 
-		private void UpdateReceiptListThreadViaUser(object o)
-		{
-			Thread.Sleep(startupDelay);
-
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log("ThreadID: " + Thread.CurrentThread.ManagedThreadId + " --> Starting"));
-
-			object[] array = o as object[];
-			tblUser user = (tblUser)array[0];
-
-			List<tblUserExpense> userExpenses = HttpClientHandler.GetUserExpensesFromUser(user);
-
-			bool found;
-			foreach (var userExpenseItem in userExpenses)
-			{
-				found = false;
-				foreach (var UserExpenseItem in UserExpenses)
-				{
-					if (userExpenseItem.fldExpenseID == userExpenseItem.fldExpenseID)
-					{
-						found = true;
-						break;
-					}
-				}
-				if (!found)
-				{
-					App.Current.Dispatcher.BeginInvoke(new Action(() => { UserExpenses.Add(userExpenseItem); }));
-				}
-			}
-
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "ThreadID: " + Thread.CurrentThread.ManagedThreadId + " ==> Done"));
-
-			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "ThreadID: " + Thread.CurrentThread.ManagedThreadId + " ==> Closed"));
-		}
-
+		/// <summary>
+		/// Updates the receipt list
+		/// </summary>
+		/// <param name="o"></param>
 		private void UpdateReceiptListThreadViaTrip(object o)
 		{
 			Thread.Sleep(startupDelay);

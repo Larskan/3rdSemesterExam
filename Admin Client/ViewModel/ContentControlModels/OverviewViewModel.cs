@@ -13,14 +13,6 @@ namespace Admin_Client.ViewModel.ContentControlModels
 	public class OverviewViewModel : NotifyPropertyChangedHandler
 	{
 
-		#region Variables
-
-		#endregion
-
-		#region Properties
-
-		#endregion
-
 		#region Constructor
 
 		public OverviewViewModel() 
@@ -32,19 +24,21 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		#region Public Methods
 
+		/// <summary>
+		/// Set the MainWindows ContentControls content to GroupList
+		/// </summary>
 		public void SetContentToGroupList()
 		{
 			MainWindowModelSingleton.Instance.SetMainContent(new GroupListView(), true);
 		}
 
+		/// <summary>
+		/// Set the MainWindows ContentControls content to UserList
+		/// </summary>
 		public void SetContentToUserList()
 		{
 			MainWindowModelSingleton.Instance.SetMainContent(new UserListView(), true);
 		}
-
-		#endregion
-
-		#region Private Methods
 
 		#endregion
 

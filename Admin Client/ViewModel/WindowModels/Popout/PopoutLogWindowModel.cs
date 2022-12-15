@@ -51,6 +51,13 @@ namespace Admin_Client.ViewModel.WindowModels.Popout
 
 		#region Constructor
 
+		/// <summary>
+		/// Creates a PopoutLogWindowModel with and connect data to the selected Logfiles name and the functionality of the view, then start a update on the log list
+		/// </summary>
+		/// <param name="dateTime">The target</param>
+		/// <param name="logContainer">The ListBox</param>
+		/// <param name="autoScrollCheckBox">The Checkbox</param>
+		/// <param name="currentWindow">The Window</param>
 		public PopoutLogWindowModel(DateTime dateTime, ListBox logContainer, CheckBox autoScrollCheckBox, Window currentWindow)
 		{
 			this.logContainer = logContainer;
@@ -74,6 +81,9 @@ namespace Admin_Client.ViewModel.WindowModels.Popout
 
 		#region Public Methods
 
+		/// <summary>
+		/// Canle token
+		/// </summary>
 		public void Closed()
 		{
 			tokenSource.Cancel();
@@ -81,6 +91,9 @@ namespace Admin_Client.ViewModel.WindowModels.Popout
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Log Close Click"));
 		}
 
+		/// <summary>
+		/// Open the current log file in a text only format
+		/// </summary>
 		public void ToText()
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Open Popout LogTextWindow"));
@@ -107,6 +120,10 @@ namespace Admin_Client.ViewModel.WindowModels.Popout
 
 		#region UpdateThread
 
+		/// <summary>
+		/// Update the log list and autoscroll
+		/// </summary>
+		/// <param name="o"></param>
 		private void UpdateLogsThread(object o)
 		{
 			object[] array = o as object[];

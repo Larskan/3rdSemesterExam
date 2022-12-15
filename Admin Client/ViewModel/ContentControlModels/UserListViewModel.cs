@@ -43,6 +43,9 @@ namespace Admin_Client.ViewModel.ContentControlModels
 		#region Public Methods
 
 		CancellationTokenSource tokenSource;
+		/// <summary>
+		/// Start an update on the user list
+		/// </summary>
 		public void Update()
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Update Users Click"));
@@ -55,6 +58,9 @@ namespace Admin_Client.ViewModel.ContentControlModels
 			ThreadPool.QueueUserWorkItem(UpdateUsersListThread, new object[] { tokenSource.Token });
 		}
 
+		/// <summary>
+		/// Create a new user and update the user list
+		/// </summary>
 		public void Create()
 		{
 			MainWindowModelSingleton.Instance.StartPopupConfirm(new tblUser() { fldPassword = "x" }, PopupMethod.Create);
@@ -62,11 +68,22 @@ namespace Admin_Client.ViewModel.ContentControlModels
 			Update();
 		}
 
+		/// <summary>
+		/// Edit the targetet user and update the user list
+		/// </summary>
+		/// <param name="user">The target</param>
 		public void Edit(tblUser user)
 		{
 			MainWindowModelSingleton.Instance.StartPopupConfirm(user, PopupMethod.Edit);
+			Thread.Sleep(500);
+			Users.Clear();
+			Update();
 		}
 
+		/// <summary>
+		/// Delete the targetet user and update the user list
+		/// </summary>
+		/// <param name="user"></param>
 		public void Delete(tblUser user)
 		{
 			MainWindowModelSingleton.Instance.StartPopupConfirm(user, PopupMethod.Delete);
@@ -79,6 +96,10 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		#region Private Methods
 
+		/// <summary>
+		/// Update the user list
+		/// </summary>
+		/// <param name="o">The parameter [CancellationToken]</param>
 		private void UpdateUsersListThread(object o)
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log("ThreadID: " + Thread.CurrentThread.ManagedThreadId + " --> Starting"));

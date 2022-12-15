@@ -91,6 +91,10 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		#region Constructor
 
+        /// <summary>
+        /// Creates a UserViewModel with a targetet user
+        /// </summary>
+        /// <param name="user">The target</param>
 		public UserViewModel(tblUser user)
         {
             this.user = user;
@@ -106,12 +110,18 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
         #region Public Methods
 
+        /// <summary>
+        /// Edit the currentUser
+        /// </summary>
         public void EditUser()
         {
             MainWindowModelSingleton.Instance.StartPopupParameterChange(user);
-            //MainWindowModelSingleton.Instance.StartPopupConfirm(user, PopupMethod.Edit);
         }
 
+        /// <summary>
+        /// Delete the targetet receipt and update the receipt list
+        /// </summary>
+        /// <param name="receipt">The target</param>
         public void DeleteReceipt(tblReceipt receipt)
         {
             MainWindowModelSingleton.Instance.StartPopupConfirm(receipt, PopupMethod.Delete);
@@ -121,6 +131,9 @@ namespace Admin_Client.ViewModel.ContentControlModels
         }
 
         CancellationTokenSource tokenSourceGroups;
+        /// <summary>
+        /// Starts an update on the group list
+        /// </summary>
         public void UpdateGroups()
         {
             LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Update Groups Click"));
@@ -134,6 +147,9 @@ namespace Admin_Client.ViewModel.ContentControlModels
         }
 
 		CancellationTokenSource tokenSourceReceipts;
+        /// <summary>
+        /// Starts an update on the receitps
+        /// </summary>
 		public void UpdateReceipts()
         {
             LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Update Receipt Click"));
@@ -148,6 +164,10 @@ namespace Admin_Client.ViewModel.ContentControlModels
         #endregion
 
         #region Private Methods
+        /// <summary>
+        /// Updates the group list
+        /// </summary>
+        /// <param name="o">The parameters [CancellationToken]</param>
         private void UpdateGroupsListThread(object o)
         {
             LogHandlerSingleton.Instance.WriteToLogFile(new Log("ThreadID: " + Thread.CurrentThread.ManagedThreadId + " --> Starting"));
@@ -180,7 +200,12 @@ namespace Admin_Client.ViewModel.ContentControlModels
 				return;
 			}
         }
-        private void UpdateReceiptsListThread(object o)
+
+		/// <summary>
+		/// Updates the receipt list
+		/// </summary>
+		/// <param name="o">The parameters [CancellationToken]</param>
+		private void UpdateReceiptsListThread(object o)
         {
             LogHandlerSingleton.Instance.WriteToLogFile(new Log("ThreadID: " + Thread.CurrentThread.ManagedThreadId + " --> Starting"));
 

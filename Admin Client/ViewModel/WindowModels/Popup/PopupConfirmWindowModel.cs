@@ -51,6 +51,13 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 
 		#region Constructor
 
+		/// <summary>
+		/// Create a 
+		/// </summary>
+		/// <param name="currentWindow">The Window</param>
+		/// <param name="target">The target object</param>
+		/// <param name="popupMethod">The Popup method</param>
+		/// <param name="linkedObject">The linked object, is by default == null</param>
 		public PopupConfirmWindowModel(Window currentWindow, object target, PopupMethod popupMethod, object linkedObject)
 		{
             // Set the methods and other object related info
@@ -118,6 +125,10 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 
 		#region Private Methods
 
+		/// <summary>
+		/// Edit the current targetet object
+		/// </summary>
+		/// <exception cref="Exception"></exception>
 		private void Edit()
 		{
 			switch (target.GetType().Name)
@@ -144,6 +155,10 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 			}
 		}
 
+		/// <summary>
+		/// Create a object of the current targetet objects type
+		/// </summary>
+		/// <exception cref="Exception"></exception>
 		private void Create()
 		{
 			switch (target.GetType().Name)
@@ -199,6 +214,10 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 			}
 		}
 
+		/// <summary>
+		/// Delete the current targetet object from DB
+		/// </summary>
+		/// <exception cref="Exception"></exception>
 		private void Delete()
 		{
 			switch (target.GetType().Name)
@@ -227,7 +246,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 
 						HttpClientHandler.Delete(SqlObjectType.tblReceipt, receipt.fldReceiptID);
 
-						//LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + receipt.fldReceiptID + " - " + receipt.fldUserID + " " + receipt.tblUser.fldFirstName + " " + receipt.tblUser.fldLastName));
+						LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Target: ID " + receipt.fldReceiptID + " - User ID: " + receipt.fldUserID));
 						break;
 					}
 				case "tblTrip":
@@ -242,6 +261,11 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 				default: throw new Exception("Has not been implemented: " + target.GetType().Name + "." + action.GetMethodInfo().Name + "()");
 			}
 		}
+
+		/// <summary>
+		/// Add a object of a given type of the currentTarget
+		/// </summary>
+		/// <exception cref="Exception"></exception>
         private void Add()
         {
             switch (target.GetType().Name)
@@ -258,6 +282,10 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
             }
         }
 
+		/// <summary>
+		/// Remove the targetet object
+		/// </summary>
+		/// <exception cref="Exception"></exception>
 		private void Remove()
 		{
 			switch (target.GetType().Name)
@@ -266,7 +294,7 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 					{
 						tblUser user = (tblUser)target;
 
-						List<tblUserToGroup> list = HttpClientHandler.GetUserToGroups();
+						List<tblUserToGroup> list = HttpClientHandler.GetUserToGroup();
 
 						foreach (var relation in list)
 						{

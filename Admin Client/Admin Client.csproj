@@ -354,10 +354,7 @@
     <Compile Include="Model\DB\HttpAPIClient.cs" />
     <Compile Include="Model\DB\HttpClientHandler.cs" />
     <Compile Include="Model\Domain\Log.cs" />
-    <Compile Include="Model\Domain\LogFile.cs" />
     <Compile Include="Model\Domain\Parameter.cs" />
-    <Compile Include="Model\Domain\Receipt.cs" />
-    <Compile Include="Model\Domain\UserExpense.cs" />
     <Compile Include="Model\FileIO\LogHandler.cs" />
     <Compile Include="Model\FileIO\ReceiptPDF.cs" />
     <Compile Include="Model\Domain\PersonPDF.cs" />

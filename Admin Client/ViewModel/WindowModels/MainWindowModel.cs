@@ -85,6 +85,10 @@ namespace Admin_Client.ViewModel.WindowModels
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Grid Relations == Created"));
 		}
 
+		/// <summary>
+		/// Set the ContentControls content, which is the middle of the window
+		/// </summary>
+		/// <param name="content">The userControl also known as View</param>
 		public void SetMainContent(UserControl content)
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, content.GetType().Name + " Click"));
@@ -95,6 +99,11 @@ namespace Admin_Client.ViewModel.WindowModels
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Content == " + content.GetType().Name));
 		}
 
+		/// <summary>
+		/// Set the ContentControls content, which is the middle of the window
+		/// </summary>
+		/// <param name="content">The userControl also known as View</param>
+		/// <param name="isMenuActive">Show menu or not</param>
 		public void SetMainContent(UserControl content, bool isMenuActive)
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, content.GetType().Name + " Click"));
@@ -107,6 +116,12 @@ namespace Admin_Client.ViewModel.WindowModels
 			IsMenuActive(isMenuActive);
 		}
 
+		/// <summary>
+		/// Set the ContentControls content, which is the middle of the window
+		/// </summary>
+		/// <param name="content">The userControl also known as View</param>
+		/// <param name="isMenuActive">Show menu or not</param>
+		/// <param name="isAccountTabActive">Show account tab or not</param>
 		public void SetMainContent(UserControl content, bool isMenuActive = true, bool isAccountTabActive = true)
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, content.GetType().Name + " Click"));
@@ -118,6 +133,12 @@ namespace Admin_Client.ViewModel.WindowModels
 			IsAccountTabActive(isAccountTabActive);
 		}
 
+		/// <summary>
+		/// Set the ContentControls content, which is the middle of the window, adds a back to previous view function
+		/// </summary>
+		/// <param name="content">The userControl also known as View</param>
+		/// <param name="backToView">The backToView</param>
+		/// <param name="isAccountTabActive">Show account tab or not</param>
 		public void SetMainContent(UserControl content, UserControl backToView, bool isAccountTabActive = true)
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, content.GetType().Name + " Click"));
@@ -129,6 +150,11 @@ namespace Admin_Client.ViewModel.WindowModels
 			IsAccountTabActive(isAccountTabActive);
 		}
 
+		/// <summary>
+		/// Set the ContentControls content, which is the middle of the window, adds a back to previous view function
+		/// </summary>
+		/// <param name="content">The userControl also known as View</param>
+		/// <param name="backToView">The backToView</param>
 		public void SetMainContent(UserControl content, UserControl backToView)
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, content.GetType().Name + " Click"));
@@ -139,16 +165,28 @@ namespace Admin_Client.ViewModel.WindowModels
 			IsMenuActive(backToView);
 		}
 
+		/// <summary>
+		/// Gets the content from the MainWindows ContentControl
+		/// </summary>
+		/// <returns>The content, which most often is a View</returns>
 		public UserControl GetMainContent()
 		{
 			return (UserControl)CControl_Main.Content;
 		}
 
+		/// <summary>
+		/// Set the relation between the currentMainWindow and the MainWindow
+		/// </summary>
+		/// <param name="window"></param>
 		public void SetMainWindow(Window window)
 		{
 			this.mainWindow = window;
 		}
 
+		/// <summary>
+		/// Get the MainWindow object
+		/// </summary>
+		/// <returns></returns>
 		public Window GetMainWindow()
 		{
 			return mainWindow;
@@ -158,16 +196,29 @@ namespace Admin_Client.ViewModel.WindowModels
 
 		#region StartWindows
 
+		/// <summary>
+		/// Start the PopoutLog
+		/// </summary>
+		/// <param name="dateTime"></param>
 		public void StartPopoutLog(DateTime dateTime)
 		{
 			new PopoutLogWindow(dateTime).Show();
 		}
 
+		/// <summary>
+		/// Start the PopoutLogTool
+		/// </summary>
 		public void StartPopoutLogTool()
 		{
 			new PopoutLogToolWindow(mainWindow).Show();
 		}
 
+		/// <summary>
+		/// Start the PopupConfirm
+		/// </summary>
+		/// <param name="o">The targetet object</param>
+		/// <param name="popupMethod">The method that gets invoked</param>
+		/// <param name="linkedO">The linked object</param>
 		public void StartPopupConfirm(object o, PopupMethod popupMethod, object linkedO = null)
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, popupMethod + " Click --> Target " + o.GetType().Name));
@@ -179,6 +230,10 @@ namespace Admin_Client.ViewModel.WindowModels
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log("PopupConfirm == Closed"));
 		}
 
+		/// <summary>
+		/// Start the PopupParameterChange
+		/// </summary>
+		/// <param name="o">The targetet object</param>
 		public void StartPopupParameterChange(object o)
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Edit Click --> Target " + o.GetType().Name));
@@ -190,6 +245,10 @@ namespace Admin_Client.ViewModel.WindowModels
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log("PopupParameterChange == Closed"));
 		}
 
+		/// <summary>
+		/// Start the PopupPasswordChange
+		/// </summary>
+		/// <param name="user">The targetet user</param>
 		public void StartPopupPasswordChange(tblUser user)
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Edit Click --> Target " + user.fldUserID + " " + user.fldFirstName + " " + user.fldLastName));
@@ -201,6 +260,11 @@ namespace Admin_Client.ViewModel.WindowModels
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log("PopupPasswordChange == Closed"));
 		}
 
+		/// <summary>
+		/// Start the PopAddUser
+		/// </summary>
+		/// <param name="group">The current selected group</param>
+		/// <param name="members">The current members of selected group</param>
 		public void StartPopupAddUser(tblGroup group, List<tblUser> members)
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Add Click --> New User"));
@@ -216,6 +280,10 @@ namespace Admin_Client.ViewModel.WindowModels
 
 		#region Private Methods
 
+		/// <summary>
+		/// Set the Menu as inactive or active
+		/// </summary>
+		/// <param name="active">The boolean for it</param>
 		private void IsMenuActive(bool active)
 		{
 			if (active)
@@ -262,6 +330,10 @@ namespace Admin_Client.ViewModel.WindowModels
 			}
 		}
 
+		/// <summary>
+		/// Set the menu to active and set the content in it
+		/// </summary>
+		/// <param name="backToView">The new content</param>
 		private void IsMenuActive(UserControl backToView)
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log("BackMenu --> True\t ( --CallBack--> " + backToView.GetType().Name + " )"));
@@ -293,6 +365,10 @@ namespace Admin_Client.ViewModel.WindowModels
 			}
 		}
 
+		/// <summary>
+		/// Set the account tab as active or inactive
+		/// </summary>
+		/// <param name="active">The boolean for it</param>
 		private void IsAccountTabActive(bool active)
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log("AccountTab --> " + active));
@@ -328,6 +404,10 @@ namespace Admin_Client.ViewModel.WindowModels
 
 		#region APIFastConnect
 
+		/// <summary>
+		/// Gets all users on launch of the program, so the next call to the API is faster
+		/// </summary>
+		/// <param name="o"></param>
 		public void APIFastConnectThread(object o)
 		{
 			Thread.Sleep(500);

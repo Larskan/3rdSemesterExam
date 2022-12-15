@@ -11,6 +11,9 @@ namespace Admin_Client.Singleton
 	{
 		private MainWindowModelSingleton() { }
 		private static MainWindowModelSingleton instance = null;
+		/// <summary>
+		/// Gets a already existing instance or creates a new instance of the MainWindowModel
+		/// </summary>
 		public static MainWindowModelSingleton Instance
 		{
 			get

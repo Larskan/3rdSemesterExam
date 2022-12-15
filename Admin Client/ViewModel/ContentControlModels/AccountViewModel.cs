@@ -70,6 +70,9 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		#region Constructor
 
+		/// <summary>
+		/// Creates a accountViewModel with information from the currentUser
+		/// </summary>
 		public AccountViewModel()
 		{
 			tblUser currentUser = HttpClientHandler.currentUser;
@@ -86,16 +89,25 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		#region Public Methods
 
+		/// <summary>
+		/// Edit the currentUsers information via PopupParameterChange
+		/// </summary>
 		public void Edit()
 		{
 			MainWindowModelSingleton.Instance.StartPopupParameterChange(HttpClientHandler.currentUser);
 		}
 
+		/// <summary>
+		/// Edit the currentUseres password via PopupPasswordChange
+		/// </summary>
 		public void EditPassword()
 		{
 			MainWindowModelSingleton.Instance.StartPopupPasswordChange(HttpClientHandler.currentUser);
 		}
 
+		/// <summary>
+		/// Start the logtool
+		/// </summary>
 		public void LogTool()
 		{
 			MainWindowModelSingleton.Instance.StartPopoutLogTool();

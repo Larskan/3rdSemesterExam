@@ -16,38 +16,35 @@ namespace Admin_Client.ViewModel.ContentControlModels.Special
 
 		#region Variables
 
-		#endregion
-
-		#region Properties
+		UserControl userControl;
 
 		#endregion
 
 		#region Constructor
 
-		public BackMenuViewModel()
+		public BackMenuViewModel(UserControl userControl)
 		{
-
+			this.userControl = userControl;
 		}
 
 		#endregion
 
 		#region Public Methods
 
-		public void Back(UserControl content)
+		/// <summary>
+		/// Returns the user to the previous content, with or without the menu
+		/// </summary>
+		public void Back()
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Back To -->"));
-			if (content.GetType().Name.Equals("OverviewView"))
+			if (userControl.GetType().Name.Equals("OverviewView"))
 			{
-				MainWindowModelSingleton.Instance.SetMainContent(content, false, true);
+				MainWindowModelSingleton.Instance.SetMainContent(userControl, false, true);
 			} else
 			{
-				MainWindowModelSingleton.Instance.SetMainContent(content, true, true);
+				MainWindowModelSingleton.Instance.SetMainContent(userControl, true, true);
 			}
 		}
-
-		#endregion
-
-		#region Private Methods
 
 		#endregion
 

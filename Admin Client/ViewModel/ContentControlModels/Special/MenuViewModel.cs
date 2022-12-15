@@ -13,14 +13,6 @@ namespace Admin_Client.ViewModel.ContentControlModels.Special
 	public class MenuViewModel : NotifyPropertyChangedHandler
 	{
 
-		#region Variables
-
-		#endregion
-
-		#region Properties
-
-		#endregion
-
 		#region Constructor
 
 		public MenuViewModel() 
@@ -32,18 +24,21 @@ namespace Admin_Client.ViewModel.ContentControlModels.Special
 
 		#region Public Methods
 
+		/// <summary>
+		/// Change the MainWindows ContentControls content to GroupListView
+		/// </summary>
 		public void ChangeContentToGroupList()
 		{
 			MainWindowModelSingleton.Instance.SetMainContent(new GroupListView());
 		}
+
+		/// <summary>
+		/// Change the MainWindows ContentControls content to UserListView
+		/// </summary>
 		public void ChangeContentToUserList()
 		{
 			MainWindowModelSingleton.Instance.SetMainContent(new UserListView());
 		}
-
-		#endregion
-
-		#region Private Methods
 
 		#endregion
 

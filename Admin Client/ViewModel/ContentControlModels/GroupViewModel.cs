@@ -53,15 +53,24 @@ namespace Admin_Client.ViewModel.ContentControlModels
 		#endregion
 
 		#region Constructor
+
+        /// <summary>
+        /// Creates a GroupViewModel with a targetet group
+        /// </summary>
+        /// <param name="group">The target</param>
 		public GroupViewModel(tblGroup group)
         {
             this.group = group;
             this.groupName = this.group.fldGroupName;
         }
+
 		#endregion
 
 		#region Public Methods
 
+        /// <summary>
+        /// Add a member to the currentGroup and update member list
+        /// </summary>
 		public void MemberAdd()
         {
             List<tblUser> tempMembers = new List<tblUser>();
@@ -77,6 +86,10 @@ namespace Admin_Client.ViewModel.ContentControlModels
 			UpdateMembers();
 		}
 
+        /// <summary>
+        /// Remove targetet user from the currentGroup and update member list
+        /// </summary>
+        /// <param name="user">The target</param>
 		public void MemberRemove(tblUser user)
 		{
 			MainWindowModelSingleton.Instance.StartPopupConfirm(user, PopupMethod.Remove);
@@ -85,6 +98,9 @@ namespace Admin_Client.ViewModel.ContentControlModels
 			UpdateMembers();
 		}
 
+        /// <summary>
+        /// Create a trip on the currentGroup
+        /// </summary>
 		public void TripCreate()
         {
             MainWindowModelSingleton.Instance.StartPopupConfirm(new tblTrip(), PopupMethod.Create, group);
@@ -92,6 +108,10 @@ namespace Admin_Client.ViewModel.ContentControlModels
 			UpdateTrips();
 		}
 
+        /// <summary>
+        /// Delete a trip from the currentGruop
+        /// </summary>
+        /// <param name="trip"></param>
         public void TripDelete(tblTrip trip)
         {
 			MainWindowModelSingleton.Instance.StartPopupConfirm(trip, PopupMethod.Delete);
@@ -100,6 +120,10 @@ namespace Admin_Client.ViewModel.ContentControlModels
 			UpdateTrips();
 		}
 
+        /// <summary>
+        /// Open a UserExpenseListView with the targetet trip
+        /// </summary>
+        /// <param name="trip">The target</param>
 		public void TripEdit(tblTrip trip)
 		{
 			MainWindowModelSingleton.Instance.SetMainContent(new UserExpenseListView(trip));
@@ -108,6 +132,9 @@ namespace Admin_Client.ViewModel.ContentControlModels
 		#region Update
 
 		CancellationTokenSource tokenSourceMembers;
+        /// <summary>
+        /// Start a update on the members list
+        /// </summary>
         public void UpdateMembers()
         {
             LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Update Members Click"));
@@ -122,6 +149,9 @@ namespace Admin_Client.ViewModel.ContentControlModels
         }
 
 		CancellationTokenSource tokenSourceTrips;
+        /// <summary>
+        /// Start a update on the trips list
+        /// </summary>
 		public void UpdateTrips()
         {
             LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Update Trips Click"));
@@ -141,6 +171,10 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		#region Private Methods
 
+        /// <summary>
+        /// Update the members list
+        /// </summary>
+        /// <param name="o">The parameters [CancellationToken]</param>
 		private void UpdateMembersListThread(object o)
         {
             object[] array = o as object[];
@@ -171,7 +205,11 @@ namespace Admin_Client.ViewModel.ContentControlModels
             }
         }
 
-        private void UpdateTripsListThread(object o)
+		/// <summary>
+		/// Update the trips list
+		/// </summary>
+		/// <param name="o">The parameters [CancellationToken]</param>
+		private void UpdateTripsListThread(object o)
         {
             object[] array = o as object[];
             CancellationToken token = (CancellationToken)array[0];

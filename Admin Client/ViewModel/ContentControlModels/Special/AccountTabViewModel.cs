@@ -15,10 +15,6 @@ namespace Admin_Client.ViewModel.ContentControlModels.Special
 	public class AccountTabViewModel : NotifyPropertyChangedHandler
 	{
 
-		#region Variables
-
-		#endregion
-
 		#region Properties
 
 		private string currentUserName;
@@ -34,6 +30,9 @@ namespace Admin_Client.ViewModel.ContentControlModels.Special
 
 		#region Constructor
 
+		/// <summary>
+		/// Starts up with the currentUsers name
+		/// </summary>
 		public AccountTabViewModel() 
 		{
 			CurrentUserName = HttpClientHandler.currentUser.fldFirstName + " " + HttpClientHandler.currentUser.fldLastName;
@@ -43,6 +42,9 @@ namespace Admin_Client.ViewModel.ContentControlModels.Special
 
 		#region Public Methods
 
+		/// <summary>
+		/// Sets the currentUser to null and sets the view to LoginView
+		/// </summary>
 		public void Logout()
 		{
 			HttpClientHandler.currentUser = null;
@@ -51,6 +53,10 @@ namespace Admin_Client.ViewModel.ContentControlModels.Special
 
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Logout == Success"));
 		}
+
+		/// <summary>
+		/// Changes the content of the MainWindows ContentControls content to AccountView
+		/// </summary>
 		public void ChangeContentToAccount()
 		{
 			MainWindowModelSingleton.Instance.SetMainContent(new AccountView(), MainWindowModelSingleton.Instance.GetMainContent(), false);

@@ -26,13 +26,6 @@ namespace Admin_Client.View.UserControls
 	public partial class UserExpenseListView : UserControl
 	{
 		UserExpenseListViewModel viewModel;
-		public UserExpenseListView(tblUser user)
-		{
-			viewModel = new UserExpenseListViewModel(user);
-			this.DataContext = viewModel;
-
-			InitializeComponent();
-		}
 
 		public UserExpenseListView(tblTrip trip)
 		{

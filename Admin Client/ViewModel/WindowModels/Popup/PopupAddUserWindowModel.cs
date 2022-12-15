@@ -41,6 +41,12 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 
         #region Constructor
 
+        /// <summary>
+        /// Creates a PopupAddUserWindowModel and creates the relations to some of the views elements
+        /// </summary>
+        /// <param name="currentWindow">The Window</param>
+        /// <param name="group">The current group</param>
+        /// <param name="members">The current members</param>
         public PopupAddUserWindowModel(Window currentWindow, tblGroup group, List<tblUser> members)
         {
             this.currentWindow = currentWindow;
@@ -52,6 +58,10 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 
         #region Public Methods
  
+        /// <summary>
+        /// Create the relation between the currentGroup and the targetet user
+        /// </summary>
+        /// <param name="user">The target</param>
         public void Add(tblUser user)
         {
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Cancel Click"));
@@ -60,6 +70,9 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 			MainWindowModelSingleton.Instance.GetMainWindow().IsEnabled = true;
 		}
 
+        /// <summary>
+        /// Cancel the relation creation for currentGroup
+        /// </summary>
         public void Cancel()
         {
             LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Cancel Click"));
@@ -69,6 +82,9 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 
 
         CancellationTokenSource tokenSource;
+        /// <summary>
+        /// Starts an update on the user list
+        /// </summary>
         public void Update()
         {
             Users.Clear();
@@ -86,6 +102,10 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 
         #region Private Methods
 
+        /// <summary>
+        /// Updates the user list
+        /// </summary>
+        /// <param name="o"></param>
         private void UpdateUsersListThread(object o)
         {
             object[] array = o as object[];

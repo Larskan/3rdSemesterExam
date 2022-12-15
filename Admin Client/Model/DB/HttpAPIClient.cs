@@ -22,6 +22,9 @@ namespace Admin_Client.Model.DB
 		#region Getters
 
 		/// <summary>
+		/// <para>
+		/// GET a specific object via a type and ID
+		/// </para>
 		/// 
 		/// |
 		/// <para>
@@ -66,6 +69,9 @@ namespace Admin_Client.Model.DB
 		}
 
 		/// <summary>
+		/// <para>
+		/// GET all of the specified type of object
+		/// </para>
 		/// 
 		/// |
 		/// <para>
@@ -120,6 +126,9 @@ namespace Admin_Client.Model.DB
 
 		/// <summary>
 		/// 
+		/// <para>
+		/// <br>POST a object to the API, the sql type and database type needs to be the same</br>
+		/// </para>
 		/// |
 		/// <para>
 		/// How To Use:
@@ -163,6 +172,9 @@ namespace Admin_Client.Model.DB
 		}
 
 		/// <summary>
+		/// <para>
+		/// PUT / Edit a object via the API
+		/// </para>
 		/// 
 		/// |
 		/// <para>
@@ -212,6 +224,9 @@ namespace Admin_Client.Model.DB
 		#region Delete
 
 		/// <summary>
+		/// <para>
+		/// DELETE a object with the given type and ID
+		/// </para>
 		/// 
 		/// |
 		/// <para>

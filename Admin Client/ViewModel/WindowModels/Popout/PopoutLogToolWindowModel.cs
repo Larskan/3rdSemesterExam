@@ -29,6 +29,9 @@ namespace Admin_Client.ViewModel.WindowModels.Popout
 
 		#region Constructor
 
+		/// <summary>
+		/// Creates a PopoutLogToolWindowModel with a loaded list of local logfiles
+		/// </summary>
 		public PopoutLogToolWindowModel()
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Open Popout LogToolWindow"));
@@ -55,12 +58,19 @@ namespace Admin_Client.ViewModel.WindowModels.Popout
 
 		#region Public Methods
 
+		/// <summary>
+		/// Open the logfile with the targetet datetime
+		/// </summary>
+		/// <param name="dateTime">The target</param>
 		public void OpenLogFile(DateTime dateTime)
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "LogTool Click --> " + dateTime.ToString()));
 			MainWindowModelSingleton.Instance.StartPopoutLog(dateTime);
 		}
 
+		/// <summary>
+		/// Focus the MainWindow
+		/// </summary>
 		public void Closed()
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "LogTool Close Click"));

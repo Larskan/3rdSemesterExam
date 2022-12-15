@@ -18,14 +18,6 @@ namespace Admin_Client.ViewModel.ContentControlModels
 	public class LoginViewModel : NotifyPropertyChangedHandler
 	{
 
-		#region Variables
-
-		#endregion
-
-		#region Properties
-
-		#endregion
-
 		#region Constructor
 
 		public LoginViewModel()
@@ -37,6 +29,11 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		#region Public Methods
 
+		/// <summary>
+		/// Authenticate the login attempt and login
+		/// </summary>
+		/// <param name="username"></param>
+		/// <param name="password"></param>
 		public void Login(string username, string password)
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Login Click"));
@@ -83,12 +80,6 @@ namespace Admin_Client.ViewModel.ContentControlModels
 			}
 
 		}
-
-		#endregion
-
-		#region Private Methods
-
-
 
 		#endregion
 

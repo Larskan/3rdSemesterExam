@@ -31,6 +31,11 @@ namespace Admin_Client.Model.DB
 
 		static bool userIsDone = false;
 		static tblUser userObject = null;
+		/// <summary>
+		/// Gets the specified user from the api
+		/// </summary>
+		/// <param name="ID">The ID for the user</param>
+		/// <returns>The user</returns>
 		public static tblUser GetUser(int ID)
 		{
 			if (userObject != null || userIsDone)
@@ -51,6 +56,10 @@ namespace Admin_Client.Model.DB
 
 		static bool usersIsDone = false;
 		static List<tblUser> usersList = new List<tblUser>();
+		/// <summary>
+		/// Gets all users in the api
+		/// </summary>
+		/// <returns>The users</returns>
 		public static List<tblUser> GetUsers()
 		{
 			if (usersList.Count > 0 || usersIsDone)
@@ -75,6 +84,10 @@ namespace Admin_Client.Model.DB
 
 		static bool groupsIsDone = false;
 		static List<tblGroup> groupsList = new List<tblGroup>();
+		/// <summary>
+		/// Gets all groups in the api
+		/// </summary>
+		/// <returns>The groups</returns>
 		public static List<tblGroup> GetGroups()
 		{
 			if (groupsList.Count > 0 || groupsIsDone)
@@ -99,6 +112,10 @@ namespace Admin_Client.Model.DB
 
 		static bool receiptsIsDone = false;
 		static List<tblReceipt> receiptsList = new List<tblReceipt>();
+		/// <summary>
+		/// Gets all receipts in the api
+		/// </summary>
+		/// <returns>The receipts</returns>
 		public static List<tblReceipt> GetReceipts()
 		{
 			if (receiptsList.Count > 0 || receiptsIsDone)
@@ -123,6 +140,11 @@ namespace Admin_Client.Model.DB
 
 		static bool tripIsDone = false;
 		static tblTrip tripObject = null;
+		/// <summary>
+		/// Gets a specified trip from the api
+		/// </summary>
+		/// <param name="ID"></param>
+		/// <returns></returns>
 		public static tblTrip GetTrip(int ID)
 		{
 			if (tripObject != null || tripIsDone)
@@ -143,6 +165,10 @@ namespace Admin_Client.Model.DB
 
 		static bool tripsIsDone = false;
 		static List<tblTrip> tripsList = new List<tblTrip>();
+		/// <summary>
+		/// Gets all trips from the api
+		/// </summary>
+		/// <returns></returns>
 		public static List<tblTrip> GetTrips()
 		{
 			if (tripsList.Count > 0 || tripsIsDone)
@@ -167,6 +193,10 @@ namespace Admin_Client.Model.DB
 
 		static bool userExpensesIsDone = false;
 		static List<tblUserExpense> userExpensesList = new List<tblUserExpense>();
+		/// <summary>
+		/// Gets all userexpenses from the api
+		/// </summary>
+		/// <returns>The userexpenses</returns>
 		public static List<tblUserExpense> GetUserExpenses()
 		{
 			if (userExpensesList.Count > 0 || userExpensesIsDone)
@@ -191,7 +221,11 @@ namespace Admin_Client.Model.DB
 
 		static bool userToGroupIsDone = false;
 		static List<tblUserToGroup> userToGroupList = new List<tblUserToGroup>();
-		public static List<tblUserToGroup> GetUserToGroups()
+		/// <summary>
+		/// Gets all userttogroup relations from the api
+		/// </summary>
+		/// <returns>The relations usertogroup</returns>
+		public static List<tblUserToGroup> GetUserToGroup()
 		{
 			if (userToGroupList.Count > 0 || userToGroupIsDone)
 			{
@@ -215,6 +249,10 @@ namespace Admin_Client.Model.DB
 
 		static bool groupToTripIsDone = false;
 		static List<tblGroupToTrip> groupToTripList = new List<tblGroupToTrip>();
+		/// <summary>
+		/// Gets all grouptotrip relations from the api
+		/// </summary>
+		/// <returns>The relations grouptotrip</returns>
 		public static List<tblGroupToTrip> GetGroupToTrip()
 		{
 			if (groupToTripList.Count > 0 || groupToTripIsDone)
@@ -239,6 +277,10 @@ namespace Admin_Client.Model.DB
 
 		static bool tripToUserExpenseIsDone = false;
 		static List<tblTripToUserExpense> tripToUserExpenseList = new List<tblTripToUserExpense>();
+		/// <summary>
+		/// Gets all triptouserexpense relations from the api
+		/// </summary>
+		/// <returns>The relations triptouserexpense</returns>
 		public static List<tblTripToUserExpense> GetTripToUserExpense()
 		{
 			if (tripToUserExpenseList.Count > 0 || tripToUserExpenseIsDone)
@@ -263,14 +305,28 @@ namespace Admin_Client.Model.DB
 
 		#region Post, Put, Delete Methods
 
+		/// <summary>
+		/// Posts a specific object via the HttpAPIClient
+		/// </summary>
+		/// <param name="o">The object to post</param>
 		public static void Post(object o)
 		{
 			new HttpAPIClient().Post(o);
 		}
+		/// <summary>
+		/// Put a specific object in the place of a target given by the ID
+		/// </summary>
+		/// <param name="o"></param>
+		/// <param name="ID"></param>
 		public static void Put(object o, int ID)
 		{
 			new HttpAPIClient().Put(o, ID);
 		}
+		/// <summary>
+		/// Delete a specific object given via type and ID
+		/// </summary>
+		/// <param name="type"></param>
+		/// <param name="ID"></param>
 		public static void Delete(SqlObjectType type, int ID)
 		{
 			new HttpAPIClient().Delete(type, ID);
@@ -280,6 +336,11 @@ namespace Admin_Client.Model.DB
 
 		#region Relations Get Methods
 
+		/// <summary>
+		/// Get all groups from a specific user
+		/// </summary>
+		/// <param name="user">The specific user</param>
+		/// <returns>The groups</returns>
 		public static List<tblGroup> GetGroupsFromUser(tblUser user)
 		{
 			if (groupsIsDone || userToGroupIsDone)
@@ -315,6 +376,11 @@ namespace Admin_Client.Model.DB
 			return filterGroups;
 		}
 
+		/// <summary>
+		/// Gets all receipts from a specific user
+		/// </summary>
+		/// <param name="user">The specific user</param>
+		/// <returns>The receitps</returns>
 		public static List<tblReceipt> GetReceiptsFromUser(tblUser user)
 		{
 			if (receiptsIsDone)
@@ -342,6 +408,11 @@ namespace Admin_Client.Model.DB
 			return filterReceipts;
 		}
 
+		/// <summary>
+		/// Gets all userExpenses from a specific user
+		/// </summary>
+		/// <param name="user">The specific user</param>
+		/// <returns>The userExpenses</returns>
 		public static List<tblUserExpense> GetUserExpensesFromUser(tblUser user)
 		{
 			if (userExpensesIsDone)
@@ -369,6 +440,11 @@ namespace Admin_Client.Model.DB
 			return filterUserExpense;
 		}
 
+		/// <summary>
+		/// Gets all users from a specific group
+		/// </summary>
+		/// <param name="group">The specific group</param>
+		/// <returns>The users</returns>
 		public static List<tblUser> GetUsersFromGroup(tblGroup group)
 		{
 			if (userToGroupIsDone || usersIsDone)
@@ -404,6 +480,11 @@ namespace Admin_Client.Model.DB
 			return filterUsers;
 		}
 
+		/// <summary>
+		/// Gets all trips from a specific group
+		/// </summary>
+		/// <param name="group">The specific group</param>
+		/// <returns>The trips</returns>
 		public static List<tblTrip> GetTripsFromGroup(tblGroup group)
 		{
 			if (tripsIsDone || groupToTripIsDone)
@@ -439,6 +520,11 @@ namespace Admin_Client.Model.DB
 			return filterTrips;
 		}
 
+		/// <summary>
+		/// Gets all userExpenses from a specific trip
+		/// </summary>
+		/// <param name="trip">The specific trip</param>
+		/// <returns>The userExpenses</returns>
 		public static List<tblUserExpense> GetUserExpensesFromTrip(tblTrip trip)
 		{
 			if (userExpensesIsDone || tripToUserExpenseIsDone)
@@ -474,6 +560,11 @@ namespace Admin_Client.Model.DB
 			return filterUserExpense;
 		}
 
+		/// <summary>
+		/// Gets all receipts from a specific trip
+		/// </summary>
+		/// <param name="trip">The specific trip</param>
+		/// <returns>The receipts</returns>
 		public static List<tblReceipt> GetReceiptsFromTrip(tblTrip trip)
 		{
 			if (receiptsIsDone)
@@ -506,6 +597,12 @@ namespace Admin_Client.Model.DB
 
 		#region Private
 
+		/// <summary>
+		/// Starts a specific API thread
+		/// </summary>
+		/// <param name="type">The object type</param>
+		/// <param name="method">The API method</param>
+		/// <param name="targetID">The targets ID, 0 by default</param>
 		static private void ThreadStart(SqlObjectType type, APIMethod method, int targetID = 0)
 		{
 			switch (method)
@@ -517,6 +614,10 @@ namespace Admin_Client.Model.DB
 			
 		}
 
+		/// <summary>
+		/// Gets a single object from a table via the API
+		/// </summary>
+		/// <param name="obj">The parameters [SqlObjectType, ID]</param>
 		static private void GetThread(object obj)
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log("ThreadID: " + Thread.CurrentThread.ManagedThreadId + " --> Starting"));
@@ -551,6 +652,10 @@ namespace Admin_Client.Model.DB
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "ThreadID: " + Thread.CurrentThread.ManagedThreadId + " ==> Closed"));
 		}
 
+		/// <summary>
+		/// Gets all objects from a table via the API
+		/// </summary>
+		/// <param name="obj">The parameters [SqlObjectType]</param>
 		static private void GetAllThread(object obj)
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log("ThreadID: " + Thread.CurrentThread.ManagedThreadId + " --> Starting"));

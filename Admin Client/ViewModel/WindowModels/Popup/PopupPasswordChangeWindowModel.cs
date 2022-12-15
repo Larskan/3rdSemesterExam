@@ -39,6 +39,11 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 
 		#region Constructor
 
+		/// <summary>
+		/// Create a PopupPasswordChangeWindowModel and set the user
+		/// </summary>
+		/// <param name="currentWindow"></param>
+		/// <param name="user"></param>
 		public PopupPasswordChangeWindowModel(Window currentWindow, tblUser user)
 		{
 			this.currentWindow = currentWindow;
@@ -51,6 +56,11 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 
 		#region Public Methods
 
+		/// <summary>
+		/// Validate the passwords and send them to the API
+		/// </summary>
+		/// <param name="password"></param>
+		/// <param name="newPassword"></param>
 		public void Confirm(string password, string newPassword)
 		{
             LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Change Click"));
@@ -70,6 +80,9 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 			MainWindowModelSingleton.Instance.GetMainWindow().IsEnabled = true;
 		}
 
+		/// <summary>
+		/// Cancel the change
+		/// </summary>
 		public void Cancel()
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Cancel Click"));

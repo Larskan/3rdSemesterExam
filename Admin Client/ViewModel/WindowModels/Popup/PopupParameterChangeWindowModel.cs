@@ -59,6 +59,11 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 
 		#region Constructor
 
+		/// <summary>
+		/// Create a PopupParameterChangeWindow with a targetet object
+		/// </summary>
+		/// <param name="currentWindow"></param>
+		/// <param name="o"></param>
 		public PopupParameterChangeWindowModel(Window currentWindow, object o)
 		{
 			this.currentWindow = currentWindow;
@@ -119,6 +124,10 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 
 		#region Public Methods
 
+		/// <summary>
+		/// Validates the parameters, changes the object and then sends it to the API
+		/// </summary>
+		/// <param name="listBox"></param>
 		public void Confirm(ListBox listBox)
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Add Click"));
@@ -241,6 +250,9 @@ namespace Admin_Client.ViewModel.WindowModels.Popup
 			MainWindowModelSingleton.Instance.GetMainWindow().IsEnabled = true;
 		}
 
+		/// <summary>
+		/// Cancel the change
+		/// </summary>
 		public void Cancel()
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, "Cancel Click"));

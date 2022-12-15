@@ -49,6 +49,10 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		#region Constructor
 
+		/// <summary>
+		/// Creates a ReceiptViewModel with a targetet user and starts a update on the receipt list
+		/// </summary>
+		/// <param name="user">The target</param>
 		public ReceiptViewModel(tblUser user)
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Information, "Get TemplateReceiptPDF for User: " + user.fldUserID + " " + user.fldFirstName + " " + user.fldFirstName));
@@ -60,6 +64,10 @@ namespace Admin_Client.ViewModel.ContentControlModels
 
 		#region Public Methods
 
+		/// <summary>
+		/// Update the receipt list
+		/// </summary>
+		/// <param name="o">The parameters [tblUser]</param>
 		private void UpdateReceiptListThread(object o)
 		{
 			Thread.Sleep(startupDelay);
