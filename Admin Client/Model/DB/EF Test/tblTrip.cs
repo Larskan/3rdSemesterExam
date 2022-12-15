@@ -20,7 +20,7 @@ namespace Admin_Client.Model.DB.EF_Test
         [Key]
         public int fldTripID { get; set; }
 
-        public double fldSum { get; set; }
+        public double? fldSum { get; set; }
         public string fldTripName { get; set; }
         public string fldTripDate { get; set; }
 

@@ -66,19 +66,30 @@
       const urlUser = "https://localhost:7002/TblUsers";
 
       async function verifyLogin() {
-        const response = await fetch(urlUser).catch((err) =>
-          alert("CORS is being a little bitch")
-        );
+
+        const [response, pass] = await Promise
+          .all([
+            fetch(urlUser),
+            EncryptPassword(document.getElementById("password").value)
+          ])
+          .catch(() => alert("CORS is being a little bitch"));
+        
+        // const response = await fetch(urlUser).catch((err) =>
+        //   alert("CORS is being a little bitch")
+        // );
         var username = document.getElementById("email").value;
-        var pass = document.getElementById("password").value;
+        // const pass = await EncryptPassword(document.getElementById("password").value);
+        console.log(pass);
         if (response == null) {
           alert("response is null :(");
           return;
         }
-
+        
         await response.json().then((data) => {
           for (let index = 0; index < data.length; index++) {
             if (username == data[index]["fldEmail"]) {
+             // console.log(data[index]["fldPassword"]);
+            //  console.log(pass);
               if (pass == data[index]["fldPassword"]) {
                 alert("nice job logging in chief");
                 window.location = "/homepage/homePage.html";
@@ -86,9 +97,21 @@
               }
             }
           }
+          
           alert("User does not exist");
         });
       }
+
+      async function EncryptPassword(string){
+        let salt = ((string.length * string.length) / 2 + (string.length / 2)) + string.charCodeAt(string.length-1);
+        const utf8 = new TextEncoder().encode(string + salt);
+        const hashBuffer = await crypto.subtle.digest('SHA-256', utf8);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        const hashHex = hashArray
+        .map((bytes)=>bytes.toString(16).padStart(2,'0')).join('');
+        return hashHex;
+      }
+
     </script>
   </body>
 </html>

@@ -42,7 +42,7 @@
 
             <TextBox x:Name="TextBoxMembers_Search" VerticalContentAlignment="Center" Grid.Column="0" Grid.Row="0" Margin="5" Resources="{StaticResource roundborder10}" TextChanged="TextBoxMembers_Search_TextChanged" />
 
-            <ListBox x:Name="ListBox_Members" Grid.Column="0" Grid.Row="1" ItemsSource="{Binding Members}" Margin="5" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource userViewTemplate}" ItemContainerStyle="{StaticResource RoundedListItem}" Style="{StaticResource roundlistboxwithempty}" Resources="{StaticResource roundborder10}" >
+            <ListBox x:Name="ListBox_Members" Grid.Column="0" Grid.Row="1" ItemsSource="{Binding Members}" Margin="5" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource userViewTemplate}" ItemContainerStyle="{StaticResource RoundedListItem}" Style="{StaticResource roundlistboxwithempty}" Resources="{StaticResource roundborder10}">
                 <ListBox.ContextMenu>
                     <ContextMenu Style="{StaticResource roundcontextmenu}" >
                         <MenuItem Header="Add" Click="MemberAdd_Click" Resources="{StaticResource roundborder10}" />

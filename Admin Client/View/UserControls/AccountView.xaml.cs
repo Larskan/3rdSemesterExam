@@ -46,5 +46,10 @@ namespace Admin_Client.View.UserControls
 		{
 			viewModel.LogTool();
         }
-	}
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+    }
 }

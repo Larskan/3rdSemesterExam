@@ -502,13 +502,12 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Label x:Name="id" Content="{Binding Id}" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
-                    <Label x:Name="name" Content="{Binding Name}" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
-                    <Label x:Name="groupname" Content="{Binding GroupName}" Grid.Column="2" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
-                    <Label x:Name="projectedvalue" Content="{Binding ProjectedValue}" Grid.Column="3" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
-                    <Label x:Name="amountpaid" Content="{Binding AmountPaid}" Grid.Column="4" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="id" Content="{Binding fldReceiptID}" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label><!---was Id instead of fldReceiptID-->
+                   <!-- <Label x:Name="name" Content="{Binding Name}" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>-->
+                    <!-- <Label x:Name="groupname" Content="{Binding GroupName}" Grid.Column="2" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>-->
+                    <Label x:Name="projectedvalue" Content="{Binding fldProjectedValue}" Grid.Column="1" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="amountpaid" Content="{Binding fldAmountPaid}" Grid.Column="2" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
                 </Grid>
             </Border>
         </DataTemplate>
@@ -523,10 +522,10 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Label x:Name="id" Content="{Binding Id}" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
-                    <Label x:Name="name" Content="{Binding Name}" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
-                    <Label x:Name="groupname" Content="{Binding Amount}" Grid.Column="2" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
-                    <Label x:Name="projectedvalue" Content="{Binding Date}" Grid.Column="3" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="date" Content="{Binding fldDate}" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="id" Content="{Binding fldUserExpenseID}" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="note" Content="{Binding fldNote}" Grid.Column="2" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                    <Label x:Name="expense" Content="{Binding fldExpense}" Grid.Column="3" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
                 </Grid>
             </Border>
         </DataTemplate>

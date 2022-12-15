@@ -1,8 +1,10 @@
-﻿using Admin_Client.Model.DB.EF_Test;
+﻿using Admin_Client.Model.DB;
+using Admin_Client.Model.DB.EF_Test;
 using Admin_Client.Model.Domain;
 using Admin_Client.Model.FileIO;
 using Admin_Client.Singleton;
 using Admin_Client.ViewModel.ContentControlModels;
+using Org.BouncyCastle.Utilities.IO.Pem;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,7 +43,14 @@ namespace Admin_Client.View.UserControls
 
 		private void DeleteReceipt_Click(object sender, RoutedEventArgs e)
 		{
-            viewModel.DeleteReceipt();
+            viewModel.DeleteReceipt((tblReceipt)ListBox_Receipts.SelectedItem);
 		}
+        private void OnPageLoaded(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine("y reload?");
+            viewModel.UpdateGroups();
+            viewModel.UpdateReceipts();
+        }
+
 	}
 }

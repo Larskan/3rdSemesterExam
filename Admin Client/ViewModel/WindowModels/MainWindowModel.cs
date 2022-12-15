@@ -77,9 +77,11 @@ namespace Admin_Client.ViewModel.WindowModels
 		public void CreateGridRelations(Grid Grid_Menu, Grid Grid_AccTab, ContentControl CC_Main)
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Grid Relations --> Creating"));
+
 			this.Grid_Menu = Grid_Menu;
 			this.Grid_AccountTab = Grid_AccTab;
 			this.CControl_Main = CC_Main;
+
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Grid Relations == Created"));
 		}
 
@@ -87,7 +89,9 @@ namespace Admin_Client.ViewModel.WindowModels
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, content.GetType().Name + " Click"));
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Content --> " + content.GetType().Name));
+
 			CControl_Main.Content = content;
+
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Content == " + content.GetType().Name));
 		}
 
@@ -95,7 +99,9 @@ namespace Admin_Client.ViewModel.WindowModels
 		{
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.UserAction, content.GetType().Name + " Click"));
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log("Content --> " + content.GetType().Name));
+
 			CControl_Main.Content = content;
+
 			LogHandlerSingleton.Instance.WriteToLogFile(new Log(LogType.Success, "Content == " + content.GetType().Name));
 
 			IsMenuActive(isMenuActive);
@@ -324,6 +330,7 @@ namespace Admin_Client.ViewModel.WindowModels
 
 		public void APIFastConnectThread(object o)
 		{
+			Thread.Sleep(500);
 			List<tblUser> users = HttpClientHandler.GetUsers();
 		}
 
